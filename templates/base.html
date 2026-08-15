@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Yala Leopard Tracks | Luxury Tented Safari Camps in Sri Lanka{% endblock %}</title>
+    <meta name="description" content="Bespoke tented safaris in Yala National Park. Experience luxury camping in Sri Lanka with expert wilderness guides.">
+    
+    {% load static %}
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Primary Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="clean-safari-theme">
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="header-container">
+            <!-- Off-canvas Menu Toggle -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Open Navigation Menu">
+                <i class="fa-solid fa-bars-staggered"></i>
+                <span class="menu-label">MENU</span>
+            </button>
+
+            <!-- Brand Logo -->
+            <a href="/" class="header-brand">
+                <span class="brand-sub">LUXURY TENTED SAFARIS</span>
+                <span class="brand-main">YALA LEOPARD TRACKS</span>
+            </a>
+
+            <!-- CTA Button -->
+            <div class="header-actions">
+                <a href="#plan-your-stay" class="btn-gold-pill">PLAN YOUR STAY</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Slide-Out Off-Canvas Navigation Drawer -->
+    <div class="offcanvas-overlay" id="offcanvasOverlay"></div>
+    <aside class="offcanvas-drawer" id="offcanvasDrawer">
+        <button class="drawer-close" id="drawerClose" aria-label="Close Menu">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="drawer-header">
+            <span class="drawer-logo">YALA LEOPARD TRACKS</span>
+            <p class="drawer-tagline">Sri Lanka Wilderness Safaris & Expeditions</p>
+        </div>
+
+        <nav class="drawer-nav">
+            <ul>
+                <li><a href="/" class="active">Home</a></li>
+                <li class="has-submenu">
+                    <a href="#camps">Camps <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                    <ul class="submenu">
+                        <li><a href="#yala-campsite">Yala National Park</a></li>
+                        <li><a href="#wilpattu-campsite">Wilpattu National Park</a></li>
+                    </ul>
+                </li>
+                <li><a href="#experiences">Experiences</a></li>
+                <li><a href="#jungle-cuisine">Jungle Cuisine</a></li>
+                <li><a href="#wildlife">Wildlife</a></li>
+                <li><a href="#about-us">About Us</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+
+        <div class="drawer-badges">
+            <span class="badge-item">🏆 SATA Winner 2019</span>
+            <span class="badge-item">⭐ TripAdvisor Choice 2024</span>
+            <span class="badge-item">🌿 Pure Life Experiences</span>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-body">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="site-footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-social">
+                <h3>GET SOCIAL WITH US</h3>
+                <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://tripadvisor.com" target="_blank" aria-label="TripAdvisor"><i class="fa-solid fa-owl"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-cta">
+                <a href="#plan-your-stay" class="btn-gold-pill">PLAN YOUR STAY</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; {% now "Y" %} Yala Leopard Tracks. All Rights Reserved. Bespoke Tented Safaris Sri Lanka.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Navigation & Scroll Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Off-canvas Menu Drawer
+            const menuToggle = document.getElementById('menuToggle');
+            const drawerClose = document.getElementById('drawerClose');
+            const offcanvasDrawer = document.getElementById('offcanvasDrawer');
+            const offcanvasOverlay = document.getElementById('offcanvasOverlay');
+
+            function openDrawer() {
+                offcanvasDrawer.classList.add('open');
+                offcanvasOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeDrawer() {
+                offcanvasDrawer.classList.remove('open');
+                offcanvasOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            if (menuToggle) menuToggle.addEventListener('click', openDrawer);
+            if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+            if (offcanvasOverlay) offcanvasOverlay.addEventListener('click', closeDrawer);
+
+            // Scroll Reveal Observer
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+            const revealElements = document.querySelectorAll('.camp-card-row, .grid-feature-card, .about-text-content, .about-image-card, .booking-card-form');
+            revealElements.forEach(el => {
+                el.classList.add('reveal-init');
+                revealObserver.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
