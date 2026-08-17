@@ -203,4 +203,132 @@ def blog(request):
     }
     return render(request, 'core/blog.html', context)
 
+def tours(request):
+    context = {
+        'title': 'Sri Lanka Tours & Islandwide Private Transport | Yala Leopard Tracks',
+        'tours_list': [
+            {
+                'id': 'grand-wildlife-circuit',
+                'category': 'round-tour',
+                'category_label': '7-DAY ROUND TOUR',
+                'tag_class': 'tag-sage',
+                'title': '7-Day Sri Lanka Grand Wildlife & Heritage Circuit',
+                'subtitle': 'The ultimate islandwide expedition covering Yala leopards, Wilpattu sloth bears, Sigiriya Rock, and Mirissa blue whales.',
+                'price': '$580',
+                'price_unit': 'per private A/C van (up to 4 guests)',
+                'duration': '7 Days / 6 Nights',
+                'vehicle': 'Private Luxury Toyota KDH Air-Conditioned Van',
+                'inclusions': [
+                    'English-Speaking Professional Driver-Guide',
+                    'All Fuel, Toll Fees, & Parking Charges',
+                    'Driver Accommodation & Meals Included',
+                    'Chilled Bottled Mineral Water Daily',
+                    'Door-to-Door Airport Pickup & Dropoff'
+                ],
+                'route': 'Colombo → Wilpattu → Sigiriya → Kandy → Udawalawe → Yala → Mirissa → Airport',
+                'featured': True
+            },
+            {
+                'id': 'southern-parks-coastal',
+                'category': 'round-tour',
+                'category_label': '4-DAY TOUR',
+                'tag_class': 'tag-amber',
+                'title': '4-Day Southern Wildlife & Coastal Fort Tour',
+                'subtitle': 'Experience wild elephants at Udawalawe, Yala leopard game drives, and UNESCO Galle Dutch Fort.',
+                'price': '$320',
+                'price_unit': 'per private A/C sedan or mini van',
+                'duration': '4 Days / 3 Nights',
+                'vehicle': 'Private A/C Toyota Prius / Axio Sedan',
+                'inclusions': [
+                    'Dedicated Chauffeur Driver',
+                    'Highway Express Tolls & Fuel',
+                    'Cold Towels & Bottled Refreshments',
+                    'Flexible Stops for Photo Spots & Tea Shops'
+                ],
+                'route': 'Colombo / Airport → Udawalawe → Yala National Park → Galle Fort → Colombo',
+                'featured': True
+            },
+            {
+                'id': 'yala-ella-transfer',
+                'category': 'transfer',
+                'category_label': 'INTERCITY SHUTTLE',
+                'tag_class': 'tag-terracotta',
+                'title': 'Yala / Tissa to Ella Scenic Mountain Transfer',
+                'subtitle': 'Comfortable private shuttle connecting Yala jungle camps with Ella tea country.',
+                'price': '$65',
+                'price_unit': 'per private vehicle (up to 3 guests)',
+                'duration': '2.5 Hours Direct',
+                'vehicle': 'Private A/C Sedan or SUV',
+                'inclusions': [
+                    'Door-to-Door Hotel Pickup & Dropoff',
+                    'Photo Stop at Ravana Waterfalls',
+                    'Luggage Handling & Bottled Water'
+                ],
+                'route': 'Yala Campsite / Tissamaharama → Ella Town / Nine Arches Bridge',
+                'featured': False
+            },
+            {
+                'id': 'cmb-airport-transfer',
+                'category': 'transfer',
+                'category_label': 'AIRPORT SHUTTLE (24/7)',
+                'tag_class': 'tag-rose',
+                'title': 'CMB Airport Express Transfer to Yala & Tissamaharama',
+                'subtitle': '24/7 direct Southern Expressway airport transfer with flight arrival tracking.',
+                'price': '$85',
+                'price_unit': 'per private A/C vehicle',
+                'duration': '3.5 Hours Express Highway',
+                'vehicle': 'Comfortable Private A/C Sedan / Van',
+                'inclusions': [
+                    'Meet & Greet at CMB Arrival Gate with Name Board',
+                    'Southern Expressway Toll Fees Included',
+                    'Flight Delay Tracking (No Extra Charge)',
+                    'Chilled Mineral Water & Reclining Seats'
+                ],
+                'route': 'Bandaranaike International Airport (CMB) ↔ Yala Gate / Hotel',
+                'featured': True
+            },
+            {
+                'id': 'cultural-triangle-express',
+                'category': 'round-tour',
+                'category_label': '3-DAY TOUR',
+                'tag_class': 'tag-sage',
+                'title': '3-Day Cultural Triangle & Minneriya Elephant Gathering',
+                'subtitle': 'Climb Sigiriya Lion Rock Fortress, explore Dambulla Cave Temple, and track elephant herds.',
+                'price': '$270',
+                'price_unit': 'per private vehicle',
+                'duration': '3 Days / 2 Nights',
+                'vehicle': 'Private A/C Sedan / SUV',
+                'inclusions': [
+                    'Experienced Chauffeur Guide',
+                    'All Transport Fuel & Toll Fees',
+                    'Hotel Pickup & Dropoff'
+                ],
+                'route': 'Colombo → Dambulla → Sigiriya Rock → Minneriya Safari → Yala',
+                'featured': False
+            },
+            {
+                'id': 'chauffeur-daily-hire',
+                'category': 'fleet',
+                'category_label': 'DAILY CHAUFFEUR HIRE',
+                'tag_class': 'tag-amber',
+                'title': 'Private Chauffeur-Driven Daily Vehicle Hire',
+                'subtitle': 'Hire a dedicated private vehicle with driver per day for customized Sri Lanka exploring.',
+                'price': '$60',
+                'price_unit': 'per day (100 km included daily)',
+                'duration': 'Per Day / Flexible Days',
+                'vehicle': 'Sedan, Luxury Van, or 4x4 Cruiser Choice',
+                'inclusions': [
+                    'Dedicated Driver & Chauffeur Allowance',
+                    'Fuel, Insurance, & Maintenance Included',
+                    '100 km Daily Mileage Allowance',
+                    'Flexible Custom Daily Itinerary'
+                ],
+                'route': 'Custom Itinerary Anywhere Across Sri Lanka',
+                'featured': False
+            }
+        ]
+    }
+    return render(request, 'core/tours.html', context)
+
+
 
