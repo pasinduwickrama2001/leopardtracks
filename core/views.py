@@ -122,3 +122,85 @@ def packages(request):
     }
     return render(request, 'core/packages.html', context)
 
+def blog(request):
+    context = {
+        'title': 'Yala Wildlife Blog & Field Journal | Yala Leopard Tracks',
+        'featured_article': {
+            'id': 'tracking-ghosts-yala-leopards',
+            'category': 'Leopard Sightings',
+            'category_code': 'leopard',
+            'title': 'Tracking the Ghosts of Yala: A Senior Naturalist’s Guide to Spotting Leopards in Block 1',
+            'author': 'Naturalist Kapila Ratnayake',
+            'author_role': 'Senior Track Leader (18 Yrs Experience)',
+            'date': 'August 14, 2026',
+            'read_time': '6 min read',
+            'excerpt': 'With the highest leopard density in the world, Yala Block 1 is the undisputed kingdom of Panthera pardus kotiya. Here is how our trackers decode alarm calls, territorial claw marks, and palu tree shadows.',
+            'image': 'images/yala-leopard-card.jpg',
+            'highlights': 'Palu tree canopy hides, territorial roar analysis, waterhole ambush tactics.'
+        },
+        'articles': [
+            {
+                'id': 'sloth-bear-palu-season',
+                'category': 'Wildlife Behavior',
+                'category_code': 'behavior',
+                'tag_class': 'tag-amber',
+                'title': 'Understanding Sri Lankan Sloth Bears: Seasonal Palu Fruit Feeding Habits',
+                'author': 'Dr. Nimal Weerasinghe',
+                'date': 'August 08, 2026',
+                'read_time': '5 min read',
+                'excerpt': 'During the summer fruiting season, Yala’s elusive sloth bears venture out onto low branches. Learn how to spot them safely.',
+                'image': 'images/yala-wildlife-hero.jpg'
+            },
+            {
+                'id': 'safari-photography-guide',
+                'category': 'Photography Tips',
+                'category_code': 'photography',
+                'tag_class': 'tag-sage',
+                'title': 'Best Lenses & Camera Settings for Dust-Free Safari Photography in Yala',
+                'author': 'Sahan Wickramasinghe',
+                'date': 'July 29, 2026',
+                'read_time': '7 min read',
+                'excerpt': 'Navigating dust clouds, harsh tropical sunlight, and sudden speed movements requires specific shutter speeds and monopod positioning.',
+                'image': 'images/jeep-safari.jpg'
+            },
+            {
+                'id': 'elephant-corridors-gathering',
+                'category': 'Conservation',
+                'category_code': 'conservation',
+                'tag_class': 'tag-rose',
+                'title': 'The Great Elephant Gathering: Udawalawe & Minneriya Migration Corridors',
+                'author': 'Conservation Team',
+                'date': 'July 18, 2026',
+                'read_time': '8 min read',
+                'excerpt': 'How ancient elephant migration pathways connect Yala, Lunugamvehera, and Udawalawe national parks into one sanctuary corridor.',
+                'image': 'images/campsite-yala.jpg'
+            },
+            {
+                'id': 'manik-river-bush-dining',
+                'category': 'Jungle Culture',
+                'category_code': 'culture',
+                'tag_class': 'tag-terracotta',
+                'title': 'Why Manik River Bush Dining is Yala’s Most Iconic Wilderness Culinary Experience',
+                'author': 'Chef Dammika Perera',
+                'date': 'July 05, 2026',
+                'read_time': '4 min read',
+                'excerpt': 'Dining under the canopy of ancient Kumbuk trees along the Manik River. Fresh clay-pot curries and starlit lantern barbecues.',
+                'image': 'images/jungle-cuisine.jpg'
+            },
+            {
+                'id': 'ethical-wildlife-tracking-rules',
+                'category': 'Conservation',
+                'category_code': 'conservation',
+                'tag_class': 'tag-sage',
+                'title': 'Ethical Wildlife Observation Rules: Protecting Yala Block 1 Habitat',
+                'author': 'Yala Leopard Tracks Team',
+                'date': 'June 22, 2026',
+                'read_time': '5 min read',
+                'excerpt': 'Our Nature First policy strictly enforces off-road boundaries, engine noise reduction, and safe distance guidelines for ethical viewing.',
+                'image': 'images/hero-safari-jeep.jpg'
+            }
+        ]
+    }
+    return render(request, 'core/blog.html', context)
+
+

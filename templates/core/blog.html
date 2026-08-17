@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Blog Hero Header Section -->
+<section class="blog-hero-section">
+    <div class="hero-content">
+        <span class="hero-pill-badge"><i class="fa-solid fa-book-bookmark"></i> FIELD JOURNAL & WILDLIFE BLOG</span>
+        <h1 class="hero-title">YALA WILDERNESS LOG</h1>
+        <p class="hero-subtitle">Field tracking logs, senior naturalist insights, wildlife photography guides, and habitat conservation updates from Yala National Park.</p>
+    </div>
+</section>
+
+<!-- Featured Hero Article -->
+<section class="featured-article-section">
+    <div class="container">
+        <div class="featured-article-card">
+            <div class="featured-image-holder">
+                <img src="{% static featured_article.image %}" alt="{{ featured_article.title }}">
+                <span class="featured-badge-overlay"><i class="fa-solid fa-fire"></i> FEATURED TRACK LOG</span>
+            </div>
+            <div class="featured-article-body">
+                <span class="section-tag tag-sage">{{ featured_article.category }}</span>
+                <h2 class="featured-title">{{ featured_article.title }}</h2>
+                <div class="article-meta-row">
+                    <span class="author-chip"><i class="fa-solid fa-user-astronaut"></i> {{ featured_article.author }}</span>
+                    <span><i class="fa-solid fa-calendar"></i> {{ featured_article.date }}</span>
+                    <span><i class="fa-solid fa-clock"></i> {{ featured_article.read_time }}</span>
+                </div>
+                <p class="featured-excerpt">{{ featured_article.excerpt }}</p>
+                <div class="package-highlight-box">
+                    <i class="fa-solid fa-binoculars"></i> <strong>Key Insight:</strong> {{ featured_article.highlights }}
+                </div>
+                <div>
+                    <a href="#blog-grid" class="btn-jungle-pill">READ FULL TRACK LOG <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Category Filter Tabs Bar -->
+<section class="blog-filter-section">
+    <div class="container">
+        <div class="filter-tabs-wrapper">
+            <button class="filter-tab active" data-filter="all">All Articles</button>
+            <button class="filter-tab" data-filter="leopard">Leopard Sightings</button>
+            <button class="filter-tab" data-filter="behavior">Wildlife Behavior</button>
+            <button class="filter-tab" data-filter="photography">Photography Tips</button>
+            <button class="filter-tab" data-filter="conservation">Conservation</button>
+            <button class="filter-tab" data-filter="culture">Jungle Culture</button>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Cards Grid Section -->
+<section class="blog-grid-section" id="blog-grid">
+    <div class="container">
+        <div class="blog-grid" id="blog-articles-grid">
+            {% for post in articles %}
+            <article class="blog-card" data-category="{{ post.category_code }}">
+                <div class="blog-card-image">
+                    <img src="{% static post.image %}" alt="{{ post.title }}">
+                </div>
+                <div class="blog-card-body">
+                    <div>
+                        <span class="section-tag {{ post.tag_class }}">{{ post.category }}</span>
+                        <h3 class="blog-card-title">{{ post.title }}</h3>
+                        <p class="blog-card-excerpt">{{ post.excerpt }}</p>
+                    </div>
+                    <div class="article-meta-row" style="margin-bottom: 0;">
+                        <span><i class="fa-solid fa-user"></i> {{ post.author }}</span>
+                        <span><i class="fa-solid fa-clock"></i> {{ post.read_time }}</span>
+                    </div>
+                </div>
+                <div class="blog-card-footer">
+                    <a href="#" class="btn-jungle-pill btn-block">READ ARTICLE</a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Subscription Widget -->
+<section class="blog-newsletter-section">
+    <div class="container">
+        <div class="blog-newsletter-card">
+            <div class="newsletter-content">
+                <h3>SUBSCRIBE TO YALA FIELD LOGS</h3>
+                <p>Receive monthly leopard sighting maps, park condition updates, and naturalist tracking stories directly in your inbox.</p>
+            </div>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing to Yala Field Logs!');">
+                <input type="email" placeholder="pasindusadanjana17@gmail.com" required>
+                <button type="submit">SUBSCRIBE NOW</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Category Filter JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const blogCards = document.querySelectorAll('.blog-card');
+
+    filterTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            filterTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            const filterValue = this.getAttribute('data-filter');
+
+            blogCards.forEach(card => {
+                if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}
