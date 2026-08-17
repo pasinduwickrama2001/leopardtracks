@@ -88,6 +88,7 @@
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'packages' %}"><i class="fa-solid fa-compass"></i> Safari Packages</a></li>
+                <li><a href="{% url 'tickets' %}"><i class="fa-solid fa-ticket"></i> Park Tickets & Fees</a></li>
                 <li class="has-submenu">
                     <a href="{% url 'home' %}#camps">Camps <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
                     <ul class="submenu">
@@ -163,7 +164,7 @@
             <div class="footer-col">
                 <h4 class="footer-heading">SUPPORT</h4>
                 <ul class="footer-links">
-                    <li><a href="#plan-your-stay"><i class="fa-solid fa-chevron-right"></i> Booking & FAQs</a></li>
+                    <li><a href="{% url 'tickets' %}"><i class="fa-solid fa-chevron-right"></i> Booking & Tickets</a></li>
                     <li><a href="{% url 'tours' %}"><i class="fa-solid fa-chevron-right"></i> Pickup & Dropoff / Tours</a></li>
                     <li><a href="{% url 'contact' %}"><i class="fa-solid fa-chevron-right"></i> Contact Support</a></li>
                 </ul>

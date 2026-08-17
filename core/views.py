@@ -511,6 +511,93 @@ def reviews(request):
     }
     return render(request, 'core/reviews.html', context)
 
+def tickets(request):
+    ticket_success = None
+    if request.method == 'POST':
+        guest_name = request.POST.get('full_name', 'Guest')
+        ticket_success = f"Thank you, {guest_name}! Your Yala park entrance permit reservation request has been received. Express queue vouchers will be emailed shortly."
+
+    context = {
+        'title': 'Yala National Park Tickets & Entrance Fees | Yala Leopard Tracks',
+        'ticket_rates': [
+            {
+                'id': 'foreign-adult',
+                'title': 'Foreign Adult Ticket',
+                'price_usd': '$40 USD',
+                'price_lkr': 'Approx Rs. 12,800 LKR',
+                'age_limit': 'Ages 12+',
+                'inclusions': [
+                    'National Park Entry Permit',
+                    'Department of Wildlife Conservation Fee',
+                    'DWC Service Tax & 15% VAT Included',
+                    'Express Gate Queue-Jump Voucher'
+                ],
+                'popular': True
+            },
+            {
+                'id': 'foreign-child',
+                'title': 'Foreign Child Ticket',
+                'price_usd': '$20 USD',
+                'price_lkr': 'Approx Rs. 6,400 LKR',
+                'age_limit': 'Ages 6 - 11 (Under 6 FREE)',
+                'inclusions': [
+                    'Child National Park Permit',
+                    'All DWC Taxes & Fees Included',
+                    'Free Educational Animal Chart'
+                ],
+                'popular': False
+            },
+            {
+                'id': 'jeep-permit-tariff',
+                'title': 'Private 4x4 Jeep Tariff',
+                'price_usd': '$15 USD',
+                'price_lkr': 'Approx Rs. 4,800 LKR',
+                'age_limit': 'Per 4x4 Vehicle Entry',
+                'inclusions': [
+                    'Jeep Entrance License Fee',
+                    'Park Gate Vehicle Registration',
+                    'Licensed Naturalist Tracker Entry'
+                ],
+                'popular': True
+            },
+            {
+                'id': 'local-resident',
+                'title': 'Sri Lankan Citizen Ticket',
+                'price_usd': 'Rs. 350 LKR',
+                'price_lkr': 'Child: Rs. 150 LKR',
+                'age_limit': 'NIC / Passport Holders',
+                'inclusions': [
+                    'Resident Park Entrance Ticket',
+                    'DWC Conservation Tax'
+                ],
+                'popular': False
+            }
+        ],
+        'gates_info': [
+            {
+                'name': 'Palatupana Gate (Block 1 Main Gate)',
+                'hours': '06:00 AM – 06:00 PM',
+                'location': 'Southern Entrance (Near Tissamaharama / Kirinda)',
+                'description': 'The primary entrance for Yala Block 1 with the highest density of Sri Lankan leopards and sloth bears.'
+            },
+            {
+                'name': 'Katagamuwa Gate (Block 1 & 2 Gate)',
+                'hours': '06:00 AM – 06:00 PM',
+                'location': 'Kataragama Entrance (Near Sacred City)',
+                'description': 'Alternative entrance with shorter queue times, ideal for guests staying in Kataragama.'
+            },
+            {
+                'name': 'Galge Gate (Block 3, 4 & 5 Gate)',
+                'hours': '06:00 AM – 06:00 PM',
+                'location': 'Northern Entrance (Büttala - Kataragama Road)',
+                'description': 'Quiet, uncrowded park block famous for wild elephant herds and birdwatching waterholes.'
+            }
+        ],
+        'ticket_success': ticket_success
+    }
+    return render(request, 'core/tickets.html', context)
+
+
 
 
 

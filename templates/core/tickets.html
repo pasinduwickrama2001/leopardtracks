@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/tickets.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Yala Tickets Hero Header Section -->
+<section class="tickets-hero-section">
+    <div class="hero-content">
+        <span class="hero-pill-badge"><i class="fa-solid fa-ticket"></i> DWC OFFICIAL PARK ENTRANCE PERMITS</span>
+        <h1 class="hero-title">YALA NATIONAL PARK TICKETS & FEES</h1>
+        <p class="hero-subtitle">Official Department of Wildlife Conservation (DWC) entrance fee breakdown, park gate operating hours, and express permit queue-jump vouchers.</p>
+    </div>
+</section>
+
+<!-- Official Ticket Rates Grid Section -->
+<section class="tickets-grid-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag tag-sage">OFFICIAL DWC TARIFFS</span>
+            <h2 class="section-title">PARK ENTRANCE TICKET FEES</h2>
+            <p class="section-subtitle">All tickets include Department of Wildlife Conservation (DWC) entrance permits, service fees, and 15% VAT tax.</p>
+        </div>
+
+        <div class="tickets-grid">
+            {% for item in ticket_rates %}
+            <div class="ticket-card">
+                {% if item.popular %}
+                <div class="ticket-card-badge"><i class="fa-solid fa-star"></i> OFFICIAL RATE</div>
+                {% endif %}
+                <div>
+                    <h3 class="ticket-title">{{ item.title }}</h3>
+                    <div class="ticket-age">{{ item.age_limit }}</div>
+
+                    <div class="ticket-price-box">
+                        <div class="price-usd">{{ item.price_usd }}</div>
+                        <div class="price-lkr">{{ item.price_lkr }}</div>
+                    </div>
+
+                    <ul class="inclusions-list">
+                        {% for inc in item.inclusions %}
+                        <li><i class="fa-solid fa-check font-jungle"></i> {{ inc }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <a href="#book-ticket-form" class="btn-jungle-pill btn-block select-ticket-btn" data-ticket="{{ item.title }}">BOOK PARK PERMIT</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Ticket Calculator Section -->
+<section class="calculator-section">
+    <div class="container">
+        <div class="calculator-card-wrapper">
+            <div class="section-header text-center" style="margin-bottom: 20px;">
+                <span class="section-tag tag-sage">LIVE ESTIMATOR</span>
+                <h2>YALA PARK TICKET PRICE CALCULATOR</h2>
+                <p>Calculate your exact park entry fee in USD and LKR before arriving at the gate.</p>
+            </div>
+
+            <div class="calc-grid">
+                <div class="calc-input-group">
+                    <label for="calc-adults"><i class="fa-solid fa-user"></i> Foreign Adults ($40 USD/ea)</label>
+                    <select id="calc-adults">
+                        <option value="1">1 Adult</option>
+                        <option value="2" selected>2 Adults</option>
+                        <option value="3">3 Adults</option>
+                        <option value="4">4 Adults</option>
+                        <option value="5">5 Adults</option>
+                        <option value="6">6 Adults (Full Jeep)</option>
+                    </select>
+                </div>
+
+                <div class="calc-input-group">
+                    <label for="calc-children"><i class="fa-solid fa-child"></i> Foreign Children ($20 USD/ea)</label>
+                    <select id="calc-children">
+                        <option value="0" selected>0 Children (Under 6 FREE)</option>
+                        <option value="1">1 Child (Ages 6-11)</option>
+                        <option value="2">2 Children</option>
+                        <option value="3">3 Children</option>
+                    </select>
+                </div>
+
+                <div class="calc-input-group">
+                    <label for="calc-jeeps"><i class="fa-solid fa-truck-monster"></i> 4x4 Jeep Permits ($15 USD/ea)</label>
+                    <select id="calc-jeeps">
+                        <option value="1" selected>1 Private 4x4 Jeep</option>
+                        <option value="2">2 Private 4x4 Jeeps</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="calc-result-box">
+                <div class="calc-result-total" id="calc-total-usd">$95.00 USD</div>
+                <div class="calc-result-sub" id="calc-total-lkr">Approx Rs. 30,400 LKR (Includes Entry + Jeep Permit + DWC Taxes)</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Yala Entrance Gates Guide Section -->
+<section class="gates-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag tag-sage">GATE DIRECTORY</span>
+            <h2 class="section-title">YALA PARK ENTRANCE GATES</h2>
+            <p class="section-subtitle">Operating hours and entry locations for Yala National Park blocks.</p>
+        </div>
+
+        <div class="gates-grid">
+            {% for gate in gates_info %}
+            <div class="gate-card">
+                <div class="gate-icon"><i class="fa-solid fa-door-open"></i></div>
+                <h3 class="gate-title">{{ gate.name }}</h3>
+                <span class="gate-hours"><i class="fa-solid fa-clock"></i> {{ gate.hours }}</span>
+                <p style="font-size: 0.84rem; color: #606C38; font-weight: 700; margin-bottom: 8px;"><i class="fa-solid fa-location-dot"></i> {{ gate.location }}</p>
+                <p class="gate-desc">{{ gate.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Express Permit Reservation Form Section -->
+<section class="booking-section" id="book-ticket-form">
+    <div class="container">
+        <div class="booking-card-wrapper">
+            {% if ticket_success %}
+            <div class="alert-success-banner" style="background-color: #606C38; color: #FFFFFF; padding: 16px 24px; border-radius: var(--radius-sm); font-weight: 700; margin-bottom: 24px;">
+                <i class="fa-solid fa-circle-check"></i> {{ ticket_success }}
+            </div>
+            {% endif %}
+
+            <div class="booking-header text-center">
+                <span class="section-tag tag-sage">SKIP THE MORNING QUEUE</span>
+                <h2>EXPRESS YALA PARK PERMIT RESERVATION</h2>
+                <p>Reserve official DWC park permits in advance to enter through express gates without queue delays.</p>
+            </div>
+
+            <form class="safari-booking-form" action="{% url 'tickets' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="full_name"><i class="fa-solid fa-user"></i> Full Name *</label>
+                        <input type="text" id="full_name" name="full_name" placeholder="e.g. Alexander Wright" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email_address"><i class="fa-solid fa-envelope"></i> Email Address *</label>
+                        <input type="email" id="email_address" name="email_address" placeholder="pasindusadanjana17@gmail.com" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone_number"><i class="fa-solid fa-phone"></i> Phone / WhatsApp *</label>
+                        <input type="tel" id="phone_number" name="phone_number" placeholder="+94 77 815 8004" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gate_choice"><i class="fa-solid fa-door-open"></i> Preferred Entrance Gate *</label>
+                        <select id="gate_choice" name="gate_choice" required>
+                            <option value="Palatupana Gate (Block 1 Main Gate)">Palatupana Gate (Block 1 Main Gate)</option>
+                            <option value="Katagamuwa Gate (Block 1 & 2 Gate)">Katagamuwa Gate (Block 1 & 2 Gate)</option>
+                            <option value="Galge Gate (Block 3, 4 & 5 Gate)">Galge Gate (Block 3, 4 & 5 Gate)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticket_date"><i class="fa-solid fa-calendar-days"></i> Safari Date *</label>
+                        <input type="date" id="ticket_date" name="ticket_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passport_no"><i class="fa-solid fa-passport"></i> Passport / ID Number *</label>
+                        <input type="text" id="passport_no" name="passport_no" placeholder="e.g. N1234567" required>
+                    </div>
+                </div>
+
+                <div class="form-submit-wrapper text-center">
+                    <button type="submit" class="btn-jungle-pill btn-block">RESERVE YALA PARK TICKETS</button>
+                    <p class="form-guarantee-note"><i class="fa-solid fa-shield-halved font-jungle"></i> Official DWC Licensed Partner • Guaranteed Gate Entry</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Calculator JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const calcAdults = document.getElementById('calc-adults');
+    const calcChildren = document.getElementById('calc-children');
+    const calcJeeps = document.getElementById('calc-jeeps');
+
+    const totalUsdEl = document.getElementById('calc-total-usd');
+    const totalLkrEl = document.getElementById('calc-total-lkr');
+
+    function calculateTotal() {
+        if (!calcAdults || !calcChildren || !calcJeeps) return;
+
+        const adults = parseInt(calcAdults.value) || 0;
+        const children = parseInt(calcChildren.value) || 0;
+        const jeeps = parseInt(calcJeeps.value) || 0;
+
+        const totalUSD = (adults * 40) + (children * 20) + (jeeps * 15);
+        const totalLKR = Math.round(totalUSD * 320);
+
+        if (totalUsdEl) totalUsdEl.textContent = `$${totalUSD}.00 USD`;
+        if (totalLkrEl) totalLkrEl.textContent = `Approx Rs. ${totalLKR.toLocaleString()} LKR (Includes Entry + Jeep Permit + DWC Taxes)`;
+    }
+
+    if (calcAdults && calcChildren && calcJeeps) {
+        calcAdults.addEventListener('change', calculateTotal);
+        calcChildren.addEventListener('change', calculateTotal);
+        calcJeeps.addEventListener('change', calculateTotal);
+        calculateTotal();
+    }
+});
+</script>
+{% endblock %}
