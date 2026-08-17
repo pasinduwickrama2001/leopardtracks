@@ -1,0 +1,292 @@
+/* ==========================================================================
+   Yala Leopard Tracks - Dedicated Reviews & Gallery Stylesheet (reviews.css)
+   Theme: Earth Olive Green (#606C38) & Warm Pastel Cream (#FAF6EE)
+   ========================================================================== */
+
+/* Reviews Hero Header Section */
+.reviews-hero-section {
+    background-color: var(--bg-pastel-cream);
+    padding: 130px 20px 45px;
+    text-align: center;
+    border-bottom: 1px solid rgba(96, 108, 56, 0.12);
+}
+
+.reviews-hero-section .hero-title {
+    color: var(--text-primary);
+    text-shadow: none;
+    margin-top: 12px;
+}
+
+.reviews-hero-section .hero-subtitle {
+    color: var(--text-muted);
+    text-shadow: none;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+/* Rating Summary Header Box */
+.rating-summary-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    margin-top: 28px;
+    background: #FFFFFF;
+    border-radius: var(--radius-card);
+    padding: 20px 36px;
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid rgba(96, 108, 56, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.rating-big-score {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #606C38;
+    line-height: 1;
+}
+
+.stars-row {
+    color: #A4702D;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+}
+
+.rating-platforms {
+    text-align: left;
+    font-size: 0.84rem;
+    color: var(--text-muted);
+}
+
+.rating-platforms strong {
+    color: var(--text-primary);
+}
+
+/* Category Filter Bar */
+.reviews-filter-section {
+    background-color: var(--bg-pastel-cream);
+    padding: 28px 0 10px;
+}
+
+.filter-tabs-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.filter-tab {
+    font-family: var(--font-brand);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border-radius: var(--radius-pill);
+    background-color: #FFFFFF;
+    color: #475128;
+    border: 1px solid rgba(96, 108, 56, 0.25);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.filter-tab:hover {
+    background-color: #E7EBD9;
+    color: #475128;
+    border-color: #606C38;
+}
+
+.filter-tab.active {
+    background-color: #606C38 !important;
+    color: #FFFFFF !important;
+    border-color: #606C38 !important;
+    box-shadow: 0 4px 15px rgba(96, 108, 56, 0.3);
+}
+
+/* Verified Guest Reviews Grid */
+.reviews-grid-section {
+    background-color: var(--bg-pastel-cream);
+    padding: 40px 0 60px;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+
+.review-card {
+    background-color: #FFFFFF;
+    border-radius: var(--radius-card);
+    padding: 32px 28px;
+    border: 1px solid rgba(96, 108, 56, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transition);
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 36px rgba(96, 108, 56, 0.16);
+    border-color: #606C38;
+}
+
+.review-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.reviewer-name {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.reviewer-origin {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.verified-badge {
+    background: #E7EBD9;
+    color: #475128;
+    font-family: var(--font-brand);
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+}
+
+.review-package-tag {
+    font-size: 0.82rem;
+    color: #606C38;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.review-comment {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    font-style: italic;
+    margin-bottom: 16px;
+}
+
+/* Wildlife Photography Gallery */
+.gallery-section {
+    background-color: var(--bg-pastel-cream);
+    padding: 60px 0;
+    border-top: 1px solid rgba(96, 108, 56, 0.12);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 36px;
+}
+
+.gallery-card {
+    position: relative;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    height: 280px;
+    border: 1px solid rgba(96, 108, 56, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.gallery-card:hover img {
+    transform: scale(1.08);
+}
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(35, 51, 37, 0.9), rgba(35, 51, 37, 0.1));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+    color: #FFFFFF;
+}
+
+.gallery-card:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.gallery-location {
+    font-size: 0.82rem;
+    color: #E7EBD9;
+}
+
+/* Share Experience Review Form */
+.review-form-section {
+    background-color: var(--bg-pastel-cream);
+    padding: 40px 0 80px;
+}
+
+.review-form-card {
+    background-color: #FFFFFF;
+    border-radius: var(--radius-card);
+    padding: 44px 40px;
+    border: 1px solid rgba(96, 108, 56, 0.18);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06);
+}
+
+/* Responsive Media Queries for Reviews Page */
+@media (max-width: 1024px) {
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rating-summary-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+        padding: 20px 24px;
+    }
+
+    .rating-platforms {
+        text-align: center;
+    }
+
+    .review-form-card {
+        padding: 28px 20px;
+    }
+}

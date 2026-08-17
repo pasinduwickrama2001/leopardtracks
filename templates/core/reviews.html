@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reviews.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Reviews & Gallery Hero Header Section -->
+<section class="reviews-hero-section">
+    <div class="hero-content">
+        <span class="hero-pill-badge"><i class="fa-solid fa-star"></i> VERIFIED GUEST REVIEWS & GALLERY</span>
+        <h1 class="hero-title">GUEST REVIEWS & WILDLIFE GALLERY</h1>
+        <p class="hero-subtitle">Real experiences, verified safari reviews, and high-resolution wildlife photography captured during our Yala National Park game drives.</p>
+        
+        <div class="rating-summary-banner">
+            <div class="rating-big-score">{{ rating_summary.score }}</div>
+            <div>
+                <div class="stars-row">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div style="font-weight: 700; color: var(--text-primary);">Based on {{ rating_summary.total_reviews }} Verified Guest Reviews</div>
+            </div>
+            <div class="rating-platforms">
+                <div><strong>TripAdvisor:</strong> {{ rating_summary.tripadvisor_rating }}</div>
+                <div><strong>Google Reviews:</strong> {{ rating_summary.google_rating }}</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Category Filter Tabs Bar -->
+<section class="reviews-filter-section">
+    <div class="container">
+        <div class="filter-tabs-wrapper">
+            <button class="filter-tab active" data-filter="all">All Reviews & Photos</button>
+            <button class="filter-tab" data-filter="leopard">Leopard Sightings</button>
+            <button class="filter-tab" data-filter="drives">Game Drives</button>
+            <button class="filter-tab" data-filter="camp">Luxury Camp Stays</button>
+            <button class="filter-tab" data-filter="photo">Wildlife Photography</button>
+        </div>
+    </div>
+</section>
+
+<!-- Verified Guest Reviews Grid Section -->
+<section class="reviews-grid-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag tag-sage">VERIFIED TESTIMONIALS</span>
+            <h2 class="section-title">WHAT OUR GUESTS SAY</h2>
+            <p class="section-subtitle">Read firsthand feedback from wildlife enthusiasts, luxury glampers, and professional photographers.</p>
+        </div>
+
+        <div class="reviews-grid" id="reviews-grid">
+            {% for item in reviews_list %}
+            <div class="review-card" data-category="{{ item.category }}">
+                <div>
+                    <div class="review-card-header">
+                        <div>
+                            <h3 class="reviewer-name">{{ item.name }}</h3>
+                            <div class="reviewer-origin"><i class="fa-solid fa-earth-americas"></i> {{ item.origin }} • {{ item.date }}</div>
+                        </div>
+                        {% if item.verified %}
+                        <span class="verified-badge"><i class="fa-solid fa-circle-check font-jungle"></i> Verified</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="stars-row" style="margin-bottom: 8px;">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+
+                    <div class="review-package-tag"><i class="fa-solid fa-compass"></i> {{ item.package }}</div>
+                    <p class="review-comment">"{{ item.comment }}"</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Wildlife Photography Gallery Section -->
+<section class="gallery-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag tag-sage">FIELD PHOTOGRAPHY</span>
+            <h2 class="section-title">YALA WILDLIFE GALLERY</h2>
+            <p class="section-subtitle">Moments captured in Yala Block 1, Block 5, and Manik River buffer zone.</p>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid">
+            {% for photo in gallery_items %}
+            <div class="gallery-card" data-category="{{ photo.category }}">
+                <img src="{% static photo.image %}" alt="{{ photo.title }}">
+                <div class="gallery-overlay">
+                    <h4 class="gallery-title">{{ photo.title }}</h4>
+                    <div class="gallery-location"><i class="fa-solid fa-location-dot font-jungle"></i> {{ photo.location }} • {{ photo.credit }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Share Experience Review Submission Form -->
+<section class="review-form-section">
+    <div class="container">
+        <div class="review-form-card">
+            {% if review_success %}
+            <div class="alert-success-banner">
+                <i class="fa-solid fa-circle-check"></i> {{ review_success }}
+            </div>
+            {% endif %}
+
+            <div class="section-header text-center">
+                <span class="section-tag tag-sage">SHARE YOUR FEEDBACK</span>
+                <h2>WRITE A REVIEW FOR YALA LEOPARD TRACKS</h2>
+                <p>Have you recently experienced a game drive or glamping stay with us? Share your feedback with future wildlife travelers.</p>
+            </div>
+
+            <form class="safari-booking-form" action="{% url 'reviews' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reviewer_name"><i class="fa-solid fa-user"></i> Your Name *</label>
+                        <input type="text" id="reviewer_name" name="reviewer_name" placeholder="e.g. Sarah Wright" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reviewer_origin"><i class="fa-solid fa-earth-americas"></i> Country / City of Origin *</label>
+                        <input type="text" id="reviewer_origin" name="reviewer_origin" placeholder="e.g. London, UK" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="safari_package_used"><i class="fa-solid fa-compass"></i> Safari Package Experienced *</label>
+                        <select id="safari_package_used" name="safari_package_used" required>
+                            <option value="Yala Block 1 Morning Leopard Game Drive">Yala Block 1 Morning Leopard Game Drive</option>
+                            <option value="Yala Full-Day Deep Wilderness Expedition">Yala Full-Day Deep Wilderness Expedition</option>
+                            <option value="2-Day Luxury Tented Camp & Dual Safari">2-Day Luxury Tented Camp & Dual Safari</option>
+                            <option value="Wildlife Photographers Special Expedition">Wildlife Photographers Special Expedition</option>
+                            <option value="7-Day Sri Lanka Grand Wildlife Circuit">7-Day Sri Lanka Grand Wildlife Circuit</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="star_rating"><i class="fa-solid fa-star"></i> Star Rating *</label>
+                        <select id="star_rating" name="star_rating" required>
+                            <option value="5 Stars - Exceptional" selected>⭐⭐⭐⭐⭐ (5 / 5 - Exceptional)</option>
+                            <option value="4 Stars - Great">⭐⭐⭐⭐ (4 / 5 - Great)</option>
+                            <option value="3 Stars - Average">⭐⭐⭐ (3 / 5 - Average)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="review_text"><i class="fa-solid fa-comment-dots"></i> Your Safari Review & Feedback *</label>
+                    <textarea id="review_text" name="review_text" rows="4" placeholder="Tell us about your sightings, naturalist guides, vehicle comfort, or camp bush dining experience..." required></textarea>
+                </div>
+
+                <div class="form-submit-wrapper text-center">
+                    <button type="submit" class="btn-jungle-pill btn-block">SUBMIT GUEST REVIEW</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Filter Tabs JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const reviewCards = document.querySelectorAll('.review-card');
+    const galleryCards = document.querySelectorAll('.gallery-card');
+
+    filterTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            filterTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            const filterValue = this.getAttribute('data-filter');
+
+            // Filter Reviews
+            reviewCards.forEach(card => {
+                if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Filter Gallery Photos
+            galleryCards.forEach(card => {
+                if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

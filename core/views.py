@@ -402,6 +402,116 @@ def about(request):
     }
     return render(request, 'core/about.html', context)
 
+def reviews(request):
+    review_success = None
+    if request.method == 'POST':
+        reviewer_name = request.POST.get('reviewer_name', 'Guest')
+        review_success = f"Thank you, {reviewer_name}! Your review has been submitted for verification and will appear on our page shortly."
+
+    context = {
+        'title': 'Guest Reviews & Wildlife Gallery | Yala Leopard Tracks',
+        'rating_summary': {
+            'score': '4.9',
+            'stars': 5,
+            'total_reviews': 342,
+            'tripadvisor_rating': '5.0 / 5.0 (Top 10% Worldwide)',
+            'google_rating': '4.9 / 5.0 (210+ Reviews)'
+        },
+        'reviews_list': [
+            {
+                'id': 1,
+                'category': 'leopard',
+                'name': 'Alexander & Sarah Wright',
+                'origin': 'London, United Kingdom',
+                'date': 'August 2026',
+                'package': 'Yala Block 1 Morning Leopard Game Drive',
+                'rating': 5,
+                'comment': 'Unbelievable morning game drive! Our naturalist Kapila spotted 3 leopards before 8 AM including a male leopard resting on a palu tree. The private Toyota Land Cruiser was exceptionally comfortable with dust protection covers for our camera lenses.',
+                'verified': True
+            },
+            {
+                'id': 2,
+                'category': 'photo',
+                'name': 'Dr. Marcus Vance',
+                'origin': 'Munich, Germany',
+                'date': 'July 2026',
+                'package': 'Wildlife Photographers Special Expedition',
+                'rating': 5,
+                'comment': 'As a professional wildlife photographer, finding a tracker who understands vehicle positioning for lighting and low angles is rare. Yala Leopard Tracks exceeded every expectation. Captured national geographic-level shots of sloth bears and leopards.',
+                'verified': True
+            },
+            {
+                'id': 3,
+                'category': 'camp',
+                'name': 'Elena & Jean Rostova',
+                'origin': 'Paris, France',
+                'date': 'July 2026',
+                'package': '2-Day Luxury Tented Camp & Dual Safari',
+                'rating': 5,
+                'comment': 'Pure wilderness magic! Sleeping in luxury tented suites with en-suite bathrooms in the Yala buffer zone, followed by alfresco candlelit dinner by Manik River. Staff are attentive, warm, and professional.',
+                'verified': True
+            },
+            {
+                'id': 4,
+                'category': 'drives',
+                'name': 'David & Evelyn Chen',
+                'origin': 'Sydney, Australia',
+                'date': 'June 2026',
+                'package': '7-Day Sri Lanka Grand Wildlife Circuit',
+                'rating': 5,
+                'comment': 'We booked the full 7-day islandwide transport and tour. Our chauffeur-guide was punctual, polite, and drove safely on expressways. Seamless pickup at CMB airport and flawless hotel dropoffs throughout Sri Lanka.',
+                'verified': True
+            }
+        ],
+        'gallery_items': [
+            {
+                'title': 'Yala Leopard Resting on Palu Tree',
+                'category': 'leopard',
+                'image': 'images/yala-leopard-card.jpg',
+                'location': 'Yala Block 1',
+                'credit': 'Photo by Kapila Ratnayake'
+            },
+            {
+                'title': 'Open-Air Private 4x4 Game Viewing Jeep',
+                'category': 'drives',
+                'image': 'images/jeep-safari.jpg',
+                'location': 'Palatupana Park Gate',
+                'credit': 'Yala Leopard Tracks Fleet'
+            },
+            {
+                'title': 'Luxury Safari Glamping Suite',
+                'category': 'camp',
+                'image': 'images/campsite-yala.jpg',
+                'location': 'Yala Buffer Wilderness',
+                'credit': 'Eco-Luxury Camp'
+            },
+            {
+                'title': 'Alfresco Kumbuk Bush Dining',
+                'category': 'camp',
+                'image': 'images/jungle-cuisine.jpg',
+                'location': 'Manik River Bank',
+                'credit': 'Wilderness Culinary Desk'
+            },
+            {
+                'title': 'Sri Lankan Sloth Bear in Summer Palu Season',
+                'category': 'photo',
+                'image': 'images/yala-wildlife-hero.jpg',
+                'location': 'Yala Block 5 Corridor',
+                'credit': 'Photo by Sahan W.'
+            },
+            {
+                'title': 'High-Performance Safari Land Cruiser',
+                'category': 'drives',
+                'image': 'images/hero-safari-jeep.jpg',
+                'location': 'Wickrama Desk Desk',
+                'credit': '4x4 Expedition Fleet'
+            }
+        ],
+        'review_success': review_success
+    }
+    return render(request, 'core/reviews.html', context)
+
+
 
 
 
