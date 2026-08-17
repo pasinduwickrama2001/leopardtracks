@@ -1,23 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Yala Leopard Tracks | Luxury Tented Safari Camps in Sri Lanka{% endblock %}</title>
-    <meta name="description" content="Bespoke tented safaris in Yala National Park. Experience luxury camping in Sri Lanka with expert wilderness guides.">
-    
+    <meta name="description"
+        content="Bespoke tented safaris in Yala National Park. Experience luxury camping in Sri Lanka with expert wilderness guides.">
+
     {% load static %}
-    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <!-- Google Website Font Style: Google Sans / Plus Jakarta Sans, Outfit, Roboto & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS v3 CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'olive-btn': '#606C38',
+                        'olive-dark': '#475128',
+                        'pastel-cream': '#FAF6EE',
+                        'pastel-sage': '#EBF3EA',
+                        'pastel-sand': '#F7EFE2',
+                        'pastel-amber': '#E0AA60',
+                        'forest-dark': '#233325',
+                    },
+                    fontFamily: {
+                        heading: ['Poppins', 'Roboto', 'sans-serif'],
+                        body: ['Roboto', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 
     <!-- Primary Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+
 <body class="clean-safari-theme">
 
     <!-- Header Navigation -->
@@ -56,18 +85,19 @@
 
         <nav class="drawer-nav">
             <ul>
-                <li><a href="/" class="active">Home</a></li>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'packages' %}"><i class="fa-solid fa-compass"></i> Safari Packages</a></li>
                 <li class="has-submenu">
-                    <a href="#camps">Camps <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                    <a href="{% url 'home' %}#camps">Camps <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
                     <ul class="submenu">
-                        <li><a href="#yala-campsite">Yala National Park</a></li>
-                        <li><a href="#wilpattu-campsite">Wilpattu National Park</a></li>
+                        <li><a href="{% url 'home' %}#yala-campsite">Yala National Park</a></li>
+                        <li><a href="{% url 'home' %}#wilpattu-campsite">Wilpattu National Park</a></li>
                     </ul>
                 </li>
-                <li><a href="#experiences">Experiences</a></li>
-                <li><a href="#jungle-cuisine">Jungle Cuisine</a></li>
-                <li><a href="#wildlife">Wildlife</a></li>
-                <li><a href="#about-us">About Us</a></li>
+                <li><a href="{% url 'home' %}#experiences">Experiences</a></li>
+                <li><a href="{% url 'home' %}#jungle-cuisine">Jungle Cuisine</a></li>
+                <li><a href="{% url 'home' %}#wildlife">Wildlife</a></li>
+                <li><a href="{% url 'home' %}#about-us">About Us</a></li>
                 <li><a href="#contact">Contact Us</a></li>
             </ul>
         </nav>
@@ -84,11 +114,82 @@
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer Section -->
+    <!-- Charming Safari Footer (#475128 Deep Olive Theme) -->
     <footer class="site-footer" id="contact">
-        <div class="footer-container">
-            <div class="footer-social">
-                <h3>GET SOCIAL WITH US</h3>
+        <!-- Floating Glassmorphic Banner Widget -->
+        <div class="footer-cta-card">
+            <div class="footer-cta-content">
+                <span class="cta-mini-tag"><i class="fa-solid fa-compass"></i> BESPOKE YALA EXPEDITIONS</span>
+                <h3>READY TO TRACK YALA LEOPARDS?</h3>
+                <p>Reserve your private 4x4 Toyota Land Cruiser jeep permit with licensed trackers today.</p>
+            </div>
+            <div class="footer-cta-action">
+                <a href="#plan-your-stay" class="btn-footer-pill">BOOK YALA SAFARI <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-grid-container">
+            <!-- Col 1: About Yala Leopard Tracks & Nature First Policy -->
+            <div class="footer-col brand-col">
+                <div class="footer-brand-header">
+                    <span class="brand-icon-glow"><i class="fa-solid fa-paw"></i></span>
+                    <span class="footer-brand-title">YALA LEOPARD TRACKS</span>
+                </div>
+                <p class="footer-brand-desc">
+                    As Sri Lanka's premier eco-expedition partner, Yala Leopard Tracks operates with a strict "Nature First" policy. We bridge luxury and raw wilderness, ensuring every journey supports local conservation efforts and ethical wildlife tracking.
+                </p>
+                <div class="footer-highlights">
+                    <p class="highlight-text"><i class="fa-solid fa-shield-cat"></i> Licensed Trackers Only • Guaranteed Ethical Observations • Federal Wildlife Safety Compliant</p>
+                </div>
+                <div class="footer-badges-row">
+                    <span class="f-badge"><i class="fa-solid fa-lock"></i> Secure Payments by PayHere</span>
+                    <span class="f-badge"><i class="fa-solid fa-shield-halved"></i> SLTDA Approved</span>
+                </div>
+            </div>
+
+            <!-- Col 2: Explore Links -->
+            <div class="footer-col">
+                <h4 class="footer-heading">EXPLORE</h4>
+                <ul class="footer-links">
+                    <li><a href="{% url 'packages' %}"><i class="fa-solid fa-chevron-right"></i> Safari Packages</a></li>
+                    <li><a href="{% url 'home' %}#about-us"><i class="fa-solid fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="{% url 'home' %}#wildlife"><i class="fa-solid fa-chevron-right"></i> Wildlife Blog</a></li>
+                    <li><a href="{% url 'home' %}#experiences"><i class="fa-solid fa-chevron-right"></i> Reviews Gallery</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Support Links -->
+            <div class="footer-col">
+                <h4 class="footer-heading">SUPPORT</h4>
+                <ul class="footer-links">
+                    <li><a href="#plan-your-stay"><i class="fa-solid fa-chevron-right"></i> Booking & FAQs</a></li>
+                    <li><a href="#experiences"><i class="fa-solid fa-chevron-right"></i> Pickup & Dropoff / Tours</a></li>
+                    <li><a href="#contact"><i class="fa-solid fa-chevron-right"></i> Contact Support</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Location & Secure Comms -->
+            <div class="footer-col contact-col">
+                <h4 class="footer-heading">LOCATION & COMMS</h4>
+                <ul class="footer-contact-list">
+                    <li><span class="contact-icon-bubble"><i class="fa-solid fa-phone"></i></span> +94 77 815 8004</li>
+                    <li><span class="contact-icon-bubble"><i class="fa-solid fa-envelope"></i></span> pasindusadanjana17@gmail.com</li>
+                    <li><span class="contact-icon-bubble"><i class="fa-solid fa-location-dot"></i></span> Wickrama, Kasingama,<br>Yala Entrance Road,<br>Southern Province, Sri Lanka</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Charming Footer Bottom Social & Copyright -->
+        <div class="footer-bottom-wrap">
+            <div class="footer-bottom-container">
+                <div class="legal-credits">
+                    <p>&copy; {% now "Y" %} Yala Leopard Tracks. All Rights Reserved. Ethical Safari Expeditions Sri Lanka.</p>
+                    <span class="legal-links">
+                        <a href="#plan-your-stay">Privacy Policy</a> • 
+                        <a href="#plan-your-stay">Terms of Service</a> • 
+                        <a href="#contact">SLTDA Certified</a>
+                    </span>
+                </div>
                 <div class="social-icons">
                     <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
@@ -96,14 +197,6 @@
                     <a href="https://tripadvisor.com" target="_blank" aria-label="TripAdvisor"><i class="fa-solid fa-owl"></i></a>
                 </div>
             </div>
-
-            <div class="footer-cta">
-                <a href="#plan-your-stay" class="btn-gold-pill">PLAN YOUR STAY</a>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; {% now "Y" %} Yala Leopard Tracks. All Rights Reserved. Bespoke Tented Safaris Sri Lanka.</p>
         </div>
     </footer>
 
@@ -150,4 +243,5 @@
         });
     </script>
 </body>
+
 </html>

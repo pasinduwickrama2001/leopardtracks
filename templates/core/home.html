@@ -5,11 +5,13 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="hero-section" style="background-image: linear-gradient(to bottom, rgba(18, 33, 24, 0.4), rgba(18, 33, 24, 0.75)), url('{% static 'images/hero-leopard.jpg' %}');">
+<section class="hero-section"
+    style="background-image: linear-gradient(to bottom, rgba(18, 33, 24, 0.4), rgba(18, 33, 24, 0.75)), url('{% static 'images/hero-leopard.jpg' %}');">
     <div class="hero-content">
-        <div class="hero-pill-badge">YALA LEOPARD TRACKS EXPEDITIONS</div>
+        <div class="hero-pill-badge">Yala Leopard Tracks Expeditions</div>
         <h1 class="hero-title">YALA NATIONAL PARK SAFARIS</h1>
-        <p class="hero-subtitle">Experience Ceylon's finest 4x4 game drives & luxury tented safaris in Yala National Park</p>
+        <p class="hero-subtitle">Experience Ceylon's finest 4x4 game drives & luxury tented safaris in Yala National
+            Park</p>
 
         <div class="hero-buttons">
             <a href="#safari-packages" class="btn-gold-pill">EXPLORE SAFARI PACKAGES</a>
@@ -75,20 +77,26 @@
         <div class="about-text-content">
             <span class="section-tag font-gold">WORLD FAMOUS WILDLIFE SANCTUARY</span>
             <h2 class="section-title">ABOUT YALA LEOPARD TRACKS</h2>
-            
+
             <p class="paragraph-lead">
-                Yala National Park is Sri Lanka's premier wildlife destination, globally renowned for hosting the highest density of leopards on Earth. At Yala Leopard Tracks, we specialize in bespoke 4x4 jeep safaris and luxury tented camp stays.
+                Yala National Park is Sri Lanka's premier wildlife destination, globally renowned for hosting the
+                highest density of leopards on Earth. At Yala Leopard Tracks, we specialize in bespoke 4x4 jeep safaris
+                and luxury tented camp stays.
             </p>
             <p>
-                Our team of certified senior naturalists and local trackers guide you through Block 1, Block 5, and quiet wilderness buffer zones. We provide customized open-top safari jeeps designed for optimal wildlife photography and viewing comfort.
+                Our team of certified senior naturalists and local trackers guide you through Block 1, Block 5, and
+                quiet wilderness buffer zones. We provide customized open-top safari jeeps designed for optimal wildlife
+                photography and viewing comfort.
             </p>
             <p>
-                From morning leopard tracking to afternoon elephant gatherings at waterholes, Yala Leopard Tracks delivers an unforgettable, ethical, and authentic safari adventure.
+                From morning leopard tracking to afternoon elephant gatherings at waterholes, Yala Leopard Tracks
+                delivers an unforgettable, ethical, and authentic safari adventure.
             </p>
         </div>
 
         <div class="about-image-card">
-            <img src="{% static 'images/yala-tent.jpg' %}" alt="Yala Leopard Tracks Luxury Safari Tent" class="rounded-img shadow-clean">
+            <img src="{% static 'images/yala-tent.jpg' %}" alt="Yala Leopard Tracks Luxury Safari Tent"
+                class="rounded-img shadow-clean">
             <div class="image-overlay-badge">
                 <span class="overlay-title">Yala National Park</span>
                 <span class="overlay-sub">Bespoke 4x4 Safaris & Luxury Tents</span>
@@ -100,7 +108,7 @@
 <!-- Yala Safari Packages Showcase Section -->
 <section class="campsites-section" id="safari-packages">
     <div class="container text-center section-header">
-        <span class="section-tag font-gold">FEATURED SAFARI ADVENTURES</span>
+        <span class="section-tag tag-sage">FEATURED SAFARI ADVENTURES</span>
         <h2 class="section-title">YALA NATIONAL PARK SAFARI PACKAGES</h2>
     </div>
 
@@ -109,37 +117,46 @@
         <div class="camp-card-row" id="yala-campsite">
             <div class="camp-image">
                 <img src="{% static 'images/yala-tent.jpg' %}" alt="Yala Leopard Safari">
-                <span class="camp-location-badge">YALA BLOCK 1 & BUFFER ZONES</span>
+                <span class="camp-location-badge badge-sage">YALA BLOCK 1 & BUFFER ZONES</span>
             </div>
             <div class="camp-details">
+                <span class="card-category tag-sage">LEOPARD CAPITAL OF THE WORLD</span>
                 <h3 class="camp-title">YALA LEOPARD & BIG 4 SAFARI</h3>
                 <p class="camp-desc">
-                    Immerse yourself in Yala's wildlife hotspot. Track Sri Lankan Leopards, Sloth Bears, Asian Elephants, and Mugger Crocodiles in private open 4x4 jeeps equipped with binoculars and coolers.
+                    Immerse yourself in Yala's wildlife hotspot. Track Sri Lankan Leopards, Sloth Bears, Asian
+                    Elephants, and Mugger Crocodiles in private open 4x4 jeeps equipped with binoculars and coolers.
                 </p>
                 <ul class="camp-features">
-                    <li><i class="fa-solid fa-circle-check font-gold"></i> Morning (05:30 AM) & Afternoon (02:30 PM) Drives</li>
-                    <li><i class="fa-solid fa-circle-check font-gold"></i> Certified Senior Naturalist & Local Tracker</li>
-                    <li><i class="fa-solid fa-circle-check font-gold"></i> Guaranteed Park Entry Tickets & Chilled Refreshments</li>
+                    <li><i class="fa-solid fa-circle-check font-jungle"></i> Morning (05:30 AM) & Afternoon (02:30 PM)
+                        Drives</li>
+                    <li><i class="fa-solid fa-circle-check font-jungle"></i> Certified Senior Naturalist & Local Tracker
+                    </li>
+                    <li><i class="fa-solid fa-circle-check font-jungle"></i> Guaranteed Park Entry Tickets & Chilled
+                        Refreshments</li>
                 </ul>
                 <a href="#plan-your-stay" class="btn-gold-pill">BOOK LEOPARD SAFARI</a>
             </div>
         </div>
 
-        <!-- Wilpattu & Yala Combo Safari -->
+        <!-- Yala Full-Day Safari -->
         <div class="camp-card-row reverse" id="wilpattu-campsite">
             <div class="camp-image">
                 <img src="{% static 'images/wilpattu-lake.jpg' %}" alt="Yala Full Day Safari">
-                <span class="camp-location-badge">FULL DAY WILDERNESS SAFARI</span>
+                <span class="camp-location-badge badge-sand">FULL DAY WILDERNESS SAFARI</span>
             </div>
             <div class="camp-details">
+                <span class="card-category tag-amber">DEEP JUNGLE EXPEDITION</span>
                 <h3 class="camp-title">YALA FULL-DAY DEEP EXPEDITION</h3>
                 <p class="camp-desc">
-                    Spend an entire day inside Yala's deep wilderness. Enjoy a mid-day picnic lunch by the Manik River, exploring remote waterholes and quiet animal migration corridors.
+                    Spend an entire day inside Yala's deep wilderness. Enjoy a mid-day picnic lunch by the Manik River,
+                    exploring remote waterholes and quiet animal migration corridors.
                 </p>
                 <ul class="camp-features">
-                    <li><i class="fa-solid fa-circle-check font-gold"></i> Full Day Access (05:30 AM – 06:00 PM)</li>
-                    <li><i class="fa-solid fa-circle-check font-gold"></i> Riverside Picnic Lunch & Gourmet Bush Snacks</li>
-                    <li><i class="fa-solid fa-circle-check font-gold"></i> Maximum Wildlife Exposure & Photography Time</li>
+                    <li><i class="fa-solid fa-circle-check font-amber"></i> Full Day Access (05:30 AM – 06:00 PM)</li>
+                    <li><i class="fa-solid fa-circle-check font-amber"></i> Riverside Picnic Lunch & Gourmet Bush Snacks
+                    </li>
+                    <li><i class="fa-solid fa-circle-check font-amber"></i> Maximum Wildlife Exposure & Photography Time
+                    </li>
                 </ul>
                 <a href="#plan-your-stay" class="btn-jungle-pill">BOOK FULL-DAY SAFARI</a>
             </div>
@@ -150,7 +167,7 @@
 <!-- Yala Safari Experiences Grid -->
 <section class="experiences-grid-section" id="experiences">
     <div class="container text-center section-header">
-        <span class="section-tag font-gold">CURATED WILDERNESS EXPERIENCES</span>
+        <span class="section-tag tag-sage">CURATED WILDERNESS EXPERIENCES</span>
         <h2 class="section-title">THE YALA LEOPARD TRACKS EXPERIENCE</h2>
     </div>
 
@@ -161,9 +178,10 @@
                 <img src="{% static 'images/wilpattu-lake.jpg' %}" alt="Yala 4x4 Safari Jeep">
             </div>
             <div class="card-body">
-                <span class="card-category">CUSTOM 4X4 VEHICLES</span>
+                <span class="card-category tag-sage">CUSTOM 4X4 VEHICLES</span>
                 <h3>CUSTOM SAFARI JEEPS</h3>
-                <p>Specially modified open Toyota Land Cruisers with elevated seating, camera mounts, and suspension built for rugged terrain.</p>
+                <p>Specially modified open Toyota Land Cruisers with elevated seating, camera mounts, and suspension
+                    built for rugged terrain.</p>
                 <a href="#plan-your-stay" class="link-gold">VIEW DETAILS <i class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>
@@ -174,9 +192,10 @@
                 <img src="{% static 'images/jungle-cuisine.jpg' %}" alt="Yala Bush Dining">
             </div>
             <div class="card-body">
-                <span class="card-category">ALFRESCO JUNGLE CUISINE</span>
+                <span class="card-category tag-rose">ALFRESCO JUNGLE CUISINE</span>
                 <h3>BUSH DINING & BAR</h3>
-                <p>Authentic Sri Lankan curries, fresh tropical juices, and candlelit dinners under starlit jungle canopy at our Yala campsite.</p>
+                <p>Authentic Sri Lankan curries, fresh tropical juices, and candlelit dinners under starlit jungle
+                    canopy at our Yala campsite.</p>
                 <a href="#plan-your-stay" class="link-gold">VIEW DETAILS <i class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>
@@ -187,9 +206,10 @@
                 <img src="{% static 'images/hero-leopard.jpg' %}" alt="Yala Leopards">
             </div>
             <div class="card-body">
-                <span class="card-category">LEOPARD SPECIALISTS</span>
+                <span class="card-category tag-amber">LEOPARD SPECIALISTS</span>
                 <h3>LEOPARD TRACKING</h3>
-                <p>Our naturalists know individual Yala leopards by name and territory, ensuring the highest sighting success rate.</p>
+                <p>Our naturalists know individual Yala leopards by name and territory, ensuring the highest sighting
+                    success rate.</p>
                 <a href="#plan-your-stay" class="link-gold">VIEW DETAILS <i class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>
@@ -200,12 +220,13 @@
 <section class="booking-section" id="plan-your-stay">
     <div class="container grid-2-col align-center">
         <div class="booking-info">
-            <span class="section-tag font-gold">BOOK YOUR EXPEDITION</span>
+            <span class="section-tag tag-sage">BOOK YOUR EXPEDITION</span>
             <h2 class="section-title">RESERVE YOUR YALA SAFARI</h2>
             <p>
-                Ready to track leopards in Yala National Park? Select your preferred safari option below and our safari specialists will confirm your jeep permits and naturalist guide.
+                Ready to track leopards in Yala National Park? Select your preferred safari option below and our safari
+                specialists will confirm your jeep permits and naturalist guide.
             </p>
-            
+
             <div class="contact-quick-list">
                 <div class="contact-item">
                     <div class="icon-bubble"><i class="fa-solid fa-envelope"></i></div>
@@ -224,7 +245,8 @@
 
         <div class="booking-card-form">
             <h3>BOOK YALA SAFARI JEEP</h3>
-            <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Thank you! Your Yala Leopard Tracks safari booking request has been received. Our team will contact you shortly to confirm your permits.');">
+            <form action="#" method="POST"
+                onsubmit="event.preventDefault(); alert('Thank you! Your Yala Leopard Tracks safari booking request has been received. Our team will contact you shortly to confirm your permits.');">
                 <div class="form-group">
                     <label for="guest_name">Full Name</label>
                     <input type="text" id="guest_name" required placeholder="John Doe">
