@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Contact Hero Header Section -->
+<section class="contact-hero-section">
+    <div class="hero-content">
+        <span class="hero-pill-badge"><i class="fa-solid fa-headset"></i> 24/7 SAFARI DESK & SUPPORT</span>
+        <h1 class="hero-title">CONTACT YALA LEOPARD TRACKS</h1>
+        <p class="hero-subtitle">Connect directly with our senior naturalist trackers, book private 4x4 game drives, or request custom islandwide transport arrangements.</p>
+    </div>
+</section>
+
+<!-- Direct Contact Cards Section -->
+<section class="contact-grid-section">
+    <div class="container">
+        <div class="contact-grid">
+            <!-- Phone & WhatsApp Card -->
+            <div class="contact-card">
+                <div class="contact-card-icon"><i class="fa-solid fa-phone"></i></div>
+                <h3 class="contact-card-title">Phone & WhatsApp</h3>
+                <p class="contact-card-value"><strong>{{ contact_info.phone }}</strong><br>Instant 24/7 Response Desk</p>
+                <a href="{{ contact_info.whatsapp_url }}" target="_blank" class="btn-whatsapp-pill"><i class="fa-brands fa-whatsapp"></i> CHAT ON WHATSAPP</a>
+            </div>
+
+            <!-- Email Card -->
+            <div class="contact-card">
+                <div class="contact-card-icon"><i class="fa-solid fa-envelope"></i></div>
+                <h3 class="contact-card-title">Official Email</h3>
+                <p class="contact-card-value"><strong>{{ contact_info.email }}</strong><br>Inquiries & Customized Quotes</p>
+                <a href="mailto:{{ contact_info.email }}" class="btn-jungle-pill" style="padding: 8px 18px; font-size: 0.78rem;">SEND AN EMAIL</a>
+            </div>
+
+            <!-- Address Card -->
+            <div class="contact-card">
+                <div class="contact-card-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                <h3 class="contact-card-title">Headquarters</h3>
+                <p class="contact-card-value">{{ contact_info.address }}</p>
+                <a href="#location-map" class="btn-light-pill" style="padding: 8px 18px; font-size: 0.78rem; border-color: #606C38; color: #475128;">VIEW ON MAP</a>
+            </div>
+
+            <!-- Operating Hours Card -->
+            <div class="contact-card">
+                <div class="contact-card-icon"><i class="fa-solid fa-clock"></i></div>
+                <h3 class="contact-card-title">Operating Desk</h3>
+                <p class="contact-card-value"><strong>Support Desk:</strong><br>{{ contact_info.desk_hours }}<br><br><strong>Gate Desk:</strong><br>{{ contact_info.gate_hours }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Contact Inquiry Form Section -->
+<section class="contact-form-section">
+    <div class="container">
+        <div class="contact-form-card">
+            {% if success_message %}
+            <div class="alert-success-banner">
+                <i class="fa-solid fa-circle-check"></i> {{ success_message }}
+            </div>
+            {% endif %}
+
+            <div class="section-header text-center">
+                <span class="section-tag tag-sage">GET IN TOUCH WITH US</span>
+                <h2>SEND US A DIRECT INQUIRY</h2>
+                <p>Have questions about park permit fees, best tracking seasons, luxury tented camps, or private airport shuttles? Fill out the form below.</p>
+            </div>
+
+            <form class="safari-booking-form" action="{% url 'contact' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="full_name"><i class="fa-solid fa-user"></i> Full Name *</label>
+                        <input type="text" id="full_name" name="full_name" placeholder="e.g. Alexander Wright" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email_address"><i class="fa-solid fa-envelope"></i> Email Address *</label>
+                        <input type="email" id="email_address" name="email_address" placeholder="pasindusadanjana17@gmail.com" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone_number"><i class="fa-solid fa-phone"></i> Phone / WhatsApp *</label>
+                        <input type="tel" id="phone_number" name="phone_number" placeholder="+94 77 815 8004" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inquiry_topic"><i class="fa-solid fa-list-check"></i> Inquiry Topic *</label>
+                        <select id="inquiry_topic" name="inquiry_topic" required>
+                            <option value="Yala Safari Permits & Game Drives">Yala Safari Permits & Game Drives</option>
+                            <option value="Luxury Tented Safari Campsite Stay">Luxury Tented Safari Campsite Stay</option>
+                            <option value="Islandwide Private Transport & Airport Transfer">Islandwide Private Transport & Airport Transfer</option>
+                            <option value="Wildlife Photography Expedition Hides">Wildlife Photography Expedition Hides</option>
+                            <option value="General Information & Customs">General Information & Customs</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="travel_date"><i class="fa-solid fa-calendar-days"></i> Expected Travel Date</label>
+                        <input type="date" id="travel_date" name="travel_date">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="guest_count"><i class="fa-solid fa-users"></i> Number of Travelers</label>
+                        <select id="guest_count" name="guest_count">
+                            <option value="Solo Traveler">Solo Traveler</option>
+                            <option value="2 Guests" selected>2 Guests</option>
+                            <option value="3-4 Guests">3-4 Guests</option>
+                            <option value="5+ Group">5+ Group</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message"><i class="fa-solid fa-comment-dots"></i> Message / Specific Questions *</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Tell us about your trip plans, preferred park entry gates, hotel pickup details, or special requests..." required></textarea>
+                </div>
+
+                <div class="form-submit-wrapper text-center">
+                    <button type="submit" class="btn-jungle-pill btn-block">SEND MESSAGE & INQUIRE</button>
+                    <p class="form-guarantee-note"><i class="fa-solid fa-bolt font-jungle"></i> Average Response Time: Under 15 Minutes</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Location Map Section -->
+<section class="location-map-section" id="location-map">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag tag-sage">FIND OUR PARK DESK</span>
+            <h2 class="section-title">YALA HEADQUARTERS LOCATION</h2>
+            <p class="section-subtitle">Located on Yala Entrance Road in Wickrama, Kasingama — just 10 minutes from the main Palatupana Park Gate.</p>
+        </div>
+
+        <div class="map-card-wrapper">
+            <div class="map-iframe-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126915.65874288636!2d81.25895785000002!3d6.24867975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae698652d5b6e27%3A0x673eece4b3b24f5a!2sTissamaharama%2C%20Sri%20Lanka!5e0!3m2!1sen!2slk!4v1700000000000!5m2!1sen!2slk" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <div class="map-location-info">
+                <h3>YALA SAFARI DESK</h3>
+                <p><strong>Address:</strong> Wickrama, Kasingama, Yala Entrance Road, Southern Province, Sri Lanka</p>
+                <p><strong>Coordinates:</strong> 6.2487° N, 81.2590° E</p>
+
+                <div class="directions-note-box">
+                    <i class="fa-solid fa-compass"></i> <strong>Pro Tip:</strong> For morning 05:30 AM safari pickups, our 4x4 Land Cruisers pick up directly from all hotels in Tissamaharama, Kirinda, and Yala buffer zone.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

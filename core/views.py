@@ -330,5 +330,27 @@ def tours(request):
     }
     return render(request, 'core/tours.html', context)
 
+def contact(request):
+    success_message = None
+    if request.method == 'POST':
+        user_name = request.POST.get('full_name', '')
+        success_message = f"Thank you, {user_name}! Your safari inquiry has been received. Our Yala desk team will contact you within 15 minutes."
+
+    context = {
+        'title': 'Contact Yala Leopard Tracks | Safari Desk & Support Sri Lanka',
+        'contact_info': {
+            'phone': '+94 77 815 8004',
+            'phone_clean': '+94778158004',
+            'email': 'pasindusadanjana17@gmail.com',
+            'address': 'Wickrama, Kasingama, Yala Entrance Road, Southern Province, Sri Lanka',
+            'desk_hours': 'Monday – Sunday: 05:00 AM – 08:00 PM IST',
+            'gate_hours': 'Park Gate Desk: 05:30 AM – 06:00 PM IST',
+            'whatsapp_url': 'https://wa.me/94778158004?text=Hello%20Yala%20Leopard%20Tracks!%20I%20would%20like%20to%20inquire%20about%20safari%20packages.'
+        },
+        'success_message': success_message
+    }
+    return render(request, 'core/contact.html', context)
+
+
 
 

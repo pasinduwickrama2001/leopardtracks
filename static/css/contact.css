@@ -1,0 +1,236 @@
+/* ==========================================================================
+   Yala Leopard Tracks - Dedicated Contact Us Stylesheet (contact.css)
+   Theme: Earth Olive Green (#606C38) & Warm Pastel Cream (#FAF6EE)
+   ========================================================================== */
+
+/* Contact Hero Header Section */
+.contact-hero-section {
+    background-color: var(--bg-pastel-cream);
+    padding: 130px 20px 45px;
+    text-align: center;
+    border-bottom: 1px solid rgba(96, 108, 56, 0.12);
+}
+
+.contact-hero-section .hero-title {
+    color: var(--text-primary);
+    text-shadow: none;
+    margin-top: 12px;
+}
+
+.contact-hero-section .hero-subtitle {
+    color: var(--text-muted);
+    text-shadow: none;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+/* Contact Info Cards Grid */
+.contact-grid-section {
+    background-color: var(--bg-pastel-cream);
+    padding: 40px 0 30px;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.contact-card {
+    background-color: #FFFFFF;
+    border-radius: var(--radius-card);
+    padding: 28px 22px;
+    border: 1px solid rgba(96, 108, 56, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: var(--transition);
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 36px rgba(96, 108, 56, 0.16);
+    border-color: #606C38;
+}
+
+.contact-card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #E7EBD9;
+    color: #475128;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    transition: var(--transition);
+}
+
+.contact-card:hover .contact-card-icon {
+    background-color: #606C38;
+    color: #FFFFFF;
+}
+
+.contact-card-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.contact-card-value {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.btn-whatsapp-pill {
+    background-color: #25D366;
+    color: #FFFFFF !important;
+    font-family: var(--font-brand);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 8px 18px;
+    border-radius: var(--radius-pill);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+    transition: var(--transition);
+}
+
+.btn-whatsapp-pill:hover {
+    background-color: #1EBE5D;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
+}
+
+/* Contact Form Section */
+.contact-form-section {
+    background-color: var(--bg-pastel-cream);
+    padding: 40px 0 70px;
+}
+
+.contact-form-card {
+    background-color: #FFFFFF;
+    border-radius: var(--radius-card);
+    padding: 44px 40px;
+    border: 1px solid rgba(96, 108, 56, 0.18);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06);
+}
+
+.alert-success-banner {
+    background-color: #606C38;
+    color: #FFFFFF;
+    padding: 16px 24px;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 16px rgba(96, 108, 56, 0.3);
+}
+
+/* Location Map Box Section */
+.location-map-section {
+    background-color: var(--bg-pastel-cream);
+    padding: 30px 0 80px;
+    border-top: 1px solid rgba(96, 108, 56, 0.12);
+}
+
+.map-card-wrapper {
+    background-color: #FFFFFF;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    border: 1px solid rgba(96, 108, 56, 0.18);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+}
+
+.map-iframe-container {
+    min-height: 360px;
+    background-color: #E7EBD9;
+}
+
+.map-iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.map-location-info {
+    padding: 40px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.map-location-info h3 {
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.map-location-info p {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.directions-note-box {
+    background-color: #FAF6EE;
+    border-left: 4px solid #606C38;
+    padding: 14px 18px;
+    font-size: 0.86rem;
+    color: #475128;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* Responsive Media Queries for Contact Page */
+@media (max-width: 1024px) {
+    .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .map-card-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .map-iframe-container {
+        min-height: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .contact-hero-section {
+        padding: 110px 16px 36px;
+    }
+
+    .contact-form-card {
+        padding: 28px 20px;
+    }
+
+    .map-location-info {
+        padding: 28px 20px;
+    }
+}
