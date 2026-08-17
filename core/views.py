@@ -351,6 +351,58 @@ def contact(request):
     }
     return render(request, 'core/contact.html', context)
 
+def about(request):
+    context = {
+        'title': 'About Us | Yala Leopard Tracks Eco-Expeditions Sri Lanka',
+        'team_members': [
+            {
+                'name': 'Kapila Ratnayake',
+                'role': 'Master Leopard Tracker & Lead Guide',
+                'exp': '18 Years Field Experience',
+                'bio': 'Born in the buffer zones of Yala, Kapila has spent 18 years mapping leopard territories across Block 1 and Block 5. His ability to decode alarm calls is unmatched.',
+                'image': 'images/guaranteed-leopard.jpg'
+            },
+            {
+                'name': 'Dr. Nimal Weerasinghe',
+                'role': 'Senior Wildlife Ecologist',
+                'exp': '15 Years Research Experience',
+                'bio': 'Dr. Nimal oversees our Nature First policy and conducts wildlife research on sloth bear feeding corridors and elephant migration patterns.',
+                'image': 'images/tailored-game-drives.jpg'
+            },
+            {
+                'name': 'Sahan Wickramasinghe',
+                'role': 'Pro Wildlife Photographer & Track Lead',
+                'exp': '12 Years Field Experience',
+                'bio': 'Specializing in high-end optical equipment positioning, Sahan assists wildlife photographers in capturing published shots of Yala leopards.',
+                'image': 'images/bespoke-itinerary.jpg'
+            }
+        ],
+        'pillars': [
+            {
+                'icon': 'fa-solid fa-seedling',
+                'title': 'Nature First Policy',
+                'desc': 'Strict off-road prohibition, silent electric-assist engines, zero littering, and mandatory safe distance guidelines.'
+            },
+            {
+                'icon': 'fa-solid fa-people-roof',
+                'title': 'Community Empowerment',
+                'desc': '100% locally employed Southern Sri Lankan naturalist guides, trackers, and camp chefs supported by fair wages.'
+            },
+            {
+                'icon': 'fa-solid fa-paw',
+                'title': 'Leopard Territory Mapping',
+                'desc': 'Decades of field tracking data mapping individual leopards in Yala Block 1 for ethical, high-probability sightings.'
+            },
+            {
+                'icon': 'fa-solid fa-campground',
+                'title': 'Eco-Luxury Glamping',
+                'desc': 'Combining raw African-style tented wilderness immersion with solar power, en-suite bathrooms, and gourmet dining.'
+            }
+        ]
+    }
+    return render(request, 'core/about.html', context)
+
+
 
 
 

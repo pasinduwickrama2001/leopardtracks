@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- About Hero Header Section -->
+<section class="about-hero-section">
+    <div class="hero-content">
+        <span class="hero-pill-badge"><i class="fa-solid fa-leaf"></i> SRI LANKA PREMIER ECO-EXPEDITION PARTNER</span>
+        <h1 class="hero-title">ABOUT YALA LEOPARD TRACKS</h1>
+        <p class="hero-subtitle">Operating with a strict "Nature First" policy, we bridge luxury and raw wilderness to ensure every safari supports local conservation and ethical wildlife tracking.</p>
+    </div>
+</section>
+
+<!-- Our Origin Story Section -->
+<section class="about-story-section">
+    <div class="container">
+        <div class="story-grid">
+            <div class="story-content">
+                <span class="section-tag tag-sage">OUR HERITAGE & MISSION</span>
+                <h2>15+ YEARS OF ETHICAL YALA WILDLIFE EXPEDITIONS</h2>
+                <p>Founded by local Southern Sri Lankan wildlife conservationists, Yala Leopard Tracks was built on a single core promise: to provide intimate, luxury safari encounters while protecting Yala National Park's fragile ecosystem.</p>
+                <p>As Sri Lanka's premier eco-expedition partner, we employ exclusively licensed senior naturalist trackers born and raised in the Yala buffer zones. Their generational knowledge of leopard territories, elephant migration paths, and bird nesting grounds ensures unmatched safari experiences.</p>
+                
+                <div style="margin-top: 24px;">
+                    <a href="{% url 'packages' %}" class="btn-jungle-pill">EXPLORE SAFARI PACKAGES <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="story-image-card">
+                <img src="{% static 'images/hero-safari-jeep.jpg' %}" alt="Yala Leopard Tracks Safari Jeep">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 4 Core Conservation Pillars -->
+<section class="pillars-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag tag-sage">OUR ETHICAL PHILOSOPHY</span>
+            <h2 class="section-title">THE 4 CONSERVATION PILLARS</h2>
+            <p class="section-subtitle">How we protect Yala's fauna and flora while delivering world-class wildlife safaris.</p>
+        </div>
+
+        <div class="pillars-grid">
+            {% for item in pillars %}
+            <div class="pillar-card">
+                <div class="pillar-icon"><i class="{{ item.icon }}"></i></div>
+                <h3 class="pillar-title">{{ item.title }}</h3>
+                <p class="pillar-desc">{{ item.desc }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Senior Naturalist Team Profiles -->
+<section class="team-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag tag-sage">EXPERT WILDLIFE TRACKERS</span>
+            <h2 class="section-title">MEET OUR SENIOR NATURALISTS</h2>
+            <p class="section-subtitle">Our licensed guides possess decades of experience tracking Panthera pardus kotiya and southern park wildlife.</p>
+        </div>
+
+        <div class="team-grid">
+            {% for member in team_members %}
+            <div class="team-card">
+                <div class="team-image-holder">
+                    <img src="{% static member.image %}" alt="{{ member.name }}">
+                </div>
+                <div class="team-card-body">
+                    <h3 class="team-name">{{ member.name }}</h3>
+                    <div class="team-role">{{ member.role }}</div>
+                    <div class="team-exp"><i class="fa-solid fa-award font-jungle"></i> {{ member.exp }}</div>
+                    <p class="team-bio">{{ member.bio }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Awards & Certifications Showcase -->
+<section class="awards-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag tag-sage">GLOBAL RECOGNITION</span>
+            <h2 class="section-title">AWARDS & CERTIFICATIONS</h2>
+            <p class="section-subtitle">Recognized worldwide for excellence in sustainable luxury wildlife tourism.</p>
+        </div>
+
+        <div class="awards-grid">
+            <div class="award-card">
+                <div class="award-icon"><i class="fa-solid fa-trophy"></i></div>
+                <h3 class="award-title">SATA Winner 2019</h3>
+                <p class="award-desc">South Asian Travel Awards Best Eco-Safari Operator</p>
+            </div>
+
+            <div class="award-card">
+                <div class="award-icon"><i class="fa-solid fa-star"></i></div>
+                <h3 class="award-title">TripAdvisor Choice 2024</h3>
+                <p class="award-desc">Top 10% Travelers' Choice Worldwide</p>
+            </div>
+
+            <div class="award-card">
+                <div class="award-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3 class="award-title">SLTDA Approved</h3>
+                <p class="award-desc">Licensed by Sri Lanka Tourism Development Authority</p>
+            </div>
+
+            <div class="award-card">
+                <div class="award-icon"><i class="fa-solid fa-earth-americas"></i></div>
+                <h3 class="award-title">Pure Life Member</h3>
+                <p class="award-desc">Global Eco-Luxury Experiential Travel Guild</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
