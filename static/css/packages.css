@@ -1,0 +1,289 @@
+/* ==========================================================================
+   Yala Leopard Tracks - Dedicated Safari Packages Stylesheet (packages.css)
+   Theme: Earth Olive Green (#606C38) & Warm Pastel Cream (#FAF6EE)
+   ========================================================================== */
+
+/* Safari Packages Hero Header Section */
+.packages-hero-section {
+    background-color: var(--bg-pastel-cream);
+    padding: 130px 20px 50px;
+    text-align: center;
+    border-bottom: 1px solid rgba(96, 108, 56, 0.12);
+}
+
+.packages-hero-section .hero-title {
+    color: var(--text-primary);
+    text-shadow: none;
+    margin-top: 12px;
+}
+
+.packages-hero-section .hero-subtitle {
+    color: var(--text-muted);
+    text-shadow: none;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+/* Category Filter Tabs Bar */
+.packages-filter-section {
+    background-color: var(--bg-pastel-cream);
+    padding: 24px 0 10px;
+}
+
+.filter-tabs-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.filter-tab {
+    font-family: var(--font-brand);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border-radius: var(--radius-pill);
+    background-color: #FFFFFF;
+    color: #475128;
+    border: 1px solid rgba(96, 108, 56, 0.25);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.filter-tab:hover {
+    background-color: #E7EBD9;
+    color: #475128;
+    border-color: #606C38;
+}
+
+.filter-tab.active {
+    background-color: #606C38 !important;
+    color: #FFFFFF !important;
+    border-color: #606C38 !important;
+    box-shadow: 0 4px 15px rgba(96, 108, 56, 0.3);
+}
+
+/* Packages Grid & Cards */
+.packages-grid-section {
+    background-color: var(--bg-pastel-cream);
+    padding: 40px 0 70px;
+}
+
+.packages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.package-card {
+    background-color: #FFFFFF;
+    border-radius: var(--radius-card);
+    padding: 32px 28px;
+    border: 1px solid rgba(96, 108, 56, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transition);
+}
+
+.package-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(96, 108, 56, 0.18);
+    border-color: #606C38;
+}
+
+.card-featured-badge {
+    position: absolute;
+    top: -14px;
+    right: 24px;
+    background: #606C38;
+    color: #FFFFFF;
+    font-family: var(--font-brand);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    padding: 5px 14px;
+    border-radius: var(--radius-pill);
+    box-shadow: 0 4px 12px rgba(96, 108, 56, 0.35);
+}
+
+.package-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 8px 0 6px;
+    line-height: 1.35;
+}
+
+.package-subtitle {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.package-pricing-box {
+    background-color: #FAF6EE;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    margin-bottom: 20px;
+    border: 1px dashed rgba(96, 108, 56, 0.25);
+}
+
+.price-amount {
+    font-family: var(--font-heading);
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: #606C38;
+    line-height: 1;
+}
+
+.price-unit {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.package-details-list {
+    margin-bottom: 20px;
+}
+
+.detail-item {
+    font-size: 0.88rem;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.package-inclusions-block {
+    margin-bottom: 20px;
+}
+
+.inclusions-title {
+    font-family: var(--font-brand);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.inclusions-list {
+    list-style: none;
+}
+
+.inclusions-list li {
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.package-highlight-box {
+    background-color: #E7EBD9;
+    color: #475128;
+    font-size: 0.82rem;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 24px;
+    line-height: 1.45;
+}
+
+/* Comparison Matrix Section */
+.comparison-matrix-section {
+    background-color: var(--bg-pastel-cream);
+    padding: 70px 0;
+    border-top: 1px solid rgba(96, 108, 56, 0.12);
+}
+
+.table-responsive-wrapper {
+    overflow-x: auto;
+    margin-top: 36px;
+    border-radius: var(--radius-card);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #FFFFFF;
+    text-align: left;
+}
+
+.comparison-table th {
+    background-color: #606C38;
+    color: #FFFFFF;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 800;
+    padding: 18px 24px;
+    letter-spacing: 0.5px;
+}
+
+.comparison-table td {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(96, 108, 56, 0.12);
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.comparison-table tr:nth-child(even) {
+    background-color: #FAF6EE;
+}
+
+.check-yes {
+    color: #606C38;
+    font-weight: 800;
+    margin-right: 6px;
+}
+
+.check-no {
+    color: #A4702D;
+    margin-right: 6px;
+}
+
+/* Responsive Breakpoints for Packages Page */
+@media (max-width: 1024px) {
+    .packages-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .packages-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .packages-hero-section {
+        padding: 110px 16px 40px;
+    }
+
+    .filter-tabs-wrapper {
+        gap: 8px;
+    }
+
+    .filter-tab {
+        font-size: 0.75rem;
+        padding: 8px 16px;
+    }
+
+    .package-card {
+        padding: 24px 20px;
+    }
+}

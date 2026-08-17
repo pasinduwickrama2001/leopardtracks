@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/packages.css' %}">
+{% endblock %}
+
 {% block content %}
 <!-- Safari Packages Hero Header Section -->
 <section class="packages-hero-section">
