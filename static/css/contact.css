@@ -8,7 +8,7 @@
     background-color: var(--bg-pastel-cream);
     padding: 130px 20px 45px;
     text-align: center;
-    border-bottom: 1px solid rgba(96, 108, 56, 0.12);
+    border-bottom: none !important;
 }
 
 .contact-hero-section .hero-title {
@@ -37,11 +37,11 @@
 }
 
 .contact-card {
-    background-color: #FFFFFF;
+    background-color: var(--bg-pastel-cream);
     border-radius: var(--radius-card);
     padding: 28px 22px;
-    border: 1px solid rgba(96, 108, 56, 0.15);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    border: none !important;
+    box-shadow: none !important;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -52,15 +52,15 @@
 
 .contact-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 16px 36px rgba(96, 108, 56, 0.16);
-    border-color: #606C38;
+    box-shadow: none !important;
+    border: none !important;
 }
 
 .contact-card-icon {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-color: #E7EBD9;
+    background-color: rgba(96, 108, 56, 0.12);
     color: #475128;
     display: flex;
     align-items: center;
@@ -120,11 +120,11 @@
 }
 
 .contact-form-card {
-    background-color: #FFFFFF;
+    background-color: var(--bg-pastel-cream);
     border-radius: var(--radius-card);
     padding: 44px 40px;
-    border: 1px solid rgba(96, 108, 56, 0.18);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06);
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .alert-success-banner {
@@ -145,15 +145,15 @@
 .location-map-section {
     background-color: var(--bg-pastel-cream);
     padding: 30px 0 80px;
-    border-top: 1px solid rgba(96, 108, 56, 0.12);
+    border-top: none !important;
 }
 
 .map-card-wrapper {
-    background-color: #FFFFFF;
+    background-color: var(--bg-pastel-cream);
     border-radius: var(--radius-card);
     overflow: hidden;
-    border: 1px solid rgba(96, 108, 56, 0.18);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    border: none !important;
+    box-shadow: none !important;
     display: grid;
     grid-template-columns: 1.2fr 1fr;
 }

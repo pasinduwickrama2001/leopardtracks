@@ -1,265 +1,131 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Yala Safari Packages & Expeditions | Yala Leopard Tracks{% endblock %}
+
 {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
 <link rel="stylesheet" href="{% static 'css/packages.css' %}">
 {% endblock %}
 
 {% block content %}
-<!-- Safari Packages Hero Header Section -->
-<section class="packages-hero-section">
-    <div class="hero-content">
-        <span class="hero-pill-badge"><i class="fa-solid fa-paw"></i> YALA NATIONAL PARK SAFARIS</span>
-        <h1 class="hero-title">YALA SAFARI PACKAGES & EXPEDITIONS</h1>
-        <p class="hero-subtitle">Bespoke 4x4 private game drives, full-day deep wilderness tracking, and luxury tented camp stays guided by licensed senior naturalists.</p>
+<!-- Safari Packages Hero Header Section (Matching blog.html hero section) -->
+<section class="blog-hero-section">
+    <div class="container text-center">
+        <span class="section-tag font-gold"><i class="fa-solid fa-paw"></i> YALA NATIONAL PARK EXPEDITIONS</span>
+        <h1 class="hero-title section-title">YALA SAFARI PACKAGES</h1>
+        <p class="paragraph-lead hero-subtitle">
+            Private 4x4 game drives, full-day deep wilderness tracking, and luxury tented camp stays guided by licensed senior naturalists.
+        </p>
     </div>
 </section>
 
-<!-- Category Filter Tabs Bar -->
-<section class="packages-filter-section">
-    <div class="container">
-        <div class="filter-tabs-wrapper">
-            <button class="filter-tab active" data-filter="all">All Safaris</button>
-            <button class="filter-tab" data-filter="half-day">Half-Day Drives</button>
-            <button class="filter-tab" data-filter="full-day">Full-Day Expeditions</button>
-            <button class="filter-tab" data-filter="luxury-camp">Luxury Tented Camp</button>
-            <button class="filter-tab" data-filter="photography">Photography Special</button>
-        </div>
-    </div>
-</section>
+<!-- Featured Hero Package (Styled like blog.html featured article section) -->
+{% if featured_package %}
+<section class="about-section" id="featured-package">
+    <div class="container grid-2-col align-center">
+        <div class="about-text-content">
+            <span class="section-tag font-gold"><i class="fa-solid fa-fire"></i> FEATURED SAFARI PACKAGE</span>
+            <h2 class="section-title">
+                <a href="{% url 'package_detail' slug=featured_package.slug %}" style="color: inherit; text-decoration: none;">
+                    {{ featured_package.title }}
+                </a>
+            </h2>
 
-<!-- Safari Packages Grid Section -->
-<section class="packages-grid-section">
-    <div class="container">
-        <div class="packages-grid" id="packages-grid">
-            {% for item in packages_list %}
-            <div class="package-card" data-category="{{ item.category }}">
-                {% if item.featured %}
-                <div class="card-featured-badge"><i class="fa-solid fa-star"></i> MOST POPULAR</div>
-                {% endif %}
-                <div class="package-card-header">
-                    <span class="section-tag {{ item.tag_class }}">{{ item.category_label }}</span>
-                    <h3 class="package-title">{{ item.title }}</h3>
-                    <p class="package-subtitle">{{ item.subtitle }}</p>
-                </div>
-                
-                <div class="package-pricing-box">
-                    <div class="price-amount">{{ item.price }}</div>
-                    <div class="price-unit">{{ item.price_unit }}</div>
-                </div>
-
-                <div class="package-details-list">
-                    <div class="detail-item">
-                        <i class="fa-solid fa-clock font-jungle"></i>
-                        <span><strong>Duration:</strong> {{ item.duration }}</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fa-solid fa-truck-monster font-jungle"></i>
-                        <span><strong>Vehicle:</strong> {{ item.vehicle }}</span>
-                    </div>
-                </div>
-
-                <div class="package-inclusions-block">
-                    <h4 class="inclusions-title"><i class="fa-solid fa-circle-check"></i> Package Inclusions:</h4>
-                    <ul class="inclusions-list">
-                        {% for inc in item.inclusions %}
-                        <li><i class="fa-solid fa-check font-jungle"></i> {{ inc }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-
-                <div class="package-highlight-box">
-                    <i class="fa-solid fa-binoculars"></i> <strong>Highlight:</strong> {{ item.highlights }}
-                </div>
-
-                <div class="package-card-footer">
-                    <a href="#book-safari-form" class="btn-jungle-pill btn-block select-package-btn" data-package="{{ item.title }}">BOOK THIS SAFARI</a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<!-- Package Comparison Matrix Table -->
-<section class="comparison-matrix-section">
-    <div class="container">
-        <div class="section-header text-center">
-            <span class="section-tag tag-sage">SIDE-BY-SIDE COMPARISON</span>
-            <h2 class="section-title">PACKAGE INCLUSIONS MATRIX</h2>
-            <p class="section-subtitle">Compare jeep specifications, park entry permits, naturalist guides, and meals across all Yala game drives.</p>
-        </div>
-
-        <div class="table-responsive-wrapper">
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Package Feature</th>
-                        <th>Half-Day Drive</th>
-                        <th>Full-Day Expedition</th>
-                        <th>Luxury Camp Stay</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Private 4x4 Land Cruiser</strong></td>
-                        <td><i class="fa-solid fa-check check-yes"></i> Included</td>
-                        <td><i class="fa-solid fa-check check-yes"></i> Heavy-Duty 4x4</td>
-                        <td><i class="fa-solid fa-check check-yes"></i> Luxury Private 4x4</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Licensed Senior Naturalist Tracker</strong></td>
-                        <td><i class="fa-solid fa-check check-yes"></i> Included</td>
-                        <td><i class="fa-solid fa-check check-yes"></i> Master Tracker</td>
-                        <td><i class="fa-solid fa-check check-yes"></i> Senior Tracker</td>
-                    </tr>
-                    <tr>
-                        <td><strong>National Park Permits & Taxes</strong></td>
-                        <td><i class="fa-solid fa-check check-yes"></i> Included</td>
-                        <td><i class="fa-solid fa-check check-yes"></i> All-Day Permits</td>
-                        <td><i class="fa-solid fa-check check-yes"></i> 2-Day Permits</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Manik River Breakfast & BBQ Lunch</strong></td>
-                        <td><i class="fa-solid fa-xmark check-no"></i> Fruits & Juices</td>
-                        <td><i class="fa-solid fa-check check-yes"></i> Breakfast & BBQ</td>
-                        <td><i class="fa-solid fa-check check-yes"></i> All Gourmet Meals</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Luxury Wilderness Glamping Suite</strong></td>
-                        <td><i class="fa-solid fa-xmark check-no"></i> Game Drive Only</td>
-                        <td><i class="fa-solid fa-xmark check-no"></i> Game Drive Only</td>
-                        <td><i class="fa-solid fa-check check-yes"></i> En-suite Safari Tent</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Hotel / Airport Transfers</strong></td>
-                        <td><i class="fa-solid fa-check check-yes"></i> Tissamaharama Area</td>
-                        <td><i class="fa-solid fa-check check-yes"></i> Yala & Tissa Area</td>
-                        <td><i class="fa-solid fa-check check-yes"></i> Free Shuttle</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
-<!-- Permit Booking Form Section -->
-<section class="booking-section" id="book-safari-form">
-    <div class="container">
-        <div class="booking-card-wrapper">
-            <div class="booking-header text-center">
-                <span class="section-tag tag-sage">INSTANT PERMIT RESERVATION</span>
-                <h2>RESERVE YOUR YALA SAFARI PERMIT</h2>
-                <p>Select your desired package and safari date to lock in your private 4x4 jeep & naturalist tracker.</p>
+            <div class="article-meta-row" style="margin-bottom: 16px;">
+                <span class="author-chip"><i class="fa-regular fa-clock"></i> {{ featured_package.duration }}</span>
+                <span>
+                    <i class="fa-solid fa-tag"></i>
+                    <strong>${{ featured_package.get_clean_price }} USD</strong>
+                </span>
+                <span><i class="fa-solid fa-truck-monster"></i> {{ featured_package.vehicle }}</span>
             </div>
 
-            <form class="safari-booking-form" action="#" method="POST">
-                {% csrf_token %}
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="full_name"><i class="fa-solid fa-user"></i> Full Name *</label>
-                        <input type="text" id="full_name" name="full_name" placeholder="e.g. Alexander Wright" required>
-                    </div>
+            <p class="paragraph-lead">
+                {{ featured_package.description|truncatewords:45 }}
+            </p>
 
-                    <div class="form-group">
-                        <label for="email_address"><i class="fa-solid fa-envelope"></i> Email Address *</label>
-                        <input type="email" id="email_address" name="email_address" placeholder="pasindusadanjana17@gmail.com" required>
-                    </div>
-                </div>
+            {% if featured_package.highlights_list %}
+            <ul class="camp-features" style="margin: 16px 0 20px; list-style: none; padding: 0;">
+                {% for hl in featured_package.highlights_list|slice:":3" %}
+                <li style="margin-bottom: 6px; font-size: 0.9rem; color: var(--forest-dark); font-weight: 600;">
+                    <i class="fa-solid fa-circle-check" style="color: #606C38; margin-right: 8px;"></i> {{ hl }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="phone_number"><i class="fa-solid fa-phone"></i> Phone / WhatsApp *</label>
-                        <input type="tel" id="phone_number" name="phone_number" placeholder="+94 77 815 8004" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="safari_package_select"><i class="fa-solid fa-compass"></i> Select Safari Package *</label>
-                        <select id="safari_package_select" name="safari_package_select" required>
-                            <option value="">-- Choose Safari Package --</option>
-                            <option value="Yala Block 1 Morning Leopard Game Drive">Yala Block 1 Morning Leopard Game Drive ($120)</option>
-                            <option value="Yala Full-Day Deep Wilderness Expedition">Yala Full-Day Deep Wilderness Expedition ($240)</option>
-                            <option value="Yala Block 5 & Manik River Sunset Safari">Yala Block 5 & Manik River Sunset Safari ($110)</option>
-                            <option value="2-Day Luxury Tented Camp & Dual Safari Package">2-Day Luxury Tented Camp & Dual Safari Package ($450)</option>
-                            <option value="Wildlife Photographers Special Expedition">Wildlife Photographers Special Expedition ($290)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="safari_date"><i class="fa-solid fa-calendar-days"></i> Safari Date *</label>
-                        <input type="date" id="safari_date" name="safari_date" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="guest_count"><i class="fa-solid fa-users"></i> Number of Guests *</label>
-                        <select id="guest_count" name="guest_count" required>
-                            <option value="1 Guest">1 Guest</option>
-                            <option value="2 Guests" selected>2 Guests</option>
-                            <option value="3 Guests">3 Guests</option>
-                            <option value="4 Guests">4 Guests</option>
-                            <option value="5 Guests">5 Guests</option>
-                            <option value="6 Guests (Full Jeep)">6 Guests (Full Jeep)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="special_requests"><i class="fa-solid fa-comment-dots"></i> Pickup Location & Special Requests</label>
-                    <textarea id="special_requests" name="special_requests" rows="3" placeholder="Specify hotel pickup location in Yala/Tissamaharama, dietary preferences, or optical equipment requirements..."></textarea>
-                </div>
-
-                <div class="form-submit-wrapper text-center">
-                    <button type="submit" class="btn-jungle-pill btn-block">CONFIRM & BOOK SAFARI PERMIT</button>
-                    <p class="form-guarantee-note"><i class="fa-solid fa-lock"></i> Instant Confirmation • 100% Refundable up to 48 Hours Prior</p>
-                </div>
-            </form>
+            <div style="margin-top: 20px;">
+                <a href="{% url 'package_detail' slug=featured_package.slug %}" class="btn-gold-pill">
+                    EXPLORE FULL PACKAGE <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
         </div>
+
+        <a href="{% url 'package_detail' slug=featured_package.slug %}" class="about-image-card" style="display: block; text-decoration: none;">
+            {% if featured_package.imageUrl %}
+            <img src="{{ featured_package.imageUrl }}" alt="{{ featured_package.title }}" class="rounded-img shadow-clean">
+            {% else %}
+            <img src="{% static 'images/yala-tent.jpg' %}" alt="{{ featured_package.title }}" class="rounded-img shadow-clean">
+            {% endif %}
+            <div class="image-overlay-badge">
+                <span class="overlay-title">Yala National Park</span>
+                <span class="overlay-sub">
+                    ${{ featured_package.get_clean_price }} USD
+                </span>
+            </div>
+        </a>
     </div>
 </section>
+{% endif %}
 
-<!-- Filter Tabs & Booking Pre-fill JavaScript -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Category Filtering
-    const filterTabs = document.querySelectorAll('.filter-tab');
-    const packageCards = document.querySelectorAll('.package-card');
+<!-- Safari Packages Grid Section (4-Column x 2-Row Bento Grid matching blog.html) -->
+<section class="blog-grid-section" id="packages-bento-section" style="padding: 0; margin: 0; width: 100vw; max-width: 100vw; background: var(--bg-pastel-cream); overflow-x: hidden;">
+    <div style="width: 100%; padding: 40px 20px 20px; text-align: center;">
+        <span class="section-tag tag-sage">ALL SAFARI EXPEDITIONS</span>
+        <h2 class="section-title" style="margin-top: 6px;">EXPLORE YALA GAME DRIVES</h2>
+    </div>
 
-    filterTabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            filterTabs.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-
-            const filterValue = this.getAttribute('data-filter');
-
-            packageCards.forEach(card => {
-                if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    });
-
-    // Auto-select package in booking dropdown on click
-    const selectPackageBtns = document.querySelectorAll('.select-package-btn');
-    const packageSelect = document.getElementById('safari_package_select');
-
-    selectPackageBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const packageTitle = this.getAttribute('data-package');
-            if (packageSelect) {
-                for (let option of packageSelect.options) {
-                    if (option.value.includes(packageTitle) || packageTitle.includes(option.value)) {
-                        option.selected = true;
-                        break;
-                    }
-                }
-            }
-        });
-    });
-});
-</script>
+    <div class="full-screen-bento-grid" id="packages-articles-grid">
+        {% for item in packages_list %}
+        {% if forloop.first %}
+        <!-- Big Bento Card (Combines 2 Columns & 2 Rows) -->
+        <a href="{% url 'package_detail' slug=item.slug %}" class="fs-bento-card fs-bento-large package-bento-item" data-category="{{ item.category }}" style="text-decoration: none;">
+            {% if item.imageUrl %}
+            <img src="{{ item.imageUrl }}" alt="{{ item.title }}" class="fs-bento-img">
+            {% else %}
+            <img src="{% static 'images/yala-tent.jpg' %}" alt="{{ item.title }}" class="fs-bento-img">
+            {% endif %}
+            <div class="fs-bento-overlay"></div>
+            <div class="fs-bento-content">
+                <h3 class="fs-bento-title fs-title-large">{{ item.title }}</h3>
+                <span class="fs-bento-date">
+                    <i class="fa-regular fa-clock"></i> {{ item.duration }} •
+                    <strong>${{ item.get_clean_price }} USD</strong>
+                </span>
+            </div>
+        </a>
+        {% else %}
+        <!-- Small Bento Card (1 Column x 1 Row) -->
+        <a href="{% url 'package_detail' slug=item.slug %}" class="fs-bento-card fs-bento-small package-bento-item" data-category="{{ item.category }}" style="text-decoration: none;">
+            {% if item.imageUrl %}
+            <img src="{{ item.imageUrl }}" alt="{{ item.title }}" class="fs-bento-img">
+            {% else %}
+            <img src="{% static 'images/yala-tent.jpg' %}" alt="{{ item.title }}" class="fs-bento-img">
+            {% endif %}
+            <div class="fs-bento-overlay"></div>
+            <div class="fs-bento-content">
+                <h3 class="fs-bento-title fs-title-small">{{ item.title }}</h3>
+                <span class="fs-bento-date">
+                    <i class="fa-regular fa-clock"></i> {{ item.duration }} •
+                    <strong>${{ item.get_clean_price }} USD</strong>
+                </span>
+            </div>
+        </a>
+        {% endif %}
+        {% empty %}
+        <p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1; padding: 40px 0;">No safari packages found in database.</p>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}

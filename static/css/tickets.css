@@ -1,47 +1,32 @@
 /* ==========================================================================
    Yala Leopard Tracks - Dedicated Yala Tickets Stylesheet (tickets.css)
    Theme: Earth Olive Green (#606C38) & Warm Pastel Cream (#FAF6EE)
+   Design System: Clean, Editorial, Light Pastel Cream matching about.html
    ========================================================================== */
 
-/* Tickets Hero Header Section */
-.tickets-hero-section {
-    background-color: var(--bg-pastel-cream);
-    padding: 130px 20px 45px;
-    text-align: center;
-    border-bottom: 1px solid rgba(96, 108, 56, 0.12);
+.tickets-hero-section,
+.tickets-grid-section,
+.calculator-section,
+.gates-section,
+.booking-section,
+.faq-section {
+    background-color: var(--bg-pastel-cream) !important;
 }
 
-.tickets-hero-section .hero-title {
-    color: var(--text-primary);
-    text-shadow: none;
-    margin-top: 12px;
-}
-
-.tickets-hero-section .hero-subtitle {
-    color: var(--text-muted);
-    text-shadow: none;
-    max-width: 780px;
-    margin: 0 auto;
-}
-
-/* Ticket Rate Cards Grid */
-.tickets-grid-section {
-    background-color: var(--bg-pastel-cream);
-    padding: 40px 0 60px;
-}
-
+/* Tariff Cards Grid */
 .tickets-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
+    margin-top: 36px;
 }
 
 .ticket-card {
-    background-color: #FFFFFF;
+    background-color: var(--bg-pastel-cream);
     border-radius: var(--radius-card);
     padding: 32px 24px;
-    border: 1px solid rgba(96, 108, 56, 0.15);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    border: none;
+    box-shadow: none;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -50,31 +35,30 @@
 }
 
 .ticket-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 36px rgba(96, 108, 56, 0.18);
-    border-color: #606C38;
+    transform: translateY(-4px);
+    box-shadow: none;
 }
 
 .ticket-card-badge {
     position: absolute;
-    top: -14px;
+    top: -12px;
     right: 20px;
     background: #606C38;
     color: #FFFFFF;
     font-family: var(--font-brand);
     font-size: 0.68rem;
     font-weight: 800;
-    letter-spacing: 1.5px;
-    padding: 5px 12px;
+    letter-spacing: 1px;
+    padding: 4px 12px;
     border-radius: var(--radius-pill);
 }
 
 .ticket-title {
     font-family: var(--font-heading);
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 800;
     color: var(--text-primary);
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .ticket-age {
@@ -84,12 +68,12 @@
 }
 
 .ticket-price-box {
-    background-color: #FAF6EE;
+    background-color: rgba(96, 108, 56, 0.08);
     padding: 16px;
     border-radius: var(--radius-sm);
     text-align: center;
     margin-bottom: 20px;
-    border: 1px dashed rgba(96, 108, 56, 0.25);
+    border: none;
 }
 
 .price-usd {
@@ -101,90 +85,114 @@
 }
 
 .price-lkr {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
     margin-top: 4px;
+    font-weight: 600;
 }
 
-/* Interactive Ticket Calculator */
-.calculator-section {
-    background-color: var(--bg-pastel-cream);
-    padding: 50px 0;
-    border-top: 1px solid rgba(96, 108, 56, 0.12);
+.inclusions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
 }
 
-.calculator-card-wrapper {
-    background: #FFFFFF;
-    border-radius: var(--radius-card);
-    padding: 40px 36px;
-    border: 1px solid rgba(96, 108, 56, 0.18);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-    max-width: 860px;
-    margin: 0 auto;
-}
-
-.calc-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin: 24px 0 28px;
-}
-
-.calc-input-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.calc-input-group label {
-    font-family: var(--font-brand);
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.8px;
+.inclusions-list li {
+    font-size: 0.88rem;
     color: var(--text-primary);
     margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.calc-input-group select,
-.calc-input-group input {
-    padding: 12px 16px;
-    border-radius: var(--radius-sm);
-    border: 1px solid rgba(96, 108, 56, 0.25);
-    background-color: #FAF6EE;
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.calc-result-box {
-    background-color: #E7EBD9;
-    border-radius: var(--radius-sm);
-    padding: 24px;
-    text-align: center;
-    border: 1px solid #606C38;
-}
-
-.calc-result-total {
-    font-family: var(--font-heading);
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: #475128;
-    line-height: 1.1;
-}
-
-.calc-result-sub {
-    font-size: 0.86rem;
-    color: var(--text-muted);
-    margin-top: 4px;
-}
-
-/* Yala Park Gates Guide Section */
-.gates-section {
+/* Counter Cards */
+.counter-card {
     background-color: var(--bg-pastel-cream);
-    padding: 60px 0;
-    border-top: 1px solid rgba(96, 108, 56, 0.12);
+    border-radius: 20px;
+    padding: 18px 20px;
+    border: none;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    transition: var(--transition);
 }
 
+.counter-card:hover {
+    transform: translateY(-2px);
+}
+
+.counter-btn-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(96, 108, 56, 0.12);
+    padding: 4px 10px;
+    border-radius: 50px;
+    border: none;
+}
+
+.counter-btn {
+    background: none;
+    border: none;
+    color: #475128;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.counter-btn:hover {
+    color: #606C38;
+    transform: scale(1.15);
+}
+
+.counter-val {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #233325;
+    min-width: 18px;
+    text-align: center;
+}
+
+/* Invoice Receipt Card */
+.invoice-card {
+    background-color: var(--bg-pastel-cream);
+    border-radius: 24px;
+    padding: 32px 28px;
+    border: none;
+    box-shadow: none;
+}
+
+.invoice-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(96, 108, 56, 0.18);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.invoice-row.total-row {
+    border-bottom: none;
+    border-top: 2px solid #606C38;
+    padding-top: 16px;
+    margin-top: 8px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #233325;
+}
+
+/* Park Gates Grid */
 .gates-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -193,18 +201,16 @@
 }
 
 .gate-card {
-    background-color: #FFFFFF;
+    background-color: var(--bg-pastel-cream);
     border-radius: var(--radius-card);
     padding: 32px 24px;
-    border: 1px solid rgba(96, 108, 56, 0.15);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    border: none;
+    box-shadow: none;
     transition: var(--transition);
 }
 
 .gate-card:hover {
-    transform: translateY(-5px);
-    border-color: #606C38;
-    box-shadow: 0 16px 36px rgba(96, 108, 56, 0.16);
+    transform: translateY(-4px);
 }
 
 .gate-icon {
@@ -215,7 +221,7 @@
 
 .gate-title {
     font-family: var(--font-heading);
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     font-weight: 800;
     color: var(--text-primary);
     margin-bottom: 6px;
@@ -226,28 +232,76 @@
     font-size: 0.78rem;
     font-weight: 800;
     color: #475128;
-    background: #E7EBD9;
+    background: rgba(96, 108, 56, 0.12);
     padding: 4px 12px;
     border-radius: var(--radius-pill);
     display: inline-block;
     margin-bottom: 12px;
+    border: none;
 }
 
 .gate-desc {
     font-size: 0.88rem;
     color: var(--text-muted);
-    line-height: 1.55;
+    line-height: 1.6;
 }
 
-/* Responsive Media Queries for Tickets Page */
+/* FAQ Accordion Item */
+.faq-accordion-item {
+    background-color: var(--bg-pastel-cream);
+    border-radius: 20px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    border: none;
+    box-shadow: none;
+    transition: var(--transition);
+}
+
+.faq-accordion-item:hover,
+.faq-accordion-item.active {
+    box-shadow: none;
+}
+
+
+
+.faq-question-btn {
+    width: 100%;
+    text-align: left;
+    padding: 18px 22px;
+    background: none;
+    border: none;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    color: #233325;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.faq-answer-panel {
+    padding: 0 22px 18px;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    display: none;
+}
+
+.faq-accordion-item.active .faq-answer-panel {
+    display: block;
+}
+
+/* Responsive Media Queries */
 @media (max-width: 1024px) {
     .tickets-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
 
-    .calc-grid {
+    .calc-layout-grid {
         grid-template-columns: 1fr;
+        gap: 32px;
     }
 
     .gates-grid {
@@ -260,12 +314,213 @@
     .tickets-grid {
         grid-template-columns: 1fr;
     }
+}
 
-    .tickets-hero-section {
-        padding: 110px 16px 36px;
+/* ==========================================================================
+   Centered Permit Request Popup Modal Styles
+   ========================================================================== */
+.permit-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(18, 33, 24, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 16px;
+}
+
+.permit-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.permit-modal-card {
+    background-color: var(--bg-pastel-cream);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 640px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 32px 28px;
+    position: relative;
+    border: none;
+    box-shadow: 0 25px 60px rgba(18, 33, 24, 0.35);
+    transform: scale(0.92);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.permit-modal-overlay.active .permit-modal-card {
+    transform: scale(1);
+}
+
+.permit-modal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(96, 108, 56, 0.1);
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    color: #233325;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.permit-modal-close-btn:hover {
+    background: #606C38;
+    color: #FFFFFF;
+    transform: rotate(90deg);
+}
+
+.permit-modal-header {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed rgba(96, 108, 56, 0.2);
+}
+
+.permit-modal-title {
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #233325;
+    margin-top: 4px;
+}
+
+.permit-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    background: rgba(96, 108, 56, 0.08);
+    padding: 16px;
+    border-radius: 16px;
+    border: none;
+    margin-bottom: 20px;
+    font-size: 0.86rem;
+}
+
+
+.permit-info-item label {
+    font-size: 0.74rem;
+    font-weight: 800;
+    color: #606C38;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.permit-info-item span {
+    font-weight: 700;
+    color: #233325;
+}
+
+.permit-breakdown-section {
+    margin-bottom: 24px;
+}
+
+.permit-breakdown-title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #233325;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.permit-breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(96, 108, 56, 0.18);
+}
+
+.permit-breakdown-table th {
+    background: #FAF6EE;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 800;
+    color: #233325;
+    border-bottom: 1px solid rgba(96, 108, 56, 0.15);
+}
+
+.permit-breakdown-table td {
+    padding: 9px 14px;
+    border-bottom: 1px dashed rgba(96, 108, 56, 0.12);
+    color: var(--text-muted);
+}
+
+.permit-breakdown-table td.val-col {
+    text-align: right;
+    font-weight: 700;
+    color: #233325;
+}
+
+.permit-breakdown-table tr.total-tr {
+    background: #606C38;
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 1rem;
+}
+
+.permit-breakdown-table tr.total-tr td {
+    color: #FFFFFF;
+    border-bottom: none;
+    padding: 12px 14px;
+}
+
+.permit-modal-actions {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn-secondary-pill {
+    background: rgba(96, 108, 56, 0.1);
+    color: #233325;
+    border: 1px solid rgba(96, 108, 56, 0.2);
+    border-radius: 50px;
+    padding: 12px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary-pill:hover {
+    background: rgba(96, 108, 56, 0.2);
+}
+
+@media (max-width: 576px) {
+    .permit-modal-card {
+        padding: 24px 18px;
     }
-
-    .calculator-card-wrapper {
-        padding: 28px 20px;
+    .permit-info-grid {
+        grid-template-columns: 1fr;
+    }
+    .permit-modal-actions {
+        grid-template-columns: 1fr;
     }
 }
+
+
+

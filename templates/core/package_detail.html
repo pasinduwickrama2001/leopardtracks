@@ -1,0 +1,1145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ package.title }} | Yala Leopard Tracks{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+<link rel="stylesheet" href="{% static 'css/package_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Package Detail Header Section - Split Layout with Right-Side Image -->
+<section class="package-detail-header-section">
+    <div class="container">
+        <div class="package-header-grid">
+            
+            <!-- Left Column: Title & Meta Info -->
+            <div class="package-header-left">
+                <div class="breadcrumb-nav">
+                    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+                    <span>/</span>
+                    <a href="{% url 'packages' %}">Packages</a>
+                    <span>/</span>
+                    <span class="active-crumb">{{ package.title }}</span>
+                </div>
+
+                <div class="header-tags">
+                    <span class="section-tag {{ package.tag_class }}">{{ package.category_label }}</span>
+                    {% if package.price_type == 'jeep_only' %}
+                    <span class="meta-pill-dark"><i class="fa-solid fa-truck-monster"></i> JEEP-ONLY DRIVE</span>
+                    {% else %}
+                    <span class="meta-pill-dark"><i class="fa-solid fa-user-check"></i> ALL-INCLUSIVE PER PERSON</span>
+                    {% endif %}
+                </div>
+
+                <h1 class="detail-header-title">{{ package.title }}</h1>
+                {% if package.subtitle %}
+                <p class="detail-header-subtitle">{{ package.subtitle }}</p>
+                {% endif %}
+
+                <div class="detail-meta-pills-row">
+                    <span class="meta-pill-dark"><i class="fa-solid fa-clock font-jungle"></i> {{ package.duration }}</span>
+                    <span class="meta-pill-dark"><i class="fa-solid fa-truck-monster font-jungle"></i> {{ package.vehicle }}</span>
+                    <span class="meta-pill-dark"><i class="fa-solid fa-users font-jungle"></i> Up to 7 Passengers</span>
+                </div>
+            </div>
+
+            <!-- Right Column: Clean Standalone Image Card & Gallery -->
+            <div class="package-header-right">
+                {% if image_urls_list %}
+                <div class="header-img-container" id="mainHeaderImageContainer">
+                    <img src="{{ image_urls_list.0 }}" alt="{{ package.title }}" id="mainHeaderImage">
+                </div>
+
+                {% if image_urls_list|length > 1 %}
+                <div style="display: flex; gap: 8px; margin-top: 12px; overflow-x: auto; padding-bottom: 4px;">
+                    {% for img_url in image_urls_list %}
+                    <div style="width: 70px; height: 50px; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid {% if forloop.first %}#606C38{% else %}transparent{% endif %}; flex-shrink: 0;" class="gallery-thumb-item" onclick="document.getElementById('mainHeaderImage').src='{{ img_url }}'; document.querySelectorAll('.gallery-thumb-item').forEach(el => el.style.borderColor='transparent'); this.style.borderColor='#606C38';">
+                        <img src="{{ img_url }}" alt="Gallery Image {{ forloop.counter }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Main Package Detail Content -->
+<section class="package-detail-section">
+    <div class="container">
+        <div class="package-detail-grid">
+            
+            <!-- Left Main Content Column -->
+            <div class="detail-left-col">
+                
+                <!-- Package Description Block -->
+                <div class="detail-block">
+                    <h2 class="detail-block-title"><i class="fa-solid fa-compass font-jungle"></i> Package Experience Overview</h2>
+                    <p class="detail-description-p">{{ package.description }}</p>
+                </div>
+
+                <!-- Safari Specifications Grid -->
+                <div class="detail-block">
+                    <h3 class="detail-block-title"><i class="fa-solid fa-sliders font-jungle"></i> Safari Specifications</h3>
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <div class="spec-label">Duration & Timing</div>
+                            <div class="spec-value">{{ package.duration }}</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">Safari Vehicle</div>
+                            <div class="spec-value">{{ package.vehicle }}</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">Jeep Capacity</div>
+                            <div class="spec-value">Max 7 Passengers</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">Free Hotel Pickup</div>
+                            <div class="spec-value">Yala, Tissa, Kirinda & Weerawila</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Highlights Block -->
+                <div class="detail-block">
+                    <h3 class="detail-block-title"><i class="fa-solid fa-binoculars font-jungle"></i> Key Safari Highlights</h3>
+                    <div class="highlights-grid">
+                        {% for hl in highlights_list %}
+                        <div class="highlight-row">
+                            <i class="fa-solid fa-star highlight-icon"></i>
+                            <div class="highlight-text">{{ hl }}</div>
+                        </div>
+                        {% empty %}
+                        <p>{{ package.highlights }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Inclusions & Exclusions Side-by-Side -->
+                <div class="detail-block">
+                    <h3 class="detail-block-title"><i class="fa-solid fa-list-check font-jungle"></i> What's Included & Excluded</h3>
+                    <div class="inc-exc-grid">
+                        
+                        <!-- Inclusions Card -->
+                        <div class="inc-card">
+                            <div class="inc-title"><i class="fa-solid fa-circle-check"></i> What's Included</div>
+                            <ul class="inc-list">
+                                {% for inc in inclusions_list %}
+                                <li><i class="fa-solid fa-check"></i> {{ inc }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <!-- Exclusions Card -->
+                        <div class="exc-card">
+                            <div class="exc-title"><i class="fa-solid fa-circle-xmark"></i> Exclusions & Add-ons</div>
+                            <ul class="exc-list">
+                                {% for exc in exclusions_list %}
+                                <li><i class="fa-solid fa-xmark"></i> {{ exc }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column Sticky Reservation Card -->
+            <div class="detail-right-col">
+                <div class="booking-sticky-card">
+                    <div class="booking-price-header">
+                        <span style="font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px; color: #475128; text-transform: uppercase;">STARTING FROM</span>
+                        <div class="booking-price-amount">{{ package.price }}</div>
+                        <div class="booking-price-unit">{{ package.price_unit }}</div>
+                    </div>
+
+                    <div class="addons-breakdown-box">
+                        <div class="addon-row">
+                            <span><i class="fa-solid fa-ticket font-jungle"></i> Entrance Ticket:</span>
+                            <span class="addon-val">
+                                {% if package.includes_tickets or package.ticketPrice == '0' %}
+                                Included ($0)
+                                {% else %}
+                                ${{ package.ticketPrice }} Adult | ${{ package.childTicketPrice }} Child (6-16) | Under 6 Free
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="addon-row">
+                            <span><i class="fa-solid fa-utensils font-jungle"></i> Meal / Food Add-on:</span>
+                            <span class="addon-val">
+                                {% if package.includes_breakfast or package.mealPrice == '0' %}
+                                Included ($0)
+                                {% else %}
+                                ${{ package.mealPrice }} / person (Choose meal count)
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="addon-row">
+                            <span><i class="fa-solid fa-van-shuttle font-jungle"></i> Hotel Pickup/Drop:</span>
+                            <span class="addon-val" style="color: #606C38;">FREE</span>
+                        </div>
+                        <div class="addon-row">
+                            <span><i class="fa-solid fa-phone font-jungle"></i> 24/7 Hotline Desk:</span>
+                            <span class="addon-val" style="color: #475128;">+94 778158004</span>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-reserve-package" id="openBookingModalBtn">
+                        <i class="fa-solid fa-calendar-check"></i> RESERVE THIS SAFARI
+                    </button>
+
+                    <div style="text-align: center; margin-top: 16px; font-size: 0.78rem; color: #777777;">
+                        <i class="fa-solid fa-shield-halved"></i> Instant Confirmation & Free Cancellation Available
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- Related Safari Packages Section (Alternating Left-Image / Right-Image Cards) -->
+{% if other_packages %}
+<section class="campsites-section" id="other-packages-section" style="padding: 70px 0; background: var(--bg-pastel-cream);">
+    <div class="container">
+        <div class="section-header text-center" style="margin-bottom: 44px;">
+            <span class="section-tag tag-sage">MORE SAFARI EXPERIENCES</span>
+            <h2 class="section-title">YOU MIGHT ALSO LIKE</h2>
+        </div>
+
+        {% for item in other_packages %}
+        <div class="camp-card-row {% if forloop.counter|divisibleby:2 %}reverse{% endif %}" style="background: transparent; box-shadow: none; border: none; margin-bottom: 48px;">
+            <div class="camp-image" style="border-radius: var(--radius-card); overflow: hidden;">
+                {% if item.imageUrl %}
+                <img src="{{ item.imageUrl }}" alt="{{ item.title }}" style="border-radius: var(--radius-card);">
+                {% else %}
+                <img src="{% static 'images/yala-tent.jpg' %}" alt="{{ item.title }}" style="border-radius: var(--radius-card);">
+                {% endif %}
+                <span class="camp-location-badge badge-sage">
+                    <i class="fa-regular fa-clock"></i> {{ item.duration }}
+                </span>
+            </div>
+            <div class="camp-details" style="padding: 10px 30px;">
+                <span class="card-category tag-sage">{{ item.category_label|default:"YALA SAFARI EXPEDITION" }}</span>
+                <h3 class="camp-title">
+                    <a href="{% url 'package_detail' slug=item.slug %}" style="color: inherit; text-decoration: none;">
+                        {{ item.title }}
+                    </a>
+                </h3>
+                <p class="camp-desc">
+                    {{ item.description|truncatewords:30 }}
+                </p>
+                <div style="font-size: 1.3rem; font-weight: 800; color: #475128; margin-bottom: 16px;">
+                    ${{ item.get_clean_price }} USD
+                </div>
+                <a href="{% url 'package_detail' slug=item.slug %}" class="btn-gold-pill">
+                    VIEW DETAILS <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Interactive Reservation Form Modal -->
+<div class="booking-modal-overlay" id="bookingModalOverlay">
+    <div class="booking-modal-card">
+        <button type="button" class="modal-close-btn" id="closeBookingModalBtn" aria-label="Close Modal"><i class="fa-solid fa-xmark"></i></button>
+        
+        <span class="modal-package-badge">
+            {% if package.price_type == 'jeep_only' %}PRIVATE JEEP SAFARI{% else %}SHARED ALL-INCLUSIVE SAFARI{% endif %}
+        </span>
+        <h2 class="modal-package-title">{{ package.title }}</h2>
+
+        <form id="safariBookingForm" method="POST" action="{% url 'create_booking' %}">
+            {% csrf_token %}
+            <input type="hidden" name="package_title" value="{{ package.title }}">
+            <input type="hidden" name="price_type" id="form_price_type" value="{{ package.price_type }}">
+            <input type="hidden" name="raw_price" id="form_raw_price" value="{{ package.price }}">
+            <input type="hidden" name="meal_price_unit" id="form_meal_price_unit" value="{{ package.mealPrice }}">
+            <input type="hidden" name="ticket_price_unit" id="form_ticket_price_unit" value="{{ package.ticketPrice }}">
+
+            <!-- Hidden Calculated Price Fields -->
+            <input type="hidden" name="base_price" id="calc_base_price" value="0">
+            <input type="hidden" name="meals_price_total" id="calc_meals_price_total" value="0">
+            <input type="hidden" name="tickets_price_total" id="calc_tickets_price_total" value="0">
+            <input type="hidden" name="total_price" id="calc_total_price" value="0">
+
+            <!-- 01. Contact Information -->
+            <div class="form-step-section">
+                <div class="step-num-title"><i class="fa-solid fa-user"></i> 01. Contact Information</div>
+                
+                <div class="form-grid-2">
+                    <div class="form-field-group">
+                        <label for="full_name">Full Name</label>
+                        <input type="text" id="full_name" name="full_name" class="form-input" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-field-group">
+                        <label for="country">Country</label>
+                        <select id="country" name="country" class="form-select" required>
+<option value="" disabled selected>-- Select Country --</option>
+                            <option value="Afghanistan" data-code="+93">Afghanistan 🇦🇫 (+93)</option>
+                            <option value="Åland Islands" data-code="+358">Åland Islands 🇦🇽 (+358)</option>
+                            <option value="Albania" data-code="+355">Albania 🇦🇱 (+355)</option>
+                            <option value="Algeria" data-code="+213">Algeria 🇩🇿 (+213)</option>
+                            <option value="American Samoa" data-code="+1684">American Samoa 🇦🇸 (+1684)</option>
+                            <option value="Andorra" data-code="+376">Andorra 🇦🇩 (+376)</option>
+                            <option value="Angola" data-code="+244">Angola 🇦🇴 (+244)</option>
+                            <option value="Anguilla" data-code="+1264">Anguilla 🇦🇮 (+1264)</option>
+                            <option value="Antarctica" data-code="+672">Antarctica 🇦🇶 (+672)</option>
+                            <option value="Antigua and Barbuda" data-code="+1268">Antigua and Barbuda 🇦🇬 (+1268)</option>
+                            <option value="Argentina" data-code="+54">Argentina 🇦🇷 (+54)</option>
+                            <option value="Armenia" data-code="+374">Armenia 🇦🇲 (+374)</option>
+                            <option value="Aruba" data-code="+297">Aruba 🇦🇼 (+297)</option>
+                            <option value="Australia" data-code="+61">Australia 🇦🇺 (+61)</option>
+                            <option value="Austria" data-code="+43">Austria 🇦🇹 (+43)</option>
+                            <option value="Azerbaijan" data-code="+994">Azerbaijan 🇦🇿 (+994)</option>
+                            <option value="Bahamas" data-code="+1242">Bahamas 🇧🇸 (+1242)</option>
+                            <option value="Bahrain" data-code="+973">Bahrain 🇧🇭 (+973)</option>
+                            <option value="Bangladesh" data-code="+880">Bangladesh 🇧🇩 (+880)</option>
+                            <option value="Barbados" data-code="+1246">Barbados 🇧🇧 (+1246)</option>
+                            <option value="Belarus" data-code="+375">Belarus 🇧🇾 (+375)</option>
+                            <option value="Belgium" data-code="+32">Belgium 🇧🇪 (+32)</option>
+                            <option value="Belize" data-code="+501">Belize 🇧🇿 (+501)</option>
+                            <option value="Benin" data-code="+229">Benin 🇧🇯 (+229)</option>
+                            <option value="Bermuda" data-code="+1441">Bermuda 🇧🇲 (+1441)</option>
+                            <option value="Bhutan" data-code="+975">Bhutan 🇧🇹 (+975)</option>
+                            <option value="Bolivia" data-code="+591">Bolivia 🇧🇴 (+591)</option>
+                            <option value="Bonaire, Sint Eustatius and Saba" data-code="+599">Bonaire, Sint Eustatius and Saba 🇧🇶 (+599)</option>
+                            <option value="Bosnia and Herzegovina" data-code="+387">Bosnia and Herzegovina 🇧🇦 (+387)</option>
+                            <option value="Botswana" data-code="+267">Botswana 🇧🇼 (+267)</option>
+                            <option value="Bouvet Island" data-code="+47">Bouvet Island 🇧🇻 (+47)</option>
+                            <option value="Brazil" data-code="+55">Brazil 🇧🇷 (+55)</option>
+                            <option value="British Indian Ocean Territory" data-code="+246">British Indian Ocean Territory 🇮🇴 (+246)</option>
+                            <option value="Brunei Darussalam" data-code="+673">Brunei Darussalam 🇧🇳 (+673)</option>
+                            <option value="Bulgaria" data-code="+359">Bulgaria 🇧🇬 (+359)</option>
+                            <option value="Burkina Faso" data-code="+226">Burkina Faso 🇧🇫 (+226)</option>
+                            <option value="Burundi" data-code="+257">Burundi 🇧🇮 (+257)</option>
+                            <option value="Cabo Verde" data-code="+238">Cabo Verde 🇨🇻 (+238)</option>
+                            <option value="Cambodia" data-code="+855">Cambodia 🇰🇭 (+855)</option>
+                            <option value="Cameroon" data-code="+237">Cameroon 🇨🇲 (+237)</option>
+                            <option value="Canada" data-code="+1">Canada 🇨🇦 (+1)</option>
+                            <option value="Cayman Islands" data-code="+1345">Cayman Islands 🇰🇾 (+1345)</option>
+                            <option value="Central African Republic" data-code="+236">Central African Republic 🇨🇫 (+236)</option>
+                            <option value="Chad" data-code="+235">Chad 🇹🇩 (+235)</option>
+                            <option value="Chile" data-code="+56">Chile 🇨🇱 (+56)</option>
+                            <option value="China" data-code="+86">China 🇨🇳 (+86)</option>
+                            <option value="Christmas Island" data-code="+61">Christmas Island 🇨🇽 (+61)</option>
+                            <option value="Cocos (Keeling) Islands" data-code="+61">Cocos (Keeling) Islands 🇨🇨 (+61)</option>
+                            <option value="Colombia" data-code="+57">Colombia 🇨🇴 (+57)</option>
+                            <option value="Comoros" data-code="+269">Comoros 🇰🇲 (+269)</option>
+                            <option value="Congo" data-code="+242">Congo 🇨🇬 (+242)</option>
+                            <option value="Congo (Democratic Republic of the)" data-code="+243">Congo (Democratic Republic of the) 🇨🇩 (+243)</option>
+                            <option value="Cook Islands" data-code="+682">Cook Islands 🇨🇰 (+682)</option>
+                            <option value="Costa Rica" data-code="+506">Costa Rica 🇨🇷 (+506)</option>
+                            <option value="Côte d'Ivoire" data-code="+225">Côte d'Ivoire 🇨🇮 (+225)</option>
+                            <option value="Croatia" data-code="+385">Croatia 🇭🇷 (+385)</option>
+                            <option value="Cuba" data-code="+53">Cuba 🇨🇺 (+53)</option>
+                            <option value="Curaçao" data-code="+599">Curaçao 🇨🇼 (+599)</option>
+                            <option value="Cyprus" data-code="+357">Cyprus 🇨🇾 (+357)</option>
+                            <option value="Czechia" data-code="+420">Czechia 🇨🇿 (+420)</option>
+                            <option value="Denmark" data-code="+45">Denmark 🇩🇰 (+45)</option>
+                            <option value="Djibouti" data-code="+253">Djibouti 🇩🇯 (+253)</option>
+                            <option value="Dominica" data-code="+1767">Dominica 🇩🇲 (+1767)</option>
+                            <option value="Dominican Republic" data-code="+1809">Dominican Republic 🇩🇴 (+1809)</option>
+                            <option value="Ecuador" data-code="+593">Ecuador 🇪🇨 (+593)</option>
+                            <option value="Egypt" data-code="+20">Egypt 🇪🇬 (+20)</option>
+                            <option value="El Salvador" data-code="+503">El Salvador 🇸🇻 (+503)</option>
+                            <option value="Equatorial Guinea" data-code="+240">Equatorial Guinea 🇬🇶 (+240)</option>
+                            <option value="Eritrea" data-code="+291">Eritrea 🇪🇷 (+291)</option>
+                            <option value="Estonia" data-code="+372">Estonia 🇪🇪 (+372)</option>
+                            <option value="Eswatini" data-code="+268">Eswatini 🇸🇿 (+268)</option>
+                            <option value="Ethiopia" data-code="+251">Ethiopia 🇪🇹 (+251)</option>
+                            <option value="Falkland Islands (Malvinas)" data-code="+500">Falkland Islands (Malvinas) 🇫🇰 (+500)</option>
+                            <option value="Faroe Islands" data-code="+298">Faroe Islands 🇫🇴 (+298)</option>
+                            <option value="Fiji" data-code="+679">Fiji 🇫🇯 (+679)</option>
+                            <option value="Finland" data-code="+358">Finland 🇫🇮 (+358)</option>
+                            <option value="France" data-code="+33">France 🇫🇷 (+33)</option>
+                            <option value="French Guiana" data-code="+594">French Guiana 🇬🇫 (+594)</option>
+                            <option value="French Polynesia" data-code="+689">French Polynesia 🇵🇫 (+689)</option>
+                            <option value="French Southern Territories" data-code="+262">French Southern Territories 🇹🇫 (+262)</option>
+                            <option value="Gabon" data-code="+241">Gabon 🇬🇦 (+241)</option>
+                            <option value="Gambia" data-code="+220">Gambia 🇬🇲 (+220)</option>
+                            <option value="Georgia" data-code="+995">Georgia 🇬🇪 (+995)</option>
+                            <option value="Germany" data-code="+49">Germany 🇩🇪 (+49)</option>
+                            <option value="Ghana" data-code="+233">Ghana 🇬🇭 (+233)</option>
+                            <option value="Gibraltar" data-code="+350">Gibraltar 🇬🇮 (+350)</option>
+                            <option value="Greece" data-code="+30">Greece 🇬🇷 (+30)</option>
+                            <option value="Greenland" data-code="+299">Greenland 🇬🇱 (+299)</option>
+                            <option value="Grenada" data-code="+1473">Grenada 🇬🇩 (+1473)</option>
+                            <option value="Guadeloupe" data-code="+590">Guadeloupe 🇬🇵 (+590)</option>
+                            <option value="Guam" data-code="+1671">Guam 🇬🇺 (+1671)</option>
+                            <option value="Guatemala" data-code="+502">Guatemala 🇬🇹 (+502)</option>
+                            <option value="Guernsey" data-code="+44">Guernsey 🇬🇬 (+44)</option>
+                            <option value="Guinea" data-code="+224">Guinea 🇬🇳 (+224)</option>
+                            <option value="Guinea-Bissau" data-code="+245">Guinea-Bissau 🇬🇼 (+245)</option>
+                            <option value="Guyana" data-code="+592">Guyana 🇬🇾 (+592)</option>
+                            <option value="Haiti" data-code="+509">Haiti 🇭🇹 (+509)</option>
+                            <option value="Heard Island and McDonald Islands" data-code="+672">Heard Island and McDonald Islands 🇭🇲 (+672)</option>
+                            <option value="Holy See" data-code="+379">Holy See 🇻🇦 (+379)</option>
+                            <option value="Honduras" data-code="+504">Honduras 🇭🇳 (+504)</option>
+                            <option value="Hong Kong" data-code="+852">Hong Kong 🇭🇰 (+852)</option>
+                            <option value="Hungary" data-code="+36">Hungary 🇭🇺 (+36)</option>
+                            <option value="Iceland" data-code="+354">Iceland 🇮🇸 (+354)</option>
+                            <option value="India" data-code="+91">India 🇮🇳 (+91)</option>
+                            <option value="Indonesia" data-code="+62">Indonesia 🇮🇩 (+62)</option>
+                            <option value="Iran" data-code="+98">Iran 🇮🇷 (+98)</option>
+                            <option value="Iraq" data-code="+964">Iraq 🇮🇶 (+964)</option>
+                            <option value="Ireland" data-code="+353">Ireland 🇮🇪 (+353)</option>
+                            <option value="Isle of Man" data-code="+44">Isle of Man 🇮🇲 (+44)</option>
+                            <option value="Israel" data-code="+972">Israel 🇮🇱 (+972)</option>
+                            <option value="Italy" data-code="+39">Italy 🇮🇹 (+39)</option>
+                            <option value="Jamaica" data-code="+1876">Jamaica 🇯🇲 (+1876)</option>
+                            <option value="Japan" data-code="+81">Japan 🇯🇵 (+81)</option>
+                            <option value="Jersey" data-code="+44">Jersey 🇯🇪 (+44)</option>
+                            <option value="Jordan" data-code="+962">Jordan 🇯🇴 (+962)</option>
+                            <option value="Kazakhstan" data-code="+7">Kazakhstan 🇰🇿 (+7)</option>
+                            <option value="Kenya" data-code="+254">Kenya 🇰🇪 (+254)</option>
+                            <option value="Kiribati" data-code="+686">Kiribati 🇰🇮 (+686)</option>
+                            <option value="Korea (Democratic People's Republic of)" data-code="+850">Korea (Democratic People's Republic of) 🇰🇵 (+850)</option>
+                            <option value="Korea (Republic of)" data-code="+82">Korea (Republic of) 🇰🇷 (+82)</option>
+                            <option value="Kuwait" data-code="+965">Kuwait 🇰🇼 (+965)</option>
+                            <option value="Kyrgyzstan" data-code="+996">Kyrgyzstan 🇰🇬 (+996)</option>
+                            <option value="Lao People's Democratic Republic" data-code="+856">Lao People's Democratic Republic 🇱🇦 (+856)</option>
+                            <option value="Latvia" data-code="+371">Latvia 🇱🇻 (+371)</option>
+                            <option value="Lebanon" data-code="+961">Lebanon 🇱🇧 (+961)</option>
+                            <option value="Lesotho" data-code="+266">Lesotho 🇱🇸 (+266)</option>
+                            <option value="Liberia" data-code="+231">Liberia 🇱🇷 (+231)</option>
+                            <option value="Libya" data-code="+218">Libya 🇱🇾 (+218)</option>
+                            <option value="Liechtenstein" data-code="+423">Liechtenstein 🇱🇮 (+423)</option>
+                            <option value="Lithuania" data-code="+370">Lithuania 🇱🇹 (+370)</option>
+                            <option value="Luxembourg" data-code="+352">Luxembourg 🇱🇺 (+352)</option>
+                            <option value="Macao" data-code="+853">Macao 🇲🇴 (+853)</option>
+                            <option value="Madagascar" data-code="+261">Madagascar 🇲🇬 (+261)</option>
+                            <option value="Malawi" data-code="+265">Malawi 🇲🇼 (+265)</option>
+                            <option value="Malaysia" data-code="+60">Malaysia 🇲🇾 (+60)</option>
+                            <option value="Maldives" data-code="+960">Maldives 🇲🇻 (+960)</option>
+                            <option value="Mali" data-code="+223">Mali 🇲🇱 (+223)</option>
+                            <option value="Malta" data-code="+356">Malta 🇲🇹 (+356)</option>
+                            <option value="Marshall Islands" data-code="+692">Marshall Islands 🇲🇭 (+692)</option>
+                            <option value="Martinique" data-code="+596">Martinique 🇲🇶 (+596)</option>
+                            <option value="Mauritania" data-code="+222">Mauritania 🇲🇷 (+222)</option>
+                            <option value="Mauritius" data-code="+230">Mauritius 🇲🇺 (+230)</option>
+                            <option value="Mayotte" data-code="+262">Mayotte 🇾🇹 (+262)</option>
+                            <option value="Mexico" data-code="+52">Mexico 🇲🇽 (+52)</option>
+                            <option value="Micronesia (Federated States of)" data-code="+691">Micronesia (Federated States of) 🇫🇲 (+691)</option>
+                            <option value="Moldova (Republic of)" data-code="+373">Moldova (Republic of) 🇲🇩 (+373)</option>
+                            <option value="Monaco" data-code="+377">Monaco 🇲🇨 (+377)</option>
+                            <option value="Mongolia" data-code="+976">Mongolia 🇲🇳 (+976)</option>
+                            <option value="Montenegro" data-code="+382">Montenegro 🇲🇪 (+382)</option>
+                            <option value="Montserrat" data-code="+1664">Montserrat 🇲🇸 (+1664)</option>
+                            <option value="Morocco" data-code="+212">Morocco 🇲🇦 (+212)</option>
+                            <option value="Mozambique" data-code="+258">Mozambique 🇲🇿 (+258)</option>
+                            <option value="Myanmar" data-code="+95">Myanmar 🇲🇲 (+95)</option>
+                            <option value="Namibia" data-code="+264">Namibia 🇳🇦 (+264)</option>
+                            <option value="Nauru" data-code="+674">Nauru 🇳🇷 (+674)</option>
+                            <option value="Nepal" data-code="+977">Nepal 🇳🇵 (+977)</option>
+                            <option value="Netherlands" data-code="+31">Netherlands 🇳🇱 (+31)</option>
+                            <option value="New Caledonia" data-code="+687">New Caledonia 🇳🇨 (+687)</option>
+                            <option value="New Zealand" data-code="+64">New Zealand 🇳🇿 (+64)</option>
+                            <option value="Nicaragua" data-code="+505">Nicaragua 🇳🇮 (+505)</option>
+                            <option value="Niger" data-code="+227">Niger 🇳🇪 (+227)</option>
+                            <option value="Nigeria" data-code="+234">Nigeria 🇳🇬 (+234)</option>
+                            <option value="Niue" data-code="+683">Niue 🇳🇺 (+683)</option>
+                            <option value="Norfolk Island" data-code="+672">Norfolk Island 🇳🇫 (+672)</option>
+                            <option value="North Macedonia" data-code="+389">North Macedonia 🇲🇰 (+389)</option>
+                            <option value="Northern Mariana Islands" data-code="+1670">Northern Mariana Islands 🇲🇵 (+1670)</option>
+                            <option value="Norway" data-code="+47">Norway 🇳🇴 (+47)</option>
+                            <option value="Oman" data-code="+968">Oman 🇴🇲 (+968)</option>
+                            <option value="Pakistan" data-code="+92">Pakistan 🇵🇰 (+92)</option>
+                            <option value="Palau" data-code="+680">Palau 🇵🇼 (+680)</option>
+                            <option value="Palestine, State of" data-code="+970">Palestine, State of 🇵🇸 (+970)</option>
+                            <option value="Panama" data-code="+507">Panama 🇵🇦 (+507)</option>
+                            <option value="Papua New Guinea" data-code="+675">Papua New Guinea 🇵🇬 (+675)</option>
+                            <option value="Paraguay" data-code="+595">Paraguay 🇵🇾 (+595)</option>
+                            <option value="Peru" data-code="+51">Peru 🇵🇪 (+51)</option>
+                            <option value="Philippines" data-code="+63">Philippines 🇵🇭 (+63)</option>
+                            <option value="Pitcairn" data-code="+64">Pitcairn 🇵🇳 (+64)</option>
+                            <option value="Poland" data-code="+48">Poland 🇵🇱 (+48)</option>
+                            <option value="Portugal" data-code="+351">Portugal 🇵🇹 (+351)</option>
+                            <option value="Puerto Rico" data-code="+1787">Puerto Rico 🇵🇷 (+1787)</option>
+                            <option value="Qatar" data-code="+974">Qatar 🇶🇦 (+974)</option>
+                            <option value="Réunion" data-code="+262">Réunion 🇷🇪 (+262)</option>
+                            <option value="Romania" data-code="+40">Romania 🇷🇴 (+40)</option>
+                            <option value="Russian Federation" data-code="+7">Russian Federation 🇷🇺 (+7)</option>
+                            <option value="Rwanda" data-code="+250">Rwanda 🇷🇼 (+250)</option>
+                            <option value="Saint Barthélemy" data-code="+590">Saint Barthélemy 🇧🇱 (+590)</option>
+                            <option value="Saint Helena, Ascension and Tristan da Cunha" data-code="+290">Saint Helena, Ascension and Tristan da Cunha 🇸🇭 (+290)</option>
+                            <option value="Saint Kitts and Nevis" data-code="+1869">Saint Kitts and Nevis 🇰🇳 (+1869)</option>
+                            <option value="Saint Lucia" data-code="+1758">Saint Lucia 🇱🇨 (+1758)</option>
+                            <option value="Saint Martin (French part)" data-code="+590">Saint Martin (French part) 🇲🇫 (+590)</option>
+                            <option value="Saint Pierre and Miquelon" data-code="+508">Saint Pierre and Miquelon 🇵🇲 (+508)</option>
+                            <option value="Saint Vincent and the Grenadines" data-code="+1784">Saint Vincent and the Grenadines 🇻🇨 (+1784)</option>
+                            <option value="Samoa" data-code="+685">Samoa 🇼🇸 (+685)</option>
+                            <option value="San Marino" data-code="+378">San Marino 🇸🇲 (+378)</option>
+                            <option value="Sao Tome and Principe" data-code="+239">Sao Tome and Principe 🇸🇹 (+239)</option>
+                            <option value="Saudi Arabia" data-code="+966">Saudi Arabia 🇸🇦 (+966)</option>
+                            <option value="Senegal" data-code="+221">Senegal 🇸🇳 (+221)</option>
+                            <option value="Serbia" data-code="+381">Serbia 🇷🇸 (+381)</option>
+                            <option value="Seychelles" data-code="+248">Seychelles 🇸🇨 (+248)</option>
+                            <option value="Sierra Leone" data-code="+232">Sierra Leone 🇸🇱 (+232)</option>
+                            <option value="Singapore" data-code="+65">Singapore 🇸🇬 (+65)</option>
+                            <option value="Sint Maarten (Dutch part)" data-code="+1721">Sint Maarten (Dutch part) 🇸🇽 (+1721)</option>
+                            <option value="Slovakia" data-code="+421">Slovakia 🇸🇰 (+421)</option>
+                            <option value="Slovenia" data-code="+386">Slovenia 🇸🇮 (+386)</option>
+                            <option value="Solomon Islands" data-code="+677">Solomon Islands 🇸🇧 (+677)</option>
+                            <option value="Somalia" data-code="+252">Somalia 🇸🇴 (+252)</option>
+                            <option value="South Africa" data-code="+27">South Africa 🇿🇦 (+27)</option>
+                            <option value="South Georgia and the South Sandwich Islands" data-code="+500">South Georgia and the South Sandwich Islands 🇬🇸 (+500)</option>
+                            <option value="South Sudan" data-code="+211">South Sudan 🇸🇸 (+211)</option>
+                            <option value="Spain" data-code="+34">Spain 🇪🇸 (+34)</option>
+                            <option value="Sri Lanka" data-code="+94">Sri Lanka 🇱🇰 (+94)</option>
+                            <option value="Sudan" data-code="+249">Sudan 🇸🇩 (+249)</option>
+                            <option value="Suriname" data-code="+597">Suriname 🇸🇷 (+597)</option>
+                            <option value="Svalbard and Jan Mayen" data-code="+47">Svalbard and Jan Mayen 🇸🇯 (+47)</option>
+                            <option value="Sweden" data-code="+46">Sweden 🇸🇪 (+46)</option>
+                            <option value="Switzerland" data-code="+41">Switzerland 🇨🇭 (+41)</option>
+                            <option value="Syrian Arab Republic" data-code="+963">Syrian Arab Republic 🇸🇾 (+963)</option>
+                            <option value="Taiwan" data-code="+886">Taiwan 🇹🇼 (+886)</option>
+                            <option value="Tajikistan" data-code="+992">Tajikistan 🇹🇯 (+992)</option>
+                            <option value="Tanzania, United Republic of" data-code="+255">Tanzania, United Republic of 🇹🇿 (+255)</option>
+                            <option value="Thailand" data-code="+66">Thailand 🇹🇭 (+66)</option>
+                            <option value="Timor-Leste" data-code="+670">Timor-Leste 🇹🇱 (+670)</option>
+                            <option value="Togo" data-code="+228">Togo 🇹🇬 (+228)</option>
+                            <option value="Tokelau" data-code="+690">Tokelau 🇹🇰 (+690)</option>
+                            <option value="Tonga" data-code="+676">Tonga 🇹🇴 (+676)</option>
+                            <option value="Trinidad and Tobago" data-code="+1868">Trinidad and Tobago 🇹🇹 (+1868)</option>
+                            <option value="Tunisia" data-code="+216">Tunisia 🇹🇳 (+216)</option>
+                            <option value="Turkey" data-code="+90">Turkey 🇹🇷 (+90)</option>
+                            <option value="Turkmenistan" data-code="+993">Turkmenistan 🇹🇲 (+993)</option>
+                            <option value="Turks and Caicos Islands" data-code="+1649">Turks and Caicos Islands 🇹🇨 (+1649)</option>
+                            <option value="Tuvalu" data-code="+688">Tuvalu 🇹🇻 (+688)</option>
+                            <option value="Uganda" data-code="+256">Uganda 🇺🇬 (+256)</option>
+                            <option value="Ukraine" data-code="+380">Ukraine 🇺🇦 (+380)</option>
+                            <option value="United Arab Emirates" data-code="+971">United Arab Emirates 🇦🇪 (+971)</option>
+                            <option value="United Kingdom" data-code="+44">United Kingdom 🇬🇧 (+44)</option>
+                            <option value="United States" data-code="+1">United States 🇺🇸 (+1)</option>
+                            <option value="United States of America" data-code="+1">United States of America 🇺🇸 (+1)</option>
+                            <option value="Uruguay" data-code="+598">Uruguay 🇺🇾 (+598)</option>
+                            <option value="Uzbekistan" data-code="+998">Uzbekistan 🇺🇿 (+998)</option>
+                            <option value="Vanuatu" data-code="+678">Vanuatu 🇻🇺 (+678)</option>
+                            <option value="Venezuela (Bolivarian Republic of)" data-code="+58">Venezuela (Bolivarian Republic of) 🇻🇪 (+58)</option>
+                            <option value="Viet Nam" data-code="+84">Viet Nam 🇻🇳 (+84)</option>
+                            <option value="Virgin Islands (British)" data-code="+1284">Virgin Islands (British) 🇻🇬 (+1284)</option>
+                            <option value="Virgin Islands (U.S.)" data-code="+1340">Virgin Islands (U.S.) 🇻🇮 (+1340)</option>
+                            <option value="Wallis and Futuna" data-code="+681">Wallis and Futuna 🇼🇫 (+681)</option>
+                            <option value="Western Sahara" data-code="+212">Western Sahara 🇪🇭 (+212)</option>
+                            <option value="Yemen" data-code="+967">Yemen 🇾🇪 (+967)</option>
+                            <option value="Zambia" data-code="+260">Zambia 🇿🇲 (+260)</option>
+                            <option value="Zimbabwe" data-code="+263">Zimbabwe 🇿🇼 (+263)</option>
+                            <option value="Other Country" data-code="+94">Other Country 🌐 (+94)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-field-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="email@example.com" required>
+                    </div>
+                    <div class="form-field-group">
+                        <label for="phone_number">Phone Number</label>
+                        <div class="phone-input-group">
+                            <select id="phone_code" name="phone_code" class="form-select">
+                                <option value="+93">+93 🇦🇫 (Afghanistan)</option>
+                                <option value="+358">+358 🇦🇽 (Åland Islands)</option>
+                                <option value="+355">+355 🇦🇱 (Albania)</option>
+                                <option value="+213">+213 🇩🇿 (Algeria)</option>
+                                <option value="+1684">+1684 🇦🇸 (American Samoa)</option>
+                                <option value="+376">+376 🇦🇩 (Andorra)</option>
+                                <option value="+244">+244 🇦🇴 (Angola)</option>
+                                <option value="+1264">+1264 🇦🇮 (Anguilla)</option>
+                                <option value="+672">+672 🇦🇶 (Antarctica)</option>
+                                <option value="+1268">+1268 🇦🇬 (Antigua and Ba)</option>
+                                <option value="+54">+54 🇦🇷 (Argentina)</option>
+                                <option value="+374">+374 🇦🇲 (Armenia)</option>
+                                <option value="+297">+297 🇦🇼 (Aruba)</option>
+                                <option value="+61">+61 🇦🇺 (Australia)</option>
+                                <option value="+43">+43 🇦🇹 (Austria)</option>
+                                <option value="+994">+994 🇦🇿 (Azerbaijan)</option>
+                                <option value="+1242">+1242 🇧🇸 (Bahamas)</option>
+                                <option value="+973">+973 🇧🇭 (Bahrain)</option>
+                                <option value="+880">+880 🇧🇩 (Bangladesh)</option>
+                                <option value="+1246">+1246 🇧🇧 (Barbados)</option>
+                                <option value="+375">+375 🇧🇾 (Belarus)</option>
+                                <option value="+32">+32 🇧🇪 (Belgium)</option>
+                                <option value="+501">+501 🇧🇿 (Belize)</option>
+                                <option value="+229">+229 🇧🇯 (Benin)</option>
+                                <option value="+1441">+1441 🇧🇲 (Bermuda)</option>
+                                <option value="+975">+975 🇧🇹 (Bhutan)</option>
+                                <option value="+591">+591 🇧🇴 (Bolivia)</option>
+                                <option value="+599">+599 🇧🇶 (Bonaire, Sint )</option>
+                                <option value="+387">+387 🇧🇦 (Bosnia and Her)</option>
+                                <option value="+267">+267 🇧🇼 (Botswana)</option>
+                                <option value="+47">+47 🇧🇻 (Bouvet Island)</option>
+                                <option value="+55">+55 🇧🇷 (Brazil)</option>
+                                <option value="+246">+246 🇮🇴 (British Indian)</option>
+                                <option value="+673">+673 🇧🇳 (Brunei Darussa)</option>
+                                <option value="+359">+359 🇧🇬 (Bulgaria)</option>
+                                <option value="+226">+226 🇧🇫 (Burkina Faso)</option>
+                                <option value="+257">+257 🇧🇮 (Burundi)</option>
+                                <option value="+238">+238 🇨🇻 (Cabo Verde)</option>
+                                <option value="+855">+855 🇰🇭 (Cambodia)</option>
+                                <option value="+237">+237 🇨🇲 (Cameroon)</option>
+                                <option value="+1">+1 🇨🇦 (Canada)</option>
+                                <option value="+1345">+1345 🇰🇾 (Cayman Islands)</option>
+                                <option value="+236">+236 🇨🇫 (Central Africa)</option>
+                                <option value="+235">+235 🇹🇩 (Chad)</option>
+                                <option value="+56">+56 🇨🇱 (Chile)</option>
+                                <option value="+86">+86 🇨🇳 (China)</option>
+                                <option value="+57">+57 🇨🇴 (Colombia)</option>
+                                <option value="+269">+269 🇰🇲 (Comoros)</option>
+                                <option value="+242">+242 🇨🇬 (Congo)</option>
+                                <option value="+243">+243 🇨🇩 (Congo (Democra)</option>
+                                <option value="+682">+682 🇨🇰 (Cook Islands)</option>
+                                <option value="+506">+506 🇨🇷 (Costa Rica)</option>
+                                <option value="+225">+225 🇨🇮 (Côte d'Ivoire)</option>
+                                <option value="+385">+385 🇭🇷 (Croatia)</option>
+                                <option value="+53">+53 🇨🇺 (Cuba)</option>
+                                <option value="+357">+357 🇨🇾 (Cyprus)</option>
+                                <option value="+420">+420 🇨🇿 (Czechia)</option>
+                                <option value="+45">+45 🇩🇰 (Denmark)</option>
+                                <option value="+253">+253 🇩🇯 (Djibouti)</option>
+                                <option value="+1767">+1767 🇩🇲 (Dominica)</option>
+                                <option value="+1809">+1809 🇩🇴 (Dominican Repu)</option>
+                                <option value="+593">+593 🇪🇨 (Ecuador)</option>
+                                <option value="+20">+20 🇪🇬 (Egypt)</option>
+                                <option value="+503">+503 🇸🇻 (El Salvador)</option>
+                                <option value="+240">+240 🇬🇶 (Equatorial Gui)</option>
+                                <option value="+291">+291 🇪🇷 (Eritrea)</option>
+                                <option value="+372">+372 🇪🇪 (Estonia)</option>
+                                <option value="+268">+268 🇸🇿 (Eswatini)</option>
+                                <option value="+251">+251 🇪🇹 (Ethiopia)</option>
+                                <option value="+500">+500 🇫🇰 (Falkland Islan)</option>
+                                <option value="+298">+298 🇫🇴 (Faroe Islands)</option>
+                                <option value="+679">+679 🇫🇯 (Fiji)</option>
+                                <option value="+33">+33 🇫🇷 (France)</option>
+                                <option value="+594">+594 🇬🇫 (French Guiana)</option>
+                                <option value="+689">+689 🇵🇫 (French Polynes)</option>
+                                <option value="+262">+262 🇹🇫 (French Souther)</option>
+                                <option value="+241">+241 🇬🇦 (Gabon)</option>
+                                <option value="+220">+220 🇬🇲 (Gambia)</option>
+                                <option value="+995">+995 🇬🇪 (Georgia)</option>
+                                <option value="+49">+49 🇩🇪 (Germany)</option>
+                                <option value="+233">+233 🇬🇭 (Ghana)</option>
+                                <option value="+350">+350 🇬🇮 (Gibraltar)</option>
+                                <option value="+30">+30 🇬🇷 (Greece)</option>
+                                <option value="+299">+299 🇬🇱 (Greenland)</option>
+                                <option value="+1473">+1473 🇬🇩 (Grenada)</option>
+                                <option value="+590">+590 🇬🇵 (Guadeloupe)</option>
+                                <option value="+1671">+1671 🇬🇺 (Guam)</option>
+                                <option value="+502">+502 🇬🇹 (Guatemala)</option>
+                                <option value="+44">+44 🇬🇬 (Guernsey)</option>
+                                <option value="+224">+224 🇬🇳 (Guinea)</option>
+                                <option value="+245">+245 🇬🇼 (Guinea-Bissau)</option>
+                                <option value="+592">+592 🇬🇾 (Guyana)</option>
+                                <option value="+509">+509 🇭🇹 (Haiti)</option>
+                                <option value="+379">+379 🇻🇦 (Holy See)</option>
+                                <option value="+504">+504 🇭🇳 (Honduras)</option>
+                                <option value="+852">+852 🇭🇰 (Hong Kong)</option>
+                                <option value="+36">+36 🇭🇺 (Hungary)</option>
+                                <option value="+354">+354 🇮🇸 (Iceland)</option>
+                                <option value="+91">+91 🇮🇳 (India)</option>
+                                <option value="+62">+62 🇮🇩 (Indonesia)</option>
+                                <option value="+98">+98 🇮🇷 (Iran)</option>
+                                <option value="+964">+964 🇮🇶 (Iraq)</option>
+                                <option value="+353">+353 🇮🇪 (Ireland)</option>
+                                <option value="+972">+972 🇮🇱 (Israel)</option>
+                                <option value="+39">+39 🇮🇹 (Italy)</option>
+                                <option value="+1876">+1876 🇯🇲 (Jamaica)</option>
+                                <option value="+81">+81 🇯🇵 (Japan)</option>
+                                <option value="+962">+962 🇯🇴 (Jordan)</option>
+                                <option value="+7">+7 🇰🇿 (Kazakhstan)</option>
+                                <option value="+254">+254 🇰🇪 (Kenya)</option>
+                                <option value="+686">+686 🇰🇮 (Kiribati)</option>
+                                <option value="+850">+850 🇰🇵 (Korea (Democra)</option>
+                                <option value="+82">+82 🇰🇷 (Korea (Republi)</option>
+                                <option value="+965">+965 🇰🇼 (Kuwait)</option>
+                                <option value="+996">+996 🇰🇬 (Kyrgyzstan)</option>
+                                <option value="+856">+856 🇱🇦 (Lao People's D)</option>
+                                <option value="+371">+371 🇱🇻 (Latvia)</option>
+                                <option value="+961">+961 🇱🇧 (Lebanon)</option>
+                                <option value="+266">+266 🇱🇸 (Lesotho)</option>
+                                <option value="+231">+231 🇱🇷 (Liberia)</option>
+                                <option value="+218">+218 🇱🇾 (Libya)</option>
+                                <option value="+423">+423 🇱🇮 (Liechtenstein)</option>
+                                <option value="+370">+370 🇱🇹 (Lithuania)</option>
+                                <option value="+352">+352 🇱🇺 (Luxembourg)</option>
+                                <option value="+853">+853 🇲🇴 (Macao)</option>
+                                <option value="+261">+261 🇲🇬 (Madagascar)</option>
+                                <option value="+265">+265 🇲🇼 (Malawi)</option>
+                                <option value="+60">+60 🇲🇾 (Malaysia)</option>
+                                <option value="+960">+960 🇲🇻 (Maldives)</option>
+                                <option value="+223">+223 🇲🇱 (Mali)</option>
+                                <option value="+356">+356 🇲🇹 (Malta)</option>
+                                <option value="+692">+692 🇲🇭 (Marshall Islan)</option>
+                                <option value="+596">+596 🇲🇶 (Martinique)</option>
+                                <option value="+222">+222 🇲🇷 (Mauritania)</option>
+                                <option value="+230">+230 🇲🇺 (Mauritius)</option>
+                                <option value="+52">+52 🇲🇽 (Mexico)</option>
+                                <option value="+691">+691 🇫🇲 (Micronesia (Fe)</option>
+                                <option value="+373">+373 🇲🇩 (Moldova (Repub)</option>
+                                <option value="+377">+377 🇲🇨 (Monaco)</option>
+                                <option value="+976">+976 🇲🇳 (Mongolia)</option>
+                                <option value="+382">+382 🇲🇪 (Montenegro)</option>
+                                <option value="+1664">+1664 🇲🇸 (Montserrat)</option>
+                                <option value="+212">+212 🇲🇦 (Morocco)</option>
+                                <option value="+258">+258 🇲🇿 (Mozambique)</option>
+                                <option value="+95">+95 🇲🇲 (Myanmar)</option>
+                                <option value="+264">+264 🇳🇦 (Namibia)</option>
+                                <option value="+674">+674 🇳🇷 (Nauru)</option>
+                                <option value="+977">+977 🇳🇵 (Nepal)</option>
+                                <option value="+31">+31 🇳🇱 (Netherlands)</option>
+                                <option value="+687">+687 🇳🇨 (New Caledonia)</option>
+                                <option value="+64">+64 🇳🇿 (New Zealand)</option>
+                                <option value="+505">+505 🇳🇮 (Nicaragua)</option>
+                                <option value="+227">+227 🇳🇪 (Niger)</option>
+                                <option value="+234">+234 🇳🇬 (Nigeria)</option>
+                                <option value="+683">+683 🇳🇺 (Niue)</option>
+                                <option value="+389">+389 🇲🇰 (North Macedoni)</option>
+                                <option value="+1670">+1670 🇲🇵 (Northern Maria)</option>
+                                <option value="+968">+968 🇴🇲 (Oman)</option>
+                                <option value="+92">+92 🇵🇰 (Pakistan)</option>
+                                <option value="+680">+680 🇵🇼 (Palau)</option>
+                                <option value="+970">+970 🇵🇸 (Palestine, Sta)</option>
+                                <option value="+507">+507 🇵🇦 (Panama)</option>
+                                <option value="+675">+675 🇵🇬 (Papua New Guin)</option>
+                                <option value="+595">+595 🇵🇾 (Paraguay)</option>
+                                <option value="+51">+51 🇵🇪 (Peru)</option>
+                                <option value="+63">+63 🇵🇭 (Philippines)</option>
+                                <option value="+48">+48 🇵🇱 (Poland)</option>
+                                <option value="+351">+351 🇵🇹 (Portugal)</option>
+                                <option value="+1787">+1787 🇵🇷 (Puerto Rico)</option>
+                                <option value="+974">+974 🇶🇦 (Qatar)</option>
+                                <option value="+40">+40 🇷🇴 (Romania)</option>
+                                <option value="+250">+250 🇷🇼 (Rwanda)</option>
+                                <option value="+290">+290 🇸🇭 (Saint Helena, )</option>
+                                <option value="+1869">+1869 🇰🇳 (Saint Kitts an)</option>
+                                <option value="+1758">+1758 🇱🇨 (Saint Lucia)</option>
+                                <option value="+508">+508 🇵🇲 (Saint Pierre a)</option>
+                                <option value="+1784">+1784 🇻🇨 (Saint Vincent )</option>
+                                <option value="+685">+685 🇼🇸 (Samoa)</option>
+                                <option value="+378">+378 🇸🇲 (San Marino)</option>
+                                <option value="+239">+239 🇸🇹 (Sao Tome and P)</option>
+                                <option value="+966">+966 🇸🇦 (Saudi Arabia)</option>
+                                <option value="+221">+221 🇸🇳 (Senegal)</option>
+                                <option value="+381">+381 🇷🇸 (Serbia)</option>
+                                <option value="+248">+248 🇸🇨 (Seychelles)</option>
+                                <option value="+232">+232 🇸🇱 (Sierra Leone)</option>
+                                <option value="+65">+65 🇸🇬 (Singapore)</option>
+                                <option value="+1721">+1721 🇸🇽 (Sint Maarten ()</option>
+                                <option value="+421">+421 🇸🇰 (Slovakia)</option>
+                                <option value="+386">+386 🇸🇮 (Slovenia)</option>
+                                <option value="+677">+677 🇸🇧 (Solomon Island)</option>
+                                <option value="+252">+252 🇸🇴 (Somalia)</option>
+                                <option value="+27">+27 🇿🇦 (South Africa)</option>
+                                <option value="+211">+211 🇸🇸 (South Sudan)</option>
+                                <option value="+34">+34 🇪🇸 (Spain)</option>
+                                <option value="+94">+94 🇱🇰 (Sri Lanka)</option>
+                                <option value="+249">+249 🇸🇩 (Sudan)</option>
+                                <option value="+597">+597 🇸🇷 (Suriname)</option>
+                                <option value="+46">+46 🇸🇪 (Sweden)</option>
+                                <option value="+41">+41 🇨🇭 (Switzerland)</option>
+                                <option value="+963">+963 🇸🇾 (Syrian Arab Re)</option>
+                                <option value="+886">+886 🇹🇼 (Taiwan)</option>
+                                <option value="+992">+992 🇹🇯 (Tajikistan)</option>
+                                <option value="+255">+255 🇹🇿 (Tanzania, Unit)</option>
+                                <option value="+66">+66 🇹🇭 (Thailand)</option>
+                                <option value="+670">+670 🇹🇱 (Timor-Leste)</option>
+                                <option value="+228">+228 🇹🇬 (Togo)</option>
+                                <option value="+690">+690 🇹🇰 (Tokelau)</option>
+                                <option value="+676">+676 🇹🇴 (Tonga)</option>
+                                <option value="+1868">+1868 🇹🇹 (Trinidad and T)</option>
+                                <option value="+216">+216 🇹🇳 (Tunisia)</option>
+                                <option value="+90">+90 🇹🇷 (Turkey)</option>
+                                <option value="+993">+993 🇹🇲 (Turkmenistan)</option>
+                                <option value="+1649">+1649 🇹🇨 (Turks and Caic)</option>
+                                <option value="+688">+688 🇹🇻 (Tuvalu)</option>
+                                <option value="+256">+256 🇺🇬 (Uganda)</option>
+                                <option value="+380">+380 🇺🇦 (Ukraine)</option>
+                                <option value="+971">+971 🇦🇪 (United Arab Em)</option>
+                                <option value="+598">+598 🇺🇾 (Uruguay)</option>
+                                <option value="+998">+998 🇺🇿 (Uzbekistan)</option>
+                                <option value="+678">+678 🇻🇺 (Vanuatu)</option>
+                                <option value="+58">+58 🇻🇪 (Venezuela (Bol)</option>
+                                <option value="+84">+84 🇻🇳 (Viet Nam)</option>
+                                <option value="+1284">+1284 🇻🇬 (Virgin Islands)</option>
+                                <option value="+1340">+1340 🇻🇮 (Virgin Islands)</option>
+                                <option value="+681">+681 🇼🇫 (Wallis and Fut)</option>
+                                <option value="+967">+967 🇾🇪 (Yemen)</option>
+                                <option value="+260">+260 🇿🇲 (Zambia)</option>
+                                <option value="+263">+263 🇿🇼 (Zimbabwe)</option>
+                            </select>
+                            <input type="tel" id="phone_number" name="phone_number" class="form-input" placeholder="77 123 4567" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 02. Safari Details & Guest Breakdown -->
+            <div class="form-step-section">
+                <div class="step-num-title"><i class="fa-solid fa-compass"></i> 02. Safari Details & Guests</div>
+                
+                <div class="form-field-group">
+                    <label for="safari_date">Safari Date</label>
+                    <input type="date" id="safari_date" name="safari_date" class="form-input" required>
+                </div>
+
+                <!-- Guest Age Breakdown Grid -->
+                <div style="margin-top: 14px;">
+                    <label style="font-size: 0.82rem; font-weight: 700; color: #333333; margin-bottom: 8px; display: block;">Select Guest Count & Age Breakdown:</label>
+                    <div class="guest-breakdown-grid">
+                        <div class="guest-type-box">
+                            <span class="guest-type-label">Adults</span>
+                            <span class="guest-type-sub">
+                                {% if package.price_type == 'per_person' %}
+                                Full Adult Rate ({{ package.price }}/person)
+                                {% else %}
+                                {% if package.includes_tickets or package.ticketPrice == '0' %}Included ($0){% else %}Full Rate Ticket (${{ package.ticketPrice }}){% endif %}
+                                {% endif %}
+                            </span>
+                            <input type="number" id="adult_guests" name="adult_guests" class="form-input" min="1" max="14" value="2" required style="margin-top: 4px;">
+                        </div>
+
+                        <div class="guest-type-box">
+                            <span class="guest-type-label">Children (6-16 yrs)</span>
+                            <span class="guest-type-sub">
+                                {% if package.price_type == 'per_person' %}
+                                Child Rate (${{ package.childTicketPrice }} USD)
+                                {% else %}
+                                {% if package.includes_tickets or package.childTicketPrice == '0' %}Included ($0){% else %}Child Ticket (${{ package.childTicketPrice }} USD){% endif %}
+                                {% endif %}
+                            </span>
+                            <input type="number" id="child_guests" name="child_guests" class="form-input" min="0" max="10" value="0" style="margin-top: 4px;">
+                        </div>
+
+                        <div class="guest-type-box">
+                            <span class="guest-type-label">Infant (Under 6 yrs)</span>
+                            <span class="guest-type-sub" style="color: #606C38;">FREE ($0 USD)</span>
+                            <input type="number" id="under6_guests" name="under6_guests" class="form-input" min="0" max="10" value="0" style="margin-top: 4px;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add-on Toggles & Meal Count Input -->
+                <div style="margin-top: 14px;">
+                    {% if package.price_type == 'jeep_only' %}
+                        <!-- Private Safari Add-on Toggles -->
+                        <div class="toggle-addon-container" style="margin-bottom: 12px;">
+                            <label class="toggle-addon-item">
+                                <div class="addon-toggle-left">
+                                    <input type="checkbox" id="include_meals" name="include_meals" class="addon-toggle-checkbox">
+                                    <span>Include Meals / Breakfast</span>
+                                </div>
+                                <span class="addon-toggle-price" id="meals_addon_label">${{ package.mealPrice }} / Person</span>
+                            </label>
+
+                            <!-- Sub-wrapper for Custom Meal Count -->
+                            <div class="meal-count-wrapper" id="mealCountWrapper" style="display: none;">
+                                <span class="meal-count-label"><i class="fa-solid fa-utensils"></i> Select Meal Count:</span>
+                                <input type="number" id="meal_count" name="meal_count" class="meal-count-input" min="1" max="15" value="2">
+                            </div>
+                        </div>
+
+                        <label class="toggle-addon-item">
+                            <div class="addon-toggle-left">
+                                <input type="checkbox" id="include_tickets" name="include_tickets" class="addon-toggle-checkbox">
+                                <span>Entry Tickets (Yala Permits)</span>
+                            </div>
+                            <span class="addon-toggle-price" id="tickets_addon_label" style="font-size: 0.78rem;">${{ package.ticketPrice }} Adult | ${{ package.childTicketPrice }} Child | Under 6 Free</span>
+                        </label>
+                    {% else %}
+                        <!-- Shared Safari Add-on Toggles (Included) -->
+                        <label class="toggle-addon-item" style="background: #F4F7F1; cursor: default;">
+                            <div class="addon-toggle-left">
+                                <input type="checkbox" id="include_meals" name="include_meals" class="addon-toggle-checkbox" checked disabled>
+                                <span>Include Meals (Packed Breakfast/Lunch)</span>
+                            </div>
+                            <span class="addon-toggle-price" style="color: #606C38;">Included ($0)</span>
+                        </label>
+
+                        <label class="toggle-addon-item" style="background: #F4F7F1; cursor: default;">
+                            <div class="addon-toggle-left">
+                                <input type="checkbox" id="include_tickets" name="include_tickets" class="addon-toggle-checkbox" checked disabled>
+                                <span>Entry Tickets (Yala Entrance & Permits)</span>
+                            </div>
+                            <span class="addon-toggle-price" style="color: #606C38;">Included ($0)</span>
+                        </label>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- 03. Special Requests -->
+            <div class="form-step-section">
+                <div class="step-num-title"><i class="fa-solid fa-pen-to-square"></i> 03. Special Requests</div>
+                
+                <div class="form-field-group">
+                    <label for="message">Message (Optional)</label>
+                    <textarea id="message" name="message" class="form-textarea" rows="3" placeholder="Let us know if you have any special needs, hotel pickup details, dietary preferences..."></textarea>
+                </div>
+            </div>
+
+            <!-- Live Calculation Summary Box -->
+            <div class="modal-summary-box">
+                <div class="summary-line">
+                    <span>{% if package.price_type == 'jeep_only' %}Jeep Base Price{% else %}Base Price (Per Person){% endif %}:</span>
+                    <span id="summary_base_price">$0.00</span>
+                </div>
+                <div class="summary-line">
+                    <span>Include Meals (<span id="summary_meal_count_label">0</span> meals):</span>
+                    <span id="summary_meals_price">$0.00</span>
+                </div>
+                <div class="summary-line">
+                    <span>Entry Tickets (<span id="summary_guest_count_label">2</span> guests):</span>
+                    <span id="summary_tickets_price">$0.00</span>
+                </div>
+                <div class="summary-line total-line">
+                    <span>Total Price:</span>
+                    <span id="summary_total_price">$0.00</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-reserve-package" style="border: none; font-size: 0.95rem; cursor: pointer;">
+                <i class="fa-solid fa-paper-plane"></i> SUBMIT BOOKING
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Ultra-Charming Success Confirmation Modal -->
+<div class="success-modal-overlay" id="bookingSuccessModalOverlay">
+    <div class="success-modal-card">
+        <div class="success-icon-ring">
+            <i class="fa-solid fa-check"></i>
+        </div>
+
+        <h3 class="success-modal-title">RESERVATION SUBMITTED!</h3>
+        <p class="success-modal-subtitle">Thank you for booking your safari expedition with <strong>Yala Leopard Tracks</strong>. A confirmation email has been dispatched to your email address.</p>
+        
+        <div class="success-ref-box" id="successBookingRef">
+            Reference ID: #6a84...
+        </div>
+
+        <div style="margin-bottom: 24px; font-size: 0.85rem; color: #475128; line-height: 1.6;">
+            📞 <strong>Need instant updates?</strong> Contact our 24/7 Safari Desk directly:<br>
+            <a href="https://wa.me/94778158004" style="color: #606C38; font-weight: 800; text-decoration: none;">Hotline / WhatsApp: +94 778158004</a>
+        </div>
+
+        <button type="button" class="btn-success-close" id="closeSuccessModalBtn">
+            CLOSE & EXPLORE SAFARIS
+        </button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modalOverlay = document.getElementById('bookingModalOverlay');
+        const openBtn = document.getElementById('openBookingModalBtn');
+        const closeBtn = document.getElementById('closeBookingModalBtn');
+
+        const adultInput = document.getElementById('adult_guests');
+        const childInput = document.getElementById('child_guests');
+        const under6Input = document.getElementById('under6_guests');
+
+        const mealsCheckbox = document.getElementById('include_meals');
+        const mealCountWrapper = document.getElementById('mealCountWrapper');
+        const mealCountInput = document.getElementById('meal_count');
+        const ticketsCheckbox = document.getElementById('include_tickets');
+
+        const successModalOverlay = document.getElementById('bookingSuccessModalOverlay');
+        const closeSuccessModalBtn = document.getElementById('closeSuccessModalBtn');
+        const successBookingRef = document.getElementById('successBookingRef');
+
+        const priceType = "{{ package.price_type }}";
+        const rawPriceStr = "{{ package.price }}";
+        const mealPriceUnit = parseFloat("{{ package.mealPrice }}") || 0;
+        const adultTicketPriceUnit = parseFloat("{{ package.ticketPrice }}") || 46;
+        const childTicketPriceUnit = parseFloat("{{ package.childTicketPrice }}") || 20;
+
+        function parsePrice(str) {
+            if (!str) return 0;
+            const match = str.match(/[\d\.]+/);
+            return match ? parseFloat(match[0]) : 0;
+        }
+
+        const baseUnitValue = parsePrice(rawPriceStr);
+
+        function calculateLiveTotal() {
+            const adults = parseInt(adultInput.value) || 0;
+            const children = parseInt(childInput.value) || 0;
+            const under6 = parseInt(under6Input.value) || 0;
+            const totalGuests = Math.max(1, adults + children + under6);
+
+            let baseTotal = 0;
+            let mealsTotal = 0;
+            let ticketsTotal = 0;
+
+            // Sync meal count input if meals checked
+            if (mealsCheckbox && mealsCheckbox.checked && priceType === 'jeep_only') {
+                if (mealCountWrapper) mealCountWrapper.style.display = 'flex';
+                let mealCount = parseInt(mealCountInput.value);
+                if (isNaN(mealCount) || mealCount <= 0) {
+                    mealCount = totalGuests;
+                    mealCountInput.value = mealCount;
+                }
+                mealsTotal = mealPriceUnit * mealCount;
+                document.getElementById('summary_meal_count_label').textContent = mealCount;
+            } else {
+                if (mealCountWrapper) mealCountWrapper.style.display = 'none';
+                document.getElementById('summary_meal_count_label').textContent = '0';
+            }
+
+            if (priceType === 'jeep_only') {
+                // Private Jeep: Fixed Jeep Price
+                baseTotal = baseUnitValue;
+
+                // Tickets from DB: Adult ticketPrice | Child childTicketPrice | Under 6 Free ($0)
+                if (ticketsCheckbox && ticketsCheckbox.checked) {
+                    ticketsTotal = (adults * adultTicketPriceUnit) + (children * childTicketPriceUnit);
+                }
+            } else {
+                // Shared Safari: Per Person All-Inclusive
+                // Adults at full adult rate, Children at child rate from DB, Infants (Under 6) FREE ($0)
+                baseTotal = (adults * baseUnitValue) + (children * childTicketPriceUnit);
+                mealsTotal = 0;
+                ticketsTotal = 0;
+            }
+
+            const grandTotal = baseTotal + mealsTotal + ticketsTotal;
+
+            // Update DOM Summary
+            document.getElementById('summary_guest_count_label').textContent = totalGuests;
+            document.getElementById('summary_base_price').textContent = '$' + baseTotal.toFixed(2);
+            document.getElementById('summary_meals_price').textContent = '$' + mealsTotal.toFixed(2);
+            document.getElementById('summary_tickets_price').textContent = '$' + ticketsTotal.toFixed(2);
+            document.getElementById('summary_total_price').textContent = '$' + grandTotal.toFixed(2);
+
+            // Hidden Inputs
+            document.getElementById('calc_base_price').value = baseTotal.toFixed(2);
+            document.getElementById('calc_meals_price_total').value = mealsTotal.toFixed(2);
+            document.getElementById('calc_tickets_price_total').value = ticketsTotal.toFixed(2);
+            document.getElementById('calc_total_price').value = grandTotal.toFixed(2);
+        }
+
+        function openModal() {
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            const dateInput = document.getElementById('safari_date');
+            if (dateInput && !dateInput.value) {
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                dateInput.value = tomorrow.toISOString().split('T')[0];
+            }
+            calculateLiveTotal();
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        if (openBtn) openBtn.addEventListener('click', openModal);
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (modalOverlay) {
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) closeModal();
+            });
+        }
+
+        // Add Listeners for Guest & Meal Inputs
+        [adultInput, childInput, under6Input, mealCountInput].forEach(inp => {
+            if (inp) inp.addEventListener('input', calculateLiveTotal);
+        });
+
+        if (mealsCheckbox && priceType === 'jeep_only') {
+            mealsCheckbox.addEventListener('change', () => {
+                if (mealsCheckbox.checked && mealCountInput) {
+                    const totalGuests = (parseInt(adultInput.value) || 0) + (parseInt(childInput.value) || 0) + (parseInt(under6Input.value) || 0);
+                    mealCountInput.value = Math.max(1, totalGuests);
+                }
+                calculateLiveTotal();
+            });
+        }
+
+        if (ticketsCheckbox && priceType === 'jeep_only') {
+            ticketsCheckbox.addEventListener('change', calculateLiveTotal);
+        }
+
+        // Form AJAX Submission with Breathtaking Success Confirmation Modal
+        const form = document.getElementById('safariBookingForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    closeModal();
+                    if (data.status === 'success') {
+                        if (successBookingRef) successBookingRef.textContent = 'Reference ID: #' + (data.booking_id || 'CONFIRMED');
+                        if (successModalOverlay) {
+                            successModalOverlay.classList.add('active');
+                            document.body.style.overflow = 'hidden';
+                        }
+                        form.reset();
+                    } else {
+                        alert('⚠️ Could not submit booking: ' + (data.message || 'Please check form details.'));
+                    }
+                })
+                .catch(err => {
+                    closeModal();
+                    if (successModalOverlay) {
+                        successModalOverlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                    form.reset();
+                });
+            });
+        }
+
+        if (closeSuccessModalBtn) {
+            closeSuccessModalBtn.addEventListener('click', () => {
+                if (successModalOverlay) successModalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+
+        // Auto-sync Phone Calling Code when Country is selected
+        const countrySelect = document.getElementById('country');
+        const phoneCodeSelect = document.getElementById('phone_code');
+        if (countrySelect && phoneCodeSelect) {
+            countrySelect.addEventListener('change', function() {
+                const selectedOpt = this.options[this.selectedIndex];
+                const dataCode = selectedOpt ? selectedOpt.getAttribute('data-code') : null;
+                if (dataCode) {
+                    for (let i = 0; i < phoneCodeSelect.options.length; i++) {
+                        if (phoneCodeSelect.options[i].value === dataCode) {
+                            phoneCodeSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initial Calc
+        calculateLiveTotal();
+    });
+</script>
+{% endblock %}

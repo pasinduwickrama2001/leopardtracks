@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<!-- Policy Header Banner -->
+<section style="background-color: var(--bg-pastel-cream); padding: 100px 0 40px;">
+    <div class="container text-center" style="max-width: 840px; margin: 0 auto;">
+        <span class="section-tag font-gold"><i class="fa-solid fa-shield-halved"></i> LEGAL & TRUST GUARANTEE</span>
+        <h1 style="font-family: var(--font-heading); font-size: 2.3rem; font-weight: 800; color: #233325; margin-top: 10px;">
+            PRIVACY POLICY, TERMS OF SERVICE & REFUND POLICY
+        </h1>
+        <p style="font-size: 1.05rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px;">
+            Yala Leopard Tracks is committed to full transparency, data privacy, and clear booking terms for all international wildlife travelers.
+        </p>
+
+        <!-- Quick Jump Tab Bar -->
+        <div style="display: flex; justify-content: center; gap: 16px; margin-top: 28px; flex-wrap: wrap;">
+            <a href="#privacy" class="btn-light-pill" style="font-size: 0.82rem; padding: 10px 22px;"><i class="fa-solid fa-user-shield font-gold"></i> PRIVACY POLICY</a>
+            <a href="#terms" class="btn-light-pill" style="font-size: 0.82rem; padding: 10px 22px;"><i class="fa-solid fa-file-contract font-gold"></i> TERMS OF SERVICE</a>
+            <a href="#refunds" class="btn-light-pill" style="font-size: 0.82rem; padding: 10px 22px;"><i class="fa-solid fa-rotate-left font-gold"></i> REFUND & CANCELLATION</a>
+        </div>
+    </div>
+</section>
+
+<!-- Main Legal Content Container -->
+<section style="background-color: var(--bg-pastel-cream); padding: 30px 0 80px;">
+    <div class="container" style="max-width: 960px; margin: 0 auto;">
+
+        <!-- 1. PRIVACY POLICY -->
+        <div id="privacy" style="background-color: var(--bg-pastel-cream); border-radius: 24px; padding: 36px; margin-bottom: 44px; border: 1px solid rgba(96,108,56,0.15);">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 18px;">
+                <div style="background: rgba(96,108,56,0.12); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #606C38; font-size: 1.2rem;">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h2 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; color: #233325; margin: 0;">1. PRIVACY POLICY</h2>
+            </div>
+            
+            <div style="font-size: 0.95rem; color: #233325; line-height: 1.8;">
+                <p style="margin-bottom: 16px;">
+                    At <strong>Yala Leopard Tracks</strong>, accessible from <code>yaleleopardtracks.com</code>, the privacy of our guests is one of our top priorities. This Privacy Policy outlines the types of information we collect and how we use and protect it.
+                </p>
+
+                <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: #606C38; margin: 20px 0 10px;">Information We Collect</h3>
+                <ul style="padding-left: 20px; margin-bottom: 20px;">
+                    <li style="margin-bottom: 8px;"><strong>Personal Information:</strong> Name, email address, phone number/WhatsApp, country of origin, and safari date preferences provided when submitting inquiries or reserving permit calculations.</li>
+                    <li style="margin-bottom: 8px;"><strong>Safari Preferences:</strong> Number of adult/child passengers, preferred game drive times (morning/afternoon/full-day), and dietary/hotel pickup requirements.</li>
+                    <li style="margin-bottom: 8px;"><strong>Email Confirmations:</strong> Automated email notifications sent via secure SMTP to confirm tariff breakdowns and booking receipts.</li>
+                </ul>
+
+                <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: #606C38; margin: 20px 0 10px;">How We Use Your Information</h3>
+                <p style="margin-bottom: 16px;">
+                    We use collected information solely to process Department of Wildlife Conservation (DWC) entrance vouchers, coordinate 4x4 Land Cruiser hotel pickups, dispatch itemized price breakdown confirmations to your email, and deliver superior customer service.
+                </p>
+
+                <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: #606C38; margin: 20px 0 10px;">Data Protection & Payment Security</h3>
+                <p style="margin-bottom: 0;">
+                    We never sell, rent, or trade guest personal information to third-party marketing companies. Online payments are encrypted via PayHere gateway using 256-bit SSL encryption compliant with PCI-DSS standards.
+                </p>
+            </div>
+        </div>
+
+        <!-- 2. TERMS OF SERVICE -->
+        <div id="terms" style="background-color: var(--bg-pastel-cream); border-radius: 24px; padding: 36px; margin-bottom: 44px; border: 1px solid rgba(96,108,56,0.15);">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 18px;">
+                <div style="background: rgba(96,108,56,0.12); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #606C38; font-size: 1.2rem;">
+                    <i class="fa-solid fa-file-contract"></i>
+                </div>
+                <h2 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; color: #233325; margin: 0;">2. TERMS OF SERVICE</h2>
+            </div>
+
+            <div style="font-size: 0.95rem; color: #233325; line-height: 1.8;">
+                <p style="margin-bottom: 16px;">
+                    By reserving a 4x4 game drive, luxury glamping camp stay, or island round tour with <strong>Yala Leopard Tracks</strong>, you agree to comply with the following operational terms and Department of Wildlife Conservation (DWC) regulations:
+                </p>
+
+                <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: #606C38; margin: 20px 0 10px;">Safari Operating Hours & Park Clearance</h3>
+                <ul style="padding-left: 20px; margin-bottom: 20px;">
+                    <li style="margin-bottom: 8px;"><strong>Morning Safaris:</strong> Pickups start between 05:00 AM – 05:30 AM. Park gates open at 06:00 AM and close at 10:00 AM.</li>
+                    <li style="margin-bottom: 8px;"><strong>Afternoon Safaris:</strong> Pickups start between 02:00 PM – 02:30 PM. Park gates close strictly at 06:00 PM.</li>
+                    <li style="margin-bottom: 8px;"><strong>Full-Day Expeditions:</strong> Operates continuously from 06:00 AM to 06:00 PM with mandatory lunch break at Patanangala beach.</li>
+                </ul>
+
+                <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: #606C38; margin: 20px 0 10px;">Guest Safety & Wildlife Conduct</h3>
+                <p style="margin-bottom: 16px;">
+                    Guests must remain inside the modified 4x4 Land Cruiser at all times except at designated DWC rest areas (Patanangala & Manik River). Feeding wildlife, loud noises, standing on seats, or littering inside the national park is strictly prohibited under Sri Lankan Wildlife Law.
+                </p>
+
+                <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: #606C38; margin: 20px 0 10px;">Wildlife Sightings Policy</h3>
+                <p style="margin-bottom: 0;">
+                    While Yala National Park hosts the world's highest wild leopard density, wildlife sightings depend on natural movement and weather conditions. Our certified senior naturalists use expert tracking techniques to maximize sighting opportunities on every safari.
+                </p>
+            </div>
+        </div>
+
+        <!-- 3. REFUND & CANCELLATION POLICY -->
+        <div id="refunds" style="background-color: var(--bg-pastel-cream); border-radius: 24px; padding: 36px; border: 1px solid rgba(96,108,56,0.15);">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 18px;">
+                <div style="background: rgba(96,108,56,0.12); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #606C38; font-size: 1.2rem;">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </div>
+                <h2 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; color: #233325; margin: 0;">3. REFUND & CANCELLATION POLICY</h2>
+            </div>
+
+            <div style="font-size: 0.95rem; color: #233325; line-height: 1.8;">
+                <p style="margin-bottom: 16px;">
+                    We understand travel plans change. Our refund and cancellation terms balance flexibility for guests with non-refundable Department of Wildlife Conservation (DWC) gate fees:
+                </p>
+
+                <div style="background: rgba(96,108,56,0.06); padding: 20px; border-radius: 16px; margin-bottom: 24px;">
+                    <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: #233325; margin: 0 0 10px 0;">Cancellation Schedule</h3>
+                    <ul style="padding-left: 20px; margin: 0;">
+                        <li style="margin-bottom: 8px;"><strong>48+ Hours Before Safari:</strong> 100% full refund of Yala Leopard Tracks service fees (minus non-refundable DWC gate entrance voucher fees).</li>
+                        <li style="margin-bottom: 8px;"><strong>24 – 48 Hours Before Safari:</strong> 50% refund or free date rescheduling to any alternative available safari slot.</li>
+                        <li style="margin-bottom: 8px;"><strong>Less Than 24 Hours / No-Show:</strong> Non-refundable due to pre-assigned jeep driver, tracker, and entrance clearance allocation.</li>
+                    </ul>
+                </div>
+
+                <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: #606C38; margin: 20px 0 10px;">Weather & Severe Emergency Rescheduling</h3>
+                <p style="margin-bottom: 16px;">
+                    In the rare event that DWC authorities close Yala National Park due to severe monsoonal weather or floods, guests will receive 100% full refund or free priority rescheduling to Wilpattu National Park or an alternative safari date.
+                </p>
+
+                <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: #606C38; margin: 20px 0 10px;">Refund Processing Time</h3>
+                <p style="margin-bottom: 0;">
+                    Approved refunds are credited back to the original payment card or bank account via PayHere gateway within <strong>3 to 5 business days</strong>.
+                </p>
+            </div>
+        </div>
+
+        <!-- Contact Support CTA -->
+        <div style="text-align: center; margin-top: 48px;">
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 14px;">Have questions regarding your safari booking or cancellation policy?</p>
+            <a href="{% url 'contact' %}" class="btn-gold-pill" style="padding: 14px 32px;">CONTACT SUPPORT TEAM <i class="fa-solid fa-headset"></i></a>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

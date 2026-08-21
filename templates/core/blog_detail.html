@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} | Yala Leopard Tracks Journal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+<link rel="stylesheet" href="{% static 'css/blog_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="blog-detail-section">
+    <div class="container">
+        <div class="blog-detail-container">
+            
+            <!-- Breadcrumb Navigation -->
+            <div class="blog-breadcrumb">
+                <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+                <span>/</span>
+                <a href="{% url 'blog' %}">Blog & Journal</a>
+                <span>/</span>
+                <span class="blog-breadcrumb-active">{{ post.title|truncatewords:6 }}</span>
+            </div>
+
+            <!-- Category & Title -->
+            <span class="section-tag tag-sage blog-category-tag">{{ post.category }}</span>
+            <h1 class="blog-detail-title">{{ post.title }}</h1>
+
+            <!-- Article Meta -->
+            <div class="blog-detail-meta">
+                <span><i class="fa-solid fa-user-astronaut"></i> Author: <strong>{{ post.author }}</strong></span>
+                <span><i class="fa-solid fa-calendar"></i> Published: <strong>{{ post.created_at|date:"F d, Y" }}</strong></span>
+            </div>
+
+            {% if post.imageUrl %}
+            <img src="{{ post.imageUrl }}" alt="{{ post.title }}" class="blog-detail-hero-img">
+            {% endif %}
+
+            <!-- Article Story Body -->
+            <div class="blog-content-body">
+                {% for paragraph in paragraphs %}
+                <p class="blog-paragraph">{{ paragraph }}</p>
+                {% empty %}
+                <p class="blog-paragraph">{{ post.content }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Promo Callout Banner -->
+            <div class="blog-promo-box">
+                <div>
+                    <h4>READY TO EXPERIENCE YALA WILDERNESS?</h4>
+                    <p>Book your 4x4 private game drive with experienced trackers today.</p>
+                </div>
+                <a href="{% url 'packages' %}" class="btn-jungle-pill">EXPLORE SAFARI PACKAGES <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Related Articles Section -->
+{% if recent_posts %}
+<section class="recent-posts-section">
+    <div class="container">
+        <div class="recent-posts-header">
+            <span class="section-tag tag-sage">MORE FROM OUR FIELD LOGS</span>
+            <h2 class="section-title recent-posts-title">RELATED WILDLIFE ARTICLES</h2>
+        </div>
+
+        <div class="recent-posts-list">
+            {% for item in recent_posts %}
+            <div class="about-section recent-post-item">
+                <div class="grid-2-col align-center">
+                    <!-- Image Left -->
+                    <a href="{% url 'blog_detail' slug=item.slug %}" class="about-image-card recent-post-image-link">
+                        {% if item.imageUrl %}
+                        <img src="{{ item.imageUrl }}" alt="{{ item.title }}" class="rounded-img shadow-clean recent-post-img">
+                        {% else %}
+                        <img src="{% static 'images/yala-wildlife-hero.jpg' %}" alt="{{ item.title }}" class="rounded-img shadow-clean recent-post-img">
+                        {% endif %}
+                        <div class="image-overlay-badge">
+                            <span class="overlay-title">Yala National Park</span>
+                            <span class="overlay-sub">{{ item.category }}</span>
+                        </div>
+                    </a>
+
+                    <!-- Description Right -->
+                    <div class="about-text-content">
+                        <span class="section-tag tag-sage recent-post-tag">{{ item.category }}</span>
+                        <h3 class="section-title recent-post-title">
+                            <a href="{% url 'blog_detail' slug=item.slug %}">{{ item.title }}</a>
+                        </h3>
+                        <div class="article-meta-row" style="margin-bottom: 14px;">
+                            <span class="author-chip"><i class="fa-solid fa-user"></i> {{ item.author }}</span>
+                            <span><i class="fa-solid fa-calendar"></i> {{ item.created_at|date:"M d, Y" }}</span>
+                        </div>
+                        <p class="paragraph-lead recent-post-excerpt">
+                            {{ item.content|truncatewords:35 }}
+                        </p>
+                        <div>
+                            <a href="{% url 'blog_detail' slug=item.slug %}" class="btn-gold-pill">READ ARTICLE <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

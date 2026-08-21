@@ -1,38 +1,49 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Contact Us & Headquarters Location | Yala Leopard Tracks{% endblock %}
+
 {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
 <link rel="stylesheet" href="{% static 'css/contact.css' %}">
 {% endblock %}
 
 {% block content %}
-<!-- Contact Hero Header Section -->
-<section class="contact-hero-section">
-    <div class="hero-content">
-        <span class="hero-pill-badge"><i class="fa-solid fa-headset"></i> 24/7 SAFARI DESK & SUPPORT</span>
-        <h1 class="hero-title">CONTACT YALA LEOPARD TRACKS</h1>
-        <p class="hero-subtitle">Connect directly with our senior naturalist trackers, book private 4x4 game drives, or request custom islandwide transport arrangements.</p>
+<!-- Blog-Style Hero Header Section -->
+<section class="blog-hero-section" style="background-color: var(--bg-pastel-cream);">
+    <div class="container text-center">
+        <span class="section-tag font-gold"><i class="fa-solid fa-headset"></i> 24/7 SAFARI DESK & SUPPORT</span>
+        <h1 class="hero-title section-title">CONTACT YALA LEOPARD TRACKS</h1>
+        <p
+            style="font-family: var(--font-body); font-size: 1.125rem; font-weight: 500; color: #233325; line-height: 1.75; margin-top: 12px; font-style: normal; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Connect directly with our senior naturalist trackers, book private 4x4 game drives, or request custom
+            islandwide transport arrangements.
+        </p>
     </div>
 </section>
 
-<!-- Direct Contact Cards Section -->
-<section class="contact-grid-section">
+<!-- Direct Contact Cards Grid Section -->
+<section class="contact-grid-section" style="background-color: var(--bg-pastel-cream); padding: 40px 0 30px;">
     <div class="container">
         <div class="contact-grid">
             <!-- Phone & WhatsApp Card -->
             <div class="contact-card">
                 <div class="contact-card-icon"><i class="fa-solid fa-phone"></i></div>
                 <h3 class="contact-card-title">Phone & WhatsApp</h3>
-                <p class="contact-card-value"><strong>{{ contact_info.phone }}</strong><br>Instant 24/7 Response Desk</p>
-                <a href="{{ contact_info.whatsapp_url }}" target="_blank" class="btn-whatsapp-pill"><i class="fa-brands fa-whatsapp"></i> CHAT ON WHATSAPP</a>
+                <p class="contact-card-value"><strong>{{ contact_info.phone }}</strong><br>Instant 24/7 Response Desk
+                </p>
+                <a href="{{ contact_info.whatsapp_url }}" target="_blank" class="btn-whatsapp-pill"><i
+                        class="fa-brands fa-whatsapp"></i> CHAT ON WHATSAPP</a>
             </div>
 
             <!-- Email Card -->
             <div class="contact-card">
                 <div class="contact-card-icon"><i class="fa-solid fa-envelope"></i></div>
                 <h3 class="contact-card-title">Official Email</h3>
-                <p class="contact-card-value"><strong>{{ contact_info.email }}</strong><br>Inquiries & Customized Quotes</p>
-                <a href="mailto:{{ contact_info.email }}" class="btn-jungle-pill" style="padding: 8px 18px; font-size: 0.78rem;">SEND AN EMAIL</a>
+                <p class="contact-card-value"><strong>{{ contact_info.email }}</strong><br>Inquiries & Customized Quotes
+                </p>
+                <a href="mailto:{{ contact_info.email }}" class="btn-gold-pill"
+                    style="padding: 8px 18px; font-size: 0.78rem;">SEND AN EMAIL</a>
             </div>
 
             <!-- Address Card -->
@@ -40,119 +51,142 @@
                 <div class="contact-card-icon"><i class="fa-solid fa-map-location-dot"></i></div>
                 <h3 class="contact-card-title">Headquarters</h3>
                 <p class="contact-card-value">{{ contact_info.address }}</p>
-                <a href="#location-map" class="btn-light-pill" style="padding: 8px 18px; font-size: 0.78rem; border-color: #606C38; color: #475128;">VIEW ON MAP</a>
+                <a href="https://maps.app.goo.gl/oQb7TbaFHfs5QCd58" target="_blank" class="btn-gold-pill"
+                    style="padding: 8px 18px; font-size: 0.78rem;">VIEW ON MAP <i
+                        class="fa-solid fa-arrow-up-right-from-square"></i></a>
             </div>
 
             <!-- Operating Hours Card -->
             <div class="contact-card">
                 <div class="contact-card-icon"><i class="fa-solid fa-clock"></i></div>
                 <h3 class="contact-card-title">Operating Desk</h3>
-                <p class="contact-card-value"><strong>Support Desk:</strong><br>{{ contact_info.desk_hours }}<br><br><strong>Gate Desk:</strong><br>{{ contact_info.gate_hours }}</p>
+                <p class="contact-card-value"><strong>Support Desk:</strong><br>{{ contact_info.desk_hours
+                    }}<br><br><strong>Gate Desk:</strong><br>{{ contact_info.gate_hours }}</p>
+            </div>
+
+            <!-- Official Wildlife Authority Card (DWC Sri Lanka) -->
+            <div class="contact-card"
+                style="grid-column: span 4; background-color: var(--bg-pastel-cream); border: none; text-align: left; padding: 32px; display: flex; flex-direction: row; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; margin-top: 10px;">
+                <div>
+                    <span class="section-tag font-gold" style="margin-bottom: 8px;"><i
+                            class="fa-solid fa-building-shield"></i> OFFICIAL NATIONAL PARK GOVERNING AUTHORITY</span>
+                    <h3
+                        style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin: 6px 0 8px;">
+                        DEPARTMENT OF WILDLIFE CONSERVATION (DWC)</h3>
+                    <p style="font-size: 0.92rem; color: var(--text-muted); margin: 0 0 6px 0;"><strong>Headquarters
+                            Address:</strong> 811A, Jayanthipura, Battaramulla, Sri Lanka.</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">
+                        <strong>Official Phones:</strong> +94 11 2 888 585 | +94 11 2 883 355 &nbsp;•&nbsp;
+                        <strong>Director General Email:</strong> <a href="mailto:dg@dwc.gov.lk"
+                            style="color: #606C38; font-weight: 700;">dg@dwc.gov.lk</a>
+                    </p>
+                </div>
+                <div>
+                    <a href="https://dwc.gov.lk" target="_blank" class="btn-gold-pill"><i class="fa-solid fa-globe"></i>
+                        VISIT DWC.GOV.LK</a>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Interactive Contact Inquiry Form Section -->
-<section class="contact-form-section">
-    <div class="container">
-        <div class="contact-form-card">
+<!-- Cuter & Smaller Compact Contact Inquiry Form Section -->
+<section class="contact-form-section" style="background-color: var(--bg-pastel-cream); padding: 30px 0 60px;">
+    <div class="container" style="max-width: 640px; margin: 0 auto;">
+        <div class="contact-form-card"
+            style="background-color: var(--bg-pastel-cream); border-radius: 24px; padding: 36px 32px; border: none; box-shadow: none;">
             {% if success_message %}
-            <div class="alert-success-banner">
+            <div class="alert-success-banner"
+                style="margin-bottom: 24px; padding: 14px 20px; background: #606C38; color: #FFFFFF; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-align: center;">
                 <i class="fa-solid fa-circle-check"></i> {{ success_message }}
             </div>
             {% endif %}
 
-            <div class="section-header text-center">
-                <span class="section-tag tag-sage">GET IN TOUCH WITH US</span>
-                <h2>SEND US A DIRECT INQUIRY</h2>
-                <p>Have questions about park permit fees, best tracking seasons, luxury tented camps, or private airport shuttles? Fill out the form below.</p>
+            <div class="section-header text-center" style="margin-bottom: 24px;">
+                <span class="section-tag tag-sage" style="font-size: 0.78rem; padding: 4px 14px;"><i
+                        class="fa-solid fa-paper-plane"></i> DIRECT DESK</span>
+                <h2 class="section-title" style="margin-top: 6px; font-size: 1.65rem;">SEND US A MESSAGE</h2>
             </div>
 
             <form class="safari-booking-form" action="{% url 'contact' %}" method="POST">
                 {% csrf_token %}
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="full_name"><i class="fa-solid fa-user"></i> Full Name *</label>
-                        <input type="text" id="full_name" name="full_name" placeholder="e.g. Alexander Wright" required>
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="full_name"
+                        style="font-size: 0.85rem; font-weight: 700; color: #233325; margin-bottom: 6px; display: block;"><i
+                            class="fa-solid fa-user font-gold"></i> Full Name *</label>
+                    <input type="text" id="full_name" name="full_name" placeholder="e.g. Alexander Wright" required
+                        style="width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(96,108,56,0.15); background: rgba(96,108,56,0.05); font-size: 0.92rem;">
+                </div>
+
+                <div class="form-row"
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                    <div class="form-group" style="margin: 0;">
+                        <label for="email_address"
+                            style="font-size: 0.85rem; font-weight: 700; color: #233325; margin-bottom: 6px; display: block;"><i
+                                class="fa-solid fa-envelope font-gold"></i> Email Address *</label>
+                        <input type="email" id="email_address" name="email_address"
+                            placeholder="yalaleopardtracks@gmail.com" required
+                            style="width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(96,108,56,0.15); background: rgba(96,108,56,0.05); font-size: 0.92rem;">
                     </div>
 
-                    <div class="form-group">
-                        <label for="email_address"><i class="fa-solid fa-envelope"></i> Email Address *</label>
-                        <input type="email" id="email_address" name="email_address" placeholder="pasindusadanjana17@gmail.com" required>
+                    <div class="form-group" style="margin: 0;">
+                        <label for="phone_number"
+                            style="font-size: 0.85rem; font-weight: 700; color: #233325; margin-bottom: 6px; display: block;"><i
+                                class="fa-solid fa-phone font-gold"></i> Phone / WhatsApp *</label>
+                        <input type="tel" id="phone_number" name="phone_number" placeholder="+94 77 815 8004" required
+                            style="width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(96,108,56,0.15); background: rgba(96,108,56,0.05); font-size: 0.92rem;">
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="phone_number"><i class="fa-solid fa-phone"></i> Phone / WhatsApp *</label>
-                        <input type="tel" id="phone_number" name="phone_number" placeholder="+94 77 815 8004" required>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="inquiry_topic"><i class="fa-solid fa-list-check"></i> Inquiry Topic *</label>
-                        <select id="inquiry_topic" name="inquiry_topic" required>
-                            <option value="Yala Safari Permits & Game Drives">Yala Safari Permits & Game Drives</option>
-                            <option value="Luxury Tented Safari Campsite Stay">Luxury Tented Safari Campsite Stay</option>
-                            <option value="Islandwide Private Transport & Airport Transfer">Islandwide Private Transport & Airport Transfer</option>
-                            <option value="Wildlife Photography Expedition Hides">Wildlife Photography Expedition Hides</option>
-                            <option value="General Information & Customs">General Information & Customs</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="travel_date"><i class="fa-solid fa-calendar-days"></i> Expected Travel Date</label>
-                        <input type="date" id="travel_date" name="travel_date">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="guest_count"><i class="fa-solid fa-users"></i> Number of Travelers</label>
-                        <select id="guest_count" name="guest_count">
-                            <option value="Solo Traveler">Solo Traveler</option>
-                            <option value="2 Guests" selected>2 Guests</option>
-                            <option value="3-4 Guests">3-4 Guests</option>
-                            <option value="5+ Group">5+ Group</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="message"><i class="fa-solid fa-comment-dots"></i> Message / Specific Questions *</label>
-                    <textarea id="message" name="message" rows="4" placeholder="Tell us about your trip plans, preferred park entry gates, hotel pickup details, or special requests..." required></textarea>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="message"
+                        style="font-size: 0.85rem; font-weight: 700; color: #233325; margin-bottom: 6px; display: block;"><i
+                            class="fa-solid fa-comment-dots font-gold"></i> Message *</label>
+                    <textarea id="message" name="message" rows="3"
+                        placeholder="Tell us about your trip plans or questions..." required
+                        style="width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(96,108,56,0.15); background: rgba(96,108,56,0.05); font-size: 0.92rem; font-family: var(--font-body);"></textarea>
                 </div>
 
                 <div class="form-submit-wrapper text-center">
-                    <button type="submit" class="btn-jungle-pill btn-block">SEND MESSAGE & INQUIRE</button>
-                    <p class="form-guarantee-note"><i class="fa-solid fa-bolt font-jungle"></i> Average Response Time: Under 15 Minutes</p>
+                    <button type="submit" class="btn-gold-pill"
+                        style="width: 100%; padding: 14px 28px; font-size: 0.92rem; border-radius: 50px; font-weight: 800; display: inline-flex; justify-content: center; align-items: center; gap: 8px;">
+                        SEND MESSAGE <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                    <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-muted); font-weight: 600;"><i
+                            class="fa-solid fa-bolt font-gold"></i> Response time: ~15 mins</p>
                 </div>
             </form>
         </div>
     </div>
 </section>
 
-<!-- Location Map Section -->
-<section class="location-map-section" id="location-map">
+<!-- Location Map Section (Google Maps Embed for https://maps.app.goo.gl/oQb7TbaFHfs5QCd58) -->
+<section class="location-map-section" id="location-map"
+    style="background-color: var(--bg-pastel-cream); padding: 40px 0 80px;">
     <div class="container">
-        <div class="section-header text-center">
-            <span class="section-tag tag-sage">FIND OUR PARK DESK</span>
-            <h2 class="section-title">YALA HEADQUARTERS LOCATION</h2>
-            <p class="section-subtitle">Located on Yala Entrance Road in Wickrama, Kasingama — just 10 minutes from the main Palatupana Park Gate.</p>
-        </div>
-
         <div class="map-card-wrapper">
             <div class="map-iframe-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126915.65874288636!2d81.25895785000002!3d6.24867975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae698652d5b6e27%3A0x673eece4b3b24f5a!2sTissamaharama%2C%20Sri%20Lanka!5e0!3m2!1sen!2slk!4v1700000000000!5m2!1sen!2slk" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.972396349386!2d81.29858767586524!3d6.265796026101962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x62b813f2717b2b81%3A0xf0b7e34cc97ec936!2sYala%20Wildlife%20Safari!5e0!3m2!1sen!2slk!4v1700000000000!5m2!1sen!2slk"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
 
             <div class="map-location-info">
-                <h3>YALA SAFARI DESK</h3>
-                <p><strong>Address:</strong> Wickrama, Kasingama, Yala Entrance Road, Southern Province, Sri Lanka</p>
-                <p><strong>Coordinates:</strong> 6.2487° N, 81.2590° E</p>
+                <h3>Yala Wildlife</h3>
+                <p><strong>Location:</strong> Yala Wildlife, Southern Province, Sri Lanka</p>
+                <p><strong>Coordinates:</strong> 6.265796° N, 81.3011626° E</p>
+
+                <div style="margin-top: 10px; margin-bottom: 20px;">
+                    <a href="https://maps.app.goo.gl/oQb7TbaFHfs5QCd58" target="_blank" class="btn-gold-pill">
+                        <i class="fa-solid fa-map-location-dot"></i> OPEN IN GOOGLE MAPS APP
+                    </a>
+                </div>
 
                 <div class="directions-note-box">
-                    <i class="fa-solid fa-compass"></i> <strong>Pro Tip:</strong> For morning 05:30 AM safari pickups, our 4x4 Land Cruisers pick up directly from all hotels in Tissamaharama, Kirinda, and Yala buffer zone.
+                    <i class="fa-solid fa-compass"></i> <strong>Hotel Pickup Pro Tip:</strong> For morning 05:30 AM
+                    safari pickups, our custom elevated 4x4 Land Cruisers pick up directly from all hotels in
+                    Tissamaharama, Kirinda, Kataragama, and Yala buffer zones.
                 </div>
             </div>
         </div>

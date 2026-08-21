@@ -1,230 +1,861 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Official Yala National Park Ticket Fees & Permit Calculator 2026/2027 | Yala Leopard Tracks{% endblock %}
+
 {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
 <link rel="stylesheet" href="{% static 'css/tickets.css' %}">
 {% endblock %}
 
 {% block content %}
-<!-- Yala Tickets Hero Header Section -->
-<section class="tickets-hero-section">
-    <div class="hero-content">
-        <span class="hero-pill-badge"><i class="fa-solid fa-ticket"></i> DWC OFFICIAL PARK ENTRANCE PERMITS</span>
-        <h1 class="hero-title">YALA NATIONAL PARK TICKETS & FEES</h1>
-        <p class="hero-subtitle">Official Department of Wildlife Conservation (DWC) entrance fee breakdown, park gate operating hours, and express permit queue-jump vouchers.</p>
+<!-- Blog-Style Hero Header Section -->
+<section class="blog-hero-section" style="background-color: var(--bg-pastel-cream);">
+    <div class="container text-center">
+        <span class="section-tag font-gold"><i class="fa-solid fa-ticket"></i> DWC OFFICIAL PARK ENTRANCE PERMITS</span>
+        <h1 class="hero-title section-title">PERMIT CALCULATOR & TARIFFS</h1>
+        <p
+            style="font-family: var(--font-body); font-size: 1.125rem; font-weight: 500; color: #233325; line-height: 1.75; margin-top: 12px; font-style: normal; max-width: 820px; margin-left: auto; margin-right: auto;">
+            Plan your park entry costs instantly. Replicating the Department of Wildlife Conservation (DWC) formulas
+            with real-time currency exchange and tax breakdown.
+        </p>
+
+        <div style="margin-top: 20px;">
+            <a href="{% url 'packages' %}" class="btn-gold-pill">BOOK SAFARI PACKAGES <i
+                    class="fa-solid fa-arrow-right"></i></a>
+        </div>
     </div>
 </section>
 
-<!-- Official Ticket Rates Grid Section -->
-<section class="tickets-grid-section">
+<!-- Main DWC Calculator & Live Invoice Layout Section -->
+<section class="calculator-section" style="background-color: var(--bg-pastel-cream); padding: 40px 0 70px;">
     <div class="container">
-        <div class="section-header text-center">
-            <span class="section-tag tag-sage">OFFICIAL DWC TARIFFS</span>
-            <h2 class="section-title">PARK ENTRANCE TICKET FEES</h2>
-            <p class="section-subtitle">All tickets include Department of Wildlife Conservation (DWC) entrance permits, service fees, and 15% VAT tax.</p>
-        </div>
+        <div class="calc-layout-grid"
+            style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: start;">
 
-        <div class="tickets-grid">
-            {% for item in ticket_rates %}
-            <div class="ticket-card">
-                {% if item.popular %}
-                <div class="ticket-card-badge"><i class="fa-solid fa-star"></i> OFFICIAL RATE</div>
-                {% endif %}
-                <div>
-                    <h3 class="ticket-title">{{ item.title }}</h3>
-                    <div class="ticket-age">{{ item.age_limit }}</div>
+            <!-- LEFT COLUMN: COUNTERS & FORMULAS -->
+            <div class="left-calc-col">
+                <!-- 1. Select Visitor Group Details -->
+                <div style="margin-bottom: 32px;">
+                    <span class="section-tag tag-sage" style="margin-bottom: 8px;"><i class="fa-solid fa-users"></i>
+                        PASSENGER TIERS</span>
+                    <h2
+                        style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #233325; margin-bottom: 8px;">
+                        1. SELECT VISITOR GROUP DETAILS</h2>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-bottom: 20px;">
+                        * Note: Private 4x4 safari jeeps require selecting at least 1 Local Adult (representing the
+                        driver-guide's mandatory park permit).
+                    </p>
 
-                    <div class="ticket-price-box">
-                        <div class="price-usd">{{ item.price_usd }}</div>
-                        <div class="price-lkr">{{ item.price_lkr }}</div>
+                    <!-- Foreign Visitors -->
+                    <div style="margin-bottom: 20px;">
+                        <span
+                            style="font-size: 0.78rem; font-weight: 800; color: #606C38; letter-spacing: 1px; display: block; margin-bottom: 10px;">FOREIGN
+                            VISITORS (NON-SAARC)</span>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                            <div class="counter-card">
+                                <div>
+                                    <div style="font-weight: 800; font-size: 0.92rem; color: #233325;">Foreign Adults
+                                    </div>
+                                    <div style="font-size: 0.78rem; color: var(--text-muted); font-style: italic;">
+                                        $25.00 USD</div>
+                                </div>
+                                <div class="counter-btn-group">
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('foreignAdults', -1)">-</button>
+                                    <span class="counter-val" id="val-foreignAdults">1</span>
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('foreignAdults', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="counter-card">
+                                <div>
+                                    <div style="font-weight: 800; font-size: 0.92rem; color: #233325;">Foreign Children
+                                    </div>
+                                    <div style="font-size: 0.78rem; color: var(--text-muted); font-style: italic;">6-12
+                                        yrs • $15.00 USD</div>
+                                </div>
+                                <div class="counter-btn-group">
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('foreignChildren', -1)">-</button>
+                                    <span class="counter-val" id="val-foreignChildren">0</span>
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('foreignChildren', 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <ul class="inclusions-list">
-                        {% for inc in item.inclusions %}
-                        <li><i class="fa-solid fa-check font-jungle"></i> {{ inc }}</li>
-                        {% endfor %}
+                    <!-- SAARC Nationals -->
+                    <div style="margin-bottom: 20px;">
+                        <span
+                            style="font-size: 0.78rem; font-weight: 800; color: #606C38; letter-spacing: 1px; display: block; margin-bottom: 10px;">SAARC
+                            NATIONALS</span>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                            <div class="counter-card">
+                                <div>
+                                    <div style="font-weight: 800; font-size: 0.92rem; color: #233325;">SAARC Adults
+                                    </div>
+                                    <div style="font-size: 0.78rem; color: var(--text-muted); font-style: italic;">
+                                        $20.00 USD</div>
+                                </div>
+                                <div class="counter-btn-group">
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('saarcAdults', -1)">-</button>
+                                    <span class="counter-val" id="val-saarcAdults">0</span>
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('saarcAdults', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="counter-card">
+                                <div>
+                                    <div style="font-weight: 800; font-size: 0.92rem; color: #233325;">SAARC Children
+                                    </div>
+                                    <div style="font-size: 0.78rem; color: var(--text-muted); font-style: italic;">6-12
+                                        yrs • $10.00 USD</div>
+                                </div>
+                                <div class="counter-btn-group">
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('saarcChildren', -1)">-</button>
+                                    <span class="counter-val" id="val-saarcChildren">0</span>
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('saarcChildren', 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Locals & Infants -->
+                    <div>
+                        <span
+                            style="font-size: 0.78rem; font-weight: 800; color: #606C38; letter-spacing: 1px; display: block; margin-bottom: 10px;">LOCAL
+                            RESIDENTS & INFANTS</span>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                            <div class="counter-card">
+                                <div>
+                                    <div style="font-weight: 800; font-size: 0.88rem; color: #233325;">Local Adults
+                                    </div>
+                                    <div style="font-size: 0.76rem; color: var(--text-muted); font-style: italic;">LKR
+                                        150</div>
+                                </div>
+                                <div class="counter-btn-group">
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('localAdults', -1)">-</button>
+                                    <span class="counter-val" id="val-localAdults">0</span>
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('localAdults', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="counter-card">
+                                <div>
+                                    <div style="font-weight: 800; font-size: 0.88rem; color: #233325;">Local Children
+                                    </div>
+                                    <div style="font-size: 0.76rem; color: var(--text-muted); font-style: italic;">6-12
+                                        yrs • LKR 100</div>
+                                </div>
+                                <div class="counter-btn-group">
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('localChildren', -1)">-</button>
+                                    <span class="counter-val" id="val-localChildren">0</span>
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('localChildren', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="counter-card">
+                                <div>
+                                    <div style="font-weight: 800; font-size: 0.88rem; color: #233325;">Infants</div>
+                                    <div style="font-size: 0.76rem; color: var(--text-muted); font-style: italic;">Under
+                                        6 • FREE</div>
+                                </div>
+                                <div class="counter-btn-group">
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('infants', -1)">-</button>
+                                    <span class="counter-val" id="val-infants">0</span>
+                                    <button type="button" class="counter-btn"
+                                        onclick="updateCount('infants', 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Register Park Entry Vehicles -->
+                <div style="margin-bottom: 32px;">
+                    <span class="section-tag tag-sage" style="margin-bottom: 8px;"><i
+                            class="fa-solid fa-truck-monster"></i> PARK TRAIL ADMISSION</span>
+                    <h2
+                        style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #233325; margin-bottom: 8px;">
+                        2. REGISTER PARK ENTRY VEHICLES</h2>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-bottom: 16px;">
+                        Vehicles entering Yala National Park pay a fixed admission charge set by DWC.
+                    </p>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                        <div class="counter-card">
+                            <div>
+                                <div style="font-weight: 800; font-size: 0.88rem; color: #233325;">Jeeps / Vans</div>
+                                <div style="font-size: 0.76rem; color: var(--text-muted); font-style: italic;">LKR 300
+                                </div>
+                            </div>
+                            <div class="counter-btn-group">
+                                <button type="button" class="counter-btn" onclick="updateCount('jeeps', -1)">-</button>
+                                <span class="counter-val" id="val-jeeps">1</span>
+                                <button type="button" class="counter-btn" onclick="updateCount('jeeps', 1)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="counter-card">
+                            <div>
+                                <div style="font-weight: 800; font-size: 0.88rem; color: #233325;">Cars / SUVs</div>
+                                <div style="font-size: 0.76rem; color: var(--text-muted); font-style: italic;">LKR 150
+                                </div>
+                            </div>
+                            <div class="counter-btn-group">
+                                <button type="button" class="counter-btn" onclick="updateCount('cars', -1)">-</button>
+                                <span class="counter-val" id="val-cars">0</span>
+                                <button type="button" class="counter-btn" onclick="updateCount('cars', 1)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="counter-card">
+                            <div>
+                                <div style="font-weight: 800; font-size: 0.88rem; color: #233325;">Buses / Lorries</div>
+                                <div style="font-size: 0.76rem; color: var(--text-muted); font-style: italic;">LKR 500
+                                </div>
+                            </div>
+                            <div class="counter-btn-group">
+                                <button type="button" class="counter-btn" onclick="updateCount('buses', -1)">-</button>
+                                <span class="counter-val" id="val-buses">0</span>
+                                <button type="button" class="counter-btn" onclick="updateCount('buses', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DWC Formula Breakdown Box -->
+                <div
+                    style="background: var(--bg-pastel-cream); border-radius: 20px; padding: 24px; border: none; box-shadow: none;">
+                    <h3
+                        style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #233325; margin-bottom: 8px;">
+                        <i class="fa-solid fa-circle-info font-gold"></i> Official DWC Calculation Formula
+                    </h3>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+                        Permits are billed across four strict categories set by the Department of Wildlife Conservation
+                        (DWC):
+                    </p>
+                    <ul style="font-size: 0.85rem; color: #233325; line-height: 1.7; padding-left: 20px; margin: 0;">
+                        <li><strong>Entrance Fees:</strong> $25 Foreign Adult, $15 Foreign Child, $20 SAARC Adult, $10
+                            SAARC Child, LKR 150 Local Adult, LKR 100 Local Child.</li>
+                        <li><strong>Vehicle Fees:</strong> LKR 300 per Jeep/Van, LKR 150 per Car, LKR 500 per Bus.</li>
+                        <li><strong>Service Charge:</strong> $10 USD equivalent per vehicle if any foreign passenger
+                            present, or LKR 400 for local-only groups.</li>
+                        <li><strong>18% VAT & 2% Gateway Fee:</strong> Mandatory government Value Added Tax (18%) and
+                            online gateway payment processing (2%).</li>
                     </ul>
                 </div>
+            </div>
 
-                <div style="margin-top: 20px;">
-                    <a href="#book-ticket-form" class="btn-jungle-pill btn-block select-ticket-btn" data-ticket="{{ item.title }}">BOOK PARK PERMIT</a>
+            <!-- RIGHT COLUMN: LIVE INVOICE RECEIPT & BOOKING FORM -->
+            <div class="right-invoice-col">
+                <!-- LIVE INVOICE RECEIPT CARD -->
+                <div class="invoice-card" style="margin-bottom: 32px;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px;">
+                        <div>
+                            <span class="section-tag font-gold" style="font-size: 0.74rem;"><i
+                                    class="fa-solid fa-receipt"></i> PERMIT ESTIMATION</span>
+                            <div style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; color: #233325; line-height: 1.1; margin-top: 4px;"
+                                id="out-total-lkr">
+                                LKR 0
+                            </div>
+                            <div style="font-size: 0.9rem; color: var(--text-muted); font-style: italic; margin-top: 2px;"
+                                id="out-total-usd">
+                                ~ $0.00 USD
+                            </div>
+                        </div>
+                        <span id="rate-badge"
+                            style="font-size: 0.72rem; font-weight: 800; background: rgba(96,108,56,0.15); color: #475128; padding: 4px 10px; border-radius: 50px;">
+                            1 USD = 327 LKR
+                        </span>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <div class="invoice-row">
+                            <span>Entry Fees Subtotal</span>
+                            <span id="out-entry-fees">LKR 0 ($0 USD)</span>
+                        </div>
+                        <div class="invoice-row">
+                            <span>Vehicle Fees Subtotal</span>
+                            <span id="out-vehicle-fees">LKR 0 ($0 USD)</span>
+                        </div>
+                        <div class="invoice-row">
+                            <span>Mandatory Service Fee</span>
+                            <span id="out-service-fee">LKR 0 ($0 USD)</span>
+                        </div>
+                        <div class="invoice-row">
+                            <span>Subtotal</span>
+                            <span id="out-subtotal">LKR 0 ($0 USD)</span>
+                        </div>
+                        <div class="invoice-row">
+                            <span>Government VAT (18%)</span>
+                            <span id="out-vat">LKR 0 ($0 USD)</span>
+                        </div>
+                        <div class="invoice-row">
+                            <span>Gateway Surcharge (2%)</span>
+                            <span id="out-gateway">LKR 0 ($0 USD)</span>
+                        </div>
+                        <div class="invoice-row total-row">
+                            <span>Total Estimated Cost</span>
+                            <span id="out-final-total">LKR 0</span>
+                        </div>
+                    </div>
+
+                    <div
+                        style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; font-style: italic; background: rgba(96,108,56,0.06); padding: 12px 14px; border-radius: 12px;">
+                        <i class="fa-solid fa-triangle-exclamation font-gold"></i> <strong>Excludes Safari Jeep
+                            Rental:</strong> Represents official DWC government park permit charges only. Private 4x4
+                        safari jeep hire and drivers are separate.
+                    </div>
+                </div>
+
+                <!-- TICKET RESERVATION GUEST FORM -->
+                <div
+                    style="background-color: var(--bg-pastel-cream); border-radius: 24px; padding: 32px 28px; border: none; box-shadow: none;">
+
+
+                    <div style="margin-bottom: 20px; text-align: center;">
+                        <span class="section-tag tag-sage" style="font-size: 0.74rem;"><i
+                                class="fa-solid fa-paper-plane"></i> EXPRESS RESERVATION</span>
+                        <h3
+                            style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; color: #233325; margin-top: 4px;">
+                            REQUEST PARK PERMITS</h3>
+                    </div>
+
+                    {% if ticket_success %}
+                    <div
+                        style="margin-bottom: 20px; padding: 12px 16px; background: #606C38; color: #FFFFFF; border-radius: 50px; font-weight: 700; font-size: 0.86rem; text-align: center;">
+                        <i class="fa-solid fa-circle-check"></i> {{ ticket_success }}
+                    </div>
+                    {% endif %}
+
+                    <form id="permitBookingForm" action="{% url 'tickets' %}" method="POST" onsubmit="openPermitModal(event)">
+                        {% csrf_token %}
+                        <input type="hidden" name="foreign_adults" id="hid-foreignAdults" value="1">
+                        <input type="hidden" name="foreign_children" id="hid-foreignChildren" value="0">
+                        <input type="hidden" name="saarc_adults" id="hid-saarcAdults" value="0">
+                        <input type="hidden" name="saarc_children" id="hid-saarcChildren" value="0">
+                        <input type="hidden" name="local_adults" id="hid-localAdults" value="0">
+                        <input type="hidden" name="local_children" id="hid-localChildren" value="0">
+                        <input type="hidden" name="infants" id="hid-infants" value="0">
+                        <input type="hidden" name="jeeps" id="hid-jeeps" value="1">
+                        <input type="hidden" name="cars" id="hid-cars" value="0">
+                        <input type="hidden" name="buses" id="hid-buses" value="0">
+
+                        <input type="hidden" name="entry_fees_lkr" id="hid-entry-fees-lkr" value="0">
+                        <input type="hidden" name="vehicle_fees_lkr" id="hid-vehicle-fees-lkr" value="0">
+                        <input type="hidden" name="service_fee_lkr" id="hid-service-fee-lkr" value="0">
+                        <input type="hidden" name="subtotal_lkr" id="hid-subtotal-lkr" value="0">
+                        <input type="hidden" name="vat_lkr" id="hid-vat-lkr" value="0">
+                        <input type="hidden" name="gateway_fee_lkr" id="hid-gateway-fee-lkr" value="0">
+                        <input type="hidden" name="calculated_total_lkr" id="hid-total-lkr" value="0">
+                        <input type="hidden" name="calculated_total_usd" id="hid-total-usd" value="0">
+
+
+                        <div style="margin-bottom: 14px;">
+                            <label
+                                style="font-size: 0.82rem; font-weight: 700; color: #233325; display: block; margin-bottom: 4px;"><i
+                                    class="fa-solid fa-user font-gold"></i> Full Name *</label>
+                            <input type="text" name="full_name" required placeholder="e.g. Alexander Wright"
+                                style="width: 100%; padding: 11px 14px; border-radius: 12px; border: 1px solid rgba(96,108,56,0.2); background: rgba(96,108,56,0.05); font-size: 0.9rem;">
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+                            <div>
+                                <label
+                                    style="font-size: 0.82rem; font-weight: 700; color: #233325; display: block; margin-bottom: 4px;"><i
+                                        class="fa-solid fa-globe font-gold"></i> Country *</label>
+                                <input type="text" name="country" required placeholder="e.g. Germany"
+                                    style="width: 100%; padding: 11px 14px; border-radius: 12px; border: 1px solid rgba(96,108,56,0.2); background: rgba(96,108,56,0.05); font-size: 0.9rem;">
+                            </div>
+                            <div>
+                                <label
+                                    style="font-size: 0.82rem; font-weight: 700; color: #233325; display: block; margin-bottom: 4px;"><i
+                                        class="fa-solid fa-envelope font-gold"></i> Email *</label>
+                                <input type="email" name="email_address" required
+                                    placeholder="yalaleopardtracks@gmail.com"
+                                    style="width: 100%; padding: 11px 14px; border-radius: 12px; border: 1px solid rgba(96,108,56,0.2); background: rgba(96,108,56,0.05); font-size: 0.9rem;">
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+                            <div>
+                                <label
+                                    style="font-size: 0.82rem; font-weight: 700; color: #233325; display: block; margin-bottom: 4px;"><i
+                                        class="fa-solid fa-phone font-gold"></i> Phone / WhatsApp *</label>
+                                <input type="tel" name="phone_number" required placeholder="+94 77 815 8004"
+                                    style="width: 100%; padding: 11px 14px; border-radius: 12px; border: 1px solid rgba(96,108,56,0.2); background: rgba(96,108,56,0.05); font-size: 0.9rem;">
+                            </div>
+                            <div>
+                                <label
+                                    style="font-size: 0.82rem; font-weight: 700; color: #233325; display: block; margin-bottom: 4px;"><i
+                                        class="fa-solid fa-calendar-days font-gold"></i> Safari Date *</label>
+                                <input type="date" name="ticket_date" required
+                                    style="width: 100%; padding: 11px 14px; border-radius: 12px; border: 1px solid rgba(96,108,56,0.2); background: rgba(96,108,56,0.05); font-size: 0.9rem;">
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 18px;">
+                            <label
+                                style="font-size: 0.82rem; font-weight: 700; color: #233325; display: block; margin-bottom: 4px;"><i
+                                    class="fa-solid fa-comment-dots font-gold"></i> Special Requests (Optional)</label>
+                            <textarea name="message" rows="2" placeholder="Add special instructions or group notes..."
+                                style="width: 100%; padding: 11px 14px; border-radius: 12px; border: 1px solid rgba(96,108,56,0.2); background: rgba(96,108,56,0.05); font-size: 0.9rem; font-family: var(--font-body);"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-gold-pill"
+                            style="width: 100%; padding: 14px; font-size: 0.92rem; border-radius: 50px; font-weight: 800; display: inline-flex; justify-content: center; align-items: center; gap: 8px;">
+                            REQUEST PERMIT TICKETS <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
-            {% endfor %}
+
         </div>
     </div>
 </section>
 
-<!-- Interactive Ticket Calculator Section -->
-<section class="calculator-section">
-    <div class="container">
-        <div class="calculator-card-wrapper">
-            <div class="section-header text-center" style="margin-bottom: 20px;">
-                <span class="section-tag tag-sage">LIVE ESTIMATOR</span>
-                <h2>YALA PARK TICKET PRICE CALCULATOR</h2>
-                <p>Calculate your exact park entry fee in USD and LKR before arriving at the gate.</p>
-            </div>
+<!-- Official DWC Ticket Tariff Guide & FAQ Section -->
+<section class="faq-section" style="background-color: var(--bg-pastel-cream); padding: 40px 0 80px;">
+    <div class="container" style="max-width: 860px; margin: 0 auto;">
+        <div class="section-header text-center" style="margin-bottom: 36px;">
+            <span class="section-tag tag-sage"><i class="fa-solid fa-circle-question"></i> OFFICIAL FAQ DESK</span>
+            <h2 class="section-title" style="margin-top: 6px;">FREQUENTLY ASKED QUESTIONS</h2>
+            <p
+                style="font-family: var(--font-body); font-size: 1.05rem; font-weight: 500; color: #233325; line-height: 1.7; margin-top: 8px;">
+                Official Department of Wildlife Conservation (DWC) entrance permit guidance and gate procedures.
+            </p>
+        </div>
 
-            <div class="calc-grid">
-                <div class="calc-input-group">
-                    <label for="calc-adults"><i class="fa-solid fa-user"></i> Foreign Adults ($40 USD/ea)</label>
-                    <select id="calc-adults">
-                        <option value="1">1 Adult</option>
-                        <option value="2" selected>2 Adults</option>
-                        <option value="3">3 Adults</option>
-                        <option value="4">4 Adults</option>
-                        <option value="5">5 Adults</option>
-                        <option value="6">6 Adults (Full Jeep)</option>
-                    </select>
-                </div>
-
-                <div class="calc-input-group">
-                    <label for="calc-children"><i class="fa-solid fa-child"></i> Foreign Children ($20 USD/ea)</label>
-                    <select id="calc-children">
-                        <option value="0" selected>0 Children (Under 6 FREE)</option>
-                        <option value="1">1 Child (Ages 6-11)</option>
-                        <option value="2">2 Children</option>
-                        <option value="3">3 Children</option>
-                    </select>
-                </div>
-
-                <div class="calc-input-group">
-                    <label for="calc-jeeps"><i class="fa-solid fa-truck-monster"></i> 4x4 Jeep Permits ($15 USD/ea)</label>
-                    <select id="calc-jeeps">
-                        <option value="1" selected>1 Private 4x4 Jeep</option>
-                        <option value="2">2 Private 4x4 Jeeps</option>
-                    </select>
+        <div class="faq-accordion-list">
+            <div class="faq-accordion-item">
+                <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+                    <span>How do I buy Yala National Park tickets online?</span>
+                    <i class="fa-solid fa-plus font-gold"></i>
+                </button>
+                <div class="faq-answer-panel">
+                    You can calculate and request your official Yala National Park entry permits online directly using
+                    our dynamic DWC calculator. Input your visitor details, submit the booking inquiry, and our agents
+                    will secure the government permits in advance. This ensures a seamless entrance, letting you skip
+                    the long ticket counter lines entirely!
                 </div>
             </div>
 
-            <div class="calc-result-box">
-                <div class="calc-result-total" id="calc-total-usd">$95.00 USD</div>
-                <div class="calc-result-sub" id="calc-total-lkr">Approx Rs. 30,400 LKR (Includes Entry + Jeep Permit + DWC Taxes)</div>
+            <div class="faq-accordion-item">
+                <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+                    <span>What is the Yala National Park entrance ticket price for foreigners?</span>
+                    <i class="fa-solid fa-plus font-gold"></i>
+                </button>
+                <div class="faq-answer-panel">
+                    For foreign visitors (Non-SAARC), the official day entrance permit fee is $25 USD for adults and $15
+                    USD for children (6-12 years). Infants under 6 enter free of charge. Our portal dynamically converts
+                    these USD prices to LKR at the live daily exchange rate for transparent calculation.
+                </div>
             </div>
+
+            <div class="faq-accordion-item">
+                <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+                    <span>Is the private safari jeep rental cost included in the ticket calculator?</span>
+                    <i class="fa-solid fa-plus font-gold"></i>
+                </button>
+                <div class="faq-answer-panel">
+                    No. The calculator computes only the official DWC government park permit charges (passenger entry
+                    tickets, vehicle trail fees, and mandatory government service charges plus 18% VAT & 2% gateway
+                    fee). Private 4x4 safari jeep hire, driver services, and independent tracker tips must be booked
+                    separately.
+                </div>
+            </div>
+
+            <div class="faq-accordion-item">
+                <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+                    <span>Do I need to book my Yala safari entry permits in advance?</span>
+                    <i class="fa-solid fa-plus font-gold"></i>
+                </button>
+                <div class="faq-answer-panel">
+                    Yes. Booking in advance is highly recommended for all visitors—especially international tourists—to
+                    ensure smooth clearance. Having your official permits prepared beforehand guarantees a stress-free
+                    experience, allowing you to bypass the gate counter queues at Palatupana or Katagamuwa and spend
+                    more time searching for leopards.
+                </div>
+            </div>
+
+            <div class="faq-accordion-item">
+                <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+                    <span>What are the official ticket counter opening hours at Yala?</span>
+                    <i class="fa-solid fa-plus font-gold"></i>
+                </button>
+                <div class="faq-answer-panel">
+                    The Department of Wildlife Conservation (DWC) ticket offices at Palatupana Gate (Block 1 & 2) and
+                    Katagamuwa Gate (Block 2) operate daily from 6:00 AM to 6:00 PM. We strongly recommend securing your
+                    digital permits online before arrival to ensure seamless early-morning entry when wildlife tracking
+                    is optimal.
+                </div>
+            </div>
+
+            <div class="faq-accordion-item">
+                <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+                    <span>Is there a discounted entrance fee for SAARC nationals?</span>
+                    <i class="fa-solid fa-plus font-gold"></i>
+                </button>
+                <div class="faq-answer-panel">
+                    Yes. SAARC adults pay a discounted government rate of $20 USD, while SAARC children aged 6 to 12 are
+                    charged $10 USD. Valid passport verification matching the registered booking details is required at
+                    the entry check-point to utilize these discounted tickets.
+                </div>
+            </div>
+        </div>
+<!-- CENTERED PERMIT REQUEST CONFIRMATION POPUP MODAL -->
+<div id="permitModalOverlay" class="permit-modal-overlay">
+    <div class="permit-modal-card">
+        <button type="button" class="permit-modal-close-btn" onclick="closePermitModal()" title="Close Popup">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <!-- Step 1: Verification & Price Breakdown Summary -->
+        <div id="modalStepSummary">
+            <div class="permit-modal-header">
+                <span class="section-tag font-gold" style="font-size: 0.72rem;"><i class="fa-solid fa-shield-halved"></i> DWC OFFICIAL PERMIT VERIFICATION</span>
+                <h3 class="permit-modal-title">CONFIRM YOUR PERMIT REQUEST</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; margin-bottom: 0;">
+                    Please verify your visitor details and price breakdown before submitting.
+                </p>
+            </div>
+
+            <!-- Guest Details Summary Grid -->
+            <div class="permit-info-grid">
+                <div class="permit-info-item">
+                    <label><i class="fa-solid fa-user font-gold"></i> Full Name</label>
+                    <span id="modal-name"></span>
+                </div>
+                <div class="permit-info-item">
+                    <label><i class="fa-solid fa-globe font-gold"></i> Country</label>
+                    <span id="modal-country"></span>
+                </div>
+                <div class="permit-info-item">
+                    <label><i class="fa-solid fa-envelope font-gold"></i> Email Address</label>
+                    <span id="modal-email"></span>
+                </div>
+                <div class="permit-info-item">
+                    <label><i class="fa-solid fa-phone font-gold"></i> Phone / WhatsApp</label>
+                    <span id="modal-phone"></span>
+                </div>
+                <div class="permit-info-item" style="grid-column: 1 / -1;">
+                    <label><i class="fa-solid fa-calendar-days font-gold"></i> Safari Date</label>
+                    <span id="modal-date"></span>
+                </div>
+            </div>
+
+            <!-- Itemized Price Breakdown Table -->
+            <div class="permit-breakdown-section">
+                <div class="permit-breakdown-title">
+                    <i class="fa-solid fa-calculator font-gold"></i> Detailed Price Breakdown
+                </div>
+
+                <table class="permit-breakdown-table">
+                    <thead>
+                        <tr>
+                            <th>Passenger & Vehicle Items</th>
+                            <th style="text-align: right;">Cost / Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modal-breakdown-rows">
+                        <!-- Populated dynamically via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal Action Buttons -->
+            <div class="permit-modal-actions">
+                <button type="button" class="btn-secondary-pill" onclick="closePermitModal()">
+                    <i class="fa-solid fa-pen-to-square"></i> Edit Details
+                </button>
+                <button type="button" id="btnConfirmSubmit" class="btn-gold-pill" onclick="confirmAndSubmitPermit()" style="font-weight: 800; font-size: 0.92rem; border-radius: 50px; padding: 13px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                    CONFIRM & SUBMIT <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2: Processing Spinner -->
+        <div id="modalStepProcessing" style="display: none; text-align: center; padding: 40px 20px;">
+            <div style="font-size: 2.5rem; color: #606C38; margin-bottom: 16px;">
+                <i class="fa-solid fa-circle-notch fa-spin"></i>
+            </div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #233325;">Securing Your DWC Permit Vouchers...</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 6px;">
+                Generating official breakdown invoice and dispatching email confirmation.
+            </p>
+        </div>
+
+        <!-- Step 3: Success Screen Inside Centered Popup Modal -->
+        <div id="modalStepSuccess" style="display: none; text-align: center; padding: 20px 10px;">
+            <div style="width: 64px; height: 64px; background: #606C38; color: #FFFFFF; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 16px; box-shadow: 0 10px 25px rgba(96,108,56,0.3);">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #233325; margin-bottom: 8px;">PERMIT REQUEST CONFIRMED!</h3>
+            <p style="font-size: 0.92rem; color: #233325; line-height: 1.6; margin-bottom: 20px;" id="modalSuccessMessage">
+                Thank you! Your Yala entrance permit request has been successfully submitted.
+            </p>
+            <div style="background: rgba(96,108,56,0.08); padding: 16px; border-radius: 16px; font-size: 0.85rem; color: var(--text-muted); text-align: left; margin-bottom: 24px; border: 1px solid rgba(96,108,56,0.15);">
+                <i class="fa-solid fa-envelope-circle-check font-gold" style="font-size: 1.1rem; vertical-align: middle; margin-right: 6px;"></i>
+                <strong>Email Confirmation Sent:</strong> Check your inbox for the itemized ticket tariff breakdown, DWC VAT receipt summary, and gate entry instructions.
+            </div>
+            <button type="button" class="btn-gold-pill" onclick="closePermitModal()" style="width: 100%; padding: 13px; font-weight: 800; border-radius: 50px;">
+                CLOSE WINDOW <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
     </div>
-</section>
+</div>
 
-<!-- Yala Entrance Gates Guide Section -->
-<section class="gates-section">
-    <div class="container">
-        <div class="section-header text-center">
-            <span class="section-tag tag-sage">GATE DIRECTORY</span>
-            <h2 class="section-title">YALA PARK ENTRANCE GATES</h2>
-            <p class="section-subtitle">Operating hours and entry locations for Yala National Park blocks.</p>
-        </div>
-
-        <div class="gates-grid">
-            {% for gate in gates_info %}
-            <div class="gate-card">
-                <div class="gate-icon"><i class="fa-solid fa-door-open"></i></div>
-                <h3 class="gate-title">{{ gate.name }}</h3>
-                <span class="gate-hours"><i class="fa-solid fa-clock"></i> {{ gate.hours }}</span>
-                <p style="font-size: 0.84rem; color: #606C38; font-weight: 700; margin-bottom: 8px;"><i class="fa-solid fa-location-dot"></i> {{ gate.location }}</p>
-                <p class="gate-desc">{{ gate.description }}</p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<!-- Express Permit Reservation Form Section -->
-<section class="booking-section" id="book-ticket-form">
-    <div class="container">
-        <div class="booking-card-wrapper">
-            {% if ticket_success %}
-            <div class="alert-success-banner" style="background-color: #606C38; color: #FFFFFF; padding: 16px 24px; border-radius: var(--radius-sm); font-weight: 700; margin-bottom: 24px;">
-                <i class="fa-solid fa-circle-check"></i> {{ ticket_success }}
-            </div>
-            {% endif %}
-
-            <div class="booking-header text-center">
-                <span class="section-tag tag-sage">SKIP THE MORNING QUEUE</span>
-                <h2>EXPRESS YALA PARK PERMIT RESERVATION</h2>
-                <p>Reserve official DWC park permits in advance to enter through express gates without queue delays.</p>
-            </div>
-
-            <form class="safari-booking-form" action="{% url 'tickets' %}" method="POST">
-                {% csrf_token %}
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="full_name"><i class="fa-solid fa-user"></i> Full Name *</label>
-                        <input type="text" id="full_name" name="full_name" placeholder="e.g. Alexander Wright" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email_address"><i class="fa-solid fa-envelope"></i> Email Address *</label>
-                        <input type="email" id="email_address" name="email_address" placeholder="pasindusadanjana17@gmail.com" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="phone_number"><i class="fa-solid fa-phone"></i> Phone / WhatsApp *</label>
-                        <input type="tel" id="phone_number" name="phone_number" placeholder="+94 77 815 8004" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="gate_choice"><i class="fa-solid fa-door-open"></i> Preferred Entrance Gate *</label>
-                        <select id="gate_choice" name="gate_choice" required>
-                            <option value="Palatupana Gate (Block 1 Main Gate)">Palatupana Gate (Block 1 Main Gate)</option>
-                            <option value="Katagamuwa Gate (Block 1 & 2 Gate)">Katagamuwa Gate (Block 1 & 2 Gate)</option>
-                            <option value="Galge Gate (Block 3, 4 & 5 Gate)">Galge Gate (Block 3, 4 & 5 Gate)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="ticket_date"><i class="fa-solid fa-calendar-days"></i> Safari Date *</label>
-                        <input type="date" id="ticket_date" name="ticket_date" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="passport_no"><i class="fa-solid fa-passport"></i> Passport / ID Number *</label>
-                        <input type="text" id="passport_no" name="passport_no" placeholder="e.g. N1234567" required>
-                    </div>
-                </div>
-
-                <div class="form-submit-wrapper text-center">
-                    <button type="submit" class="btn-jungle-pill btn-block">RESERVE YALA PARK TICKETS</button>
-                    <p class="form-guarantee-note"><i class="fa-solid fa-shield-halved font-jungle"></i> Official DWC Licensed Partner • Guaranteed Gate Entry</p>
-                </div>
-            </form>
-        </div>
-    </div>
-</section>
-
-<!-- Calculator JavaScript -->
+<!-- Calculator & FAQ JavaScript -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const calcAdults = document.getElementById('calc-adults');
-    const calcChildren = document.getElementById('calc-children');
-    const calcJeeps = document.getElementById('calc-jeeps');
 
-    const totalUsdEl = document.getElementById('calc-total-usd');
-    const totalLkrEl = document.getElementById('calc-total-lkr');
+    let exchangeRate = 327;
 
-    function calculateTotal() {
-        if (!calcAdults || !calcChildren || !calcJeeps) return;
+    const state = {
+        foreignAdults: 1,
+        foreignChildren: 0,
+        saarcAdults: 0,
+        saarcChildren: 0,
+        localAdults: 0,
+        localChildren: 0,
+        infants: 0,
+        jeeps: 1,
+        cars: 0,
+        buses: 0
+    };
 
-        const adults = parseInt(calcAdults.value) || 0;
-        const children = parseInt(calcChildren.value) || 0;
-        const jeeps = parseInt(calcJeeps.value) || 0;
+    // Rates
+    const RATES = {
+        LOCAL_ADULT: 150,
+        LOCAL_CHILD: 100,
+        VEHICLE_JEEP: 300,
+        VEHICLE_CAR: 150,
+        VEHICLE_BUS: 500,
+        SERVICE_LOCAL: 400,
+        VAT_RATE: 0.18
+    };
 
-        const totalUSD = (adults * 40) + (children * 20) + (jeeps * 15);
-        const totalLKR = Math.round(totalUSD * 320);
-
-        if (totalUsdEl) totalUsdEl.textContent = `$${totalUSD}.00 USD`;
-        if (totalLkrEl) totalLkrEl.textContent = `Approx Rs. ${totalLKR.toLocaleString()} LKR (Includes Entry + Jeep Permit + DWC Taxes)`;
+    function updateCount(key, delta) {
+        if (state.hasOwnProperty(key)) {
+            state[key] = Math.max(0, state[key] + delta);
+            const el = document.getElementById('val-' + key);
+            if (el) el.textContent = state[key];
+            calculateInvoice();
+        }
     }
 
-    if (calcAdults && calcChildren && calcJeeps) {
-        calcAdults.addEventListener('change', calculateTotal);
-        calcChildren.addEventListener('change', calculateTotal);
-        calcJeeps.addEventListener('change', calculateTotal);
-        calculateTotal();
+    function calculateInvoice() {
+        const foreignAdultRateLKR = 25 * exchangeRate;
+        const foreignChildRateLKR = 15 * exchangeRate;
+        const saarcAdultRateLKR = 20 * exchangeRate;
+        const saarcChildRateLKR = 10 * exchangeRate;
+
+        const entryFeesLKR =
+            state.foreignAdults * foreignAdultRateLKR +
+            state.foreignChildren * foreignChildRateLKR +
+            state.saarcAdults * saarcAdultRateLKR +
+            state.saarcChildren * saarcChildRateLKR +
+            state.localAdults * RATES.LOCAL_ADULT +
+            state.localChildren * RATES.LOCAL_CHILD;
+
+        const vehicleFeesLKR =
+            state.jeeps * RATES.VEHICLE_JEEP +
+            state.cars * RATES.VEHICLE_CAR +
+            state.buses * RATES.VEHICLE_BUS;
+
+        const totalPassengers =
+            state.foreignAdults + state.foreignChildren +
+            state.saarcAdults + state.saarcChildren +
+            state.localAdults + state.localChildren + state.infants;
+
+        const hasForeigners = (state.foreignAdults + state.foreignChildren + state.saarcAdults + state.saarcChildren) > 0;
+        const totalVehicles = state.jeeps + state.cars + state.buses;
+
+        let serviceFeeLKR = 0;
+        if (totalPassengers > 0 && totalVehicles > 0) {
+            serviceFeeLKR = (hasForeigners ? 10 * exchangeRate : RATES.SERVICE_LOCAL) * totalVehicles;
+        }
+
+        const subtotalLKR = entryFeesLKR + vehicleFeesLKR + serviceFeeLKR;
+        const vatLKR = subtotalLKR * RATES.VAT_RATE;
+        const gatewayFeeLKR = (subtotalLKR + vatLKR) * 0.1;
+        const totalLKR = Math.round(subtotalLKR + vatLKR + gatewayFeeLKR);
+        const totalUSD = totalLKR / exchangeRate;
+
+        // Set UI outputs
+        document.getElementById('out-total-lkr').textContent = 'LKR ' + totalLKR.toLocaleString();
+        document.getElementById('out-total-usd').textContent = '~ $' + totalUSD.toFixed(2) + ' USD';
+
+        document.getElementById('out-entry-fees').textContent = 'LKR ' + Math.round(entryFeesLKR).toLocaleString() + ' ($' + (entryFeesLKR / exchangeRate).toFixed(1) + ' USD)';
+        document.getElementById('out-vehicle-fees').textContent = 'LKR ' + Math.round(vehicleFeesLKR).toLocaleString() + ' ($' + (vehicleFeesLKR / exchangeRate).toFixed(1) + ' USD)';
+        document.getElementById('out-service-fee').textContent = 'LKR ' + Math.round(serviceFeeLKR).toLocaleString() + ' ($' + (serviceFeeLKR / exchangeRate).toFixed(1) + ' USD)';
+        document.getElementById('out-subtotal').textContent = 'LKR ' + Math.round(subtotalLKR).toLocaleString() + ' ($' + (subtotalLKR / exchangeRate).toFixed(1) + ' USD)';
+        document.getElementById('out-vat').textContent = 'LKR ' + Math.round(vatLKR).toLocaleString() + ' ($' + (vatLKR / exchangeRate).toFixed(1) + ' USD)';
+        document.getElementById('out-gateway').textContent = 'LKR ' + Math.round(gatewayFeeLKR).toLocaleString() + ' ($' + (gatewayFeeLKR / exchangeRate).toFixed(1) + ' USD)';
+        document.getElementById('out-final-total').textContent = 'LKR ' + totalLKR.toLocaleString();
+
+        // Hidden inputs
+        if (document.getElementById('hid-foreignAdults')) document.getElementById('hid-foreignAdults').value = state.foreignAdults;
+        if (document.getElementById('hid-foreignChildren')) document.getElementById('hid-foreignChildren').value = state.foreignChildren;
+        if (document.getElementById('hid-saarcAdults')) document.getElementById('hid-saarcAdults').value = state.saarcAdults;
+        if (document.getElementById('hid-saarcChildren')) document.getElementById('hid-saarcChildren').value = state.saarcChildren;
+        if (document.getElementById('hid-localAdults')) document.getElementById('hid-localAdults').value = state.localAdults;
+        if (document.getElementById('hid-localChildren')) document.getElementById('hid-localChildren').value = state.localChildren;
+        if (document.getElementById('hid-infants')) document.getElementById('hid-infants').value = state.infants;
+
+        if (document.getElementById('hid-jeeps')) document.getElementById('hid-jeeps').value = state.jeeps;
+        if (document.getElementById('hid-cars')) document.getElementById('hid-cars').value = state.cars;
+        if (document.getElementById('hid-buses')) document.getElementById('hid-buses').value = state.buses;
+
+        if (document.getElementById('hid-entry-fees-lkr')) document.getElementById('hid-entry-fees-lkr').value = entryFeesLKR;
+        if (document.getElementById('hid-vehicle-fees-lkr')) document.getElementById('hid-vehicle-fees-lkr').value = vehicleFeesLKR;
+        if (document.getElementById('hid-service-fee-lkr')) document.getElementById('hid-service-fee-lkr').value = serviceFeeLKR;
+        if (document.getElementById('hid-subtotal-lkr')) document.getElementById('hid-subtotal-lkr').value = subtotalLKR;
+        if (document.getElementById('hid-vat-lkr')) document.getElementById('hid-vat-lkr').value = vatLKR;
+        if (document.getElementById('hid-gateway-fee-lkr')) document.getElementById('hid-gateway-fee-lkr').value = gatewayFeeLKR;
+
+        document.getElementById('hid-total-lkr').value = totalLKR;
+        document.getElementById('hid-total-usd').value = totalUSD.toFixed(2);
     }
-});
+
+    function openPermitModal(e) {
+        if (e) e.preventDefault();
+
+        const form = document.getElementById('permitBookingForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        // Populate Guest Details in Modal
+        document.getElementById('modal-name').textContent = form.full_name.value;
+        document.getElementById('modal-country').textContent = form.country.value;
+        document.getElementById('modal-email').textContent = form.email_address.value;
+        document.getElementById('modal-phone').textContent = form.phone_number.value;
+        document.getElementById('modal-date').textContent = form.ticket_date.value;
+
+        // Build Breakdown Rows
+        let rowsHtml = '';
+        if (state.foreignAdults > 0) rowsHtml += `<tr><td>Foreign Adults ($25 USD)</td><td class="val-col">${state.foreignAdults}</td></tr>`;
+        if (state.foreignChildren > 0) rowsHtml += `<tr><td>Foreign Children ($15 USD)</td><td class="val-col">${state.foreignChildren}</td></tr>`;
+        if (state.saarcAdults > 0) rowsHtml += `<tr><td>SAARC Adults ($20 USD)</td><td class="val-col">${state.saarcAdults}</td></tr>`;
+        if (state.saarcChildren > 0) rowsHtml += `<tr><td>SAARC Children ($10 USD)</td><td class="val-col">${state.saarcChildren}</td></tr>`;
+        if (state.localAdults > 0) rowsHtml += `<tr><td>Local Adults (LKR 150)</td><td class="val-col">${state.localAdults}</td></tr>`;
+        if (state.localChildren > 0) rowsHtml += `<tr><td>Local Children (LKR 100)</td><td class="val-col">${state.localChildren}</td></tr>`;
+        if (state.infants > 0) rowsHtml += `<tr><td>Infants (Under 6 Free)</td><td class="val-col">${state.infants}</td></tr>`;
+        if (state.jeeps > 0) rowsHtml += `<tr><td>Safari Jeeps / Vans</td><td class="val-col">${state.jeeps}</td></tr>`;
+        if (state.cars > 0) rowsHtml += `<tr><td>Cars / SUVs</td><td class="val-col">${state.cars}</td></tr>`;
+        if (state.buses > 0) rowsHtml += `<tr><td>Buses / Lorries</td><td class="val-col">${state.buses}</td></tr>`;
+
+        const entryLKR = parseFloat(document.getElementById('hid-entry-fees-lkr').value || 0);
+        const vehicleLKR = parseFloat(document.getElementById('hid-vehicle-fees-lkr').value || 0);
+        const serviceLKR = parseFloat(document.getElementById('hid-service-fee-lkr').value || 0);
+        const subtotalLKR = parseFloat(document.getElementById('hid-subtotal-lkr').value || 0);
+        const vatLKR = parseFloat(document.getElementById('hid-vat-lkr').value || 0);
+        const gatewayLKR = parseFloat(document.getElementById('hid-gateway-fee-lkr').value || 0);
+        const totalLKR = parseFloat(document.getElementById('hid-total-lkr').value || 0);
+        const totalUSD = parseFloat(document.getElementById('hid-total-usd').value || 0);
+
+        rowsHtml += `
+            <tr style="border-top: 2px solid rgba(96,108,56,0.2);"><td>Entry Fees Subtotal</td><td class="val-col">LKR ${Math.round(entryLKR).toLocaleString()}</td></tr>
+            <tr><td>Vehicle Admission Fees</td><td class="val-col">LKR ${Math.round(vehicleLKR).toLocaleString()}</td></tr>
+            <tr><td>Mandatory DWC Service Fee</td><td class="val-col">LKR ${Math.round(serviceLKR).toLocaleString()}</td></tr>
+            <tr style="font-weight: 700; background: rgba(96,108,56,0.05);"><td>Subtotal</td><td class="val-col">LKR ${Math.round(subtotalLKR).toLocaleString()}</td></tr>
+            <tr><td>Government VAT (18%)</td><td class="val-col">LKR ${Math.round(vatLKR).toLocaleString()}</td></tr>
+            <tr><td>Gateway Processing (2%)</td><td class="val-col">LKR ${Math.round(gatewayLKR).toLocaleString()}</td></tr>
+            <tr class="total-tr"><td>Total Estimated Cost</td><td class="val-col">LKR ${totalLKR.toLocaleString()} (~ $${totalUSD.toFixed(2)} USD)</td></tr>
+        `;
+
+        document.getElementById('modal-breakdown-rows').innerHTML = rowsHtml;
+
+        // Reset step states
+        document.getElementById('modalStepSummary').style.display = 'block';
+        document.getElementById('modalStepProcessing').style.display = 'none';
+        document.getElementById('modalStepSuccess').style.display = 'none';
+
+        // Show centered popup modal
+        document.getElementById('permitModalOverlay').classList.add('active');
+    }
+
+    function closePermitModal() {
+        document.getElementById('permitModalOverlay').classList.remove('active');
+    }
+
+    function confirmAndSubmitPermit() {
+        document.getElementById('modalStepSummary').style.display = 'none';
+        document.getElementById('modalStepProcessing').style.display = 'block';
+
+        const form = document.getElementById('permitBookingForm');
+        const formData = new FormData(form);
+
+        fetch("{% url 'tickets' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('modalStepProcessing').style.display = 'none';
+            if (data.status === 'success') {
+                document.getElementById('modalSuccessMessage').textContent = data.message;
+                document.getElementById('modalStepSuccess').style.display = 'block';
+                form.reset();
+                calculateInvoice();
+            } else {
+                alert('Submission error: ' + (data.message || 'Something went wrong. Please try again.'));
+                document.getElementById('modalStepSummary').style.display = 'block';
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById('modalStepProcessing').style.display = 'none';
+            document.getElementById('modalStepSummary').style.display = 'block';
+            alert('A network error occurred while submitting your request. Please try again.');
+        });
+    }
+
+    function fetchExchangeRate() {
+        fetch('https://open.er-api.com/v6/latest/USD')
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.rates && data.rates.LKR) {
+                    exchangeRate = data.rates.LKR;
+                    const badge = document.getElementById('rate-badge');
+                    if (badge) badge.textContent = 'Live Rate: 1 USD = ' + exchangeRate.toFixed(2) + ' LKR';
+                    calculateInvoice();
+                }
+            })
+            .catch(err => {
+                console.log('Using standard exchange rate fallback (327 LKR/USD)');
+                calculateInvoice();
+            });
+    }
+
+    function toggleFaq(btn) {
+        const item = btn.parentElement;
+        const isActive = item.classList.contains('active');
+        document.querySelectorAll('.faq-accordion-item').forEach(el => el.classList.remove('active'));
+        if (!isActive) item.classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        fetchExchangeRate();
+        calculateInvoice();
+    });
 </script>
 {% endblock %}

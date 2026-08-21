@@ -224,10 +224,10 @@
 }
 
 .fleet-card {
-    background: #FFFFFF;
+    background: var(--bg-pastel-cream);
     border-radius: var(--radius-card);
     padding: 28px 24px;
-    border: 1px solid rgba(96, 108, 56, 0.15);
+    /* border: 1px solid rgba(96, 108, 56, 0.15); */
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
     text-align: center;
 }
@@ -265,6 +265,7 @@
 
 /* Responsive Media Queries for Tours Page */
 @media (max-width: 1024px) {
+
     .tours-grid,
     .fleet-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -273,6 +274,7 @@
 }
 
 @media (max-width: 768px) {
+
     .tours-grid,
     .fleet-grid {
         grid-template-columns: 1fr;
