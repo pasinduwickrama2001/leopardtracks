@@ -77,7 +77,21 @@ load_dotenv(BASE_DIR / '.env')
 USE_MONGODB = os.getenv('USE_MONGODB', 'False').lower() in ('true', '1', 'yes')
 MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/leopardtracks_db')
 
+# Writable SQLite path for Vercel serverless environment
+if os.getenv('VERCEL') or os.getenv('VERCEL_ENV'):
+    SQLITE_PATH = Path('/tmp') / 'db.sqlite3'
+else:
+    SQLITE_PATH = BASE_DIR / 'db.sqlite3'
+
+djongo_available = False
 if USE_MONGODB:
+    try:
+        import djongo
+        djongo_available = True
+    except ImportError:
+        djongo_available = False
+
+if USE_MONGODB and djongo_available:
     DATABASES = {
         'default': {
             'ENGINE': 'djongo',
@@ -92,9 +106,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': SQLITE_PATH,
         }
     }
+
 
 
 # Password validation
@@ -132,7 +147,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+try:
+    import whitenoise
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+except ImportError:
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+
 
 
 MEDIA_URL = '/media/'
