@@ -9,6 +9,32 @@
         content="Bespoke tented safaris in Yala National Park. Experience luxury camping in Sri Lanka with expert wilderness guides.">
 
     {% load static %}
+    <!-- Google Favicon & Search Engine Branding -->
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'images/favicon.png' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
+    <link rel="manifest" href="{% url 'site_webmanifest' %}">
+    <link rel="image_src" href="{% static 'images/logo-official.png' %}">
+
+    <!-- Open Graph & Social Media Logo Meta Tags -->
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}">
+    <meta property="og:logo" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}">
+
+    <!-- Google Search Schema.org Organization Logo Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      "name": "Yala Leopard Tracks",
+      "url": "{{ request.scheme }}://{{ request.get_host }}",
+      "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}",
+      "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}",
+      "description": "Bespoke tented safaris in Yala National Park, Sri Lanka.",
+      "telephone": "+94778158004"
+    }
+    </script>
     <!-- Google Website Font Style: Google Sans / Plus Jakarta Sans, Outfit, Roboto & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,7 +77,8 @@
 <body class="clean-safari-theme">
 
     <!-- Header Navigation -->
-    <header class="header {% if request.resolver_match.url_name == 'home' or request.path == '/' %}is-home{% else %}header-solid scrolled{% endif %}">
+    <header
+        class="header {% if request.resolver_match.url_name == 'home' or request.path == '/' %}is-home{% else %}header-solid scrolled{% endif %}">
         <div class="header-container">
             <!-- Off-canvas Menu Toggle -->
             <button class="menu-toggle" id="menuToggle" aria-label="Open Navigation Menu">
@@ -83,8 +110,13 @@
         </button>
 
         <div class="drawer-header">
-            <span class="drawer-logo">YALA LEOPARD TRACKS</span>
-            <p class="drawer-tagline">Sri Lanka Wilderness Safaris & Expeditions</p>
+            <div class="drawer-brand-wrap">
+                <img src="{% static 'images/logo-official.png' %}" alt="Yala Leopard Tracks Logo" class="drawer-logo-img" width="40" height="40">
+                <div>
+                    <span class="drawer-logo">YALA LEOPARD TRACKS</span>
+                    <p class="drawer-tagline">Sri Lanka Wilderness Safaris & Expeditions</p>
+                </div>
+            </div>
         </div>
 
         <nav class="drawer-nav">
@@ -97,7 +129,7 @@
                 <li><a href="{% url 'blog' %}"><i class="fa-solid fa-newspaper"></i> Wildlife Blog</a></li>
                 <li><a href="{% url 'about' %}"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
                 <li><a href="{% url 'contact' %}"><i class="fa-solid fa-headset"></i> Contact Us</a></li>
-              
+
             </ul>
         </nav>
 
@@ -114,7 +146,9 @@
             <!-- Col 1: About Yala Leopard Tracks & Nature First Policy -->
             <div class="footer-col brand-col">
                 <div class="footer-brand-header">
-                    <span class="brand-icon-glow"><i class="fa-solid fa-paw"></i></span>
+                    <span class="brand-icon-glow">
+                        <img src="{% static 'images/logo-official.png' %}" alt="Yala Leopard Tracks Logo" class="footer-logo-img" width="28" height="28">
+                    </span>
                     <span class="footer-brand-title">YALA LEOPARD TRACKS</span>
                 </div>
                 <p class="footer-brand-desc">
@@ -128,7 +162,6 @@
                 </div>
                 <div class="footer-badges-row">
                     <span class="f-badge"><i class="fa-solid fa-lock"></i> Secure Payments by PayHere</span>
-                    <!-- <span class="f-badge"><i class="fa-solid fa-shield-halved"></i> SLTDA Approved</span> -->
                 </div>
             </div>
 
@@ -148,10 +181,13 @@
             <div class="footer-col">
                 <h4 class="footer-heading">SUPPORT</h4>
                 <ul class="footer-links">
-                    <li><a href="{% url 'tickets' %}"><i class="fa-solid fa-chevron-right"></i> Booking & Tickets</a></li>
-                    <li><a href="{% url 'tours' %}"><i class="fa-solid fa-chevron-right"></i> Pickup & Dropoff / Tours</a></li>
+                    <li><a href="{% url 'tickets' %}"><i class="fa-solid fa-chevron-right"></i> Booking & Tickets</a>
+                    </li>
+                    <li><a href="{% url 'tours' %}"><i class="fa-solid fa-chevron-right"></i> Pickup & Dropoff /
+                            Tours</a></li>
                     <li><a href="{% url 'contact' %}"><i class="fa-solid fa-chevron-right"></i> Contact Support</a></li>
-                    <li><a href="{% url 'policies' %}"><i class="fa-solid fa-chevron-right"></i> Privacy & Refund Terms</a></li>
+                    <li><a href="{% url 'policies' %}"><i class="fa-solid fa-chevron-right"></i> Privacy & Refund
+                            Terms</a></li>
                 </ul>
             </div>
 
@@ -172,7 +208,9 @@
         <div class="footer-bottom-wrap">
             <div class="footer-bottom-container">
                 <div class="legal-credits">
-                    <p>&copy; {% now "Y" %} Yala Leopard Tracks. All Rights Reserved. Ethical Safari Expeditions Sri Lanka.</p>
+                    <p>&copy; {% now "Y" %} Yala Leopard Tracks. All Rights Reserved. Ethical Safari Expeditions Sri
+                        Lanka. • <span style="color: #606C38; font-weight: 700;"><i
+                                class="fa-solid fa-code font-gold"></i> Architected by Pasindu</span></p>
                     <span class="legal-links">
                         <a href="{% url 'policies' %}#privacy">Privacy Policy</a> •
                         <a href="{% url 'policies' %}#terms">Terms of Service</a> •
@@ -180,14 +218,14 @@
                     </span>
                 </div>
                 <div class="social-icons">
-                    <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i
-                            class="fa-brands fa-facebook-f"></i></a>
-                    <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i
-                            class="fa-brands fa-instagram"></i></a>
-                    <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i
-                            class="fa-brands fa-youtube"></i></a>
-                    <a href="https://tripadvisor.com" target="_blank" aria-label="TripAdvisor"><i
-                            class="fa-solid fa-owl"></i></a>
+                    <a href="https://api.whatsapp.com/send/?phone=94778158004&text=Hello+Yala+Leopard+Tracks%21+I+would+like+to+inquire+about+safari+packages.&type=phone_number&app_absent=0"
+                        target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://api.whatsapp.com/send/?phone=94778158004&text=Hello+Yala+Leopard+Tracks%21+I+would+like+to+inquire+about+safari+packages.&type=phone_number&app_absent=0"
+                        target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://api.whatsapp.com/send/?phone=94778158004&text=Hello+Yala+Leopard+Tracks%21+I+would+like+to+inquire+about+safari+packages.&type=phone_number&app_absent=0"
+                        target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://api.whatsapp.com/send/?phone=94778158004&text=Hello+Yala+Leopard+Tracks%21+I+would+like+to+inquire+about+safari+packages.&type=phone_number&app_absent=0"
+                        target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
                 </div>
             </div>
         </div>

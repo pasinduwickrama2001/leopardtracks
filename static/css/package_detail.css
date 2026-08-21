@@ -794,3 +794,55 @@
     transform: translateY(-2px);
 }
 
+/* Responsive Media Queries for Package Detail Page */
+@media (max-width: 992px) {
+    .package-detail-layout {
+        grid-template-columns: 1fr !important;
+        gap: 36px !important;
+    }
+
+    .booking-sticky-card {
+        position: static !important;
+        top: auto !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .package-detail-hero {
+        padding: 95px 16px 30px !important;
+    }
+
+    .package-detail-title {
+        font-size: 1.7rem !important;
+    }
+
+    .package-gallery-grid {
+        grid-template-columns: 1fr !important;
+        height: auto !important;
+    }
+
+    .booking-modal-card {
+        padding: 24px 18px !important;
+        max-height: 85vh !important;
+    }
+
+    .package-price-amount {
+        font-size: 2.2rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .package-detail-title {
+        font-size: 1.4rem !important;
+    }
+
+    .btn-reserve-package,
+    .btn-gold-pill,
+    .btn-success-close {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 12px 18px !important;
+    }
+}
+
+

@@ -1142,6 +1142,48 @@ def policies(request):
     return render(request, 'core/policies.html', context)
 
 
+def robots_txt(request):
+    """
+    Returns robots.txt for Googlebot and search engines.
+    """
+    from django.http import HttpResponse
+    content = """User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: {}://{}/sitemap.xml
+""".format(request.scheme, request.get_host())
+    return HttpResponse(content, content_type="text/plain")
+
+
+def site_webmanifest(request):
+    """
+    Returns site.webmanifest for PWA & Google Search logo indexing.
+    """
+    from django.http import JsonResponse
+    data = {
+        "name": "Yala Leopard Tracks",
+        "short_name": "LeopardTracks",
+        "icons": [
+            {
+                "src": f"{request.scheme}://{request.get_host()}/static/images/favicon.png",
+                "sizes": "192x192",
+                "type": "image/png"
+            },
+            {
+                "src": f"{request.scheme}://{request.get_host()}/static/images/logo-official.png",
+                "sizes": "512x512",
+                "type": "image/png"
+            }
+        ],
+        "theme_color": "#606C38",
+        "background_color": "#FAF6EE",
+        "display": "standalone"
+    }
+    return JsonResponse(data)
+
+
+
 
 
 

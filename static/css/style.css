@@ -475,6 +475,55 @@ button[type="submit"]:hover,
     color: var(--text-primary);
 }
 
+.brand-logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-brand-logo-img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(224, 170, 96, 0.4);
+    border: 1px solid rgba(224, 170, 96, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header-brand:hover .header-brand-logo-img {
+    transform: scale(1.1) rotate(-6deg);
+    box-shadow: 0 0 15px rgba(224, 170, 96, 0.7);
+}
+
+.brand-text-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.drawer-brand-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.drawer-logo-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(224, 170, 96, 0.4);
+    box-shadow: 0 0 8px rgba(224, 170, 96, 0.5);
+}
+
+.footer-logo-img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 /* Off-Canvas Navigation Drawer */
 .offcanvas-overlay {
     position: fixed;
@@ -1678,6 +1727,94 @@ button[type="submit"]:hover,
     font-weight: 800;
     padding: 6px 14px;
     border-radius: 50px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 2;
+}
+
+/* Universal Device Responsiveness Overrides (Mobile, Tablet, Desktop) */
+@media (max-width: 992px) {
+
+    div[style*="grid-template-columns: repeat(4"],
+    div[style*="grid-template-columns: repeat(3"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Collapse all inline multi-column grids to 1 column on mobile screens */
+    div[style*="grid-template-columns: 1fr 1fr"],
+    div[style*="grid-template-columns: 1.1fr 1fr"],
+    div[style*="grid-template-columns: 1.4fr 1fr"],
+    div[style*="grid-template-columns: repeat(4"],
+    div[style*="grid-template-columns: repeat(3"],
+    div[style*="grid-template-columns: repeat(2"] {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+    }
+
+    /* Adapt image wrap heights on mobile */
+    .webflow-img-wrap {
+        height: 240px !important;
+        border-radius: 18px !important;
+    }
+
+    /* Clear inline side paddings for alternating row text content */
+    div[style*="padding-left: 12px"],
+    div[style*="padding-right: 12px"] {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Responsive tables */
+    table {
+        display: block !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* Padding adjustments for container cards on small screens */
+    .container {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+
+    div[style*="padding: 36px"],
+    div[style*="padding: 40px"],
+    div[style*="padding: 48px"] {
+        padding: 24px 18px !important;
+    }
+
+    /* Section padding on mobile */
+    section {
+        padding: 40px 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* Typography & Button scaling for small mobile screens */
+    h1,
+    .hero-title {
+        font-size: 1.75rem !important;
+    }
+
+    h2,
+    .section-title {
+        font-size: 1.35rem !important;
+    }
+
+    h3 {
+        font-size: 1.2rem !important;
+    }
+
+    .btn-gold-pill,
+    .btn-light-pill,
+    .btn-jungle-pill {
+        padding: 12px 20px !important;
+        font-size: 0.8rem !important;
+        text-align: center !important;
+    }
 }

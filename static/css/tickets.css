@@ -510,17 +510,86 @@
     background: rgba(96, 108, 56, 0.2);
 }
 
-@media (max-width: 576px) {
-    .permit-modal-card {
-        padding: 24px 18px;
-    }
-    .permit-info-grid {
-        grid-template-columns: 1fr;
-    }
-    .permit-modal-actions {
-        grid-template-columns: 1fr;
+/* Responsive Media Queries for Tickets Page */
+@media (max-width: 992px) {
+    .calc-layout-grid,
+    .tickets-grid,
+    .gates-grid {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
     }
 }
+
+@media (max-width: 768px) {
+    .tickets-hero-section,
+    .blog-hero-section {
+        padding: 100px 16px 30px !important;
+    }
+
+    .tickets-hero-section .hero-title,
+    .blog-hero-section .hero-title {
+        font-size: 1.8rem !important;
+    }
+
+    .calculator-section {
+        padding: 24px 0 50px !important;
+    }
+
+    .calc-layout-grid,
+    .tickets-grid,
+    .gates-grid,
+    .calculator-layout {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+    }
+
+    .calculator-card-form,
+    .invoice-card,
+    .counter-card {
+        padding: 18px 14px !important;
+    }
+
+    .permit-modal-card {
+        padding: 20px 16px !important;
+        max-height: 85vh !important;
+    }
+
+    .permit-info-grid,
+    .permit-modal-actions {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Stack inner counter card grids on mobile phones */
+    div[style*="grid-template-columns: 1fr 1fr"],
+    div[style*="grid-template-columns: repeat(3"] {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .counter-card {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .tickets-hero-section .hero-title {
+        font-size: 1.5rem !important;
+    }
+
+    .btn-gold-pill,
+    .btn-secondary-pill,
+    .btn-block {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 12px 18px !important;
+    }
+}
+
+
 
 
 

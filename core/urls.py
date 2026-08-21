@@ -15,5 +15,8 @@ urlpatterns = [
     path('reviews/', views.reviews, name='reviews'),
     path('tickets/', views.tickets, name='tickets'),
     path('policies/', views.policies, name='policies'),
+    path('robots.txt', views.robots_txt, name='robots_txt'),
+    path('site.webmanifest', views.site_webmanifest, name='site_webmanifest'),
 ]
+
 

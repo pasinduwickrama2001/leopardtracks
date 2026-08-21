@@ -237,30 +237,84 @@
 }
 
 /* Responsive Media Queries for About Page */
-@media (max-width: 1024px) {
+@media (max-width: 992px) {
     .story-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
     }
 
     .pillars-grid,
-    .awards-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
+    .awards-grid,
     .team-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
     }
 }
 
 @media (max-width: 768px) {
+    .about-hero-section,
+    .blog-hero-section {
+        padding: 100px 16px 30px !important;
+    }
+
+    .about-hero-section .hero-title,
+    .blog-hero-section .hero-title {
+        font-size: 1.8rem !important;
+    }
+
+    .about-story-section,
+    .about-yala-editorial-section,
+    .pillars-section,
+    .team-section,
+    .awards-section {
+        padding: 40px 0 !important;
+    }
+
+    .story-content h2 {
+        font-size: 1.45rem !important;
+    }
+
+    .story-image-card img {
+        height: 250px !important;
+    }
+
     .pillars-grid,
     .awards-grid,
     .team-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
     }
 
-    .about-hero-section {
-        padding: 110px 16px 36px;
+    .about-yala-editorial-section h2 {
+        font-size: 1.6rem !important;
+    }
+
+    .about-yala-editorial-section h3 {
+        font-size: 1.3rem !important;
+        margin: 24px 0 10px !important;
+    }
+
+    .blog-paragraph {
+        font-size: 0.92rem !important;
+        line-height: 1.7 !important;
     }
 }
+
+@media (max-width: 480px) {
+    .about-hero-section .hero-title,
+    .blog-hero-section .hero-title {
+        font-size: 1.5rem !important;
+    }
+
+    .story-content h2 {
+        font-size: 1.3rem !important;
+    }
+
+    .btn-gold-pill {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 12px 20px !important;
+        font-size: 0.82rem !important;
+    }
+}
+

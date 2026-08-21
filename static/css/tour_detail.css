@@ -530,33 +530,54 @@
 /* Responsive Media Queries */
 @media (max-width: 992px) {
     .tour-detail-layout-grid {
-        grid-template-columns: 1fr;
-        gap: 28px;
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
     }
 
     .tour-booking-sidebar {
-        position: static;
-        max-width: 360px;
-        margin: 0 auto;
+        position: static !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
     }
 }
 
 @media (max-width: 768px) {
     .tour-detail-section {
-        padding: 90px 0 50px;
+        padding: 95px 16px 40px !important;
     }
 
     .tour-detail-title {
-        font-size: 1.85rem;
+        font-size: 1.7rem !important;
     }
 
     .inclusions-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
     }
 
     .tour-booking-cta {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding: 18px 16px !important;
+    }
+
+    .tour-booking-cta .btn-gold-pill,
+    .tour-booking-cta .btn-jungle-pill {
+        width: 100% !important;
+        text-align: center !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .tour-detail-title {
+        font-size: 1.45rem !important;
+    }
+
+    .btn-gold-pill,
+    .btn-light-pill,
+    .btn-jungle-pill {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 12px 18px !important;
     }
 }

@@ -348,33 +348,54 @@
 }
 
 /* Responsive Breakpoints for Packages Page */
-@media (max-width: 1024px) {
+@media (max-width: 992px) {
     .packages-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
     }
 }
 
 @media (max-width: 768px) {
     .packages-grid {
-        grid-template-columns: 1fr;
-        gap: 28px;
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
     }
 
     .packages-hero-section {
-        padding: 110px 16px 40px;
+        padding: 100px 16px 30px !important;
+    }
+
+    .packages-hero-section .hero-title {
+        font-size: 1.8rem !important;
     }
 
     .filter-tabs-wrapper {
-        gap: 8px;
+        gap: 8px !important;
+        overflow-x: auto !important;
+        padding-bottom: 8px !important;
     }
 
     .filter-tab {
-        font-size: 0.75rem;
-        padding: 8px 16px;
+        font-size: 0.75rem !important;
+        padding: 8px 16px !important;
+        white-space: nowrap !important;
     }
 
     .package-card {
-        padding: 24px 20px;
+        padding: 20px 16px !important;
     }
 }
+
+@media (max-width: 480px) {
+    .packages-hero-section .hero-title {
+        font-size: 1.5rem !important;
+    }
+
+    .btn-gold-pill,
+    .btn-light-pill {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 12px 18px !important;
+    }
+}
+

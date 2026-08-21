@@ -201,36 +201,84 @@
 }
 
 /* Responsive Media Queries for Contact Page */
-@media (max-width: 1024px) {
+@media (max-width: 992px) {
     .contact-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
     }
 
     .map-card-wrapper {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
     }
 
     .map-iframe-container {
-        min-height: 280px;
+        min-height: 280px !important;
     }
 }
 
 @media (max-width: 768px) {
+    .contact-hero-section,
+    .blog-hero-section {
+        padding: 100px 16px 30px !important;
+    }
+
+    .contact-hero-section .hero-title,
+    .blog-hero-section .hero-title {
+        font-size: 1.8rem !important;
+    }
+
     .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
     }
 
-    .contact-hero-section {
-        padding: 110px 16px 36px;
+    /* Target DWC Sri Lanka Card on mobile */
+    .contact-card[style*="grid-column: 1 / -1"] {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding: 24px 18px !important;
     }
 
-    .contact-form-card {
-        padding: 28px 20px;
+    .contact-card[style*="grid-column: 1 / -1"] .btn-gold-pill {
+        width: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
     }
 
+    .contact-form-card,
     .map-location-info {
-        padding: 28px 20px;
+        padding: 24px 18px !important;
+    }
+
+    .map-location-info h3 {
+        font-size: 1.3rem !important;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+
+    div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
     }
 }
+
+@media (max-width: 480px) {
+    .contact-hero-section .hero-title,
+    .blog-hero-section .hero-title {
+        font-size: 1.5rem !important;
+    }
+
+    .btn-whatsapp-pill,
+    .btn-gold-pill,
+    button[type="submit"] {
+        width: 100% !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding: 12px 18px !important;
+    }
+}
+
+
