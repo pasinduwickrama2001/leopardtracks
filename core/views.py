@@ -1183,6 +1183,89 @@ def site_webmanifest(request):
     return JsonResponse(data)
 
 
+def sitemap_xml(request):
+    """
+    Dynamically generates sitemap.xml listing all static pages and dynamic model pages.
+    """
+    from django.http import HttpResponse
+    from django.urls import reverse
+    from xml.sax.saxutils import escape
+
+    domain = f"{request.scheme}://{request.get_host()}"
+    
+    # 1. Core Static Pages
+    static_urls = [
+        {'loc': domain + '/', 'changefreq': 'daily', 'priority': '1.0'},
+        {'loc': domain + reverse('packages'), 'changefreq': 'daily', 'priority': '0.9'},
+        {'loc': domain + reverse('tours'), 'changefreq': 'daily', 'priority': '0.9'},
+        {'loc': domain + reverse('tickets'), 'changefreq': 'weekly', 'priority': '0.8'},
+        {'loc': domain + reverse('blog'), 'changefreq': 'daily', 'priority': '0.8'},
+        {'loc': domain + reverse('about'), 'changefreq': 'monthly', 'priority': '0.7'},
+        {'loc': domain + reverse('contact'), 'changefreq': 'monthly', 'priority': '0.7'},
+        {'loc': domain + reverse('reviews'), 'changefreq': 'weekly', 'priority': '0.7'},
+        {'loc': domain + reverse('policies'), 'changefreq': 'monthly', 'priority': '0.5'},
+    ]
+
+    xml_entries = []
+    for item in static_urls:
+        xml_entries.append(f"""  <url>
+    <loc>{escape(item['loc'])}</loc>
+    <changefreq>{item['changefreq']}</changefreq>
+    <priority>{item['priority']}</priority>
+  </url>""")
+
+    # 2. Dynamic Safari Packages
+    for pkg in SafariPackage.objects.all():
+        if pkg.slug:
+            try:
+                url = f"{domain}{reverse('package_detail', kwargs={'slug': pkg.slug})}"
+                xml_entries.append(f"""  <url>
+    <loc>{escape(url)}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>""")
+            except Exception:
+                pass
+
+    # 3. Dynamic Tours
+    for tr in Tour.objects.all():
+        if tr.slug:
+            try:
+                url = f"{domain}{reverse('tour_detail', kwargs={'slug': tr.slug})}"
+                xml_entries.append(f"""  <url>
+    <loc>{escape(url)}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>""")
+            except Exception:
+                pass
+
+    # 4. Dynamic Blog Posts
+    for post in BlogPost.objects.all():
+        if post.slug:
+            try:
+                url = f"{domain}{reverse('blog_detail', kwargs={'slug': post.slug})}"
+                lastmod = post.updated_at.strftime('%Y-%m-%d') if getattr(post, 'updated_at', None) else (post.created_at.strftime('%Y-%m-%d') if getattr(post, 'created_at', None) else '')
+                lastmod_tag = f"\n    <lastmod>{lastmod}</lastmod>" if lastmod else ""
+                xml_entries.append(f"""  <url>
+    <loc>{escape(url)}</loc>{lastmod_tag}
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>""")
+            except Exception:
+                pass
+
+    joined_entries = "\n".join(xml_entries)
+    xml_content = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{joined_entries}
+</urlset>"""
+
+    return HttpResponse(xml_content, content_type="application/xml")
+
+
+
+
 
 
 

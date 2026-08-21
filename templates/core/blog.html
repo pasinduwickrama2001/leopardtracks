@@ -1,7 +1,74 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Yala Wildlife Blog & Field Journal | Yala Leopard Tracks{% endblock %}
+{% block title %}Yala National Park Wildlife Blog & Safari Field Journal | Yala Leopard Tracks{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="Explore Yala National Park wildlife field logs, leopard tracking reports, photography tips & naturalist articles by Yala Leopard Tracks Sri Lanka.">
+{% endblock %}
+
+{% block meta_keywords %}
+<meta name="keywords" content="Yala National Park blog, Yala wildlife journal, Sri Lanka leopard tracking, Yala safari guide, Panthera pardus kotiya, Yala Block 1 Ruhuna, Yala wildlife photography">
+{% endblock %}
+
+{% block og_tags %}
+<meta property="og:title" content="Yala National Park Wildlife Blog & Safari Field Journal | Yala Leopard Tracks">
+<meta property="og:description" content="Field tracking logs, senior naturalist insights, wildlife photography guides, and habitat conservation updates from Yala National Park, Sri Lanka.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+<meta property="og:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+<meta property="og:site_name" content="Yala Leopard Tracks">
+<meta property="og:locale" content="en_US">
+{% endblock %}
+
+{% block twitter_tags %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Yala National Park Wildlife Blog & Safari Journal">
+<meta name="twitter:description" content="Field tracking logs, senior naturalist insights & photography guides from Yala National Park, Sri Lanka.">
+<meta name="twitter:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Yala National Park Wildlife Journal",
+    "description": "Field tracking logs, senior naturalist insights, wildlife photography guides, and habitat conservation updates from Yala National Park, Sri Lanka.",
+    "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Yala Leopard Tracks",
+      "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}"
+    },
+    "about": {
+      "@type": "TouristAttraction",
+      "name": "Yala National Park (Ruhuna)",
+      "description": "Spanning 979 sq km in Sri Lanka's dry zone, world-renowned for the highest wild leopard density on Earth."
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ request.scheme }}://{{ request.get_host }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Wildlife Blog & Journal",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+      }
+    ]
+  }
+]
+</script>
+{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
@@ -11,13 +78,24 @@
 <!-- Blog Hero Header Section -->
 <section class="blog-hero-section">
     <div class="container text-center">
-        <span class="section-tag font-gold"><i class="fa-solid fa-book-bookmark"></i> FIELD JOURNAL & WILDLIFE
-            BLOG</span>
-        <h1 class="hero-title section-title">YALA WILDERNESS LOG</h1>
+        <span class="section-tag font-gold"><i class="fa-solid fa-book-bookmark"></i> FIELD JOURNAL & WILDLIFE BLOG</span>
+        <h1 class="hero-title section-title">YALA NATIONAL PARK WILDLIFE JOURNAL</h1>
         <p class="paragraph-lead hero-subtitle">
-            Field tracking logs, senior naturalist insights, wildlife photography guides, and habitat conservation
-            updates from Yala National Park.
+            Field tracking logs, senior naturalist insights, wildlife photography guides, and habitat conservation updates from Yala National Park, Sri Lanka.
         </p>
+    </div>
+</section>
+
+<!-- Topical SEO Tags Ribbon -->
+<section style="background-color: var(--bg-pastel-cream); padding: 15px 0 25px;">
+    <div class="container">
+        <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; max-width: 900px; margin: 0 auto; text-align: center;">
+            <span style="font-size: 0.82rem; font-weight: 800; color: #606C38; background: rgba(96,108,56,0.08); padding: 6px 14px; border-radius: 50px;"><i class="fa-solid fa-paw font-gold"></i> Leopard Behavior Logs</span>
+            <span style="font-size: 0.82rem; font-weight: 800; color: #606C38; background: rgba(96,108,56,0.08); padding: 6px 14px; border-radius: 50px;"><i class="fa-solid fa-camera font-gold"></i> Wildlife Photography Tips</span>
+            <span style="font-size: 0.82rem; font-weight: 800; color: #606C38; background: rgba(96,108,56,0.08); padding: 6px 14px; border-radius: 50px;"><i class="fa-solid fa-map-location-dot font-gold"></i> Yala Block 1 Ruhuna Guides</span>
+            <span style="font-size: 0.82rem; font-weight: 800; color: #606C38; background: rgba(96,108,56,0.08); padding: 6px 14px; border-radius: 50px;"><i class="fa-solid fa-ticket font-gold"></i> Gate & Ticket Tariffs</span>
+            <span style="font-size: 0.82rem; font-weight: 800; color: #606C38; background: rgba(96,108,56,0.08); padding: 6px 14px; border-radius: 50px;"><i class="fa-solid fa-leaf font-gold"></i> Conservation Updates</span>
+        </div>
     </div>
 </section>
 
@@ -26,39 +104,36 @@
 <section class="about-section" id="featured-article">
     <div class="container grid-2-col align-center">
         <div class="about-text-content">
-            <span class="section-tag font-gold"><i class="fa-solid fa-fire"></i> FEATURED TRACK LOG</span>
+            <span class="section-tag font-gold"><i class="fa-solid fa-fire"></i> FEATURED YALA TRACK LOG</span>
             <h2 class="section-title">
                 <a href="{% url 'blog_detail' slug=featured_post.slug %}"
                     style="color: inherit; text-decoration: none;">{{ featured_post.title }}</a>
             </h2>
 
             <div class="article-meta-row" style="margin-bottom: 16px;">
-                <span class="author-chip"><i class="fa-solid fa-user-astronaut"></i> {{ featured_post.author }}</span>
-                <span><i class="fa-solid fa-calendar"></i> {{ featured_post.created_at|date:"M d, Y" }}</span>
-                <!-- <span class="section-tag tag-sage" style="padding: 4px 12px; font-size: 0.75rem;">{{
-                    featured_post.category }}</span> -->
+                <span class="author-chip"><i class="fa-solid fa-user"></i> {{ featured_post.author }}</span>
+                <span><i class="fa-solid fa-calendar-day"></i> {{ featured_post.created_at|date:"M d, Y" }}</span>
             </div>
 
             <p class="paragraph-lead">
                 {{ featured_post.content|truncatewords:45 }}
             </p>
-            <p>
-                Written by our certified senior naturalists and local trackers guiding through Block 1, Block 5, and
-                quiet wilderness buffer zones.
+            <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.65;">
+                Written by our certified senior naturalists and local trackers guiding game drives through Yala Block 1, Block 5, and quiet wilderness buffer zones.
             </p>
 
             <div style="margin-top: 20px;">
-                <a href="{% url 'blog_detail' slug=featured_post.slug %}" class="btn-gold-pill">READ FULL TRACK LOG <i
+                <a href="{% url 'blog_detail' slug=featured_post.slug %}" class="btn-gold-pill" aria-label="Read {{ featured_post.title }}">READ FULL TRACK LOG <i
                         class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>
 
-        <a href="{% url 'blog_detail' slug=featured_post.slug %}" class="about-image-card" style="display: block; text-decoration: none;">
+        <a href="{% url 'blog_detail' slug=featured_post.slug %}" class="about-image-card" style="display: block; text-decoration: none;" aria-label="{{ featured_post.title }}">
             {% if featured_post.imageUrl %}
-            <img src="{{ featured_post.imageUrl }}" alt="{{ featured_post.title }}" class="rounded-img shadow-clean">
+            <img src="{{ featured_post.imageUrl }}" alt="{{ featured_post.title }} - Yala National Park Wildlife Story" class="rounded-img shadow-clean" loading="eager" decoding="async">
             {% else %}
-            <img src="{% static 'images/yala-tent.jpg' %}" alt="{{ featured_post.title }}"
-                class="rounded-img shadow-clean">
+            <img src="{% static 'images/yala-tent.jpg' %}" alt="{{ featured_post.title }} - Yala National Park Wildlife Story"
+                class="rounded-img shadow-clean" loading="eager" decoding="async">
             {% endif %}
             <div class="image-overlay-badge">
                 <span class="overlay-title">Yala National Park</span>
@@ -73,18 +148,18 @@
 <section class="blog-grid-section" id="blog-grid" style="padding: 0; margin: 0; width: 100%; max-width: 100%; background: var(--bg-pastel-cream); overflow-x: hidden;">
     <div style="width: 100%; padding: 40px 20px 20px; text-align: center;">
         <span class="section-tag tag-sage">ALL FIELD LOGS & ARTICLES</span>
-        <h2 class="section-title" style="margin-top: 6px;">EXPLORE YALA WILDLIFE STORIES</h2>
+        <h2 class="section-title" style="margin-top: 6px;">ALL YALA NATIONAL PARK SAFARI ARTICLES & GUIDES</h2>
     </div>
 
     <div class="full-screen-bento-grid" id="blog-articles-grid">
         {% for post in other_posts|default:all_posts %}
         {% if forloop.first %}
         <!-- Big Bento Card (Combines 2 Columns & 2 Rows) -->
-        <a href="{% url 'blog_detail' slug=post.slug %}" class="fs-bento-card fs-bento-large" style="text-decoration: none;">
+        <a href="{% url 'blog_detail' slug=post.slug %}" class="fs-bento-card fs-bento-large" style="text-decoration: none;" aria-label="{{ post.title }}">
             {% if post.imageUrl %}
-            <img src="{{ post.imageUrl }}" alt="{{ post.title }}" class="fs-bento-img">
+            <img src="{{ post.imageUrl }}" alt="{{ post.title }} - Yala National Park Wildlife Journal" class="fs-bento-img" loading="lazy" decoding="async">
             {% else %}
-            <img src="{% static 'images/yala-wildlife-hero.jpg' %}" alt="{{ post.title }}" class="fs-bento-img">
+            <img src="{% static 'images/yala-wildlife-hero.jpg' %}" alt="{{ post.title }} - Yala National Park Wildlife Journal" class="fs-bento-img" loading="lazy" decoding="async">
             {% endif %}
             <div class="fs-bento-overlay"></div>
             <div class="fs-bento-content">
@@ -94,11 +169,11 @@
         </a>
         {% else %}
         <!-- Small Bento Card (1 Column x 1 Row) -->
-        <a href="{% url 'blog_detail' slug=post.slug %}" class="fs-bento-card fs-bento-small" style="text-decoration: none;">
+        <a href="{% url 'blog_detail' slug=post.slug %}" class="fs-bento-card fs-bento-small" style="text-decoration: none;" aria-label="{{ post.title }}">
             {% if post.imageUrl %}
-            <img src="{{ post.imageUrl }}" alt="{{ post.title }}" class="fs-bento-img">
+            <img src="{{ post.imageUrl }}" alt="{{ post.title }} - Yala National Park Safari Guide" class="fs-bento-img" loading="lazy" decoding="async">
             {% else %}
-            <img src="{% static 'images/yala-wildlife-hero.jpg' %}" alt="{{ post.title }}" class="fs-bento-img">
+            <img src="{% static 'images/yala-wildlife-hero.jpg' %}" alt="{{ post.title }} - Yala National Park Safari Guide" class="fs-bento-img" loading="lazy" decoding="async">
             {% endif %}
             <div class="fs-bento-overlay"></div>
             <div class="fs-bento-content">

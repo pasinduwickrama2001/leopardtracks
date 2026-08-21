@@ -1,7 +1,87 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Google Maps Verified Reviews & Wildlife Gallery | Yala Leopard Tracks{% endblock %}
+{% block title %}Yala National Park Reviews & Guest Ratings | Yala Leopard Tracks Sri Lanka{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="Read 850+ 5-star Google Maps reviews & guest ratings for Yala Leopard Tracks. Authentic safari jeep game drive feedback & leopard photo logs in Sri Lanka.">
+{% endblock %}
+
+{% block meta_keywords %}
+<meta name="keywords" content="Yala safari reviews, Yala Leopard Tracks reviews, Google reviews Yala safari, Yala safari ratings, best Yala safari jeep reviews, Sri Lanka leopard safari feedback">
+{% endblock %}
+
+{% block og_tags %}
+<meta property="og:title" content="Yala Safari Reviews & Guest Ratings | Yala Leopard Tracks Sri Lanka">
+<meta property="og:description" content="Authentic Google Maps reviews, verified guest ratings, and high-resolution wildlife photography captured during our Yala National Park game drives.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+<meta property="og:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+<meta property="og:site_name" content="Yala Leopard Tracks">
+<meta property="og:locale" content="en_US">
+{% endblock %}
+
+{% block twitter_tags %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Yala Safari Reviews & Verified Guest Feedback">
+<meta name="twitter:description" content="Authentic Google Maps reviews & 5-star guest ratings for Yala Leopard Tracks safaris in Sri Lanka.">
+<meta name="twitter:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "Yala Leopard Tracks",
+    "url": "{{ request.scheme }}://{{ request.get_host }}",
+    "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}",
+    "telephone": "+94778158004",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "850",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Dr. Christian Weber"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "reviewBody": "We started our game drive at 5:30 AM with Yala Leopard Tracks. Our naturalist Kapila tracked alarm calls near Block 1 waterhole and found a large male leopard resting on a palu branch for over 45 minutes!"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ request.scheme }}://{{ request.get_host }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Guest Reviews",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+      }
+    ]
+  }
+]
+</script>
+{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
@@ -13,14 +93,14 @@
 <section class="blog-hero-section">
     <div class="container text-center">
         <span class="section-tag font-gold"><i class="fa-solid fa-star"></i> VERIFIED GOOGLE MAPS REVIEWS & FIELD JOURNAL</span>
-        <h1 class="hero-title section-title">GUEST SAFARI REVIEWS & GALLERY</h1>
+        <h1 class="hero-title section-title">YALA SAFARI GUEST REVIEWS & GALLERY</h1>
         <p class="paragraph-lead hero-subtitle">
             Authentic Google Maps reviews, verified guest ratings, and high-resolution wildlife photography captured during our Yala National Park game drives.
         </p>
     </div>
 </section>
 
-<!-- Featured Hero Article / Review Section (Styled like blog.html Featured Section) -->
+<!-- Featured Hero Article / Review Section -->
 <section class="about-section" id="featured-review">
     <div class="container grid-2-col align-center">
         <div class="about-text-content">
@@ -46,7 +126,7 @@
         </div>
 
         <div class="about-image-card">
-            <img src="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg" alt="Yala Leopard Sightings" class="rounded-img shadow-clean">
+            <img src="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg" alt="Yala Leopard Sightings - Yala National Park Safari Review" class="rounded-img shadow-clean" loading="eager" decoding="async">
             <div class="image-overlay-badge">
                 <span class="overlay-title">Yala National Park</span>
                 <span class="overlay-sub">Google Reviews</span>
@@ -55,20 +135,7 @@
     </div>
 </section>
 
-<!-- Category Filter Bar -->
-<!-- <section class="reviews-filter-section">
-    <div class="container">
-        <div class="filter-tabs-wrapper">
-            <button class="filter-tab active" data-filter="all">All Reviews & Photos</button>
-            <button class="filter-tab" data-filter="leopard">Leopard Sightings</button>
-            <button class="filter-tab" data-filter="drives">Game Drives</button>
-            <button class="filter-tab" data-filter="camp">Luxury Camp Stays</button>
-            <button class="filter-tab" data-filter="photo">Wildlife Photography</button>
-        </div>
-    </div>
-</section> -->
-
-<!-- Blog-Style Full Screen Bento Grid for Reviews (Matching blog.html Grid) -->
+<!-- Blog-Style Full Screen Bento Grid for Reviews -->
 <section class="blog-grid-section" id="reviews-grid-section" style="padding: 0; margin: 0; width: 100vw; max-width: 100vw; background: var(--bg-pastel-cream); overflow-x: hidden;">
     <div style="width: 100%; padding: 40px 20px 20px; text-align: center;">
         <span class="section-tag tag-sage">GOOGLE MAPS VERIFIED FEEDBACK</span>
@@ -77,14 +144,14 @@
 
     <div class="full-screen-bento-grid" id="reviews-grid">
         {% for item in reviews_list %}
-        <!-- Square Bento Review Card (Cycles between Big 2x2 Square & Small 1x1 Square) -->
+        <!-- Square Bento Review Card -->
         <div class="fs-bento-card {% cycle 'fs-bento-square-large' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-large' 'fs-bento-square-small' 'fs-bento-square-small' %} review-card {% if forloop.counter > 10 %}review-item-hidden{% endif %}" 
              data-category="{{ item.category }}"
              {% if forloop.counter > 11 %}style="display: none;"{% endif %}>
             {% if item.photo_url %}
-            <img src="{{ item.photo_url }}" alt="{{ item.name }}" class="fs-bento-img">
+            <img src="{{ item.photo_url }}" alt="{{ item.name }} - Yala Safari Guest Review Photo" class="fs-bento-img" loading="lazy" decoding="async">
             {% else %}
-            <img src="{% static 'images/yala-wildlife-hero.jpg' %}" alt="{{ item.name }}" class="fs-bento-img">
+            <img src="{% static 'images/yala-wildlife-hero.jpg' %}" alt="{{ item.name }} - Yala Safari Guest Review Photo" class="fs-bento-img" loading="lazy" decoding="async">
             {% endif %}
             <div class="fs-bento-overlay"></div>
             <div class="fs-bento-content">

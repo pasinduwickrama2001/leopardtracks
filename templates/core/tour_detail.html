@@ -1,7 +1,84 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ tour.title }} | Sri Lanka Tour Expeditions{% endblock %}
+{% block title %}{{ tour.title }} | Sri Lanka Tour & Yala Safari Expeditions{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="Book {{ tour.title }} in Sri Lanka including Yala National Park leopard safaris. {{ tour.duration }}, private luxury transport, starting from ${{ tour.get_clean_price }} USD.">
+{% endblock %}
+
+{% block meta_keywords %}
+<meta name="keywords" content="{{ tour.title }}, Sri Lanka tour packages, Yala national park tour, Sri Lanka wildlife itinerary, {{ tour.route }}, Sri Lanka private driver tour">
+{% endblock %}
+
+{% block og_tags %}
+<meta property="og:title" content="{{ tour.title }} | Sri Lanka Tour Expeditions">
+<meta property="og:description" content="{{ tour.description|truncatewords:28|striptags }}">
+<meta property="og:type" content="product">
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+<meta property="og:image" content="{{ tour.get_tour_image_url }}">
+<meta property="og:site_name" content="Yala Leopard Tracks">
+<meta property="og:locale" content="en_US">
+<meta property="product:price:amount" content="{{ tour.get_clean_price }}">
+<meta property="product:price:currency" content="USD">
+{% endblock %}
+
+{% block twitter_tags %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ tour.title }} | Sri Lanka Tour">
+<meta name="twitter:description" content="{{ tour.description|truncatewords:28|striptags }}">
+<meta name="twitter:image" content="{{ tour.get_tour_image_url }}">
+{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    "name": "{{ tour.title|escapejs }}",
+    "description": "{{ tour.description|truncatewords:40|striptags|escapejs }}",
+    "image": "{{ tour.get_tour_image_url }}",
+    "touristType": ["Wildlife Enthusiasts", "Culture Seekers", "Island Expeditioners"],
+    "offers": {
+      "@type": "Offer",
+      "price": "{{ tour.get_clean_price }}",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "offeredBy": {
+        "@type": "TravelAgency",
+        "name": "Yala Leopard Tracks",
+        "telephone": "+94778158004"
+      }
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ request.scheme }}://{{ request.get_host }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Islandwide Tours",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'tours' %}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{{ tour.title|escapejs }}",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+      }
+    ]
+  }
+]
+</script>
+{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">

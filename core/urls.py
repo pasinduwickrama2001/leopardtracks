@@ -16,6 +16,7 @@ urlpatterns = [
     path('tickets/', views.tickets, name='tickets'),
     path('policies/', views.policies, name='policies'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
+    path('sitemap.xml', views.sitemap_xml, name='sitemap_xml'),
     path('site.webmanifest', views.site_webmanifest, name='site_webmanifest'),
 ]
 

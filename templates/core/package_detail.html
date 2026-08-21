@@ -1,7 +1,84 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ package.title }} | Yala Leopard Tracks{% endblock %}
+{% block title %}{{ package.title }} | Yala National Park Safari Jeep Tour Sri Lanka{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="Book {{ package.title }} in Yala National Park Sri Lanka. {{ package.duration }}, {{ package.vehicle }}, from ${{ package.get_clean_price }} USD. Senior naturalists & DWC gate clearance.">
+{% endblock %}
+
+{% block meta_keywords %}
+<meta name="keywords" content="{{ package.title }}, Yala safari package, Yala jeep drive, Yala National Park safari booking, {{ package.category_label }}, Yala 4x4 Land Cruiser, Palatupana gate safari, Panthera pardus kotiya">
+{% endblock %}
+
+{% block og_tags %}
+<meta property="og:title" content="{{ package.title }} | Yala National Park Safari">
+<meta property="og:description" content="{{ package.description|truncatewords:28|striptags }}">
+<meta property="og:type" content="product">
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+<meta property="og:image" content="{% if image_urls_list %}{{ image_urls_list.0 }}{% elif package.imageUrl %}{{ package.imageUrl }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/yala-tent.jpg' %}{% endif %}">
+<meta property="og:site_name" content="Yala Leopard Tracks">
+<meta property="og:locale" content="en_US">
+<meta property="product:price:amount" content="{{ package.get_clean_price }}">
+<meta property="product:price:currency" content="USD">
+{% endblock %}
+
+{% block twitter_tags %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ package.title }} | Yala Safari Tour">
+<meta name="twitter:description" content="{{ package.description|truncatewords:28|striptags }}">
+<meta name="twitter:image" content="{% if image_urls_list %}{{ image_urls_list.0 }}{% elif package.imageUrl %}{{ package.imageUrl }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/yala-tent.jpg' %}{% endif %}">
+{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    "name": "{{ package.title|escapejs }}",
+    "description": "{{ package.description|truncatewords:40|striptags|escapejs }}",
+    "image": "{% if image_urls_list %}{{ image_urls_list.0 }}{% else %}{{ package.imageUrl }}{% endif %}",
+    "touristType": ["Wildlife Enthusiasts", "Safari Photographers", "Family Travelers"],
+    "offers": {
+      "@type": "Offer",
+      "price": "{{ package.get_clean_price }}",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "offeredBy": {
+        "@type": "TravelAgency",
+        "name": "Yala Leopard Tracks",
+        "telephone": "+94778158004"
+      }
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ request.scheme }}://{{ request.get_host }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Safari Packages",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'packages' %}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{{ package.title|escapejs }}",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+      }
+    ]
+  }
+]
+</script>
+{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
@@ -218,9 +295,9 @@
         <div class="camp-card-row {% if forloop.counter|divisibleby:2 %}reverse{% endif %}" style="background: transparent; box-shadow: none; border: none; margin-bottom: 48px;">
             <div class="camp-image" style="border-radius: var(--radius-card); overflow: hidden;">
                 {% if item.imageUrl %}
-                <img src="{{ item.imageUrl }}" alt="{{ item.title }}" style="border-radius: var(--radius-card);">
+                <img src="{{ item.imageUrl }}" alt="{{ item.title }} - Yala National Park Safari Package" style="border-radius: var(--radius-card);" loading="lazy" decoding="async">
                 {% else %}
-                <img src="{% static 'images/yala-tent.jpg' %}" alt="{{ item.title }}" style="border-radius: var(--radius-card);">
+                <img src="{% static 'images/yala-tent.jpg' %}" alt="{{ item.title }} - Yala National Park Safari Package" style="border-radius: var(--radius-card);" loading="lazy" decoding="async">
                 {% endif %}
                 <span class="camp-location-badge badge-sage">
                     <i class="fa-regular fa-clock"></i> {{ item.duration }}

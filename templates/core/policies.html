@@ -1,7 +1,69 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}Privacy Policy, Terms of Service & Refunds | Yala Leopard Tracks Sri Lanka{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="Read privacy policies, booking terms of service, DWC park entry rules & refund cancellation policies for Yala Leopard Tracks safaris Sri Lanka.">
+{% endblock %}
+
+{% block meta_keywords %}
+<meta name="keywords" content="Yala safari privacy policy, Yala Leopard Tracks terms of service, Yala jeep refund policy, DWC national park entry rules, Yala cancellation policy">
+{% endblock %}
+
+{% block og_tags %}
+<meta property="og:title" content="Privacy Policy, Terms of Service & Refunds | Yala Leopard Tracks">
+<meta property="og:description" content="Yala Leopard Tracks privacy commitment, booking terms of service, DWC park rules & refund cancellation policies for wildlife travelers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+<meta property="og:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+<meta property="og:site_name" content="Yala Leopard Tracks">
+<meta property="og:locale" content="en_US">
+{% endblock %}
+
+{% block twitter_tags %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Privacy Policy, Terms of Service & Refunds | Yala Leopard Tracks">
+<meta name="twitter:description" content="Yala Leopard Tracks privacy commitment, booking terms, DWC entry rules & cancellation policy.">
+<meta name="twitter:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Privacy Policy, Terms of Service & Refund Policy",
+    "description": "Legal terms, guest data privacy protection, payment security, DWC entry rules, and cancellation policies.",
+    "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Yala Leopard Tracks",
+      "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ request.scheme }}://{{ request.get_host }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Terms & Policies",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+      }
+    ]
+  }
+]
+</script>
+{% endblock %}
 
 {% block content %}
 <!-- Policy Header Banner -->

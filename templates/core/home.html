@@ -1,11 +1,160 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Yala Leopard Tracks | Yala National Park Safaris & Luxury Camping Sri Lanka{% endblock %}
+{% block title %}Yala National Park Safaris | Yala Leopards Sri Lanka{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="Book private 4x4 Yala National Park safari jeeps, luxury glamping camps & Sri Lanka round tours. Experience the highest leopard density on Earth with senior naturalists.">
+{% endblock %}
+
+{% block meta_keywords %}
+<meta name="keywords" content="Yala National Park, Yala safari packages, Yala National Park safaris, Yala safari jeep booking, luxury glamping Yala Sri Lanka, Yala entrance fees DWC, Palatupana gate Yala, Panthera pardus kotiya">
+{% endblock %}
+
+{% block og_tags %}
+<meta property="og:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Yala Leopard Tracks Sri Lanka">
+<meta property="og:description" content="Book private 4x4 Yala National Park safari jeep game drives, luxury tented glamping camps & Sri Lanka round tours with certified naturalists.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+<meta property="og:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+<meta property="og:site_name" content="Yala Leopard Tracks">
+<meta property="og:locale" content="en_US">
+{% endblock %}
+
+{% block twitter_tags %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Yala Leopard Tracks Sri Lanka">
+<meta name="twitter:description" content="Private 4x4 Yala safari jeep drives & luxury camping in Sri Lanka with expert naturalists.">
+<meta name="twitter:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "@id": "{{ request.scheme }}://{{ request.get_host }}#organization",
+    "name": "Yala Leopard Tracks",
+    "url": "{{ request.scheme }}://{{ request.get_host }}",
+    "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}",
+    "image": "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg",
+    "description": "Ceylon's premier 4x4 game drives & luxury glamping expeditions in Yala National Park, Sri Lanka.",
+    "telephone": "+94778158004",
+    "email": "info@yalaleopardtracks.com",
+    "priceRange": "$$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Palatupana Gate Road",
+      "addressLocality": "Tissamaharama",
+      "addressRegion": "Southern Province",
+      "postalCode": "82000",
+      "addressCountry": "LK"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 6.3712,
+      "longitude": 81.3934
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "05:00",
+      "closes": "20:00"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "850",
+      "bestRating": "5"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "{{ request.scheme }}://{{ request.get_host }}#website",
+    "url": "{{ request.scheme }}://{{ request.get_host }}",
+    "name": "Yala Leopard Tracks",
+    "description": "Private 4x4 Yala National Park Safari Jeep Booking & Luxury Tented Camps in Sri Lanka",
+    "publisher": {
+      "@id": "{{ request.scheme }}://{{ request.get_host }}#organization"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "TouristAttraction",
+    "name": "Yala National Park (Ruhuna)",
+    "description": "Spanning 979 sq km in Sri Lanka, world-renowned for hosting the highest density of wild leopards on Earth.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Tissamaharama",
+      "addressCountry": "LK"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 6.3712,
+      "longitude": 81.5167
+    },
+    "touristType": ["Wildlife Enthusiasts", "Photographers", "Safari Travelers"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Yala National Park Safaris Home",
+        "item": "{{ request.scheme }}://{{ request.get_host }}"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the best time for a Yala National Park safari?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Early morning (6:00 AM - 10:00 AM) and late afternoon (2:30 PM - 6:00 PM) game drives offer the best sightings of wild leopards, elephants, and sloth bears during active feeding and roaming hours."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which entrance gate is best for Yala Block 1 game drives?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Palatupana Gate is the primary entrance for Block 1 (Ruhuna), which holds the world's highest leopard density. Katagamuwa Gate serves Katagamuwa and Block 1/5 western entries."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does a Yala National Park entrance ticket cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Official DWC gate tariffs are $25 USD for foreign adults, $15 USD for foreign children (6-12 yrs), $20 USD for SAARC adults, plus LKR 300 vehicle license fee and 18% VAT."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are safari jeeps and luxury camping packages private?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, all Yala Leopard Tracks safaris are conducted in private 4x4 modified Land Cruiser jeeps with experienced naturalists, cool refreshments, and DWC park clearance included."
+        }
+      }
+    ]
+  }
+]
+</script>
+{% endblock %}
 
 {% block content %}
 <!-- 1. Webflow-Style Hero Section -->
-<section class="hero-section" style="background-image: linear-gradient(to bottom, rgba(18, 33, 24, 0.3), rgba(18, 33, 24, 0.75)), url('{{ hero.get_hero_image_url }}');">
+<section class="hero-section"
+    style="background-image: linear-gradient(to bottom, rgba(18, 33, 24, 0.3), rgba(18, 33, 24, 0.75)), url('{{ hero.get_hero_image_url }}');">
     <div class="hero-content">
         {% if hero.badge_text %}
         <div class="hero-pill-badge">{{ hero.badge_text }}</div>
@@ -13,12 +162,29 @@
         <div class="hero-pill-badge"><i class="fa-solid fa-leaf font-gold"></i> CEYLON'S PREMIER SAFARI SANCTUARY</div>
         {% endif %}
 
-        <h1 class="hero-title">{{ hero.title|default:"WILD YALA SAFARIS" }}</h1>
-        <p class="hero-subtitle">{{ hero.subtitle|default:"Ceylon's premier 4x4 game drives & luxury glamping expeditions." }}</p>
+        <h1 class="hero-title">{{ hero.title|default:"YALA SAFARI PACKAGES & LUXURY TENTED CAMPS" }}</h1>
+        <p class="hero-subtitle">{{ hero.subtitle|default:"Ceylon's premier 4x4 game drives & luxury glamping expeditions in Yala National Park, Sri Lanka." }}</p>
 
         <div class="hero-buttons">
-            <a href="{% url 'packages' %}" class="btn-gold-pill">{{ hero.button_primary_text|default:"EXPLORE PACKAGES" }} <i class="fa-solid fa-arrow-right"></i></a>
-            <a href="#safari-packages" class="btn-light-pill">{{ hero.button_secondary_text|default:"RESERVE JEEP" }}</a>
+            {% if hero and hero.button_primary_text %}
+            <a href="{{ hero.button_primary_url|default:'/packages/' }}" class="btn-gold-pill" aria-label="{{ hero.button_primary_text }}">
+                {{ hero.button_primary_text }} <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            {% else %}
+            <a href="{% url 'packages' %}" class="btn-gold-pill" aria-label="Explore Yala Safari Packages">
+                EXPLORE PACKAGES <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            {% endif %}
+
+            {% if hero and hero.button_secondary_text %}
+            <a href="{{ hero.button_secondary_url|default:'#safari-packages' }}" class="btn-light-pill" aria-label="{{ hero.button_secondary_text }}">
+                {{ hero.button_secondary_text }}
+            </a>
+            {% else %}
+            <a href="#safari-packages" class="btn-light-pill" aria-label="Reserve Yala Safari Jeep">
+                RESERVE JEEP
+            </a>
+            {% endif %}
         </div>
     </div>
 
@@ -130,7 +296,7 @@
         <div class="webflow-card">
             <div class="webflow-img-wrap" style="height: 420px; border-radius: 24px;">
                 <img src="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg"
-                    alt="Yala National Park Sri Lankan Leopard">
+                    alt="Wild Sri Lankan Leopard Panthera pardus kotiya on Patanangala rock in Yala National Park" loading="lazy" decoding="async" width="600" height="420">
                 <span class="webflow-floating-badge" style="font-size: 0.78rem; padding: 8px 16px;"><i
                         class="fa-solid fa-paw"></i> Panthera pardus kotiya</span>
             </div>
@@ -142,10 +308,12 @@
 <!-- 5. Yala National Park Map & Block Details Section (Pure Typography & Main Background) -->
 <section class="about-section" id="yala-map-blocks" style="background-color: var(--bg-pastel-cream); padding: 60px 0;">
     <div class="container text-center section-header" style="margin-bottom: 40px;">
-        <span class="section-tag tag-sage"><i class="fa-solid fa-map-location-dot"></i> GEOGRAPHIC ZONING & BOUNDARIES</span>
+        <span class="section-tag tag-sage"><i class="fa-solid fa-map-location-dot"></i> GEOGRAPHIC ZONING &
+            BOUNDARIES</span>
         <h2 class="section-title">YALA NATIONAL PARK MAP & PARK BLOCKS GUIDE</h2>
         <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 840px; margin: 8px auto 0;">
-            Spanning 979 sq km along Sri Lanka's southeastern coast, Yala National Park comprises 5 distinct administrative blocks, 4 major entrance gates, and adjacent wildlife sanctuaries.
+            Spanning 979 sq km along Sri Lanka's southeastern coast, Yala National Park comprises 5 distinct
+            administrative blocks, 4 major entrance gates, and adjacent wildlife sanctuaries.
         </p>
     </div>
 
@@ -153,47 +321,67 @@
         <!-- Park Entrance Gates Text Guide (Pure Text, Main BG) -->
         <div style="background-color: var(--bg-pastel-cream); padding: 10px 0 36px;">
             <div style="max-width: 900px; margin: 0 auto; text-align: center;">
-                <span class="section-tag font-gold" style="font-size: 0.74rem;"><i class="fa-solid fa-compass"></i> ENTRANCE GATES & ACCESS GUIDE</span>
-                <h3 style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; color: #233325; margin: 10px 0 14px;">
+                <span class="section-tag font-gold" style="font-size: 0.74rem;"><i class="fa-solid fa-compass"></i>
+                    ENTRANCE GATES & ACCESS GUIDE</span>
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; color: #233325; margin: 10px 0 14px;">
                     NAVIGATING YALA'S 4 MAIN PARK GATES
                 </h3>
                 <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 24px;">
-                    Access to Yala National Park is regulated through designated Department of Wildlife Conservation (DWC) entrance gates. Selecting the right gate determines which blocks and habitats your safari jeep will explore:
+                    Access to Yala National Park is regulated through designated Department of Wildlife Conservation
+                    (DWC) entrance gates. Selecting the right gate determines which blocks and habitats your safari jeep
+                    will explore:
                 </p>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
                 <div style="background-color: var(--bg-pastel-cream); padding: 10px;">
-                    <div style="font-size: 1.2rem; color: #606C38; margin-bottom: 8px;"><i class="fa-solid fa-door-open font-gold"></i></div>
-                    <h4 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #233325; margin-bottom: 6px;">Palatupana Main Gate</h4>
-                    <div style="font-size: 0.78rem; color: #606C38; font-weight: 700; margin-bottom: 8px;">Tissamaharama Entry</div>
+                    <div style="font-size: 1.2rem; color: #606C38; margin-bottom: 8px;"><i
+                            class="fa-solid fa-door-open font-gold"></i></div>
+                    <h4
+                        style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #233325; margin-bottom: 6px;">
+                        Palatupana Main Gate</h4>
+                    <div style="font-size: 0.78rem; color: #606C38; font-weight: 700; margin-bottom: 8px;">Tissamaharama
+                        Entry</div>
                     <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.6;">
                         Primary entrance to Block 1 (Ruhuna). Nearest gate for lodges in Tissa and Kirinda.
                     </p>
                 </div>
 
                 <div style="background-color: var(--bg-pastel-cream); padding: 10px;">
-                    <div style="font-size: 1.2rem; color: #606C38; margin-bottom: 8px;"><i class="fa-solid fa-door-open font-gold"></i></div>
-                    <h4 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #233325; margin-bottom: 6px;">Katagamuwa Gate</h4>
-                    <div style="font-size: 0.78rem; color: #606C38; font-weight: 700; margin-bottom: 8px;">Kataragama Entry</div>
+                    <div style="font-size: 1.2rem; color: #606C38; margin-bottom: 8px;"><i
+                            class="fa-solid fa-door-open font-gold"></i></div>
+                    <h4
+                        style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #233325; margin-bottom: 6px;">
+                        Katagamuwa Gate</h4>
+                    <div style="font-size: 0.78rem; color: #606C38; font-weight: 700; margin-bottom: 8px;">Kataragama
+                        Entry</div>
                     <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.6;">
                         Western access gate serving both Block 1 and Block 5 (Weheragala Reservoir).
                     </p>
                 </div>
 
                 <div style="background-color: var(--bg-pastel-cream); padding: 10px;">
-                    <div style="font-size: 1.2rem; color: #606C38; margin-bottom: 8px;"><i class="fa-solid fa-door-open font-gold"></i></div>
-                    <h4 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #233325; margin-bottom: 6px;">Galge Gate</h4>
-                    <div style="font-size: 0.78rem; color: #606C38; font-weight: 700; margin-bottom: 8px;">Buttala Road Entry</div>
+                    <div style="font-size: 1.2rem; color: #606C38; margin-bottom: 8px;"><i
+                            class="fa-solid fa-door-open font-gold"></i></div>
+                    <h4
+                        style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #233325; margin-bottom: 6px;">
+                        Galge Gate</h4>
+                    <div style="font-size: 0.78rem; color: #606C38; font-weight: 700; margin-bottom: 8px;">Buttala Road
+                        Entry</div>
                     <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.6;">
                         Northern entry point dedicated to Block 3 and Block 5 for low-density safaris.
                     </p>
                 </div>
 
                 <div style="background-color: var(--bg-pastel-cream); padding: 10px;">
-                    <div style="font-size: 1.2rem; color: #606C38; margin-bottom: 8px;"><i class="fa-solid fa-door-open font-gold"></i></div>
-                    <h4 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #233325; margin-bottom: 6px;">Okanda Gate</h4>
-                    <div style="font-size: 0.78rem; color: #606C38; font-weight: 700; margin-bottom: 8px;">Kumana Entry</div>
+                    <div style="font-size: 1.2rem; color: #606C38; margin-bottom: 8px;"><i
+                            class="fa-solid fa-door-open font-gold"></i></div>
+                    <h4
+                        style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #233325; margin-bottom: 6px;">
+                        Okanda Gate</h4>
+                    <div style="font-size: 0.78rem; color: #606C38; font-weight: 700; margin-bottom: 8px;">Kumana Entry
+                    </div>
                     <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.6;">
                         Eastern entrance to Kumana National Park (Yala East) waterbird sanctuary.
                     </p>
@@ -205,40 +393,64 @@
         <div style="margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;">
             <!-- Block 1 -->
             <div style="background-color: var(--bg-pastel-cream); padding: 10px;">
-                <div style="font-size: 0.76rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">MAIN GAME DRIVE ZONE</div>
-                <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #233325; margin-bottom: 8px;">BLOCK 1 (RUHUNA) — 141 SQ KM</h3>
-                <div style="font-size: 0.82rem; color: #606C38; font-weight: 700; margin-bottom: 12px;"><i class="fa-solid fa-paw"></i> World's Highest Leopard Sighting Density</div>
+                <div
+                    style="font-size: 0.76rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
+                    MAIN GAME DRIVE ZONE</div>
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #233325; margin-bottom: 8px;">
+                    BLOCK 1 (RUHUNA) — 141 SQ KM</h3>
+                <div style="font-size: 0.82rem; color: #606C38; font-weight: 700; margin-bottom: 12px;"><i
+                        class="fa-solid fa-paw"></i> World's Highest Leopard Sighting Density</div>
                 <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 12px;">
-                    Block 1 is the most celebrated sector of Yala National Park. Bordered by the Indian Ocean to the south and the Manik River to the north, it encompasses dry monsoon forests, open scrublands, coastal lagoons (Buttuwa & Uraniya), and ancient granite monoliths like Patanangala.
+                    Block 1 is the most celebrated sector of Yala National Park. Bordered by the Indian Ocean to the
+                    south and the Manik River to the north, it encompasses dry monsoon forests, open scrublands, coastal
+                    lagoons (Buttuwa & Uraniya), and ancient granite monoliths like Patanangala.
                 </p>
                 <p style="font-size: 0.86rem; color: #233325; line-height: 1.6;">
-                    <strong>Key Wildlife:</strong> Sri Lankan Leopard, Asian Elephant herds, Sloth Bear, Spotted Deer, Wild Boar, Mugger Crocodiles, and Lesser Adjutant Storks.
+                    <strong>Key Wildlife:</strong> Sri Lankan Leopard, Asian Elephant herds, Sloth Bear, Spotted Deer,
+                    Wild Boar, Mugger Crocodiles, and Lesser Adjutant Storks.
                 </p>
             </div>
 
             <!-- Block 5 -->
             <div style="background-color: var(--bg-pastel-cream); padding: 10px;">
-                <div style="font-size: 0.76rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">QUIET WILDERNESS ZONE</div>
-                <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #233325; margin-bottom: 8px;">BLOCK 5 (WEHERAGALA) — 66 SQ KM</h3>
-                <div style="font-size: 0.82rem; color: #606C38; font-weight: 700; margin-bottom: 12px;"><i class="fa-solid fa-water"></i> Reservoir Ecosystem & Birding</div>
+                <div
+                    style="font-size: 0.76rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
+                    QUIET WILDERNESS ZONE</div>
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #233325; margin-bottom: 8px;">
+                    BLOCK 5 (WEHERAGALA) — 66 SQ KM</h3>
+                <div style="font-size: 0.82rem; color: #606C38; font-weight: 700; margin-bottom: 12px;"><i
+                        class="fa-solid fa-water"></i> Reservoir Ecosystem & Birding</div>
                 <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 12px;">
-                    Located near Katagamuwa and Galge gates, Block 5 surrounds the Weheragala Reservoir on the Manik River. It offers serene, low-vehicle game drives through dense riverine forest canopy and calm waters where elephants bathe during midday hours.
+                    Located near Katagamuwa and Galge gates, Block 5 surrounds the Weheragala Reservoir on the Manik
+                    River. It offers serene, low-vehicle game drives through dense riverine forest canopy and calm
+                    waters where elephants bathe during midday hours.
                 </p>
                 <p style="font-size: 0.86rem; color: #233325; line-height: 1.6;">
-                    <strong>Key Wildlife:</strong> Solitary Bull Elephants, Sloth Bears, Crested Serpent Eagles, Brown Fish Owls, Barking Deer, and Leopard corridors.
+                    <strong>Key Wildlife:</strong> Solitary Bull Elephants, Sloth Bears, Crested Serpent Eagles, Brown
+                    Fish Owls, Barking Deer, and Leopard corridors.
                 </p>
             </div>
 
             <!-- Block 2, 3 & 4 -->
             <div style="background-color: var(--bg-pastel-cream); padding: 10px;">
-                <div style="font-size: 0.76rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">DEEP NATURE RESERVES</div>
-                <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #233325; margin-bottom: 8px;">BLOCKS 2, 3 & 4 — 770 SQ KM</h3>
-                <div style="font-size: 0.82rem; color: #606C38; font-weight: 700; margin-bottom: 12px;"><i class="fa-solid fa-gopuram"></i> Untamed Jungle & Ancient Ruins</div>
+                <div
+                    style="font-size: 0.76rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
+                    DEEP NATURE RESERVES</div>
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #233325; margin-bottom: 8px;">
+                    BLOCKS 2, 3 & 4 — 770 SQ KM</h3>
+                <div style="font-size: 0.82rem; color: #606C38; font-weight: 700; margin-bottom: 12px;"><i
+                        class="fa-solid fa-gopuram"></i> Untamed Jungle & Ancient Ruins</div>
                 <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 12px;">
-                    Spanning vast untouched tracts from the Kumbukkan Oya river mouth to the northern boundary, Blocks 2, 3, and 4 are strict natural reserves. They shelter 2,200-year-old Buddhist monastic ruins at Sithulpawwa and Magul Maha Viharaya.
+                    Spanning vast untouched tracts from the Kumbukkan Oya river mouth to the northern boundary, Blocks
+                    2, 3, and 4 are strict natural reserves. They shelter 2,200-year-old Buddhist monastic ruins at
+                    Sithulpawwa and Magul Maha Viharaya.
                 </p>
                 <p style="font-size: 0.86rem; color: #233325; line-height: 1.6;">
-                    <strong>Key Wildlife:</strong> Wild Water Buffalo, Migratory Elephant Corridors, Black-necked Storks, Fishing Cats, and Sambar Deer.
+                    <strong>Key Wildlife:</strong> Wild Water Buffalo, Migratory Elephant Corridors, Black-necked
+                    Storks, Fishing Cats, and Sambar Deer.
                 </p>
             </div>
         </div>
@@ -248,23 +460,28 @@
 
 
 <!-- 6. Dynamic Featured Safari Packages Summary Section (Alternating Webflow Layout) -->
-<section class="campsites-section" id="safari-packages" style="background-color: var(--bg-pastel-cream); padding: 60px 0;">
+<section class="campsites-section" id="safari-packages"
+    style="background-color: var(--bg-pastel-cream); padding: 60px 0;">
     <div class="container text-center section-header" style="margin-bottom: 44px;">
-        <span class="section-tag tag-sage"><i class="fa-solid fa-truck-monster"></i> FEATURED GAME DRIVES & EXPEDITIONS</span>
-        <h2 class="section-title">YALA SAFARI PACKAGES</h2>
+        <span class="section-tag tag-sage"><i class="fa-solid fa-truck-monster"></i> FEATURED GAME DRIVES &
+            EXPEDITIONS</span>
+        <h2 class="section-title">PRIVATE 4X4 YALA SAFARI JEEP PACKAGES</h2>
         <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 720px; margin: 8px auto 0;">
-            Private 4x4 jeep game drives with certified naturalists, chilled refreshments, and park clearance.
+            Private Toyota Land Cruiser 4x4 game drives with certified naturalists, chilled refreshments, and park clearance support.
         </p>
     </div>
 
     <div class="container" style="display: flex; flex-direction: column; gap: 48px;">
         {% for pkg in home_packages|slice:":3" %}
-        <div style="background-color: var(--bg-pastel-cream); border-radius: 24px; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+        <div
+            style="background-color: var(--bg-pastel-cream); border-radius: 24px; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
             {% if forloop.counter|divisibleby:2 %}
             <!-- Card 2: Right Side Image, Left Side Description -->
             <div style="padding-right: 12px;">
                 <span class="section-tag font-gold" style="font-size: 0.76rem;">{{ pkg.category_label }}</span>
-                <h3 style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; color: #233325; margin: 8px 0 10px;">{{ pkg.title }}</h3>
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; color: #233325; margin: 8px 0 10px;">
+                    {{ pkg.title }}</h3>
                 <div style="font-size: 0.88rem; color: #606C38; font-weight: 700; margin-bottom: 14px;">
                     <i class="fa-solid fa-clock font-gold"></i> {{ pkg.duration }} • {{ pkg.vehicle }}
                 </div>
@@ -273,10 +490,15 @@
                 </p>
 
                 <div style="background: rgba(96,108,56,0.06); padding: 16px; border-radius: 16px; margin-bottom: 22px;">
-                    <div style="font-size: 0.78rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Package Highlights</div>
-                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.86rem; color: #233325; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <div
+                        style="font-size: 0.78rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+                        Package Highlights</div>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; font-size: 0.86rem; color: #233325; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                         {% for inc in pkg.inclusions_list %}
-                        <li style="display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-circle-check font-gold" style="font-size: 0.78rem;"></i> {{ inc }}</li>
+                        <li style="display: flex; align-items: center; gap: 6px;"><i
+                                class="fa-solid fa-circle-check font-gold" style="font-size: 0.78rem;"></i> {{ inc }}
+                        </li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -284,28 +506,35 @@
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <div>
                         <div style="font-size: 0.76rem; color: var(--text-muted); font-weight: 600;">PRICING FROM</div>
-                        <div style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #233325;">${{ pkg.clean_price }} <span style="font-size: 0.85rem; font-weight: 600; color: #606C38;">USD</span></div>
+                        <div
+                            style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #233325;">
+                            ${{ pkg.clean_price }} <span
+                                style="font-size: 0.85rem; font-weight: 600; color: #606C38;">USD</span></div>
                     </div>
-                    <a href="{% url 'package_detail' pkg.slug %}" class="btn-gold-pill" style="padding: 12px 24px; font-size: 0.88rem;">EXPLORE SAFARI <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="{% url 'package_detail' pkg.slug %}" class="btn-gold-pill"
+                        style="padding: 12px 24px; font-size: 0.88rem;">EXPLORE SAFARI <i
+                            class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="webflow-img-wrap" style="height: 340px; border-radius: 24px;">
-                <img src="{{ pkg.imageUrl }}" alt="{{ pkg.title }}">
+                <img src="{{ pkg.imageUrl }}" alt="{{ pkg.title }} - Yala National Park Safari Jeep Drive" loading="lazy" decoding="async">
                 <span class="webflow-floating-badge">{{ pkg.category_label }}</span>
                 <span class="webflow-price-badge">${{ pkg.clean_price }} USD</span>
             </div>
             {% else %}
             <!-- Card 1 & 3: Left Side Image, Right Side Description -->
             <div class="webflow-img-wrap" style="height: 340px; border-radius: 24px;">
-                <img src="{{ pkg.imageUrl }}" alt="{{ pkg.title }}">
+                <img src="{{ pkg.imageUrl }}" alt="{{ pkg.title }} - Yala National Park Safari Jeep Drive" loading="lazy" decoding="async">
                 <span class="webflow-floating-badge">{{ pkg.category_label }}</span>
                 <span class="webflow-price-badge">${{ pkg.clean_price }} USD</span>
             </div>
 
             <div style="padding-left: 12px;">
                 <span class="section-tag font-gold" style="font-size: 0.76rem;">{{ pkg.category_label }}</span>
-                <h3 style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; color: #233325; margin: 8px 0 10px;">{{ pkg.title }}</h3>
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; color: #233325; margin: 8px 0 10px;">
+                    {{ pkg.title }}</h3>
                 <div style="font-size: 0.88rem; color: #606C38; font-weight: 700; margin-bottom: 14px;">
                     <i class="fa-solid fa-clock font-gold"></i> {{ pkg.duration }} • {{ pkg.vehicle }}
                 </div>
@@ -314,10 +543,15 @@
                 </p>
 
                 <div style="background: rgba(96,108,56,0.06); padding: 16px; border-radius: 16px; margin-bottom: 22px;">
-                    <div style="font-size: 0.78rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Package Highlights</div>
-                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.86rem; color: #233325; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <div
+                        style="font-size: 0.78rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+                        Package Highlights</div>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; font-size: 0.86rem; color: #233325; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                         {% for inc in pkg.inclusions_list %}
-                        <li style="display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-circle-check font-gold" style="font-size: 0.78rem;"></i> {{ inc }}</li>
+                        <li style="display: flex; align-items: center; gap: 6px;"><i
+                                class="fa-solid fa-circle-check font-gold" style="font-size: 0.78rem;"></i> {{ inc }}
+                        </li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -325,9 +559,14 @@
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <div>
                         <div style="font-size: 0.76rem; color: var(--text-muted); font-weight: 600;">PRICING FROM</div>
-                        <div style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #233325;">${{ pkg.clean_price }} <span style="font-size: 0.85rem; font-weight: 600; color: #606C38;">USD</span></div>
+                        <div
+                            style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #233325;">
+                            ${{ pkg.clean_price }} <span
+                                style="font-size: 0.85rem; font-weight: 600; color: #606C38;">USD</span></div>
                     </div>
-                    <a href="{% url 'package_detail' pkg.slug %}" class="btn-gold-pill" style="padding: 12px 24px; font-size: 0.88rem;">EXPLORE SAFARI <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="{% url 'package_detail' pkg.slug %}" class="btn-gold-pill"
+                        style="padding: 12px 24px; font-size: 0.88rem;">EXPLORE SAFARI <i
+                            class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
             {% endif %}
@@ -335,7 +574,8 @@
         {% endfor %}
 
         <div style="text-align: center; margin-top: 16px;">
-            <a href="{% url 'packages' %}" class="btn-gold-pill" style="padding: 14px 36px; font-size: 0.95rem;">VIEW ALL SAFARI PACKAGES <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="{% url 'packages' %}" class="btn-gold-pill" style="padding: 14px 36px; font-size: 0.95rem;">VIEW
+                ALL SAFARI PACKAGES <i class="fa-solid fa-arrow-right"></i></a>
         </div>
     </div>
 </section>
@@ -344,36 +584,48 @@
 <!-- 7. Multi-Day Sri Lanka Round Tours Showcase (Alternating Webflow Layout) -->
 <section class="tours-section" id="island-tours" style="background-color: var(--bg-pastel-cream); padding: 60px 0;">
     <div class="container text-center section-header" style="margin-bottom: 40px;">
-        <span class="section-tag tag-sage"><i class="fa-solid fa-earth-asia"></i> DISCOVER THE PEARL OF THE INDIAN OCEAN</span>
+        <span class="section-tag tag-sage"><i class="fa-solid fa-earth-asia"></i> DISCOVER THE PEARL OF THE INDIAN
+            OCEAN</span>
         <h2 class="section-title">BESPOKE SRI LANKA ROUND TOURS</h2>
         <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 800px; margin: 8px auto 0;">
-            Immerse yourself in 2,500 years of royal ancient civilization, misty tea mountain estates, golden palm-fringed coastlines, and world-class Yala leopard safaris.
+            Immerse yourself in 2,500 years of royal ancient civilization, misty tea mountain estates, golden
+            palm-fringed coastlines, and world-class Yala leopard safaris.
         </p>
     </div>
 
     <!-- Brief Attractive Sri Lanka Description for Foreigners -->
     <div class="container" style="margin-bottom: 48px;">
-        <div style="background-color: var(--bg-pastel-cream); border-radius: 24px; padding: 10px; max-width: 920px; margin: 0 auto; text-align: center;">
+        <div
+            style="background-color: var(--bg-pastel-cream); border-radius: 24px; padding: 10px; max-width: 920px; margin: 0 auto; text-align: center;">
             <p style="font-size: 1.02rem; color: #233325; line-height: 1.8; font-weight: 600; margin-bottom: 14px;">
-                Voted among the world's top island destinations, Sri Lanka offers an extraordinary blend of UNESCO World Heritage rock fortresses like Sigiriya, scenic mountain train journeys through Ella, sacred temple cities in Kandy, and thrilling wildlife game drives in Yala.
+                Voted among the world's top island destinations, Sri Lanka offers an extraordinary blend of UNESCO World
+                Heritage rock fortresses like Sigiriya, scenic mountain train journeys through Ella, sacred temple
+                cities in Kandy, and thrilling wildlife game drives in Yala.
             </p>
             <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 16px;">
-                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i class="fa-solid fa-landmark font-gold"></i> 8 UNESCO World Heritage Sites</span>
-                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i class="fa-solid fa-train font-gold"></i> Scenic Ella Mountain Railways</span>
-                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i class="fa-solid fa-umbrella-beach font-gold"></i> Tropical Palm Coastlines</span>
-                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i class="fa-solid fa-paw font-gold"></i> Big 4 Wildlife Safaris</span>
+                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i
+                        class="fa-solid fa-landmark font-gold"></i> 8 UNESCO World Heritage Sites</span>
+                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i
+                        class="fa-solid fa-train font-gold"></i> Scenic Ella Mountain Railways</span>
+                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i
+                        class="fa-solid fa-umbrella-beach font-gold"></i> Tropical Palm Coastlines</span>
+                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i
+                        class="fa-solid fa-paw font-gold"></i> Big 4 Wildlife Safaris</span>
             </div>
         </div>
     </div>
 
     <div class="container" style="display: flex; flex-direction: column; gap: 48px;">
         {% for tr in home_tours|slice:":3" %}
-        <div style="background-color: var(--bg-pastel-cream); border-radius: 24px; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+        <div
+            style="background-color: var(--bg-pastel-cream); border-radius: 24px; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
             {% if forloop.counter|divisibleby:2 %}
             <!-- Tour Card 2: Right Side Image, Left Side Description -->
             <div style="padding-right: 12px;">
                 <span class="section-tag font-gold" style="font-size: 0.76rem;">{{ tr.duration }} EXPEDITION</span>
-                <h3 style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; color: #233325; margin: 8px 0 10px;">{{ tr.title }}</h3>
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; color: #233325; margin: 8px 0 10px;">
+                    {{ tr.title }}</h3>
                 <div style="font-size: 0.88rem; color: #606C38; font-weight: 700; margin-bottom: 14px;">
                     <i class="fa-solid fa-route font-gold"></i> {{ tr.route }}
                 </div>
@@ -382,39 +634,51 @@
                 </p>
 
                 <div style="background: rgba(96,108,56,0.06); padding: 16px; border-radius: 16px; margin-bottom: 22px;">
-                    <div style="font-size: 0.78rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Tour Highlights & Inclusions</div>
-                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.86rem; color: #233325; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <div
+                        style="font-size: 0.78rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+                        Tour Highlights & Inclusions</div>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; font-size: 0.86rem; color: #233325; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                         {% for h in tr.highlights_list %}
-                        <li style="display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-circle-check font-gold" style="font-size: 0.78rem;"></i> {{ h }}</li>
+                        <li style="display: flex; align-items: center; gap: 6px;"><i
+                                class="fa-solid fa-circle-check font-gold" style="font-size: 0.78rem;"></i> {{ h }}</li>
                         {% endfor %}
                     </ul>
                 </div>
 
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <div>
-                        <div style="font-size: 0.76rem; color: var(--text-muted); font-weight: 600;">FULL TOUR PRICE FROM</div>
-                        <div style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #233325;">${{ tr.clean_price }} <span style="font-size: 0.85rem; font-weight: 600; color: #606C38;">USD / person</span></div>
+                        <div style="font-size: 0.76rem; color: var(--text-muted); font-weight: 600;">FULL TOUR PRICE
+                            FROM</div>
+                        <div
+                            style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #233325;">
+                            ${{ tr.clean_price }} <span
+                                style="font-size: 0.85rem; font-weight: 600; color: #606C38;">USD / person</span></div>
                     </div>
-                    <a href="{% url 'tour_detail' tr.slug %}" class="btn-gold-pill" style="padding: 12px 24px; font-size: 0.88rem;">VIEW ITINERARY <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="{% url 'tour_detail' tr.slug %}" class="btn-gold-pill"
+                        style="padding: 12px 24px; font-size: 0.88rem;">VIEW ITINERARY <i
+                            class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="webflow-img-wrap" style="height: 340px; border-radius: 24px;">
-                <img src="{{ tr.imageUrl }}" alt="{{ tr.title }}">
+                <img src="{{ tr.imageUrl }}" alt="{{ tr.title }} - Sri Lanka Round Tour Expedition" loading="lazy" decoding="async">
                 <span class="webflow-floating-badge">{{ tr.duration }}</span>
                 <span class="webflow-price-badge">${{ tr.clean_price }} USD</span>
             </div>
             {% else %}
             <!-- Tour Card 1 & 3: Left Side Image, Right Side Description -->
             <div class="webflow-img-wrap" style="height: 340px; border-radius: 24px;">
-                <img src="{{ tr.imageUrl }}" alt="{{ tr.title }}">
+                <img src="{{ tr.imageUrl }}" alt="{{ tr.title }} - Sri Lanka Round Tour Expedition" loading="lazy" decoding="async">
                 <span class="webflow-floating-badge">{{ tr.duration }}</span>
                 <span class="webflow-price-badge">${{ tr.clean_price }} USD</span>
             </div>
 
             <div style="padding-left: 12px;">
                 <span class="section-tag font-gold" style="font-size: 0.76rem;">{{ tr.duration }} EXPEDITION</span>
-                <h3 style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; color: #233325; margin: 8px 0 10px;">{{ tr.title }}</h3>
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; color: #233325; margin: 8px 0 10px;">
+                    {{ tr.title }}</h3>
                 <div style="font-size: 0.88rem; color: #606C38; font-weight: 700; margin-bottom: 14px;">
                     <i class="fa-solid fa-route font-gold"></i> {{ tr.route }}
                 </div>
@@ -423,20 +687,30 @@
                 </p>
 
                 <div style="background: rgba(96,108,56,0.06); padding: 16px; border-radius: 16px; margin-bottom: 22px;">
-                    <div style="font-size: 0.78rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Tour Highlights & Inclusions</div>
-                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.86rem; color: #233325; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <div
+                        style="font-size: 0.78rem; font-weight: 800; color: #606C38; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+                        Tour Highlights & Inclusions</div>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; font-size: 0.86rem; color: #233325; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                         {% for h in tr.highlights_list %}
-                        <li style="display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-circle-check font-gold" style="font-size: 0.78rem;"></i> {{ h }}</li>
+                        <li style="display: flex; align-items: center; gap: 6px;"><i
+                                class="fa-solid fa-circle-check font-gold" style="font-size: 0.78rem;"></i> {{ h }}</li>
                         {% endfor %}
                     </ul>
                 </div>
 
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <div>
-                        <div style="font-size: 0.76rem; color: var(--text-muted); font-weight: 600;">FULL TOUR PRICE FROM</div>
-                        <div style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #233325;">${{ tr.clean_price }} <span style="font-size: 0.85rem; font-weight: 600; color: #606C38;">USD / person</span></div>
+                        <div style="font-size: 0.76rem; color: var(--text-muted); font-weight: 600;">FULL TOUR PRICE
+                            FROM</div>
+                        <div
+                            style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #233325;">
+                            ${{ tr.clean_price }} <span
+                                style="font-size: 0.85rem; font-weight: 600; color: #606C38;">USD / person</span></div>
                     </div>
-                    <a href="{% url 'tour_detail' tr.slug %}" class="btn-gold-pill" style="padding: 12px 24px; font-size: 0.88rem;">VIEW ITINERARY <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="{% url 'tour_detail' tr.slug %}" class="btn-gold-pill"
+                        style="padding: 12px 24px; font-size: 0.88rem;">VIEW ITINERARY <i
+                            class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
             {% endif %}
@@ -444,7 +718,8 @@
         {% endfor %}
 
         <div style="text-align: center; margin-top: 16px;">
-            <a href="{% url 'tours' %}" class="btn-gold-pill" style="padding: 14px 36px; font-size: 0.95rem;">VIEW ALL ISLAND TOURS <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="{% url 'tours' %}" class="btn-gold-pill" style="padding: 14px 36px; font-size: 0.95rem;">VIEW ALL
+                ISLAND TOURS <i class="fa-solid fa-arrow-right"></i></a>
         </div>
     </div>
 </section>
@@ -516,18 +791,24 @@
         <span class="section-tag tag-sage"><i class="fa-solid fa-star font-gold"></i> VERIFIED GUEST TESTIMONIALS</span>
         <h2 class="section-title">WHAT TRAVELELS SAY ABOUT YALA LEOPARD TRACKS</h2>
         <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 820px; margin: 8px auto 0;">
-            With over verified 5-star reviews across Google Maps and TripAdvisor, discover why international wildlife enthusiasts, families, and photographers choose us for their Yala game drives.
+            With over verified 5-star reviews across Google Maps and TripAdvisor, discover why international wildlife
+            enthusiasts, families, and photographers choose us for their Yala game drives.
         </p>
     </div>
 
     <!-- Trust Badges & Brief Overview Text -->
     <div class="container" style="margin-bottom: 40px;">
-        <div style="background-color: var(--bg-pastel-cream); border-radius: 20px; padding: 10px; max-width: 880px; margin: 0 auto; text-align: center;">
+        <div
+            style="background-color: var(--bg-pastel-cream); border-radius: 20px; padding: 10px; max-width: 880px; margin: 0 auto; text-align: center;">
             <div style="display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-top: 12px;">
-                <span style="font-size: 0.86rem; font-weight: 800; color: #233325;"><i class="fa-solid fa-star font-gold"></i> 5.0 / 5.0 Average Rating</span>
-                <span style="font-size: 0.86rem; font-weight: 800; color: #233325;"><i class="fa-brands fa-google font-gold"></i>Google Verified Reviews</span>
-                <span style="font-size: 0.86rem; font-weight: 800; color: #233325;"><i class="fa-solid fa-shield-halved font-gold"></i> 100% Sightings Guarantee Focus</span>
-                <span style="font-size: 0.86rem; font-weight: 800; color: #233325;"><i class="fa-solid fa-user-check font-gold"></i> Senior Certified Naturalists</span>
+                <span style="font-size: 0.86rem; font-weight: 800; color: #233325;"><i
+                        class="fa-solid fa-star font-gold"></i> 5.0 / 5.0 Average Rating</span>
+                <span style="font-size: 0.86rem; font-weight: 800; color: #233325;"><i
+                        class="fa-brands fa-google font-gold"></i>Google Verified Reviews</span>
+                <span style="font-size: 0.86rem; font-weight: 800; color: #233325;"><i
+                        class="fa-solid fa-shield-halved font-gold"></i> 100% Sightings Guarantee Focus</span>
+                <span style="font-size: 0.86rem; font-weight: 800; color: #233325;"><i
+                        class="fa-solid fa-user-check font-gold"></i> Senior Certified Naturalists</span>
             </div>
         </div>
     </div>
@@ -535,30 +816,39 @@
     <div class="container">
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;">
             {% for rv in home_reviews|slice:":3" %}
-            <div style="background-color: var(--bg-pastel-cream); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(96,108,56,0.14);">
+            <div
+                style="background-color: var(--bg-pastel-cream); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(96,108,56,0.14);">
                 <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                         <div style="color: #D4AF37; font-size: 0.95rem;">
                             {% for star in rv.rating_stars %}
                             <i class="fa-solid fa-star"></i>
                             {% endfor %}
                         </div>
-                        <span style="font-size: 0.72rem; font-weight: 800; background: rgba(96,108,56,0.12); color: #606C38; padding: 4px 12px; border-radius: 50px;">
+                        <span
+                            style="font-size: 0.72rem; font-weight: 800; background: rgba(96,108,56,0.12); color: #606C38; padding: 4px 12px; border-radius: 50px;">
                             <i class="fa-brands fa-google"></i> {{ rv.source }}
                         </span>
                     </div>
 
-                    <p style="font-size: 0.92rem; color: #233325; line-height: 1.68; font-style: italic; margin-bottom: 20px;">
+                    <p
+                        style="font-size: 0.92rem; color: #233325; line-height: 1.68; font-style: italic; margin-bottom: 20px;">
                         "{{ rv.comment|truncatewords:30 }}"
                     </p>
                 </div>
 
-                <div style="border-top: 1px dashed rgba(96,108,56,0.18); padding-top: 14px; display: flex; align-items: center; justify-content: space-between;">
+                <div
+                    style="border-top: 1px dashed rgba(96,108,56,0.18); padding-top: 14px; display: flex; align-items: center; justify-content: space-between;">
                     <div>
-                        <div style="font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800; color: #233325;">{{ rv.name }}</div>
-                        <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">{{ rv.origin }} • <span style="color: #606C38;">{{ rv.package }}</span></div>
+                        <div
+                            style="font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800; color: #233325;">
+                            {{ rv.name }}</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">{{ rv.origin }} •
+                            <span style="color: #606C38;">{{ rv.package }}</span></div>
                     </div>
-                    <div style="background: rgba(96,108,56,0.1); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #606C38; font-size: 0.8rem;">
+                    <div
+                        style="background: rgba(96,108,56,0.1); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #606C38; font-size: 0.8rem;">
                         <i class="fa-solid fa-quote-right font-gold"></i>
                     </div>
                 </div>
@@ -567,33 +857,44 @@
         </div>
 
         <div style="text-align: center; margin-top: 44px;">
-            <a href="{% url 'reviews' %}" class="btn-gold-pill" style="padding: 14px 36px; font-size: 0.95rem;">READ ALL 800+ GUEST REVIEWS <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="{% url 'reviews' %}" class="btn-gold-pill" style="padding: 14px 36px; font-size: 0.95rem;">READ ALL
+                800+ GUEST REVIEWS <i class="fa-solid fa-arrow-right"></i></a>
         </div>
     </div>
 </section>
 
 
 <!-- 10. Wildlife Field Journals & Blog Summary Section (Alternating Webflow Layout) -->
-<section class="blog-summary-section" id="wildlife-blogs" style="background-color: var(--bg-pastel-cream); padding: 60px 0;">
+<section class="blog-summary-section" id="wildlife-blogs"
+    style="background-color: var(--bg-pastel-cream); padding: 60px 0;">
     <div class="container text-center section-header" style="margin-bottom: 32px;">
         <span class="section-tag tag-sage"><i class="fa-solid fa-book-open"></i> WILDLIFE FIELD LOGS & INSIGHTS</span>
         <h2 class="section-title">LATEST STORIES & ARTICLES</h2>
         <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 820px; margin: 8px auto 0;">
-            Immerse yourself in authentic field reports, expert leopard tracking techniques, telephoto wildlife photography guides, seasonal Palu fruiting guides, and Yala National Park conservation news written by senior naturalists.
+            Immerse yourself in authentic field reports, expert leopard tracking techniques, telephoto wildlife
+            photography guides, seasonal Palu fruiting guides, and Yala National Park conservation news written by
+            senior naturalists.
         </p>
     </div>
 
     <!-- Additional Engaging Web Content Badge Bar -->
     <div class="container" style="margin-bottom: 44px;">
-        <div style="background-color: var(--bg-pastel-cream); border-radius: 20px; padding: 10px; max-width: 900px; margin: 0 auto; text-align: center;">
+        <div
+            style="background-color: var(--bg-pastel-cream); border-radius: 20px; padding: 10px; max-width: 900px; margin: 0 auto; text-align: center;">
             <p style="font-size: 0.98rem; color: #233325; line-height: 1.75; font-weight: 600; margin-bottom: 14px;">
-                Whether you're planning your first 4x4 game drive or seeking professional camera settings for low-light leopard sightings on Sithulpawwa rocks, our senior naturalist field journal provides invaluable insider advice.
+                Whether you're planning your first 4x4 game drive or seeking professional camera settings for low-light
+                leopard sightings on Sithulpawwa rocks, our senior naturalist field journal provides invaluable insider
+                advice.
             </p>
             <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 12px;">
-                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i class="fa-solid fa-camera font-gold"></i> Wildlife Photography Tips</span>
-                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i class="fa-solid fa-paw font-gold"></i> Leopard Behavior Logs</span>
-                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i class="fa-solid fa-calendar font-gold"></i> Best Weather & Safari Seasons</span>
-                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i class="fa-solid fa-leaf font-gold"></i> Nature First Conservation</span>
+                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i
+                        class="fa-solid fa-camera font-gold"></i> Wildlife Photography Tips</span>
+                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i
+                        class="fa-solid fa-paw font-gold"></i> Leopard Behavior Logs</span>
+                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i
+                        class="fa-solid fa-calendar font-gold"></i> Best Weather & Safari Seasons</span>
+                <span style="font-size: 0.82rem; font-weight: 800; color: #606C38;"><i
+                        class="fa-solid fa-leaf font-gold"></i> Nature First Conservation</span>
             </div>
         </div>
     </div>
@@ -601,12 +902,15 @@
 
     <div class="container" style="display: flex; flex-direction: column; gap: 48px;">
         {% for b in home_blogs|slice:":3" %}
-        <div style="background-color: var(--bg-pastel-cream); border-radius: 24px; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+        <div
+            style="background-color: var(--bg-pastel-cream); border-radius: 24px; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
             {% if forloop.counter|divisibleby:2 %}
             <!-- Article 2: Right Side Image, Left Side Description -->
             <div style="padding-right: 12px;">
                 <span class="section-tag font-gold" style="font-size: 0.76rem;">{{ b.category }}</span>
-                <h3 style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; color: #233325; margin: 8px 0 10px; line-height: 1.3;">{{ b.title }}</h3>
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; color: #233325; margin: 8px 0 10px; line-height: 1.3;">
+                    {{ b.title }}</h3>
                 <div style="font-size: 0.84rem; color: #606C38; font-weight: 700; margin-bottom: 14px;">
                     <i class="fa-solid fa-calendar-day font-gold"></i> {{ b.created_at }} • By {{ b.author }}
                 </div>
@@ -615,24 +919,28 @@
                 </p>
 
                 <div>
-                    <a href="{% url 'blog_detail' b.slug %}" class="btn-gold-pill" style="padding: 12px 24px; font-size: 0.88rem;">READ FULL ARTICLE <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="{% url 'blog_detail' b.slug %}" class="btn-gold-pill"
+                        style="padding: 12px 24px; font-size: 0.88rem;">READ FULL ARTICLE <i
+                            class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="webflow-img-wrap" style="height: 320px; border-radius: 24px;">
-                <img src="{{ b.imageUrl }}" alt="{{ b.title }}">
+                <img src="{{ b.imageUrl }}" alt="{{ b.title }} - Yala Wildlife Journal" loading="lazy" decoding="async">
                 <span class="webflow-floating-badge">{{ b.category }}</span>
             </div>
             {% else %}
             <!-- Article 1 & 3: Left Side Image, Right Side Description -->
             <div class="webflow-img-wrap" style="height: 320px; border-radius: 24px;">
-                <img src="{{ b.imageUrl }}" alt="{{ b.title }}">
+                <img src="{{ b.imageUrl }}" alt="{{ b.title }} - Yala Wildlife Journal" loading="lazy" decoding="async">
                 <span class="webflow-floating-badge">{{ b.category }}</span>
             </div>
 
             <div style="padding-left: 12px;">
                 <span class="section-tag font-gold" style="font-size: 0.76rem;">{{ b.category }}</span>
-                <h3 style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; color: #233325; margin: 8px 0 10px; line-height: 1.3;">{{ b.title }}</h3>
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; color: #233325; margin: 8px 0 10px; line-height: 1.3;">
+                    {{ b.title }}</h3>
                 <div style="font-size: 0.84rem; color: #606C38; font-weight: 700; margin-bottom: 14px;">
                     <i class="fa-solid fa-calendar-day font-gold"></i> {{ b.created_at }} • By {{ b.author }}
                 </div>
@@ -641,7 +949,9 @@
                 </p>
 
                 <div>
-                    <a href="{% url 'blog_detail' b.slug %}" class="btn-gold-pill" style="padding: 12px 24px; font-size: 0.88rem;">READ FULL ARTICLE <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="{% url 'blog_detail' b.slug %}" class="btn-gold-pill"
+                        style="padding: 12px 24px; font-size: 0.88rem;">READ FULL ARTICLE <i
+                            class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
             {% endif %}
@@ -649,10 +959,75 @@
         {% endfor %}
 
         <div style="text-align: center; margin-top: 16px;">
-            <a href="{% url 'blog' %}" class="btn-gold-pill" style="padding: 14px 36px; font-size: 0.95rem;">VIEW ALL ARTICLES <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="{% url 'blog' %}" class="btn-gold-pill" style="padding: 14px 36px; font-size: 0.95rem;">VIEW ALL
+                ARTICLES <i class="fa-solid fa-arrow-right"></i></a>
         </div>
     </div>
 </section>
 
+<!-- 11. Frequently Asked Questions (FAQ) Section for Google SERP Snippets & User Conversion -->
+<section class="faq-summary-section" id="yala-faq" style="background-color: var(--bg-pastel-cream); padding: 60px 0; border-top: 1px solid rgba(96,108,56,0.12);">
+    <div class="container text-center section-header" style="margin-bottom: 40px;">
+        <span class="section-tag tag-sage"><i class="fa-solid fa-circle-question font-gold"></i> FREQUENTLY ASKED QUESTIONS</span>
+        <h2 class="section-title">YALA NATIONAL PARK SAFARIS FAQ</h2>
+        <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 800px; margin: 8px auto 0;">
+            Everything you need to know about planning, booking, and enjoying private 4x4 game drives and luxury camping stays in Yala.
+        </p>
+    </div>
+
+    <div class="container" style="max-width: 920px; margin: 0 auto;">
+        <div class="faq-accordion-list" style="display: flex; flex-direction: column; gap: 16px;">
+            <details style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
+                <summary style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                    <span><i class="fa-solid fa-sun font-gold" style="margin-right: 10px;"></i> What is the best time of day for a Yala National Park leopard safari?</span>
+                    <i class="fa-solid fa-chevron-down font-gold"></i>
+                </summary>
+                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
+                    Early morning game drives (6:00 AM – 10:00 AM) and late afternoon game drives (2:30 PM – 6:00 PM) offer peak wildlife activity. Leopards are boldest at dawn and dusk, actively patrolling territory or resting atop granite rock outcrops.
+                </p>
+            </details>
+
+            <details style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
+                <summary style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                    <span><i class="fa-solid fa-door-open font-gold" style="margin-right: 10px;"></i> Which entrance gate is best for Yala Block 1 game drives?</span>
+                    <i class="fa-solid fa-chevron-down font-gold"></i>
+                </summary>
+                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
+                    Palatupana Gate (near Tissamaharama) is the main entrance for Block 1 (Ruhuna), which holds the world's highest leopard density per square kilometer. Katagamuwa Gate serves guests staying near Kataragama or accessing Block 1 & 5.
+                </p>
+            </details>
+
+            <details style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
+                <summary style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                    <span><i class="fa-solid fa-ticket font-gold" style="margin-right: 10px;"></i> How much does a Yala National Park entrance permit cost?</span>
+                    <i class="fa-solid fa-chevron-down font-gold"></i>
+                </summary>
+                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
+                    Department of Wildlife Conservation (DWC) gate tariffs are $25.00 USD for foreign adults, $15.00 USD for foreign children (ages 6–12), $20.00 USD for SAARC adults, plus LKR 300 vehicle entry licensing fee, vehicle service charge, and 18% government VAT.
+                </p>
+            </details>
+
+            <details style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
+                <summary style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                    <span><i class="fa-solid fa-truck-monster font-gold" style="margin-right: 10px;"></i> Are Yala Leopard Tracks safari jeeps private or shared?</span>
+                    <i class="fa-solid fa-chevron-down font-gold"></i>
+                </summary>
+                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
+                    All our safari jeep packages are 100% private. You get a dedicated Toyota Land Cruiser 4x4 with elevated cushioned safari seating, experienced driver-trackers, chilled bottled water/refreshments, and park clearance support.
+                </p>
+            </details>
+
+            <details style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
+                <summary style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                    <span><i class="fa-solid fa-paw font-gold" style="margin-right: 10px;"></i> What animals can I spot in Yala National Park besides leopards?</span>
+                    <i class="fa-solid fa-chevron-down font-gold"></i>
+                </summary>
+                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
+                    In addition to the Sri Lankan Leopard (Panthera pardus kotiya), Yala shelters Asian Elephants, Sloth Bears, Mugger Crocodiles, Spotted Deer, Wild Boar, Sambars, Water Buffaloes, Fishing Cats, and over 215 resident and migratory bird species.
+                </p>
+            </details>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

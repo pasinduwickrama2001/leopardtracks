@@ -1,7 +1,93 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Official Yala National Park Ticket Fees & Permit Calculator 2026/2027 | Yala Leopard Tracks{% endblock %}
+{% block title %}Yala National Park Ticket Fees & Permit Calculator | Yala Leopard {% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="Calculate official Yala National Park DWC entrance ticket fees, vehicle licensing, service charges & 18% VAT online. Instant USD/LKR tariff calculator.">
+{% endblock %}
+
+{% block meta_keywords %}
+<meta name="keywords" content="Yala entrance fee, Yala national park tickets, Yala permit calculator, DWC ticket prices Yala, Yala safari entrance cost, Yala Palatupana ticket rates 2026">
+{% endblock %}
+
+{% block og_tags %}
+<meta property="og:title" content="Yala National Park Ticket Fees & Permit Calculator 2026/2027">
+<meta property="og:description" content="Calculate official DWC entry tickets, vehicle licensing fees, service charges & 18% VAT online with real-time LKR exchange rate calculations.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+<meta property="og:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+<meta property="og:site_name" content="Yala Leopard Tracks">
+<meta property="og:locale" content="en_US">
+{% endblock %}
+
+{% block twitter_tags %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Yala National Park Ticket Fees & Permit Calculator">
+<meta name="twitter:description" content="Calculate official DWC entry tickets, vehicle licensing fees & 18% VAT online.">
+<meta name="twitter:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Yala National Park DWC Permit & Ticket Calculator",
+    "description": "Replicating official Department of Wildlife Conservation (DWC) formulas with real-time USD/LKR currency conversion, vehicle licensing fees & VAT breakdowns.",
+    "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+    "applicationCategory": "TravelApplication",
+    "operatingSystem": "All",
+    "author": {
+      "@type": "Organization",
+      "name": "Yala Leopard Tracks",
+      "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ request.scheme }}://{{ request.get_host }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Ticket Calculator",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much is the foreign adult entrance fee for Yala National Park?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The foreign adult entrance fee is $25.00 USD plus LKR 300 vehicle license fee, service charges, and 18% government VAT."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I pre-calculate DWC entrance ticket prices for a group?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, our live DWC Permit Calculator computes foreign adult/child, SAARC, local passenger fees, vehicle admission charges, and taxes in real time."
+        }
+      }
+    ]
+  }
+]
+</script>
+{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
@@ -342,7 +428,8 @@
                     </div>
                     {% endif %}
 
-                    <form id="permitBookingForm" action="{% url 'tickets' %}" method="POST" onsubmit="openPermitModal(event)">
+                    <form id="permitBookingForm" action="{% url 'tickets' %}" method="POST"
+                        onsubmit="openPermitModal(event)">
                         {% csrf_token %}
                         <input type="hidden" name="foreign_adults" id="hid-foreignAdults" value="1">
                         <input type="hidden" name="foreign_children" id="hid-foreignChildren" value="0">
@@ -517,259 +604,271 @@
                 </div>
             </div>
         </div>
-<!-- CENTERED PERMIT REQUEST CONFIRMATION POPUP MODAL -->
-<div id="permitModalOverlay" class="permit-modal-overlay">
-    <div class="permit-modal-card">
-        <button type="button" class="permit-modal-close-btn" onclick="closePermitModal()" title="Close Popup">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-
-        <!-- Step 1: Verification & Price Breakdown Summary -->
-        <div id="modalStepSummary">
-            <div class="permit-modal-header">
-                <span class="section-tag font-gold" style="font-size: 0.72rem;"><i class="fa-solid fa-shield-halved"></i> DWC OFFICIAL PERMIT VERIFICATION</span>
-                <h3 class="permit-modal-title">CONFIRM YOUR PERMIT REQUEST</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; margin-bottom: 0;">
-                    Please verify your visitor details and price breakdown before submitting.
-                </p>
-            </div>
-
-            <!-- Guest Details Summary Grid -->
-            <div class="permit-info-grid">
-                <div class="permit-info-item">
-                    <label><i class="fa-solid fa-user font-gold"></i> Full Name</label>
-                    <span id="modal-name"></span>
-                </div>
-                <div class="permit-info-item">
-                    <label><i class="fa-solid fa-globe font-gold"></i> Country</label>
-                    <span id="modal-country"></span>
-                </div>
-                <div class="permit-info-item">
-                    <label><i class="fa-solid fa-envelope font-gold"></i> Email Address</label>
-                    <span id="modal-email"></span>
-                </div>
-                <div class="permit-info-item">
-                    <label><i class="fa-solid fa-phone font-gold"></i> Phone / WhatsApp</label>
-                    <span id="modal-phone"></span>
-                </div>
-                <div class="permit-info-item" style="grid-column: 1 / -1;">
-                    <label><i class="fa-solid fa-calendar-days font-gold"></i> Safari Date</label>
-                    <span id="modal-date"></span>
-                </div>
-            </div>
-
-            <!-- Itemized Price Breakdown Table -->
-            <div class="permit-breakdown-section">
-                <div class="permit-breakdown-title">
-                    <i class="fa-solid fa-calculator font-gold"></i> Detailed Price Breakdown
-                </div>
-
-                <table class="permit-breakdown-table">
-                    <thead>
-                        <tr>
-                            <th>Passenger & Vehicle Items</th>
-                            <th style="text-align: right;">Cost / Quantity</th>
-                        </tr>
-                    </thead>
-                    <tbody id="modal-breakdown-rows">
-                        <!-- Populated dynamically via JS -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Modal Action Buttons -->
-            <div class="permit-modal-actions">
-                <button type="button" class="btn-secondary-pill" onclick="closePermitModal()">
-                    <i class="fa-solid fa-pen-to-square"></i> Edit Details
+        <!-- CENTERED PERMIT REQUEST CONFIRMATION POPUP MODAL -->
+        <div id="permitModalOverlay" class="permit-modal-overlay">
+            <div class="permit-modal-card">
+                <button type="button" class="permit-modal-close-btn" onclick="closePermitModal()" title="Close Popup">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
-                <button type="button" id="btnConfirmSubmit" class="btn-gold-pill" onclick="confirmAndSubmitPermit()" style="font-weight: 800; font-size: 0.92rem; border-radius: 50px; padding: 13px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
-                    CONFIRM & SUBMIT <i class="fa-solid fa-paper-plane"></i>
-                </button>
+
+                <!-- Step 1: Verification & Price Breakdown Summary -->
+                <div id="modalStepSummary">
+                    <div class="permit-modal-header">
+                        <span class="section-tag font-gold" style="font-size: 0.72rem;"><i
+                                class="fa-solid fa-shield-halved"></i> DWC OFFICIAL PERMIT VERIFICATION</span>
+                        <h3 class="permit-modal-title">CONFIRM YOUR PERMIT REQUEST</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; margin-bottom: 0;">
+                            Please verify your visitor details and price breakdown before submitting.
+                        </p>
+                    </div>
+
+                    <!-- Guest Details Summary Grid -->
+                    <div class="permit-info-grid">
+                        <div class="permit-info-item">
+                            <label><i class="fa-solid fa-user font-gold"></i> Full Name</label>
+                            <span id="modal-name"></span>
+                        </div>
+                        <div class="permit-info-item">
+                            <label><i class="fa-solid fa-globe font-gold"></i> Country</label>
+                            <span id="modal-country"></span>
+                        </div>
+                        <div class="permit-info-item">
+                            <label><i class="fa-solid fa-envelope font-gold"></i> Email Address</label>
+                            <span id="modal-email"></span>
+                        </div>
+                        <div class="permit-info-item">
+                            <label><i class="fa-solid fa-phone font-gold"></i> Phone / WhatsApp</label>
+                            <span id="modal-phone"></span>
+                        </div>
+                        <div class="permit-info-item" style="grid-column: 1 / -1;">
+                            <label><i class="fa-solid fa-calendar-days font-gold"></i> Safari Date</label>
+                            <span id="modal-date"></span>
+                        </div>
+                    </div>
+
+                    <!-- Itemized Price Breakdown Table -->
+                    <div class="permit-breakdown-section">
+                        <div class="permit-breakdown-title">
+                            <i class="fa-solid fa-calculator font-gold"></i> Detailed Price Breakdown
+                        </div>
+
+                        <table class="permit-breakdown-table">
+                            <thead>
+                                <tr>
+                                    <th>Passenger & Vehicle Items</th>
+                                    <th style="text-align: right;">Cost / Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-breakdown-rows">
+                                <!-- Populated dynamically via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Modal Action Buttons -->
+                    <div class="permit-modal-actions">
+                        <button type="button" class="btn-secondary-pill" onclick="closePermitModal()">
+                            <i class="fa-solid fa-pen-to-square"></i> Edit Details
+                        </button>
+                        <button type="button" id="btnConfirmSubmit" class="btn-gold-pill"
+                            onclick="confirmAndSubmitPermit()"
+                            style="font-weight: 800; font-size: 0.92rem; border-radius: 50px; padding: 13px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                            CONFIRM & SUBMIT <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Processing Spinner -->
+                <div id="modalStepProcessing" style="display: none; text-align: center; padding: 40px 20px;">
+                    <div style="font-size: 2.5rem; color: #606C38; margin-bottom: 16px;">
+                        <i class="fa-solid fa-circle-notch fa-spin"></i>
+                    </div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #233325;">
+                        Securing Your DWC Permit Vouchers...</h3>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 6px;">
+                        Generating official breakdown invoice and dispatching email confirmation.
+                    </p>
+                </div>
+
+                <!-- Step 3: Success Screen Inside Centered Popup Modal -->
+                <div id="modalStepSuccess" style="display: none; text-align: center; padding: 20px 10px;">
+                    <div
+                        style="width: 64px; height: 64px; background: #606C38; color: #FFFFFF; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 16px; box-shadow: 0 10px 25px rgba(96,108,56,0.3);">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h3
+                        style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #233325; margin-bottom: 8px;">
+                        PERMIT REQUEST CONFIRMED!</h3>
+                    <p style="font-size: 0.92rem; color: #233325; line-height: 1.6; margin-bottom: 20px;"
+                        id="modalSuccessMessage">
+                        Thank you! Your Yala entrance permit request has been successfully submitted.
+                    </p>
+                    <div
+                        style="background: rgba(96,108,56,0.08); padding: 16px; border-radius: 16px; font-size: 0.85rem; color: var(--text-muted); text-align: left; margin-bottom: 24px; border: 1px solid rgba(96,108,56,0.15);">
+                        <i class="fa-solid fa-envelope-circle-check font-gold"
+                            style="font-size: 1.1rem; vertical-align: middle; margin-right: 6px;"></i>
+                        <strong>Email Confirmation Sent:</strong> Check your inbox for the itemized ticket tariff
+                        breakdown, DWC VAT receipt summary, and gate entry instructions.
+                    </div>
+                    <button type="button" class="btn-gold-pill" onclick="closePermitModal()"
+                        style="width: 100%; padding: 13px; font-weight: 800; border-radius: 50px;">
+                        CLOSE WINDOW <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- Step 2: Processing Spinner -->
-        <div id="modalStepProcessing" style="display: none; text-align: center; padding: 40px 20px;">
-            <div style="font-size: 2.5rem; color: #606C38; margin-bottom: 16px;">
-                <i class="fa-solid fa-circle-notch fa-spin"></i>
-            </div>
-            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #233325;">Securing Your DWC Permit Vouchers...</h3>
-            <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 6px;">
-                Generating official breakdown invoice and dispatching email confirmation.
-            </p>
-        </div>
+        <!-- Calculator & FAQ JavaScript -->
+        <script>
 
-        <!-- Step 3: Success Screen Inside Centered Popup Modal -->
-        <div id="modalStepSuccess" style="display: none; text-align: center; padding: 20px 10px;">
-            <div style="width: 64px; height: 64px; background: #606C38; color: #FFFFFF; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 16px; box-shadow: 0 10px 25px rgba(96,108,56,0.3);">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <h3 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #233325; margin-bottom: 8px;">PERMIT REQUEST CONFIRMED!</h3>
-            <p style="font-size: 0.92rem; color: #233325; line-height: 1.6; margin-bottom: 20px;" id="modalSuccessMessage">
-                Thank you! Your Yala entrance permit request has been successfully submitted.
-            </p>
-            <div style="background: rgba(96,108,56,0.08); padding: 16px; border-radius: 16px; font-size: 0.85rem; color: var(--text-muted); text-align: left; margin-bottom: 24px; border: 1px solid rgba(96,108,56,0.15);">
-                <i class="fa-solid fa-envelope-circle-check font-gold" style="font-size: 1.1rem; vertical-align: middle; margin-right: 6px;"></i>
-                <strong>Email Confirmation Sent:</strong> Check your inbox for the itemized ticket tariff breakdown, DWC VAT receipt summary, and gate entry instructions.
-            </div>
-            <button type="button" class="btn-gold-pill" onclick="closePermitModal()" style="width: 100%; padding: 13px; font-weight: 800; border-radius: 50px;">
-                CLOSE WINDOW <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-    </div>
-</div>
+            let exchangeRate = 327;
 
-<!-- Calculator & FAQ JavaScript -->
-<script>
+            const state = {
+                foreignAdults: 1,
+                foreignChildren: 0,
+                saarcAdults: 0,
+                saarcChildren: 0,
+                localAdults: 0,
+                localChildren: 0,
+                infants: 0,
+                jeeps: 1,
+                cars: 0,
+                buses: 0
+            };
 
-    let exchangeRate = 327;
+            // Rates
+            const RATES = {
+                LOCAL_ADULT: 150,
+                LOCAL_CHILD: 100,
+                VEHICLE_JEEP: 300,
+                VEHICLE_CAR: 150,
+                VEHICLE_BUS: 500,
+                SERVICE_LOCAL: 400,
+                VAT_RATE: 0.18
+            };
 
-    const state = {
-        foreignAdults: 1,
-        foreignChildren: 0,
-        saarcAdults: 0,
-        saarcChildren: 0,
-        localAdults: 0,
-        localChildren: 0,
-        infants: 0,
-        jeeps: 1,
-        cars: 0,
-        buses: 0
-    };
+            function updateCount(key, delta) {
+                if (state.hasOwnProperty(key)) {
+                    state[key] = Math.max(0, state[key] + delta);
+                    const el = document.getElementById('val-' + key);
+                    if (el) el.textContent = state[key];
+                    calculateInvoice();
+                }
+            }
 
-    // Rates
-    const RATES = {
-        LOCAL_ADULT: 150,
-        LOCAL_CHILD: 100,
-        VEHICLE_JEEP: 300,
-        VEHICLE_CAR: 150,
-        VEHICLE_BUS: 500,
-        SERVICE_LOCAL: 400,
-        VAT_RATE: 0.18
-    };
+            function calculateInvoice() {
+                const foreignAdultRateLKR = 25 * exchangeRate;
+                const foreignChildRateLKR = 15 * exchangeRate;
+                const saarcAdultRateLKR = 20 * exchangeRate;
+                const saarcChildRateLKR = 10 * exchangeRate;
 
-    function updateCount(key, delta) {
-        if (state.hasOwnProperty(key)) {
-            state[key] = Math.max(0, state[key] + delta);
-            const el = document.getElementById('val-' + key);
-            if (el) el.textContent = state[key];
-            calculateInvoice();
-        }
-    }
+                const entryFeesLKR =
+                    state.foreignAdults * foreignAdultRateLKR +
+                    state.foreignChildren * foreignChildRateLKR +
+                    state.saarcAdults * saarcAdultRateLKR +
+                    state.saarcChildren * saarcChildRateLKR +
+                    state.localAdults * RATES.LOCAL_ADULT +
+                    state.localChildren * RATES.LOCAL_CHILD;
 
-    function calculateInvoice() {
-        const foreignAdultRateLKR = 25 * exchangeRate;
-        const foreignChildRateLKR = 15 * exchangeRate;
-        const saarcAdultRateLKR = 20 * exchangeRate;
-        const saarcChildRateLKR = 10 * exchangeRate;
+                const vehicleFeesLKR =
+                    state.jeeps * RATES.VEHICLE_JEEP +
+                    state.cars * RATES.VEHICLE_CAR +
+                    state.buses * RATES.VEHICLE_BUS;
 
-        const entryFeesLKR =
-            state.foreignAdults * foreignAdultRateLKR +
-            state.foreignChildren * foreignChildRateLKR +
-            state.saarcAdults * saarcAdultRateLKR +
-            state.saarcChildren * saarcChildRateLKR +
-            state.localAdults * RATES.LOCAL_ADULT +
-            state.localChildren * RATES.LOCAL_CHILD;
+                const totalPassengers =
+                    state.foreignAdults + state.foreignChildren +
+                    state.saarcAdults + state.saarcChildren +
+                    state.localAdults + state.localChildren + state.infants;
 
-        const vehicleFeesLKR =
-            state.jeeps * RATES.VEHICLE_JEEP +
-            state.cars * RATES.VEHICLE_CAR +
-            state.buses * RATES.VEHICLE_BUS;
+                const hasForeigners = (state.foreignAdults + state.foreignChildren + state.saarcAdults + state.saarcChildren) > 0;
+                const totalVehicles = state.jeeps + state.cars + state.buses;
 
-        const totalPassengers =
-            state.foreignAdults + state.foreignChildren +
-            state.saarcAdults + state.saarcChildren +
-            state.localAdults + state.localChildren + state.infants;
+                let serviceFeeLKR = 0;
+                if (totalPassengers > 0 && totalVehicles > 0) {
+                    serviceFeeLKR = (hasForeigners ? 10 * exchangeRate : RATES.SERVICE_LOCAL) * totalVehicles;
+                }
 
-        const hasForeigners = (state.foreignAdults + state.foreignChildren + state.saarcAdults + state.saarcChildren) > 0;
-        const totalVehicles = state.jeeps + state.cars + state.buses;
+                const subtotalLKR = entryFeesLKR + vehicleFeesLKR + serviceFeeLKR;
+                const vatLKR = subtotalLKR * RATES.VAT_RATE;
+                const gatewayFeeLKR = (subtotalLKR + vatLKR) * 0.1;
+                const totalLKR = Math.round(subtotalLKR + vatLKR + gatewayFeeLKR);
+                const totalUSD = totalLKR / exchangeRate;
 
-        let serviceFeeLKR = 0;
-        if (totalPassengers > 0 && totalVehicles > 0) {
-            serviceFeeLKR = (hasForeigners ? 10 * exchangeRate : RATES.SERVICE_LOCAL) * totalVehicles;
-        }
+                // Set UI outputs
+                document.getElementById('out-total-lkr').textContent = 'LKR ' + totalLKR.toLocaleString();
+                document.getElementById('out-total-usd').textContent = '~ $' + totalUSD.toFixed(2) + ' USD';
 
-        const subtotalLKR = entryFeesLKR + vehicleFeesLKR + serviceFeeLKR;
-        const vatLKR = subtotalLKR * RATES.VAT_RATE;
-        const gatewayFeeLKR = (subtotalLKR + vatLKR) * 0.1;
-        const totalLKR = Math.round(subtotalLKR + vatLKR + gatewayFeeLKR);
-        const totalUSD = totalLKR / exchangeRate;
+                document.getElementById('out-entry-fees').textContent = 'LKR ' + Math.round(entryFeesLKR).toLocaleString() + ' ($' + (entryFeesLKR / exchangeRate).toFixed(1) + ' USD)';
+                document.getElementById('out-vehicle-fees').textContent = 'LKR ' + Math.round(vehicleFeesLKR).toLocaleString() + ' ($' + (vehicleFeesLKR / exchangeRate).toFixed(1) + ' USD)';
+                document.getElementById('out-service-fee').textContent = 'LKR ' + Math.round(serviceFeeLKR).toLocaleString() + ' ($' + (serviceFeeLKR / exchangeRate).toFixed(1) + ' USD)';
+                document.getElementById('out-subtotal').textContent = 'LKR ' + Math.round(subtotalLKR).toLocaleString() + ' ($' + (subtotalLKR / exchangeRate).toFixed(1) + ' USD)';
+                document.getElementById('out-vat').textContent = 'LKR ' + Math.round(vatLKR).toLocaleString() + ' ($' + (vatLKR / exchangeRate).toFixed(1) + ' USD)';
+                document.getElementById('out-gateway').textContent = 'LKR ' + Math.round(gatewayFeeLKR).toLocaleString() + ' ($' + (gatewayFeeLKR / exchangeRate).toFixed(1) + ' USD)';
+                document.getElementById('out-final-total').textContent = 'LKR ' + totalLKR.toLocaleString();
 
-        // Set UI outputs
-        document.getElementById('out-total-lkr').textContent = 'LKR ' + totalLKR.toLocaleString();
-        document.getElementById('out-total-usd').textContent = '~ $' + totalUSD.toFixed(2) + ' USD';
+                // Hidden inputs
+                if (document.getElementById('hid-foreignAdults')) document.getElementById('hid-foreignAdults').value = state.foreignAdults;
+                if (document.getElementById('hid-foreignChildren')) document.getElementById('hid-foreignChildren').value = state.foreignChildren;
+                if (document.getElementById('hid-saarcAdults')) document.getElementById('hid-saarcAdults').value = state.saarcAdults;
+                if (document.getElementById('hid-saarcChildren')) document.getElementById('hid-saarcChildren').value = state.saarcChildren;
+                if (document.getElementById('hid-localAdults')) document.getElementById('hid-localAdults').value = state.localAdults;
+                if (document.getElementById('hid-localChildren')) document.getElementById('hid-localChildren').value = state.localChildren;
+                if (document.getElementById('hid-infants')) document.getElementById('hid-infants').value = state.infants;
 
-        document.getElementById('out-entry-fees').textContent = 'LKR ' + Math.round(entryFeesLKR).toLocaleString() + ' ($' + (entryFeesLKR / exchangeRate).toFixed(1) + ' USD)';
-        document.getElementById('out-vehicle-fees').textContent = 'LKR ' + Math.round(vehicleFeesLKR).toLocaleString() + ' ($' + (vehicleFeesLKR / exchangeRate).toFixed(1) + ' USD)';
-        document.getElementById('out-service-fee').textContent = 'LKR ' + Math.round(serviceFeeLKR).toLocaleString() + ' ($' + (serviceFeeLKR / exchangeRate).toFixed(1) + ' USD)';
-        document.getElementById('out-subtotal').textContent = 'LKR ' + Math.round(subtotalLKR).toLocaleString() + ' ($' + (subtotalLKR / exchangeRate).toFixed(1) + ' USD)';
-        document.getElementById('out-vat').textContent = 'LKR ' + Math.round(vatLKR).toLocaleString() + ' ($' + (vatLKR / exchangeRate).toFixed(1) + ' USD)';
-        document.getElementById('out-gateway').textContent = 'LKR ' + Math.round(gatewayFeeLKR).toLocaleString() + ' ($' + (gatewayFeeLKR / exchangeRate).toFixed(1) + ' USD)';
-        document.getElementById('out-final-total').textContent = 'LKR ' + totalLKR.toLocaleString();
+                if (document.getElementById('hid-jeeps')) document.getElementById('hid-jeeps').value = state.jeeps;
+                if (document.getElementById('hid-cars')) document.getElementById('hid-cars').value = state.cars;
+                if (document.getElementById('hid-buses')) document.getElementById('hid-buses').value = state.buses;
 
-        // Hidden inputs
-        if (document.getElementById('hid-foreignAdults')) document.getElementById('hid-foreignAdults').value = state.foreignAdults;
-        if (document.getElementById('hid-foreignChildren')) document.getElementById('hid-foreignChildren').value = state.foreignChildren;
-        if (document.getElementById('hid-saarcAdults')) document.getElementById('hid-saarcAdults').value = state.saarcAdults;
-        if (document.getElementById('hid-saarcChildren')) document.getElementById('hid-saarcChildren').value = state.saarcChildren;
-        if (document.getElementById('hid-localAdults')) document.getElementById('hid-localAdults').value = state.localAdults;
-        if (document.getElementById('hid-localChildren')) document.getElementById('hid-localChildren').value = state.localChildren;
-        if (document.getElementById('hid-infants')) document.getElementById('hid-infants').value = state.infants;
+                if (document.getElementById('hid-entry-fees-lkr')) document.getElementById('hid-entry-fees-lkr').value = entryFeesLKR;
+                if (document.getElementById('hid-vehicle-fees-lkr')) document.getElementById('hid-vehicle-fees-lkr').value = vehicleFeesLKR;
+                if (document.getElementById('hid-service-fee-lkr')) document.getElementById('hid-service-fee-lkr').value = serviceFeeLKR;
+                if (document.getElementById('hid-subtotal-lkr')) document.getElementById('hid-subtotal-lkr').value = subtotalLKR;
+                if (document.getElementById('hid-vat-lkr')) document.getElementById('hid-vat-lkr').value = vatLKR;
+                if (document.getElementById('hid-gateway-fee-lkr')) document.getElementById('hid-gateway-fee-lkr').value = gatewayFeeLKR;
 
-        if (document.getElementById('hid-jeeps')) document.getElementById('hid-jeeps').value = state.jeeps;
-        if (document.getElementById('hid-cars')) document.getElementById('hid-cars').value = state.cars;
-        if (document.getElementById('hid-buses')) document.getElementById('hid-buses').value = state.buses;
+                document.getElementById('hid-total-lkr').value = totalLKR;
+                document.getElementById('hid-total-usd').value = totalUSD.toFixed(2);
+            }
 
-        if (document.getElementById('hid-entry-fees-lkr')) document.getElementById('hid-entry-fees-lkr').value = entryFeesLKR;
-        if (document.getElementById('hid-vehicle-fees-lkr')) document.getElementById('hid-vehicle-fees-lkr').value = vehicleFeesLKR;
-        if (document.getElementById('hid-service-fee-lkr')) document.getElementById('hid-service-fee-lkr').value = serviceFeeLKR;
-        if (document.getElementById('hid-subtotal-lkr')) document.getElementById('hid-subtotal-lkr').value = subtotalLKR;
-        if (document.getElementById('hid-vat-lkr')) document.getElementById('hid-vat-lkr').value = vatLKR;
-        if (document.getElementById('hid-gateway-fee-lkr')) document.getElementById('hid-gateway-fee-lkr').value = gatewayFeeLKR;
+            function openPermitModal(e) {
+                if (e) e.preventDefault();
 
-        document.getElementById('hid-total-lkr').value = totalLKR;
-        document.getElementById('hid-total-usd').value = totalUSD.toFixed(2);
-    }
+                const form = document.getElementById('permitBookingForm');
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
 
-    function openPermitModal(e) {
-        if (e) e.preventDefault();
+                // Populate Guest Details in Modal
+                document.getElementById('modal-name').textContent = form.full_name.value;
+                document.getElementById('modal-country').textContent = form.country.value;
+                document.getElementById('modal-email').textContent = form.email_address.value;
+                document.getElementById('modal-phone').textContent = form.phone_number.value;
+                document.getElementById('modal-date').textContent = form.ticket_date.value;
 
-        const form = document.getElementById('permitBookingForm');
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
+                // Build Breakdown Rows
+                let rowsHtml = '';
+                if (state.foreignAdults > 0) rowsHtml += `<tr><td>Foreign Adults ($25 USD)</td><td class="val-col">${state.foreignAdults}</td></tr>`;
+                if (state.foreignChildren > 0) rowsHtml += `<tr><td>Foreign Children ($15 USD)</td><td class="val-col">${state.foreignChildren}</td></tr>`;
+                if (state.saarcAdults > 0) rowsHtml += `<tr><td>SAARC Adults ($20 USD)</td><td class="val-col">${state.saarcAdults}</td></tr>`;
+                if (state.saarcChildren > 0) rowsHtml += `<tr><td>SAARC Children ($10 USD)</td><td class="val-col">${state.saarcChildren}</td></tr>`;
+                if (state.localAdults > 0) rowsHtml += `<tr><td>Local Adults (LKR 150)</td><td class="val-col">${state.localAdults}</td></tr>`;
+                if (state.localChildren > 0) rowsHtml += `<tr><td>Local Children (LKR 100)</td><td class="val-col">${state.localChildren}</td></tr>`;
+                if (state.infants > 0) rowsHtml += `<tr><td>Infants (Under 6 Free)</td><td class="val-col">${state.infants}</td></tr>`;
+                if (state.jeeps > 0) rowsHtml += `<tr><td>Safari Jeeps / Vans</td><td class="val-col">${state.jeeps}</td></tr>`;
+                if (state.cars > 0) rowsHtml += `<tr><td>Cars / SUVs</td><td class="val-col">${state.cars}</td></tr>`;
+                if (state.buses > 0) rowsHtml += `<tr><td>Buses / Lorries</td><td class="val-col">${state.buses}</td></tr>`;
 
-        // Populate Guest Details in Modal
-        document.getElementById('modal-name').textContent = form.full_name.value;
-        document.getElementById('modal-country').textContent = form.country.value;
-        document.getElementById('modal-email').textContent = form.email_address.value;
-        document.getElementById('modal-phone').textContent = form.phone_number.value;
-        document.getElementById('modal-date').textContent = form.ticket_date.value;
+                const entryLKR = parseFloat(document.getElementById('hid-entry-fees-lkr').value || 0);
+                const vehicleLKR = parseFloat(document.getElementById('hid-vehicle-fees-lkr').value || 0);
+                const serviceLKR = parseFloat(document.getElementById('hid-service-fee-lkr').value || 0);
+                const subtotalLKR = parseFloat(document.getElementById('hid-subtotal-lkr').value || 0);
+                const vatLKR = parseFloat(document.getElementById('hid-vat-lkr').value || 0);
+                const gatewayLKR = parseFloat(document.getElementById('hid-gateway-fee-lkr').value || 0);
+                const totalLKR = parseFloat(document.getElementById('hid-total-lkr').value || 0);
+                const totalUSD = parseFloat(document.getElementById('hid-total-usd').value || 0);
 
-        // Build Breakdown Rows
-        let rowsHtml = '';
-        if (state.foreignAdults > 0) rowsHtml += `<tr><td>Foreign Adults ($25 USD)</td><td class="val-col">${state.foreignAdults}</td></tr>`;
-        if (state.foreignChildren > 0) rowsHtml += `<tr><td>Foreign Children ($15 USD)</td><td class="val-col">${state.foreignChildren}</td></tr>`;
-        if (state.saarcAdults > 0) rowsHtml += `<tr><td>SAARC Adults ($20 USD)</td><td class="val-col">${state.saarcAdults}</td></tr>`;
-        if (state.saarcChildren > 0) rowsHtml += `<tr><td>SAARC Children ($10 USD)</td><td class="val-col">${state.saarcChildren}</td></tr>`;
-        if (state.localAdults > 0) rowsHtml += `<tr><td>Local Adults (LKR 150)</td><td class="val-col">${state.localAdults}</td></tr>`;
-        if (state.localChildren > 0) rowsHtml += `<tr><td>Local Children (LKR 100)</td><td class="val-col">${state.localChildren}</td></tr>`;
-        if (state.infants > 0) rowsHtml += `<tr><td>Infants (Under 6 Free)</td><td class="val-col">${state.infants}</td></tr>`;
-        if (state.jeeps > 0) rowsHtml += `<tr><td>Safari Jeeps / Vans</td><td class="val-col">${state.jeeps}</td></tr>`;
-        if (state.cars > 0) rowsHtml += `<tr><td>Cars / SUVs</td><td class="val-col">${state.cars}</td></tr>`;
-        if (state.buses > 0) rowsHtml += `<tr><td>Buses / Lorries</td><td class="val-col">${state.buses}</td></tr>`;
-
-        const entryLKR = parseFloat(document.getElementById('hid-entry-fees-lkr').value || 0);
-        const vehicleLKR = parseFloat(document.getElementById('hid-vehicle-fees-lkr').value || 0);
-        const serviceLKR = parseFloat(document.getElementById('hid-service-fee-lkr').value || 0);
-        const subtotalLKR = parseFloat(document.getElementById('hid-subtotal-lkr').value || 0);
-        const vatLKR = parseFloat(document.getElementById('hid-vat-lkr').value || 0);
-        const gatewayLKR = parseFloat(document.getElementById('hid-gateway-fee-lkr').value || 0);
-        const totalLKR = parseFloat(document.getElementById('hid-total-lkr').value || 0);
-        const totalUSD = parseFloat(document.getElementById('hid-total-usd').value || 0);
-
-        rowsHtml += `
+                rowsHtml += `
             <tr style="border-top: 2px solid rgba(96,108,56,0.2);"><td>Entry Fees Subtotal</td><td class="val-col">LKR ${Math.round(entryLKR).toLocaleString()}</td></tr>
             <tr><td>Vehicle Admission Fees</td><td class="val-col">LKR ${Math.round(vehicleLKR).toLocaleString()}</td></tr>
             <tr><td>Mandatory DWC Service Fee</td><td class="val-col">LKR ${Math.round(serviceLKR).toLocaleString()}</td></tr>
@@ -779,83 +878,83 @@
             <tr class="total-tr"><td>Total Estimated Cost</td><td class="val-col">LKR ${totalLKR.toLocaleString()} (~ $${totalUSD.toFixed(2)} USD)</td></tr>
         `;
 
-        document.getElementById('modal-breakdown-rows').innerHTML = rowsHtml;
+                document.getElementById('modal-breakdown-rows').innerHTML = rowsHtml;
 
-        // Reset step states
-        document.getElementById('modalStepSummary').style.display = 'block';
-        document.getElementById('modalStepProcessing').style.display = 'none';
-        document.getElementById('modalStepSuccess').style.display = 'none';
-
-        // Show centered popup modal
-        document.getElementById('permitModalOverlay').classList.add('active');
-    }
-
-    function closePermitModal() {
-        document.getElementById('permitModalOverlay').classList.remove('active');
-    }
-
-    function confirmAndSubmitPermit() {
-        document.getElementById('modalStepSummary').style.display = 'none';
-        document.getElementById('modalStepProcessing').style.display = 'block';
-
-        const form = document.getElementById('permitBookingForm');
-        const formData = new FormData(form);
-
-        fetch("{% url 'tickets' %}", {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById('modalStepProcessing').style.display = 'none';
-            if (data.status === 'success') {
-                document.getElementById('modalSuccessMessage').textContent = data.message;
-                document.getElementById('modalStepSuccess').style.display = 'block';
-                form.reset();
-                calculateInvoice();
-            } else {
-                alert('Submission error: ' + (data.message || 'Something went wrong. Please try again.'));
+                // Reset step states
                 document.getElementById('modalStepSummary').style.display = 'block';
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            document.getElementById('modalStepProcessing').style.display = 'none';
-            document.getElementById('modalStepSummary').style.display = 'block';
-            alert('A network error occurred while submitting your request. Please try again.');
-        });
-    }
+                document.getElementById('modalStepProcessing').style.display = 'none';
+                document.getElementById('modalStepSuccess').style.display = 'none';
 
-    function fetchExchangeRate() {
-        fetch('https://open.er-api.com/v6/latest/USD')
-            .then(res => res.json())
-            .then(data => {
-                if (data && data.rates && data.rates.LKR) {
-                    exchangeRate = data.rates.LKR;
-                    const badge = document.getElementById('rate-badge');
-                    if (badge) badge.textContent = 'Live Rate: 1 USD = ' + exchangeRate.toFixed(2) + ' LKR';
-                    calculateInvoice();
-                }
-            })
-            .catch(err => {
-                console.log('Using standard exchange rate fallback (327 LKR/USD)');
+                // Show centered popup modal
+                document.getElementById('permitModalOverlay').classList.add('active');
+            }
+
+            function closePermitModal() {
+                document.getElementById('permitModalOverlay').classList.remove('active');
+            }
+
+            function confirmAndSubmitPermit() {
+                document.getElementById('modalStepSummary').style.display = 'none';
+                document.getElementById('modalStepProcessing').style.display = 'block';
+
+                const form = document.getElementById('permitBookingForm');
+                const formData = new FormData(form);
+
+                fetch("{% url 'tickets' %}", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        document.getElementById('modalStepProcessing').style.display = 'none';
+                        if (data.status === 'success') {
+                            document.getElementById('modalSuccessMessage').textContent = data.message;
+                            document.getElementById('modalStepSuccess').style.display = 'block';
+                            form.reset();
+                            calculateInvoice();
+                        } else {
+                            alert('Submission error: ' + (data.message || 'Something went wrong. Please try again.'));
+                            document.getElementById('modalStepSummary').style.display = 'block';
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        document.getElementById('modalStepProcessing').style.display = 'none';
+                        document.getElementById('modalStepSummary').style.display = 'block';
+                        alert('A network error occurred while submitting your request. Please try again.');
+                    });
+            }
+
+            function fetchExchangeRate() {
+                fetch('https://open.er-api.com/v6/latest/USD')
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.rates && data.rates.LKR) {
+                            exchangeRate = data.rates.LKR;
+                            const badge = document.getElementById('rate-badge');
+                            if (badge) badge.textContent = 'Live Rate: 1 USD = ' + exchangeRate.toFixed(2) + ' LKR';
+                            calculateInvoice();
+                        }
+                    })
+                    .catch(err => {
+                        console.log('Using standard exchange rate fallback (327 LKR/USD)');
+                        calculateInvoice();
+                    });
+            }
+
+            function toggleFaq(btn) {
+                const item = btn.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-accordion-item').forEach(el => el.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                fetchExchangeRate();
                 calculateInvoice();
             });
-    }
-
-    function toggleFaq(btn) {
-        const item = btn.parentElement;
-        const isActive = item.classList.contains('active');
-        document.querySelectorAll('.faq-accordion-item').forEach(el => el.classList.remove('active'));
-        if (!isActive) item.classList.add('active');
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        fetchExchangeRate();
-        calculateInvoice();
-    });
-</script>
-{% endblock %}
+        </script>
+        {% endblock %}
