@@ -13,87 +13,100 @@ def home(request):
     except Exception:
         hero = None
 
-    # Fetch Dynamic Counts from Database
-    total_packages = SafariPackage.objects.count()
-    total_tours = Tour.objects.count()
-    total_blogs = BlogPost.objects.count()
-    total_reviews = GuestReview.objects.count()
+    # Fetch Dynamic Counts from Database with Safe Exception Handling
+    try:
+        total_packages = SafariPackage.objects.count()
+        total_tours = Tour.objects.count()
+        total_blogs = BlogPost.objects.count()
+        total_reviews = GuestReview.objects.count()
+    except Exception:
+        total_packages = total_tours = total_blogs = total_reviews = 0
 
     # Fetch ALL Dynamic Safari Packages from Database
-    packages_qs = SafariPackage.objects.all()
     packages_list = []
-    for pkg in packages_qs:
-        packages_list.append({
-            'id': pkg.id,
-            'title': pkg.title,
-            'subtitle': pkg.subtitle,
-            'slug': pkg.slug,
-            'imageUrl': pkg.imageUrl or '/static/images/yala-tent.jpg',
-            'description': pkg.description,
-            'category_label': pkg.category_label,
-            'tag_class': pkg.tag_class,
-            'clean_price': pkg.get_clean_price(),
-            'price_unit': pkg.price_unit,
-            'duration': pkg.duration,
-            'vehicle': pkg.vehicle,
-            'inclusions_list': pkg.get_inclusions_list()[:3],
-        })
+    try:
+        packages_qs = SafariPackage.objects.all()
+        for pkg in packages_qs:
+            packages_list.append({
+                'id': pkg.id,
+                'title': pkg.title,
+                'subtitle': pkg.subtitle,
+                'slug': pkg.slug,
+                'imageUrl': pkg.imageUrl or '/static/images/yala-tent.jpg',
+                'description': pkg.description,
+                'category_label': pkg.category_label,
+                'tag_class': pkg.tag_class,
+                'clean_price': pkg.get_clean_price(),
+                'price_unit': pkg.price_unit,
+                'duration': pkg.duration,
+                'vehicle': pkg.vehicle,
+                'inclusions_list': pkg.get_inclusions_list()[:3],
+            })
+    except Exception:
+        packages_list = []
 
     # Fetch ALL Dynamic Island Round Tours from Database
-    tours_qs = Tour.objects.all()
     tours_list = []
-    for tr in tours_qs:
-        tours_list.append({
-            'id': tr.id,
-            'title': tr.title,
-            'slug': tr.slug,
-            'route': tr.route,
-            'duration': tr.duration,
-            'clean_price': tr.get_clean_price(),
-            'imageUrl': tr.get_tour_image_url(),
-            'description': tr.description,
-            'highlights_list': tr.get_highlights_list()[:3],
-        })
+    try:
+        tours_qs = Tour.objects.all()
+        for tr in tours_qs:
+            tours_list.append({
+                'id': tr.id,
+                'title': tr.title,
+                'slug': tr.slug,
+                'route': tr.route,
+                'duration': tr.duration,
+                'clean_price': tr.get_clean_price(),
+                'imageUrl': tr.get_tour_image_url(),
+                'description': tr.description,
+                'highlights_list': tr.get_highlights_list()[:3],
+            })
+    except Exception:
+        tours_list = []
 
     # Fetch ALL Dynamic Wildlife Field Journal Blogs from Database & Shuffle Randomly
-    blogs_qs = list(BlogPost.objects.all())
-    import random
-    random.shuffle(blogs_qs)
-
     blogs_list = []
-    for b in blogs_qs:
-        paragraphs = b.get_paragraphs()
-        excerpt = paragraphs[0] if paragraphs else b.content[:140] + "..."
-        blogs_list.append({
-            'id': b.id,
-            'title': b.title,
-            'slug': b.slug,
-            'category': b.category,
-            'author': b.author,
-            'imageUrl': b.imageUrl or '/static/images/yala-wildlife-hero.jpg',
-            'excerpt': excerpt[:140] + ("..." if len(excerpt) > 140 else ""),
-            'created_at': b.created_at.strftime('%b %d, %Y') if getattr(b, 'created_at', None) else 'Aug 2026',
-        })
+    try:
+        blogs_qs = list(BlogPost.objects.all())
+        import random
+        random.shuffle(blogs_qs)
 
+        for b in blogs_qs:
+            paragraphs = b.get_paragraphs()
+            excerpt = paragraphs[0] if paragraphs else b.content[:140] + "..."
+            blogs_list.append({
+                'id': b.id,
+                'title': b.title,
+                'slug': b.slug,
+                'category': b.category,
+                'author': b.author,
+                'imageUrl': b.imageUrl or '/static/images/yala-wildlife-hero.jpg',
+                'excerpt': excerpt[:140] + ("..." if len(excerpt) > 140 else ""),
+                'created_at': b.created_at.strftime('%b %d, %Y') if getattr(b, 'created_at', None) else 'Aug 2026',
+            })
+    except Exception:
+        blogs_list = []
 
     # Fetch ALL Verified Guest Reviews & Testimonials from Database
-    all_reviews = list(GuestReview.objects.all())
-    verified_reviews = [r for r in all_reviews if getattr(r, 'verified', True)]
-    reviews_qs = verified_reviews[:6] if verified_reviews else all_reviews[:6]
-
-
     reviews_list = []
-    for r in reviews_qs:
-        reviews_list.append({
-            'name': r.name,
-            'origin': r.origin,
-            'package': r.package,
-            'rating': r.rating,
-            'rating_stars': range(r.rating),
-            'comment': r.comment,
-            'source': r.source,
-            'date': r.date,
-        })
+    try:
+        all_reviews = list(GuestReview.objects.all())
+        verified_reviews = [r for r in all_reviews if getattr(r, 'verified', True)]
+        reviews_qs = verified_reviews[:6] if verified_reviews else all_reviews[:6]
+
+        for r in reviews_qs:
+            reviews_list.append({
+                'name': r.name,
+                'origin': r.origin,
+                'package': r.package,
+                'rating': r.rating,
+                'rating_stars': range(r.rating),
+                'comment': r.comment,
+                'source': r.source,
+                'date': r.date,
+            })
+    except Exception:
+        reviews_list = []
 
     # Dynamic Stats Summary driven by database counts
     stats_summary = [
@@ -117,6 +130,7 @@ def home(request):
         'total_reviews_count': total_reviews,
     }
     return render(request, 'core/home.html', context)
+
 
 
 
