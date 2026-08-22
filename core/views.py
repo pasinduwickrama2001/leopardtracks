@@ -13,6 +13,17 @@ def home(request):
     except Exception:
         hero = None
 
+    if not hero:
+        try:
+            from .mongodb import fetch_mongo_heroes
+            m_heroes = fetch_mongo_heroes()
+            if m_heroes:
+                active_m = [h for h in m_heroes if getattr(h, 'is_active', True)]
+                hero = active_m[0] if active_m else m_heroes[0]
+        except Exception:
+            pass
+
+
     # Fetch Dynamic Counts from Database with Safe Exception Handling
     try:
         total_packages = SafariPackage.objects.count()
@@ -327,14 +338,39 @@ def packages(request):
 
 
 def package_detail(request, slug):
-    package = SafariPackage.objects.filter(slug=slug).first()
-    if not package and slug.isdigit():
-        package = SafariPackage.objects.filter(id=int(slug)).first()
-        
+    package = None
+    try:
+        package = SafariPackage.objects.filter(slug=slug).first()
+        if not package and slug.isdigit():
+            package = SafariPackage.objects.filter(id=int(slug)).first()
+    except Exception:
+        package = None
+
+    if not package:
+        try:
+            from .mongodb import fetch_mongo_package_by_slug
+            package = fetch_mongo_package_by_slug(slug)
+        except Exception:
+            package = None
+
     if not package:
         return redirect('packages')
 
-    other_packages = SafariPackage.objects.exclude(id=package.id)[:3]
+    other_packages = []
+    try:
+        if hasattr(package, 'id'):
+            other_packages = list(SafariPackage.objects.exclude(id=package.id)[:3])
+    except Exception:
+        other_packages = []
+
+    if not other_packages:
+        try:
+            from .mongodb import fetch_mongo_packages, MongoPackageModel
+            m_pkgs = fetch_mongo_packages()
+            if m_pkgs:
+                other_packages = [MongoPackageModel(p) for p in m_pkgs if p.get('slug') != slug][:3]
+        except Exception:
+            pass
 
     context = {
         'title': f'{package.title} | Yala Leopard Tracks',
@@ -346,6 +382,7 @@ def package_detail(request, slug):
         'other_packages': other_packages
     }
     return render(request, 'core/package_detail.html', context)
+
 
 def create_booking(request):
     if request.method == 'POST':
@@ -798,15 +835,30 @@ def tours(request):
 
 
 def tour_detail(request, slug):
+    tour = None
+    all_tours = []
     try:
         all_tours = list(Tour.objects.all())
         tour = next((t for t in all_tours if t.slug == slug), None)
-        if not tour:
-            tour = get_object_or_404(Tour, slug=slug)
     except Exception:
-        tour = get_object_or_404(Tour, slug=slug)
+        tour = None
 
-    recent_tours = [t for t in all_tours if t.slug != slug][:3]
+    if not tour:
+        try:
+            from .mongodb import fetch_mongo_tour_by_slug, fetch_mongo_tours, MongoTourModel
+            tour = fetch_mongo_tour_by_slug(slug)
+            if not all_tours:
+                m_tours = fetch_mongo_tours()
+                if m_tours:
+                    all_tours = [MongoTourModel(t) for t in m_tours]
+        except Exception:
+            pass
+
+    if not tour:
+        return redirect('tours')
+
+    recent_tours = [t for t in all_tours if getattr(t, 'slug', '') != slug][:3]
+
 
     if request.method == 'POST':
         full_name = request.POST.get('full_name', '')
