@@ -752,17 +752,25 @@ button[type="submit"]:hover,
 
 .hero-buttons {
     display: flex;
-    gap: 14px;
+    gap: 12px;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
 }
 
 .hero-buttons .btn-gold-pill,
 .hero-buttons .btn-light-pill {
-    padding: 10px 22px !important;
+    padding: 10px 20px !important;
     font-size: 0.76rem !important;
-    letter-spacing: 1.2px !important;
+    letter-spacing: 1px !important;
+    width: auto !important;
+    max-width: 220px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
 }
+
 
 .hero-scroll-indicator {
     position: absolute;
@@ -1592,18 +1600,25 @@ button[type="submit"]:hover,
         font-size: 1.45rem;
     }
 
-    /* Hero Buttons Full Width Mobile */
+    /* Hero Buttons Compact Short Length Mobile */
     .hero-buttons {
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
         width: 100%;
     }
 
     .hero-buttons .btn-jungle-pill,
     .hero-buttons .btn-gold-pill,
     .hero-buttons .btn-light-pill {
-        width: 100%;
+        width: auto !important;
+        max-width: 170px;
+        padding: 9px 16px !important;
+        font-size: 0.72rem !important;
         text-align: center;
     }
+
 
     /* Footer Card & Grid Mobile Adjustments */
     .footer-cta-card {

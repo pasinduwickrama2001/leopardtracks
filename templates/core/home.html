@@ -172,20 +172,21 @@
             </a>
             {% else %}
             <a href="{% url 'packages' %}" class="btn-gold-pill" aria-label="Explore Yala Safari Packages">
-                EXPLORE PACKAGES <i class="fa-solid fa-arrow-right"></i>
+                PACKAGES <i class="fa-solid fa-arrow-right"></i>
             </a>
             {% endif %}
 
             {% if hero and hero.button_secondary_text %}
-            <a href="{{ hero.button_secondary_url|default:'#safari-packages' }}" class="btn-light-pill" aria-label="{{ hero.button_secondary_text }}">
+            <a href="{{ hero.button_secondary_url|default:'/contact/' }}" class="btn-light-pill" aria-label="{{ hero.button_secondary_text }}">
                 {{ hero.button_secondary_text }}
             </a>
             {% else %}
-            <a href="#safari-packages" class="btn-light-pill" aria-label="Reserve Yala Safari Jeep">
-                RESERVE JEEP
+            <a href="/contact/" class="btn-light-pill" aria-label="Book Yala Safari">
+                BOOK SAFARI
             </a>
             {% endif %}
         </div>
+
     </div>
 
 

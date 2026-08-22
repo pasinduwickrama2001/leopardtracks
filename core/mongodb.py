@@ -146,10 +146,18 @@ class MongoHeroModel:
         self.badge_text = doc.get('badge_text', 'YALA LEOPARD TRACKS')
         self.imageUrl = doc.get('imageUrl', '') or doc.get('bg_image_url', '') or '/static/images/yala-wildlife-hero.jpg'
         self.bg_image_url = self.imageUrl
-        self.button_primary_text = doc.get('button_primary_text', 'EXPLORE PACKAGES')
+        btn_p = doc.get('button_primary_text', 'PACKAGES')
+        if btn_p == 'EXPLORE PACKAGES':
+            btn_p = 'PACKAGES'
+        self.button_primary_text = btn_p
         self.button_primary_url = doc.get('button_primary_url', '/packages/')
-        self.button_secondary_text = doc.get('button_secondary_text', 'BOOK SAFARI')
+
+        btn_s = doc.get('button_secondary_text', 'BOOK SAFARI')
+        if btn_s == 'RESERVE YALA SAFARI JEEP':
+            btn_s = 'BOOK SAFARI'
+        self.button_secondary_text = btn_s
         self.button_secondary_url = doc.get('button_secondary_url', '/contact/')
+
         self.cta_text = doc.get('cta_text', 'Book Now')
         self.cta_link = doc.get('cta_link', '#plan-your-stay')
         self.is_active = doc.get('is_active', True)
