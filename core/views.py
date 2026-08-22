@@ -22,7 +22,7 @@ def home(request):
     except Exception:
         total_packages = total_tours = total_blogs = total_reviews = 0
 
-    # Fetch ALL Dynamic Safari Packages from Database
+    # Fetch ALL Dynamic Safari Packages from Database / MongoDB Atlas Fallback
     packages_list = []
     try:
         packages_qs = SafariPackage.objects.all()
@@ -45,7 +45,34 @@ def home(request):
     except Exception:
         packages_list = []
 
-    # Fetch ALL Dynamic Island Round Tours from Database
+    if not packages_list:
+        try:
+            from .mongodb import fetch_mongo_packages
+            m_pkgs = fetch_mongo_packages()
+            if m_pkgs:
+                for pkg in m_pkgs:
+                    inclusions_raw = pkg.get('inclusions', '') or ''
+                    inclusions_list = [inc.strip() for inc in inclusions_raw.split('\n') if inc.strip()][:3]
+                    price_str = str(pkg.get('price', '$55')).replace('$', '').strip()
+                    packages_list.append({
+                        'id': pkg.get('id', 1),
+                        'title': pkg.get('title', ''),
+                        'subtitle': pkg.get('subtitle', ''),
+                        'slug': pkg.get('slug', ''),
+                        'imageUrl': pkg.get('imageUrl', '') or '/static/images/yala-tent.jpg',
+                        'description': pkg.get('description', ''),
+                        'category_label': pkg.get('category_label', 'SAFARI DRIVE'),
+                        'tag_class': pkg.get('tag_class', 'tag-sage'),
+                        'clean_price': price_str,
+                        'price_unit': pkg.get('price_unit', 'per jeep'),
+                        'duration': pkg.get('duration', '4 Hours'),
+                        'vehicle': pkg.get('vehicle', 'Private 4x4 Jeep'),
+                        'inclusions_list': inclusions_list,
+                    })
+        except Exception:
+            pass
+
+    # Fetch ALL Dynamic Island Round Tours from Database / MongoDB Atlas
     tours_list = []
     try:
         tours_qs = Tour.objects.all()
@@ -63,6 +90,29 @@ def home(request):
             })
     except Exception:
         tours_list = []
+
+    if not tours_list:
+        try:
+            from .mongodb import fetch_mongo_tours
+            m_tours = fetch_mongo_tours()
+            if m_tours:
+                for tr in m_tours:
+                    hl_raw = tr.get('highlights', '') or ''
+                    hl_list = [h.strip() for h in hl_raw.split('\n') if h.strip()][:3]
+                    price_str = str(tr.get('price', '280')).replace('$', '').strip()
+                    tours_list.append({
+                        'id': tr.get('id', 1),
+                        'title': tr.get('title', ''),
+                        'slug': tr.get('slug', ''),
+                        'route': tr.get('route', ''),
+                        'duration': tr.get('duration', ''),
+                        'clean_price': price_str,
+                        'imageUrl': tr.get('imageUrl', '') or '/static/images/yala-wildlife-hero.jpg',
+                        'description': tr.get('description', ''),
+                        'highlights_list': hl_list,
+                    })
+        except Exception:
+            pass
 
     # Fetch ALL Dynamic Wildlife Field Journal Blogs from Database & Shuffle Randomly
     blogs_list = []
@@ -87,7 +137,27 @@ def home(request):
     except Exception:
         blogs_list = []
 
-    # Fetch ALL Verified Guest Reviews & Testimonials from Database
+    if not blogs_list:
+        try:
+            from .mongodb import fetch_mongo_blogs
+            m_blogs = fetch_mongo_blogs()
+            if m_blogs:
+                for b in m_blogs:
+                    content_text = b.get('content', '') or ''
+                    blogs_list.append({
+                        'id': b.get('id', 1),
+                        'title': b.get('title', ''),
+                        'slug': b.get('slug', ''),
+                        'category': b.get('category', 'WILDLIFE'),
+                        'author': b.get('author', 'Senior Naturalist Desk'),
+                        'imageUrl': b.get('imageUrl', '') or '/static/images/yala-wildlife-hero.jpg',
+                        'excerpt': content_text[:140] + "...",
+                        'created_at': 'Aug 2026',
+                    })
+        except Exception:
+            pass
+
+    # Fetch ALL Verified Guest Reviews & Testimonials from Database / MongoDB Atlas
     reviews_list = []
     try:
         all_reviews = list(GuestReview.objects.all())
@@ -107,6 +177,32 @@ def home(request):
             })
     except Exception:
         reviews_list = []
+
+    if not reviews_list:
+        try:
+            from .mongodb import fetch_mongo_reviews
+            m_reviews = fetch_mongo_reviews(limit=6)
+            if m_reviews:
+                for r in m_reviews:
+                    rating_val = int(r.get('rating', 5))
+                    reviews_list.append({
+                        'name': r.get('name', 'Safari Guest'),
+                        'origin': r.get('origin', 'International Traveler'),
+                        'package': r.get('package', 'Yala National Park Safari'),
+                        'rating': rating_val,
+                        'rating_stars': range(rating_val),
+                        'comment': r.get('comment', 'Exceptional experience!'),
+                        'source': r.get('source', 'Google Verified Review'),
+                        'date': r.get('date', 'August 2026'),
+                    })
+        except Exception:
+            pass
+
+    # Calculate totals
+    total_packages = max(total_packages, len(packages_list))
+    total_tours = max(total_tours, len(tours_list))
+    total_blogs = max(total_blogs, len(blogs_list))
+    total_reviews = max(total_reviews, len(reviews_list))
 
     # Dynamic Stats Summary driven by database counts
     stats_summary = [
@@ -135,41 +231,90 @@ def home(request):
 
 
 
+
 def packages(request):
-    packages_queryset = SafariPackage.objects.all()
-    
-    # Process inclusions, exclusions, and highlights lists for template display
     packages_list = []
-    for pkg in packages_queryset:
-        clean_p = pkg.get_clean_price()
-        packages_list.append({
-            'id': pkg.id,
-            'title': pkg.title,
-            'subtitle': pkg.subtitle,
-            'slug': pkg.slug,
-            'imageUrl': pkg.imageUrl,
-            'description': pkg.description,
-            'category': pkg.category,
-            'category_label': pkg.category_label,
-            'tag_class': pkg.tag_class,
-            'price_type': pkg.price_type,
-            'price': clean_p,
-            'get_clean_price': clean_p,
-            'price_unit': pkg.price_unit,
-            'mealPrice': pkg.mealPrice,
-            'ticketPrice': pkg.ticketPrice,
-            'includes_tickets': pkg.includes_tickets,
-            'ticket_addon_price': pkg.ticket_addon_price,
-            'includes_breakfast': pkg.includes_breakfast,
-            'breakfast_addon_price': pkg.breakfast_addon_price,
-            'duration': pkg.duration,
-            'vehicle': pkg.vehicle,
-            'inclusions': pkg.get_inclusions_list(),
-            'exclusions': pkg.get_exclusions_list(),
-            'highlights_list': pkg.get_highlights_list(),
-            'highlights': pkg.highlights,
-            'featured': pkg.featured
-        })
+    try:
+        packages_queryset = SafariPackage.objects.all()
+        for pkg in packages_queryset:
+            clean_p = pkg.get_clean_price()
+            packages_list.append({
+                'id': pkg.id,
+                'title': pkg.title,
+                'subtitle': pkg.subtitle,
+                'slug': pkg.slug,
+                'imageUrl': pkg.imageUrl,
+                'description': pkg.description,
+                'category': pkg.category,
+                'category_label': pkg.category_label,
+                'tag_class': pkg.tag_class,
+                'price_type': pkg.price_type,
+                'price': clean_p,
+                'get_clean_price': clean_p,
+                'price_unit': pkg.price_unit,
+                'mealPrice': pkg.mealPrice,
+                'ticketPrice': pkg.ticketPrice,
+                'includes_tickets': pkg.includes_tickets,
+                'ticket_addon_price': pkg.ticket_addon_price,
+                'includes_breakfast': pkg.includes_breakfast,
+                'breakfast_addon_price': pkg.breakfast_addon_price,
+                'duration': pkg.duration,
+                'vehicle': pkg.vehicle,
+                'inclusions': pkg.get_inclusions_list(),
+                'exclusions': pkg.get_exclusions_list(),
+                'highlights_list': pkg.get_highlights_list(),
+                'highlights': pkg.highlights,
+                'featured': pkg.featured
+            })
+    except Exception:
+        packages_list = []
+
+    if not packages_list:
+        try:
+            from .mongodb import fetch_mongo_packages
+            m_pkgs = fetch_mongo_packages()
+            if m_pkgs:
+                for pkg in m_pkgs:
+                    inc_raw = pkg.get('inclusions', '') or ''
+                    exc_raw = pkg.get('exclusions', '') or ''
+                    hl_raw = pkg.get('highlights', '') or ''
+
+                    inc_list = [i.strip() for i in inc_raw.split('\n') if i.strip()]
+                    exc_list = [e.strip() for e in exc_raw.split('\n') if e.strip()]
+                    hl_list = [h.strip() for h in hl_raw.split('\n') if h.strip()]
+
+                    price_clean = str(pkg.get('price', '$55')).replace('$', '').strip()
+
+                    packages_list.append({
+                        'id': pkg.get('id', 1),
+                        'title': pkg.get('title', ''),
+                        'subtitle': pkg.get('subtitle', ''),
+                        'slug': pkg.get('slug', ''),
+                        'imageUrl': pkg.get('imageUrl', '') or '/static/images/yala-tent.jpg',
+                        'description': pkg.get('description', ''),
+                        'category': pkg.get('category', 'half-day'),
+                        'category_label': pkg.get('category_label', 'HALF-DAY DRIVE'),
+                        'tag_class': pkg.get('tag_class', 'tag-sage'),
+                        'price_type': pkg.get('price_type', 'jeep_only'),
+                        'price': price_clean,
+                        'get_clean_price': price_clean,
+                        'price_unit': pkg.get('price_unit', 'per jeep'),
+                        'mealPrice': pkg.get('mealPrice', '0'),
+                        'ticketPrice': pkg.get('ticketPrice', '46'),
+                        'includes_tickets': pkg.get('includes_tickets', False),
+                        'ticket_addon_price': pkg.get('ticket_addon_price', ''),
+                        'includes_breakfast': pkg.get('includes_breakfast', False),
+                        'breakfast_addon_price': pkg.get('breakfast_addon_price', ''),
+                        'duration': pkg.get('duration', '4 Hours'),
+                        'vehicle': pkg.get('vehicle', 'Private 4x4 Jeep'),
+                        'inclusions': inc_list,
+                        'exclusions': exc_list,
+                        'highlights_list': hl_list,
+                        'highlights': hl_raw,
+                        'featured': pkg.get('featured', False)
+                    })
+        except Exception:
+            pass
 
     featured_package = next((p for p in packages_list if p.get('featured')), packages_list[0] if packages_list else None)
 
@@ -179,6 +324,7 @@ def packages(request):
         'featured_package': featured_package,
     }
     return render(request, 'core/packages.html', context)
+
 
 def package_detail(request, slug):
     package = SafariPackage.objects.filter(slug=slug).first()
