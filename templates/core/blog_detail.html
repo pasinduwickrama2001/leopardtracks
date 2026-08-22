@@ -1,23 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ post.title }} | Yala National Park Wildlife Journal Sri Lanka{% endblock %}
+{% block title %}{{ post.title }} | Discoveryala Wildlife Journal Sri Lanka{% endblock %}
 
 {% block meta_description %}
-<meta name="description" content="{% if paragraphs %}{{ paragraphs.0|truncatewords:26|striptags }}{% else %}{{ post.content|truncatewords:26|striptags }}{% endif %} Read full Yala National Park safari guide by Yala Leopard Tracks.">
+<meta name="description"
+    content="{% if paragraphs %}{{ paragraphs.0|truncatewords:26|striptags }}{% else %}{{ post.content|truncatewords:26|striptags }}{% endif %} Read full Yala National Park safari guide by Discoveryala.">
 {% endblock %}
 
 {% block meta_keywords %}
-<meta name="keywords" content="{{ post.title }}, Yala National Park blog, Yala safari guide, Sri Lanka leopard safari, Panthera pardus kotiya, {{ post.category }}, Yala wildlife field logs, Palatupana gate, Yala Block 1 Ruhuna">
+<meta name="keywords"
+    content="{{ post.title }}, Yala National Park blog, Yala safari guide, Sri Lanka leopard safari, Panthera pardus kotiya, {{ post.category }}, Yala wildlife field logs, Palatupana gate, Yala Block 1 Ruhuna, Discoveryala">
 {% endblock %}
 
 {% block og_tags %}
-<meta property="og:title" content="{{ post.title }} | Yala National Park Wildlife Journal">
-<meta property="og:description" content="{% if paragraphs %}{{ paragraphs.0|truncatewords:26|striptags }}{% else %}{{ post.content|truncatewords:26|striptags }}{% endif %}">
+<meta property="og:title" content="{{ post.title }} | Discoveryala Wildlife Journal">
+<meta property="og:description"
+    content="{% if paragraphs %}{{ paragraphs.0|truncatewords:26|striptags }}{% else %}{{ post.content|truncatewords:26|striptags }}{% endif %}">
 <meta property="og:type" content="article">
 <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
-<meta property="og:image" content="{% if post.imageUrl %}{{ post.imageUrl }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/yala-wildlife-hero.jpg' %}{% endif %}">
-<meta property="og:site_name" content="Yala Leopard Tracks">
+<meta property="og:image"
+    content="{% if post.imageUrl %}{{ post.imageUrl }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/yala-wildlife-hero.jpg' %}{% endif %}">
+<meta property="og:site_name" content="Discoveryala">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="{{ post.created_at|date:'c' }}">
 <meta property="article:author" content="{{ post.author }}">
@@ -26,9 +30,11 @@
 
 {% block twitter_tags %}
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ post.title }} | Yala National Park Journal">
-<meta name="twitter:description" content="{% if paragraphs %}{{ paragraphs.0|truncatewords:26|striptags }}{% else %}{{ post.content|truncatewords:26|striptags }}{% endif %}">
-<meta name="twitter:image" content="{% if post.imageUrl %}{{ post.imageUrl }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/yala-wildlife-hero.jpg' %}{% endif %}">
+<meta name="twitter:title" content="{{ post.title }} | Discoveryala Journal">
+<meta name="twitter:description"
+    content="{% if paragraphs %}{{ paragraphs.0|truncatewords:26|striptags }}{% else %}{{ post.content|truncatewords:26|striptags }}{% endif %}">
+<meta name="twitter:image"
+    content="{% if post.imageUrl %}{{ post.imageUrl }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/yala-wildlife-hero.jpg' %}{% endif %}">
 {% endblock %}
 
 {% block schema_org %}
@@ -47,7 +53,7 @@
     },
     "publisher": {
       "@type": "Organization",
-      "name": "Yala Leopard Tracks",
+      "name": "Discoveryala",
       "logo": {
         "@type": "ImageObject",
         "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}"
@@ -100,7 +106,7 @@
 <section class="blog-detail-section">
     <div class="container">
         <div class="blog-detail-container">
-            
+
             <!-- Breadcrumb Navigation -->
             <nav class="blog-breadcrumb" aria-label="Breadcrumb">
                 <a href="/"><i class="fa-solid fa-house"></i> Home</a>
@@ -118,11 +124,13 @@
             <div class="blog-detail-meta">
                 <span><i class="fa-solid fa-user"></i> Author: <strong>{{ post.author }}</strong></span>
                 <span><i class="fa-solid fa-calendar-day"></i> Published: <strong>{{ post.created_at|date:"F d, Y" }}</strong></span>
-                <span><i class="fa-solid fa-location-dot font-gold"></i> Location: <strong>Yala National Park, Sri Lanka</strong></span>
+                <span><i class="fa-solid fa-location-dot font-gold"></i> Location: <strong>Yala National Park, Sri
+                        Lanka</strong></span>
             </div>
 
             {% if post.imageUrl %}
-            <img src="{{ post.imageUrl }}" alt="{{ post.title }} - Yala National Park Wildlife Guide" class="blog-detail-hero-img" loading="eager" decoding="async">
+            <img src="{{ post.imageUrl }}" alt="{{ post.title }} - Yala National Park Wildlife Guide"
+                class="blog-detail-hero-img" loading="eager" decoding="async">
             {% endif %}
 
             <!-- Article Story Body -->
@@ -135,15 +143,21 @@
             </article>
 
             <!-- Yala National Park Safari Feature Callout -->
-            <div style="background: rgba(96,108,56,0.08); border-left: 4px solid #606C38; border-radius: 16px; padding: 22px 28px; margin: 36px 0;">
+            <div
+                style="background: rgba(96,108,56,0.08); border-left: 4px solid #606C38; border-radius: 16px; padding: 22px 28px; margin: 36px 0;">
                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
                     <i class="fa-solid fa-paw font-gold" style="font-size: 1.2rem;"></i>
-                    <strong style="font-family: var(--font-heading); font-size: 1.1rem; color: #233325;">YALA NATIONAL PARK WILDLIFE INSIGHT</strong>
+                    <strong style="font-family: var(--font-heading); font-size: 1.1rem; color: #233325;">YALA NATIONAL
+                        PARK WILDLIFE INSIGHT</strong>
                 </div>
                 <p style="font-size: 0.94rem; color: var(--text-muted); line-height: 1.68; margin: 0 0 14px 0;">
-                    Yala National Park (Ruhuna) encompasses 979 sq km of dry monsoon forests, coastal lagoons, and granite monoliths. Home to the world's highest wild leopard concentration (<em>Panthera pardus kotiya</em>), Asian Elephants, and Sloth Bears, Yala offers world-class 4x4 game drive opportunities.
+                    Yala National Park (Ruhuna) encompasses 979 sq km of dry monsoon forests, coastal lagoons, and
+                    granite monoliths. Home to the world's highest wild leopard concentration (<em>Panthera pardus
+                        kotiya</em>), Asian Elephants, and Sloth Bears, Yala offers world-class 4x4 game drive
+                    opportunities.
                 </p>
-                <div style="display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.82rem; font-weight: 700; color: #606C38;">
+                <div
+                    style="display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.82rem; font-weight: 700; color: #606C38;">
                     <span><i class="fa-solid fa-circle-check font-gold"></i> 4x4 Toyota Land Cruisers</span>
                     <span><i class="fa-solid fa-circle-check font-gold"></i> Palatupana & Katagamuwa Gates</span>
                     <span><i class="fa-solid fa-circle-check font-gold"></i> Certified Senior Naturalists</span>
@@ -154,9 +168,11 @@
             <div class="blog-promo-box">
                 <div>
                     <h4>READY TO EXPERIENCE YALA WILDERNESS?</h4>
-                    <p>Book your private 4x4 Yala National Park safari jeep game drive with experienced trackers today.</p>
+                    <p>Book your private 4x4 Yala National Park safari jeep game drive with experienced trackers today.
+                    </p>
                 </div>
-                <a href="{% url 'packages' %}" class="btn-jungle-pill" aria-label="Explore Yala Safari Packages">EXPLORE SAFARI PACKAGES <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="{% url 'packages' %}" class="btn-jungle-pill" aria-label="Explore Yala Safari Packages">EXPLORE
+                    SAFARI PACKAGES <i class="fa-solid fa-arrow-right"></i></a>
             </div>
 
         </div>
@@ -177,11 +193,15 @@
             <div class="about-section recent-post-item">
                 <div class="grid-2-col align-center">
                     <!-- Image Left -->
-                    <a href="{% url 'blog_detail' slug=item.slug %}" class="about-image-card recent-post-image-link" aria-label="{{ item.title }}">
+                    <a href="{% url 'blog_detail' slug=item.slug %}" class="about-image-card recent-post-image-link"
+                        aria-label="{{ item.title }}">
                         {% if item.imageUrl %}
-                        <img src="{{ item.imageUrl }}" alt="{{ item.title }} - Yala National Park Safari Blog" class="rounded-img shadow-clean recent-post-img" loading="lazy" decoding="async">
+                        <img src="{{ item.imageUrl }}" alt="{{ item.title }} - Yala National Park Safari Blog"
+                            class="rounded-img shadow-clean recent-post-img" loading="lazy" decoding="async">
                         {% else %}
-                        <img src="{% static 'images/yala-wildlife-hero.jpg' %}" alt="{{ item.title }} - Yala National Park Safari Blog" class="rounded-img shadow-clean recent-post-img" loading="lazy" decoding="async">
+                        <img src="{% static 'images/yala-wildlife-hero.jpg' %}"
+                            alt="{{ item.title }} - Yala National Park Safari Blog"
+                            class="rounded-img shadow-clean recent-post-img" loading="lazy" decoding="async">
                         {% endif %}
                         <div class="image-overlay-badge">
                             <span class="overlay-title">Yala National Park</span>
@@ -203,7 +223,9 @@
                             {{ item.content|truncatewords:35 }}
                         </p>
                         <div>
-                            <a href="{% url 'blog_detail' slug=item.slug %}" class="btn-gold-pill" aria-label="Read {{ item.title }}">READ ARTICLE <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{% url 'blog_detail' slug=item.slug %}" class="btn-gold-pill"
+                                aria-label="Read {{ item.title }}">READ ARTICLE <i
+                                    class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>

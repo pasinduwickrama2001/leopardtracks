@@ -21,7 +21,7 @@
     <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
     {% endblock %}
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="author" content="Yala Leopard Tracks Senior Naturalists">
+    <meta name="author" content="Discoveryala Senior Naturalists">
 
     <!-- Local & Geographic SEO Meta Tags -->
     <meta name="geo.region" content="LK-33">
@@ -39,21 +39,21 @@
 
     <!-- Open Graph Social Media Meta Tags -->
     {% block og_tags %}
-    <meta property="og:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Yala Leopard Tracks Sri Lanka">
+    <meta property="og:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Discoveryala Sri Lanka">
     <meta property="og:description"
         content="Book private 4x4 Yala National Park safari jeep game drives, luxury tented glamping camps & Sri Lanka round tours with certified naturalists.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
     <meta property="og:image"
         content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
-    <meta property="og:site_name" content="Yala Leopard Tracks">
+    <meta property="og:site_name" content="Discoveryala">
     <meta property="og:locale" content="en_US">
     {% endblock %}
 
     <!-- Twitter Card Meta Tags -->
     {% block twitter_tags %}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Yala Leopard Tracks">
+    <meta name="twitter:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Discoveryala">
     <meta name="twitter:description"
         content="Book private 4x4 Yala National Park safari jeep game drives & luxury glamping in Sri Lanka.">
     <meta name="twitter:image"
@@ -68,13 +68,13 @@
         "@context": "https://schema.org",
         "@type": "TravelAgency",
         "@id": "{{ request.scheme }}://{{ request.get_host }}#organization",
-        "name": "Yala Leopard Tracks",
+        "name": "Discoveryala",
         "url": "{{ request.scheme }}://{{ request.get_host }}",
         "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}",
         "image": "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg",
         "description": "Bespoke 4x4 game drives, luxury tented glamping & islandwide tours in Yala National Park, Sri Lanka.",
         "telephone": "+94778158004",
-        "email": "info@yalaleopardtracks.com",
+        "email": "yalaleopardtracks@gmail.com",
         "priceRange": "$$$",
         "address": {
           "@type": "PostalAddress",
@@ -152,7 +152,7 @@
             <!-- Brand Logo -->
             <a href="/" class="header-brand">
                 <span class="brand-sub">LUXURY TENTED SAFARIS</span>
-                <span class="brand-main">YALA LEOPARD TRACKS</span>
+                <span class="brand-main">DISCOVERYALA</span>
             </a>
 
             <!-- CTA Button -->
@@ -174,10 +174,10 @@
 
         <div class="drawer-header">
             <div class="drawer-brand-wrap">
-                <img src="{% static 'images/logo-official.png' %}" alt="Yala Leopard Tracks Logo"
+                <img src="{% static 'images/logo-official.png' %}" alt="Discover Yala Logo"
                     class="drawer-logo-img" width="40" height="40">
                 <div>
-                    <span class="drawer-logo">YALA LEOPARD TRACKS</span>
+                    <span class="drawer-logo">DISCOVERYALA</span>
                     <p class="drawer-tagline">Sri Lanka Wilderness Safaris & Expeditions</p>
                 </div>
             </div>
@@ -207,17 +207,17 @@
     <!-- Charming Safari Footer (#475128 Deep Olive Theme) -->
     <footer class="site-footer" id="contact">
         <div class="footer-grid-container">
-            <!-- Col 1: About Yala Leopard Tracks & Nature First Policy -->
+            <!-- Col 1: About Discover Yala & Nature First Policy -->
             <div class="footer-col brand-col">
                 <div class="footer-brand-header">
                     <span class="brand-icon-glow">
-                        <img src="{% static 'images/logo-official.png' %}" alt="Yala Leopard Tracks Logo"
+                        <img src="{% static 'images/logo-official.png' %}" alt="Discover Yala Logo"
                             class="footer-logo-img" width="28" height="28">
                     </span>
-                    <span class="footer-brand-title">YALA LEOPARD TRACKS</span>
+                    <span class="footer-brand-title">DISCOVERYALA</span>
                 </div>
                 <p class="footer-brand-desc">
-                    As Sri Lanka's premier eco-expedition partner, Yala Leopard Tracks operates with a strict "Nature
+                    As Sri Lanka's premier eco-expedition partner, Discover Yala operates with a strict "Nature
                     First" policy. We bridge luxury and raw wilderness, ensuring every journey supports local
                     conservation efforts and ethical wildlife tracking.
                 </p>
@@ -273,7 +273,7 @@
         <div class="footer-bottom-wrap">
             <div class="footer-bottom-container">
                 <div class="legal-credits">
-                    <p>&copy; {% now "Y" %} Yala Leopard Tracks. All Rights Reserved. Ethical Safari Expeditions Sri
+                    <p>&copy; {% now "Y" %} Discover Yala. All Rights Reserved. Ethical Safari Expeditions Sri
                         Lanka. • <span style="color: #606C38; font-weight: 700;"><i
                                 class="fa-solid fa-code font-gold"></i> Architected by Pasindu</span></p>
                     <span class="legal-links">
@@ -414,7 +414,8 @@
             </div>
 
             <!-- WhatsApp White Button -->
-            <a href="https://wa.me/94778158004?text=Hello!%20I%20saw%20the%20August%20Discount%20deal%20and%20would%20like%20to%20book." target="_blank" rel="noopener" class="exact-whatsapp-btn">
+            <a href="https://wa.me/94778158004?text=Hello!%20I%20saw%20the%20August%20Discount%20deal%20and%20would%20like%20to%20book."
+                target="_blank" rel="noopener" class="exact-whatsapp-btn">
                 <i class="fa-brands fa-whatsapp"></i> WHATSAPP
             </a>
 

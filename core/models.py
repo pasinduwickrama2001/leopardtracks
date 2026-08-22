@@ -158,7 +158,7 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=250)
     slug = models.CharField(max_length=250, blank=True, help_text="URL slug identifier e.g. Yala-National-Park-The-Wildlife-Paradise-of-Sri-Lanka")
     category = models.CharField(max_length=100, default='WILDLIFE LOG')
-    author = models.CharField(max_length=100, default='Yala Leopard Tracks Naturalist')
+    author = models.CharField(max_length=100, default='Discoveryala Naturalist')
     
     # Dual Image: Local Device File Upload or Cloudinary URL link
     image_file = models.ImageField(upload_to='blogs/', blank=True, null=True, help_text="Upload image file from local device (auto-uploads to Cloudinary) OR paste Cloudinary URL below")

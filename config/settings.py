@@ -109,8 +109,12 @@ djongo_available = False
 if USE_MONGODB:
     try:
         import djongo
+        # Test MongoDB connection to prevent server crash if Atlas SRV or credentials fail
+        from pymongo import MongoClient
+        test_client = MongoClient(MONGODB_URI, serverSelectionTimeoutMS=2000, connectTimeoutMS=2000)
+        test_client.admin.command('ping')
         djongo_available = True
-    except ImportError:
+    except Exception as mongo_err:
         djongo_available = False
 
 if USE_MONGODB and djongo_available:
@@ -194,7 +198,7 @@ EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '').replace(' ', '')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'Yala Leopard Tracks <yalaleopardtracks@gmail.com>')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'Discoveryala <yalaleopardtracks@gmail.com>')
 ADMIN_NOTIFICATION_EMAIL = os.getenv('ADMIN_NOTIFICATION_EMAIL', 'yalaleopardtracks@gmail.com')
 
 # ==============================================================================

@@ -4,8 +4,8 @@ from .models import SafariPackage, SafariBooking, BlogPost, HeroSection, Tour
 
 
 # Customize Django Admin Panel Titles & Branding
-admin.site.site_header = "Yala Leopard Tracks Administration"
-admin.site.site_title = "Yala Leopard Tracks Admin"
+admin.site.site_header = "Discoveryala Administration"
+admin.site.site_title = "Discoveryala Admin"
 admin.site.index_title = "Safari Packages & Eco-Expeditions Desk"
 
 @admin.register(Tour)

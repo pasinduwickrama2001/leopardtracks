@@ -236,7 +236,7 @@ def home(request):
     ]
 
     context = {
-        'title': 'Yala Leopard Tracks | Yala National Park Safaris & Luxury Camping Sri Lanka',
+        'title': 'Discoveryala | Yala National Park Safaris & Luxury Camping Sri Lanka',
         'hero': hero,
         'home_packages': packages_list,
         'home_tours': tours_list,
@@ -342,7 +342,7 @@ def packages(request):
     featured_package = next((p for p in packages_list if p.get('featured')), packages_list[0] if packages_list else None)
 
     context = {
-        'title': 'Yala Safari Packages & Expeditions | Yala Leopard Tracks',
+        'title': 'Yala Safari Packages & Expeditions | Discoveryala',
         'packages_list': packages_list,
         'featured_package': featured_package,
     }
@@ -385,7 +385,7 @@ def package_detail(request, slug):
             pass
 
     context = {
-        'title': f'{package.title} | Yala Leopard Tracks',
+        'title': f'{package.title} | Discoveryala',
         'package': package,
         'inclusions_list': package.get_inclusions_list(),
         'exclusions_list': package.get_exclusions_list(),
@@ -452,17 +452,17 @@ def create_booking(request):
                 from django.core.mail import EmailMultiAlternatives
                 from django.conf import settings
 
-                from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Yala Leopard Tracks <yalaleopardtracks@gmail.com>')
+                from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Discoveryala <yalaleopardtracks@gmail.com>')
                 admin_email = getattr(settings, 'ADMIN_NOTIFICATION_EMAIL', 'yalaleopardtracks@gmail.com')
                 if getattr(settings, 'EMAIL_HOST_USER', ''):
                     admin_email = getattr(settings, 'EMAIL_HOST_USER')
 
                 # 1. Confirmation Email to Guest (Rich HTML Theme)
-                guest_subject = f"Safari Reservation Received - {package_title} | Yala Leopard Tracks"
+                guest_subject = f"Safari Reservation Received - {package_title} | Discoveryala"
                 
                 guest_text = f"""Ayubowan {full_name}!
 
-Thank you for reserving your safari expedition with Yala Leopard Tracks!
+Thank you for reserving your safari expedition with Discoveryala!
 Booking Reference: #{booking.id}
 Package: {package_title}
 Safari Date: {safari_date}
@@ -473,7 +473,7 @@ Hotline / WhatsApp: +94 778158004
 Email: yalaleopardtracks@gmail.com
 
 Our safari coordinator desk will contact you shortly to confirm pickup details.
-Yala Leopard Tracks Expeditions Team
+Discoveryala Expeditions Team
 """
 
                 guest_html = f"""<!DOCTYPE html>
@@ -523,7 +523,7 @@ Yala Leopard Tracks Expeditions Team
         
         <div class="email-body">
             <div class="greeting">Ayubowan, {full_name}! 🌿</div>
-            <p class="intro-p">Thank you for reserving your safari expedition with <strong>Yala Leopard Tracks</strong>! We have received your booking request and our naturalist desk is preparing your private 4x4 game drive itinerary.</p>
+            <p class="intro-p">Thank you for reserving your safari expedition with <strong>Discoveryala</strong>! We have received your booking request and our naturalist desk is preparing your private 4x4 game drive itinerary.</p>
             
             <!-- Reservation Details Card -->
             <div class="card-box">
@@ -571,7 +571,7 @@ Yala Leopard Tracks Expeditions Team
         </div>
 
         <div class="email-footer">
-            <p style="margin: 0 0 8px 0; font-weight: 700; color: #FFFFFF; font-size: 13px;">Yala Leopard Tracks Expeditions & Luxury Safaris</p>
+            <p style="margin: 0 0 8px 0; font-weight: 700; color: #FFFFFF; font-size: 13px;">Discoveryala Expeditions & Luxury Safaris</p>
             <p style="margin: 0 0 10px 0;">Yala National Park Buffer Zone, Tissamaharama, Sri Lanka</p>
             <p style="margin: 0 0 12px 0; font-weight: 800; color: #D4AF37; font-size: 13px;">Hotline / WhatsApp: +94 778158004</p>
             <p style="margin: 0;">Email: <a href="mailto:yalaleopardtracks@gmail.com" class="footer-link">yalaleopardtracks@gmail.com</a> | Web: <a href="https://yalaleopardtracks.com" class="footer-link">yalaleopardtracks.com</a></p>
@@ -695,7 +695,7 @@ def blog(request):
     other_posts = [p for p in all_posts if p != featured_post]
 
     context = {
-        'title': 'Yala Wildlife Blog & Field Journal | Yala Leopard Tracks',
+        'title': 'Yala Wildlife Blog & Field Journal | Discoveryala',
         'featured_post': featured_post,
         'other_posts': other_posts,
         'all_posts': all_posts
@@ -746,7 +746,7 @@ def blog_detail(request, slug):
     recent_posts = [p for p in all_posts if p != post][:3]
 
     context = {
-        'title': f'{post.title} | Yala Leopard Tracks Journal',
+        'title': f'{post.title} | Discoveryala Journal',
         'post': post,
         'paragraphs': post.get_paragraphs(),
         'recent_posts': recent_posts
@@ -807,7 +807,7 @@ def tours(request):
     featured_tour = next((t for t in tours_list if t.get('isFeatured')), tours_list[0] if tours_list else None)
 
     context = {
-        'title': 'Sri Lanka Round Tours & Chauffeur Transport | Yala Leopard Tracks',
+        'title': 'Sri Lanka Round Tours & Chauffeur Transport | Discoveryala',
         'tours_list': tours_list,
         'featured_tour': featured_tour,
     }
@@ -840,7 +840,7 @@ def tours(request):
         })
 
     context = {
-        'title': 'Sri Lanka Tours & Islandwide Private Transport | Yala Leopard Tracks',
+        'title': 'Sri Lanka Tours & Islandwide Private Transport | Discoveryala',
         'tours_list': tours_list,
     }
     return render(request, 'core/tours.html', context)
@@ -905,9 +905,9 @@ def tour_detail(request, slug):
                     from django.core.mail import EmailMultiAlternatives
                     from django.conf import settings
 
-                    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Yala Leopard Tracks <yalaleopardtracks@gmail.com>')
+                    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Discoveryala <yalaleopardtracks@gmail.com>')
                     
-                    guest_subject = f"Tour Reservation Confirmation - {tour.title} | Yala Leopard Tracks"
+                    guest_subject = f"Tour Reservation Confirmation - {tour.title} | Discoveryala"
                     guest_text = f"Ayubowan {full_name}!\n\nThank you for booking {tour.title}.\nBooking Ref: #{booking.id}\nDate: {safari_date}\nGuests: {guests}\nPrice: ${tour.price}\n\nOur team will contact you shortly."
                     
                     guest_html = f"""<!DOCTYPE html>
@@ -923,9 +923,9 @@ def tour_detail(request, slug):
 </head>
 <body>
 <div class="box">
-    <div class="hdr">YALA LEOPARD TRACKS - TOUR RESERVATION</div>
+    <div class="hdr">DISCOVERYALA - TOUR RESERVATION</div>
     <p>Ayubowan <strong>{full_name}</strong>,</p>
-    <p>Thank you for reserving your <strong>{tour.title}</strong> tour with Yala Leopard Tracks!</p>
+    <p>Thank you for reserving your <strong>{tour.title}</strong> tour with Discoveryala!</p>
     <div class="row"><span class="lbl">Booking Ref:</span> #{booking.id}</div>
     <div class="row"><span class="lbl">Tour Package:</span> {tour.title}</div>
     <div class="row"><span class="lbl">Tour Date:</span> {safari_date}</div>
@@ -1028,10 +1028,10 @@ Message Details:
 
             # 2. Guest Email Confirmation
             if user_email:
-                guest_subject = f"Safari Inquiry Received | Yala Leopard Tracks"
+                guest_subject = f"Safari Inquiry Received | Discoveryala"
                 guest_body = f"""Ayubowan {user_name}!
 
-Thank you for contacting Yala Leopard Tracks Sri Lanka. We have received your inquiry regarding "{inquiry_topic}".
+Thank you for contacting Discoveryala Sri Lanka. We have received your inquiry regarding "{inquiry_topic}".
 
 Our senior safari desk coordinator will review your request and get back to you within 15 minutes.
 
@@ -1042,7 +1042,7 @@ Summary of Your Message:
 • Message: {user_message}
 
 Warm regards,
-Yala Leopard Tracks Expedition Team
+Discoveryala Expedition Team
 Phone / WhatsApp: +94 77 815 8004
 Email: yalaleopardtracks@gmail.com
 Location: Yala National Park Entrance Road, Sri Lanka
@@ -1056,7 +1056,7 @@ Location: Yala National Park Entrance Road, Sri Lanka
         success_message = f"Thank you, {user_name}! Your safari inquiry has been received. Our Yala desk team will contact you within 15 minutes."
 
     context = {
-        'title': 'Contact Yala Leopard Tracks | Safari Desk & Support Sri Lanka',
+        'title': 'Contact Discoveryala | Safari Desk & Support Sri Lanka',
         'contact_info': {
             'phone': '+94 77 815 8004',
             'phone_clean': '+94778158004',
@@ -1072,7 +1072,7 @@ Location: Yala National Park Entrance Road, Sri Lanka
 
 def about(request):
     context = {
-        'title': 'About Us | Yala Leopard Tracks Eco-Expeditions Sri Lanka',
+        'title': 'About Us | Discoveryala Eco-Expeditions Sri Lanka',
         'team_members': [
             {
                 'name': 'Kapila Ratnayake',
@@ -1202,7 +1202,7 @@ def reviews(request):
         avg_score = f"{avg_num:.1f}"
 
     context = {
-        'title': 'Google Maps Verified Reviews & Wildlife Gallery | Yala Leopard Tracks',
+        'title': 'Google Maps Verified Reviews & Wildlife Gallery | Discoveryala',
         'rating_summary': {
             'score': avg_score,
             'stars': 5,
@@ -1225,7 +1225,7 @@ def reviews(request):
                 'category': 'drives',
                 'image': 'images/jeep-safari.jpg',
                 'location': 'Palatupana Park Gate',
-                'credit': 'Yala Leopard Tracks Fleet'
+                'credit': 'Discoveryala Fleet'
             },
             {
                 'title': 'Luxury Safari Glamping Suite',
@@ -1309,7 +1309,7 @@ def tickets(request):
                 from django.core.mail import EmailMultiAlternatives
                 from django.conf import settings
 
-                from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Yala Leopard Tracks <yalaleopardtracks@gmail.com>')
+                from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Discoveryala <yalaleopardtracks@gmail.com>')
 
                 breakdown_items = ""
                 if foreign_adults > 0:
@@ -1357,13 +1357,13 @@ def tickets(request):
                 """
 
                 guest_subject = f"Yala Park Entrance Permit Request Confirmation - Ref #{ref_code}"
-                guest_text = f"Dear {full_name},\n\nThank you for requesting official Yala National Park entrance permits with Yala Leopard Tracks.\n\nSafari Date: {ticket_date}\nTotal Cost: LKR {total_lkr:,.2f} (~ ${total_usd:.2f} USD)\nReference ID: #{ref_code}\n\nOur expedition desk will process your express gate voucher shortly."
+                guest_text = f"Dear {full_name},\n\nThank you for requesting official Yala National Park entrance permits with Discoveryala.\n\nSafari Date: {ticket_date}\nTotal Cost: LKR {total_lkr:,.2f} (~ ${total_usd:.2f} USD)\nReference ID: #{ref_code}\n\nOur expedition desk will process your express gate voucher shortly."
                 
                 guest_html = f"""
                 <div style="background-color: #FAF6EE; padding: 24px 12px; font-family: 'Inter', Helvetica, Arial, sans-serif;">
                     <div style="max-width: 620px; margin: 0 auto; background: #FFFFFF; border-radius: 24px; overflow: hidden; border: 1px solid rgba(71, 81, 40, 0.18);">
                         <div style="background-color: #122118; padding: 32px 24px; text-align: center; color: #FFFFFF; border-bottom: 3px solid #D4AF37;">
-                            <h1 style="font-size: 22px; font-weight: 800; letter-spacing: 1px; margin: 0; color: #FAF6EE;">YALA LEOPARD TRACKS</h1>
+                            <h1 style="font-size: 22px; font-weight: 800; letter-spacing: 1px; margin: 0; color: #FAF6EE;">DISCOVERYALA</h1>
                             <p style="font-size: 13px; color: #D4AF37; margin: 6px 0 0 0; font-weight: 600; text-transform: uppercase;">Official DWC Park Entrance Permit Confirmation</p>
                         </div>
                         <div style="padding: 30px 24px; background-color: #FAF6EE;">
@@ -1389,7 +1389,7 @@ def tickets(request):
                             </div>
                         </div>
                         <div style="background-color: #122118; padding: 24px; text-align: center; font-size: 12px; color: #999999;">
-                            <p style="margin: 0;">Yala Leopard Tracks • Tissamaharama / Yala National Park, Sri Lanka</p>
+                            <p style="margin: 0;">Discoveryala • Tissamaharama / Yala National Park, Sri Lanka</p>
                             <p style="margin: 4px 0 0 0;">Email: <a href="mailto:yalaleopardtracks@gmail.com" style="color: #D4AF37; text-decoration: none;">yalaleopardtracks@gmail.com</a> | WhatsApp: +94 77 815 8004</p>
                         </div>
                     </div>
@@ -1427,7 +1427,7 @@ def tickets(request):
 
 
     context = {
-        'title': 'Yala National Park Tickets & Entrance Fees | Yala Leopard Tracks',
+        'title': 'Yala National Park Tickets & Entrance Fees | Discoveryala',
         'ticket_rates': [
             {
                 'id': 'foreign-adult',
@@ -1496,10 +1496,33 @@ def tickets(request):
                 'description': 'Alternative entrance with shorter queue times, ideal for guests staying in Kataragama.'
             },
             {
-                'name': 'Galge Gate (Block 3, 4 & 5 Gate)',
-                'hours': '06:00 AM – 06:00 PM',
-                'location': 'Northern Entrance (Büttala - Kataragama Road)',
-                'description': 'Quiet, uncrowded park block famous for wild elephant herds and birdwatching waterholes.'
+                'name': 'Foreign Child Entry',
+                'price': '$15 USD',
+                'description': 'Department of Wildlife Conservation discounted admission for children (6 - 11 yrs)'
+            },
+            {
+                'id': 'saarc-adult',
+                'name': 'SAARC Adult Entry',
+                'price': '$20 USD',
+                'description': 'Special tariff for passport holders of SAARC member nations'
+            },
+            {
+                'id': 'saarc-child',
+                'name': 'SAARC Child Entry',
+                'price': '$10 USD',
+                'description': 'Special tariff for SAARC nation children (6 - 11 yrs)'
+            },
+            {
+                'id': 'local-adult',
+                'name': 'Sri Lankan Adult',
+                'price': 'LKR 150',
+                'description': 'Resident citizen entrance fee for Sri Lankan adults'
+            },
+            {
+                'id': 'local-child',
+                'name': 'Sri Lankan Child',
+                'price': 'LKR 100',
+                'description': 'Resident citizen entrance fee for Sri Lankan children'
             }
         ],
         'ticket_success': ticket_success
@@ -1512,9 +1535,41 @@ def policies(request):
     Legal Policies View: Consolidates Privacy Policy, Terms of Service, and Refund Policy.
     """
     context = {
-        'title': 'Privacy Policy, Terms of Service & Refund Policy | Yala Leopard Tracks',
+        'title': 'Privacy Policy, Terms of Service & Refund Policy | Discoveryala',
     }
     return render(request, 'core/policies.html', context)
+
+
+def api_get_reviews(request):
+    """
+    Public JSON API to fetch Google Maps verified reviews dynamically.
+    Returns 5-star ratings, author photos, relative time descriptions & full text.
+    """
+    try:
+        from core.models import Review
+        reviews = Review.objects.filter(is_published=True).order_by('-created_at')
+        review_data = []
+        for r in reviews:
+            review_data.append({
+                'id': r.id,
+                'author_name': r.author_name,
+                'author_photo_url': r.get_photo_url(),
+                'rating': r.rating,
+                'relative_time_description': r.relative_time,
+                'text': r.text,
+                'google_maps_url': r.google_maps_url,
+                'verified': r.verified,
+                'created_at': r.created_at.strftime("%Y-%m-%d")
+            })
+        return JsonResponse({'status': 'success', 'reviews': review_data})
+    except Exception as e:
+        # Fallback to static reviews structure if DB query fails
+        return JsonResponse({
+            'status': 'fallback',
+            'publisher': {
+                'name': 'Discoveryala'
+            }
+        })
 
 
 def robots_txt(request):
@@ -1537,8 +1592,8 @@ def site_webmanifest(request):
     """
     from django.http import JsonResponse
     data = {
-        "name": "Yala Leopard Tracks",
-        "short_name": "LeopardTracks",
+        "name": "Discoveryala",
+        "short_name": "Discoveryala",
         "icons": [
             {
                 "src": f"{request.scheme}://{request.get_host()}/static/images/favicon.png",
