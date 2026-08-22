@@ -1842,7 +1842,7 @@ button[type="submit"]:hover,
     }
 }
 
-/* Exact Bottom-Left Pop-Up Card (Cute Compact Website Theme) */
+/* Exact Bottom-Left Pop-Up Card (Main #606C38 Theme Background) */
 .exact-pop-container {
     position: fixed;
     bottom: 20px;
@@ -1852,12 +1852,12 @@ button[type="submit"]:hover,
 }
 
 .exact-pop-card {
-    background: linear-gradient(145deg, #122118, #1b3023);
-    border: 1px solid rgba(96, 108, 56, 0.45);
+    background: #606C38;
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 20px;
     padding: 16px 14px 12px;
     width: 265px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(96, 108, 56, 0.2);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 25px rgba(96, 108, 56, 0.3);
     color: #FFFFFF;
     position: relative;
     transform: translateY(120%) scale(0.9);
@@ -1881,9 +1881,9 @@ button[type="submit"]:hover,
 }
 
 .exact-verified-badge {
-    background: rgba(96, 108, 56, 0.25);
-    border: 1px solid rgba(155, 179, 89, 0.4);
-    color: #9bb359;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #FFFFFF;
     font-size: 0.6rem;
     font-weight: 800;
     letter-spacing: 1px;
@@ -1895,9 +1895,9 @@ button[type="submit"]:hover,
 }
 
 .exact-pop-close {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: #E7EBD9;
+    background: rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
     font-size: 16px;
     width: 24px;
     height: 24px;
@@ -1910,9 +1910,9 @@ button[type="submit"]:hover,
 }
 
 .exact-pop-close:hover {
-    background: #606C38;
-    color: #FFFFFF;
-    border-color: #606C38;
+    background: #FFFFFF;
+    color: #475128;
+    border-color: #FFFFFF;
 }
 
 /* Heading */
@@ -1928,7 +1928,7 @@ button[type="submit"]:hover,
 }
 
 .highlight-august {
-    color: #9bb359;
+    color: #FAF6EE;
 }
 
 /* Subtitle & List */
@@ -1936,7 +1936,7 @@ button[type="submit"]:hover,
     font-size: 0.62rem;
     font-weight: 700;
     letter-spacing: 1px;
-    color: #9bb359;
+    color: #E7EBD9;
     margin-bottom: 6px;
 }
 
@@ -1953,7 +1953,7 @@ button[type="submit"]:hover,
     font-size: 0.66rem;
     font-weight: 600;
     letter-spacing: 0.6px;
-    color: #E7EBD9;
+    color: #FAF6EE;
     display: flex;
     align-items: center;
     gap: 5px;
@@ -1961,7 +1961,7 @@ button[type="submit"]:hover,
 
 .exact-pop-list li::before {
     content: "•";
-    color: #9bb359;
+    color: #FAF6EE;
     font-size: 0.85rem;
 }
 
@@ -1974,8 +1974,8 @@ button[type="submit"]:hover,
 }
 
 .exact-deal-row {
-    background: rgba(0, 0, 0, 0.28);
-    border: 1px solid rgba(96, 108, 56, 0.3);
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
     padding: 8px 10px;
     display: flex;
@@ -1992,13 +1992,13 @@ button[type="submit"]:hover,
 
 .exact-deal-time {
     font-size: 0.6rem;
-    color: #A3B19B;
+    color: #E7EBD9;
     margin-top: 1px;
 }
 
 .exact-deal-price-pill {
-    background: rgba(96, 108, 56, 0.2);
-    border: 1px solid rgba(155, 179, 89, 0.35);
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.35);
     padding: 4px 8px;
     border-radius: 10px;
     display: flex;
@@ -2008,20 +2008,21 @@ button[type="submit"]:hover,
 
 .exact-old-price {
     font-size: 0.75rem;
-    color: #8A9A83;
+    color: #E7EBD9;
     text-decoration: line-through;
+    opacity: 0.8;
 }
 
 .exact-new-price {
     font-size: 0.98rem;
     font-weight: 800;
-    color: #9bb359;
+    color: #FFFFFF;
 }
 
-/* WhatsApp Main Theme Button */
+/* WhatsApp Main Theme White Button */
 .exact-whatsapp-btn {
-    background: #606C38;
-    color: #FFFFFF;
+    background: #FFFFFF;
+    color: #475128;
     font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 1px;
@@ -2034,13 +2035,13 @@ button[type="submit"]:hover,
     padding: 10px;
     border-radius: 25px;
     margin-bottom: 10px;
-    box-shadow: 0 4px 15px rgba(96, 108, 56, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .exact-whatsapp-btn:hover {
-    background: #475128;
-    color: #FFFFFF;
+    background: #FAF6EE;
+    color: #233325;
     transform: translateY(-2px);
 }
 
@@ -2054,28 +2055,28 @@ button[type="submit"]:hover,
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: #9bb359;
+    color: #FAF6EE;
     font-size: 0.6rem;
     font-weight: 700;
     letter-spacing: 1.2px;
 }
 
 .exact-pop-footer span {
-    color: #A3B19B;
+    color: #E7EBD9;
 }
 
 /* Minimized Trigger Badge Pill */
 .exact-pop-trigger {
     display: none;
-    background: #122118;
-    border: 1px solid #606C38;
+    background: #606C38;
+    border: 1px solid rgba(255, 255, 255, 0.4);
     color: #FFFFFF;
     padding: 6px 12px;
     border-radius: 25px;
     font-size: 0.72rem;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     align-items: center;
     gap: 6px;
 }
@@ -2083,12 +2084,12 @@ button[type="submit"]:hover,
 .trigger-dot {
     width: 7px;
     height: 7px;
-    background: #9bb359;
+    background: #FAF6EE;
     border-radius: 50%;
 }
 
 .trigger-price {
-    color: #9bb359;
+    color: #FAF6EE;
     font-weight: 800;
 }
 
