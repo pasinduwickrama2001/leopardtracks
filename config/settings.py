@@ -86,11 +86,15 @@ load_dotenv(BASE_DIR / '.env')
 USE_MONGODB = os.getenv('USE_MONGODB', 'False').lower() in ('true', '1', 'yes')
 MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/leopardtracks_db')
 
-# Writable SQLite path for Vercel serverless environment
-if os.getenv('VERCEL') or os.getenv('VERCEL_ENV'):
+# Production database configuration: Prioritize bundled pre-populated db_prod.sqlite3
+prod_db_file = BASE_DIR / 'db_prod.sqlite3'
+if prod_db_file.exists():
+    SQLITE_PATH = prod_db_file
+elif os.getenv('VERCEL') or os.getenv('VERCEL_ENV'):
     SQLITE_PATH = Path('/tmp') / 'db.sqlite3'
 else:
     SQLITE_PATH = BASE_DIR / 'db.sqlite3'
+
 
 djongo_available = False
 if USE_MONGODB:
