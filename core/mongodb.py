@@ -4,7 +4,6 @@ import logging
 logger = logging.getLogger(__name__)
 _mongo_client = None
 
-DEFAULT_MONGODB_URI = 'mongodb+srv://pasinduwickramasooriya_db_user:mynameispasindu@cluster0.uj70orq.mongodb.net/leopardtracks_db?retryWrites=true&w=majority'
 DEFAULT_MONGODB_NAME = 'leopardtracks_db'
 
 def get_mongo_uri():
@@ -16,7 +15,7 @@ def get_mongo_uri():
                 uri = getattr(settings, 'MONGODB_URI', '').strip()
         except Exception:
             pass
-    return uri if uri else DEFAULT_MONGODB_URI
+    return uri
 
 def get_mongo_dbname():
     name = os.getenv('MONGODB_NAME', '').strip()
@@ -46,6 +45,10 @@ def get_mongo_db():
     try:
         import pymongo
         uri = get_mongo_uri()
+        if not uri:
+            logger.warning("No MONGODB_URI found in environment variables.")
+            return None
+
         db_name = get_mongo_dbname()
 
         if _mongo_client is None:
@@ -55,6 +58,7 @@ def get_mongo_db():
     except Exception as e:
         logger.error(f"MongoDB connection error: {e}")
         return None
+
 
 def fetch_mongo_packages():
     """
