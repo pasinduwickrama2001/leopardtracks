@@ -177,12 +177,26 @@ def home(request):
 
     # Fetch ALL Verified Guest Reviews & Testimonials from Database / MongoDB Atlas
     reviews_list = []
+    DEFAULT_REVIEW_PHOTOS = [
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg",
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1786355872/blogs/amvi8vrath9rtjzrk01m.jpg",
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1780047686/tours/yltrwtcjetsweu307nhc.jpg",
+        "https://res.cloudinary.com/ddcismwuy/image/upload/v1787109356/leopardtracks/packages/htla2ya4mzqnxheuujcg.jpg",
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1779297100/hero_sections/gmahc1wbil3xja4ohw1i.jpg",
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784456381/blogs/jqbr6khinkvptii7ax0c.jpg",
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1779352393/blogs/lww3k1nql9xpouch1ap6.jpg",
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1781080452/blogs/ju0ukvrwuyvbfwpeinb0.jpg"
+    ]
+
     try:
         all_reviews = list(GuestReview.objects.all())
         verified_reviews = [r for r in all_reviews if getattr(r, 'verified', True)]
         reviews_qs = verified_reviews[:6] if verified_reviews else all_reviews[:6]
 
-        for r in reviews_qs:
+        for idx, r in enumerate(reviews_qs):
+            photo = getattr(r, 'photo_url', None)
+            if not photo or not str(photo).startswith('http'):
+                photo = DEFAULT_REVIEW_PHOTOS[idx % len(DEFAULT_REVIEW_PHOTOS)]
             reviews_list.append({
                 'name': r.name,
                 'origin': r.origin,
@@ -192,6 +206,7 @@ def home(request):
                 'comment': r.comment,
                 'source': r.source,
                 'date': r.date,
+                'photo_url': photo,
             })
     except Exception:
         reviews_list = []
@@ -201,8 +216,11 @@ def home(request):
             from .mongodb import fetch_mongo_reviews
             m_reviews = fetch_mongo_reviews(limit=6)
             if m_reviews:
-                for r in m_reviews:
+                for idx, r in enumerate(m_reviews):
                     rating_val = int(r.get('rating', 5))
+                    photo = r.get('photo_url') or r.get('photo') or r.get('imageUrl')
+                    if not photo or not str(photo).startswith('http'):
+                        photo = DEFAULT_REVIEW_PHOTOS[idx % len(DEFAULT_REVIEW_PHOTOS)]
                     reviews_list.append({
                         'name': r.get('name', 'Safari Guest'),
                         'origin': r.get('origin', 'International Traveler'),
@@ -212,9 +230,11 @@ def home(request):
                         'comment': r.get('comment', 'Exceptional experience!'),
                         'source': r.get('source', 'Google Verified Review'),
                         'date': r.get('date', 'August 2026'),
+                        'photo_url': photo,
                     })
         except Exception:
             pass
+
 
     # Calculate totals
     total_packages = max(total_packages, len(packages_list))
@@ -1157,6 +1177,9 @@ def reviews(request):
     try:
         db_reviews = list(GuestReview.objects.all())
         random.shuffle(db_reviews)
+        for idx, r in enumerate(db_reviews):
+            if not getattr(r, 'photo_url', None) or not str(getattr(r, 'photo_url', '')).startswith('http'):
+                r.photo_url = DEFAULT_REVIEW_PHOTOS[idx % len(DEFAULT_REVIEW_PHOTOS)]
     except Exception:
         db_reviews = []
 
@@ -1166,8 +1189,8 @@ def reviews(request):
             m_revs = fetch_mongo_reviews(limit=1000)
             if m_revs:
                 class MongoReviewModel:
-                    def __init__(self, doc):
-                        self.id = doc.get('id', 1)
+                    def __init__(self, doc, index=0):
+                        self.id = doc.get('id', index + 1)
                         self.pk = self.id
                         self.name = doc.get('name', 'Safari Guest')
                         self.origin = doc.get('origin', 'Google Reviewer')
@@ -1180,10 +1203,23 @@ def reviews(request):
                         self.source = doc.get('source', 'Google Verified Review')
                         self.category = doc.get('category', 'leopard')
 
-                db_reviews = [MongoReviewModel(r) for r in m_revs]
+                        raw_photo = doc.get('photo_url') or doc.get('photo') or doc.get('imageUrl')
+                        if raw_photo and str(raw_photo).startswith('http'):
+                            self.photo_url = raw_photo
+                        else:
+                            self.photo_url = DEFAULT_REVIEW_PHOTOS[index % len(DEFAULT_REVIEW_PHOTOS)]
+
+                        raw_avatar = doc.get('avatar_url') or doc.get('avatar')
+                        if raw_avatar and str(raw_avatar).startswith('http'):
+                            self.avatar_url = raw_avatar
+                        else:
+                            self.avatar_url = self.photo_url
+
+                db_reviews = [MongoReviewModel(r, idx) for idx, r in enumerate(m_revs)]
                 random.shuffle(db_reviews)
         except Exception:
             pass
+
 
     total_reviews_count = len(db_reviews)
     avg_score = "4.9"
