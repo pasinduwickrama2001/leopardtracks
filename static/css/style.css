@@ -1842,22 +1842,24 @@ button[type="submit"]:hover,
     }
 }
 
-/* Exact Bottom-Left Pop-Up Card (Main Website Background Color #FAF6EE & Main Theme Fonts) */
+/* Exact Bottom-Left Pop-Up Card (Cute Mini Borderless #FAF6EE Website Theme) */
 .exact-pop-container {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
+    bottom: 18px;
+    left: 18px;
     z-index: 999999;
-    font-family: var(--font-body, 'Plus Jakarta Sans', 'Inter', sans-serif);
+    font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .exact-pop-card {
     background: var(--bg-pastel-cream, #FAF6EE);
-    border: 1px solid rgba(96, 108, 56, 0.35);
-    border-radius: 20px;
-    padding: 16px 14px 12px;
-    width: 265px;
-    box-shadow: 0 16px 40px rgba(35, 51, 37, 0.16), 0 0 20px rgba(96, 108, 56, 0.08);
+    border: none !important;
+    border-radius: 18px;
+    padding: 13px 12px 10px;
+    width: 245px;
+    box-shadow: 0 14px 36px rgba(35, 51, 37, 0.14);
     color: var(--text-primary, #233325);
     position: relative;
     transform: translateY(120%) scale(0.9);
@@ -1877,30 +1879,30 @@ button[type="submit"]:hover,
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .exact-verified-badge {
-    background: rgba(96, 108, 56, 0.12);
-    border: 1px solid rgba(96, 108, 56, 0.3);
+    background: rgba(96, 108, 56, 0.1);
+    border: none !important;
     color: var(--pastel-sage-main, #606C38);
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     font-weight: 800;
-    letter-spacing: 0.8px;
-    padding: 3px 10px;
-    border-radius: 14px;
+    letter-spacing: 0.6px;
+    padding: 3px 8px;
+    border-radius: 12px;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
 }
 
 .exact-pop-close {
     background: rgba(96, 108, 56, 0.08);
-    border: 1px solid rgba(96, 108, 56, 0.18);
+    border: none !important;
     color: var(--text-primary, #233325);
-    font-size: 16px;
-    width: 24px;
-    height: 24px;
+    font-size: 14px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -1912,18 +1914,17 @@ button[type="submit"]:hover,
 .exact-pop-close:hover {
     background: var(--pastel-sage-main, #606C38);
     color: #FFFFFF;
-    border-color: var(--pastel-sage-main, #606C38);
 }
 
-/* Heading - Theme Clear Fonts */
+/* Heading - Theme Clear Google Fonts */
 .exact-pop-title {
     font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-weight: 800;
     letter-spacing: -0.3px;
     color: var(--text-primary, #233325);
-    margin: 0 0 4px;
-    line-height: 1.15;
+    margin: 0 0 3px;
+    line-height: 1.1;
     text-transform: uppercase;
 }
 
@@ -1933,91 +1934,91 @@ button[type="submit"]:hover,
 
 /* Subtitle & List */
 .exact-pop-sub {
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     font-weight: 800;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
     color: var(--pastel-sage-main, #606C38);
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     text-transform: uppercase;
 }
 
 .exact-pop-list {
     list-style: none;
     padding: 0;
-    margin: 0 0 12px;
+    margin: 0 0 10px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
 }
 
 .exact-pop-list li {
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     font-weight: 700;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
     color: var(--text-primary, #233325);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
 }
 
 .exact-check-icon {
     color: var(--pastel-sage-main, #606C38);
-    font-size: 0.75rem;
+    font-size: 0.68rem;
 }
 
 /* Deals */
 .exact-pop-deals {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 6px;
+    margin-bottom: 10px;
 }
 
 .exact-deal-row {
     background: #FFFFFF;
-    border: 1px solid rgba(96, 108, 56, 0.22);
-    border-radius: 12px;
-    padding: 8px 10px;
+    border: none !important;
+    border-radius: 10px;
+    padding: 7px 8px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 2px 8px rgba(35, 51, 37, 0.04);
+    box-shadow: 0 2px 8px rgba(35, 51, 37, 0.05);
 }
 
 .exact-deal-title {
     font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     font-weight: 800;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
     color: var(--text-primary, #233325);
 }
 
 .exact-deal-time {
-    font-size: 0.6rem;
+    font-size: 0.56rem;
     font-weight: 600;
     color: var(--text-muted, #586B5A);
     margin-top: 1px;
 }
 
 .exact-deal-price-pill {
-    background: rgba(96, 108, 56, 0.1);
-    border: 1px solid rgba(96, 108, 56, 0.28);
-    padding: 4px 8px;
-    border-radius: 10px;
+    background: rgba(96, 108, 56, 0.08);
+    border: none !important;
+    padding: 3px 6px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
 }
 
 .exact-old-price {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     color: var(--text-light, #778B78);
     text-decoration: line-through;
 }
 
 .exact-new-price {
-    font-size: 1rem;
+    font-size: 0.92rem;
     font-weight: 800;
     color: var(--pastel-sage-main, #606C38);
 }
@@ -2026,20 +2027,21 @@ button[type="submit"]:hover,
 .exact-whatsapp-btn {
     background: var(--pastel-sage-main, #606C38);
     color: #FFFFFF;
+    border: none !important;
     font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     font-weight: 800;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
     text-decoration: none;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    padding: 10px;
-    border-radius: 25px;
-    margin-bottom: 10px;
-    box-shadow: 0 4px 15px rgba(96, 108, 56, 0.3);
+    gap: 5px;
+    padding: 9px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    box-shadow: 0 4px 12px rgba(96, 108, 56, 0.25);
     transition: transform 0.2s ease, background 0.2s ease;
 }
 
@@ -2050,7 +2052,7 @@ button[type="submit"]:hover,
 }
 
 .exact-whatsapp-btn i {
-    font-size: 0.95rem;
+    font-size: 0.88rem;
 }
 
 /* Footer Row */
@@ -2058,11 +2060,11 @@ button[type="submit"]:hover,
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     color: var(--pastel-sage-main, #606C38);
-    font-size: 0.6rem;
+    font-size: 0.56rem;
     font-weight: 800;
-    letter-spacing: 1.2px;
+    letter-spacing: 1px;
 }
 
 .exact-pop-footer span {
@@ -2073,22 +2075,22 @@ button[type="submit"]:hover,
 .exact-pop-trigger {
     display: none;
     background: var(--bg-pastel-cream, #FAF6EE);
-    border: 1px solid var(--pastel-sage-main, #606C38);
+    border: none !important;
     color: var(--text-primary, #233325);
     font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
-    padding: 6px 12px;
-    border-radius: 25px;
-    font-size: 0.72rem;
+    padding: 5px 11px;
+    border-radius: 20px;
+    font-size: 0.68rem;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(35, 51, 37, 0.15);
+    box-shadow: 0 6px 18px rgba(35, 51, 37, 0.12);
     align-items: center;
-    gap: 6px;
+    gap: 5px;
 }
 
 .trigger-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     background: var(--pastel-sage-main, #606C38);
     border-radius: 50%;
 }
@@ -2108,11 +2110,11 @@ button[type="submit"]:hover,
 
 @media (max-width: 480px) {
     .exact-pop-container {
-        bottom: 14px;
-        left: 14px;
+        bottom: 12px;
+        left: 12px;
     }
     .exact-pop-card {
-        width: 250px;
-        padding: 14px 12px 10px;
+        width: 230px;
+        padding: 12px 10px 8px;
     }
 }
