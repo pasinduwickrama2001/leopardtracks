@@ -139,13 +139,25 @@ class MongoHeroModel:
     def __init__(self, doc):
         self._doc = doc
         self.id = doc.get('id', 1)
-        self.title = doc.get('title', 'Yala National Park Safaris')
-        self.subtitle = doc.get('subtitle', 'Luxury Tented Camps & Expeditions')
+        self.pk = self.id
+        self.title = doc.get('title', 'WILD YALA SAFARIS')
+        self.subtitle = doc.get('subtitle', "Ceylon's premier 4x4 game drives & luxury glamping.")
         self.description = doc.get('description', '')
-        self.bg_image_url = doc.get('bg_image_url', '') or doc.get('imageUrl', '')
+        self.badge_text = doc.get('badge_text', 'YALA LEOPARD TRACKS')
+        self.imageUrl = doc.get('imageUrl', '') or doc.get('bg_image_url', '') or '/static/images/yala-wildlife-hero.jpg'
+        self.bg_image_url = self.imageUrl
+        self.button_primary_text = doc.get('button_primary_text', 'EXPLORE PACKAGES')
+        self.button_primary_url = doc.get('button_primary_url', '/packages/')
+        self.button_secondary_text = doc.get('button_secondary_text', 'BOOK SAFARI')
+        self.button_secondary_url = doc.get('button_secondary_url', '/contact/')
         self.cta_text = doc.get('cta_text', 'Book Now')
         self.cta_link = doc.get('cta_link', '#plan-your-stay')
         self.is_active = doc.get('is_active', True)
+
+    def get_hero_image_url(self):
+        if self.imageUrl and str(self.imageUrl).strip():
+            return str(self.imageUrl).strip()
+        return '/static/images/yala-wildlife-hero.jpg'
 
 
 def get_mongo_uri():
