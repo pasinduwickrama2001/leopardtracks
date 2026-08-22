@@ -609,15 +609,40 @@ Safari Desk Hotline: +94 778158004
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
 
 def blog(request):
-    all_posts = list(BlogPost.objects.all())
-    featured_post = None
-    for p in all_posts:
-        if getattr(p, 'featured', False):
-            featured_post = p
-            break
-    if not featured_post and all_posts:
-        featured_post = all_posts[0]
+    all_posts = []
+    try:
+        all_posts = list(BlogPost.objects.all())
+    except Exception:
+        all_posts = []
 
+    if not all_posts:
+        try:
+            from .mongodb import fetch_mongo_blogs
+            m_blogs = fetch_mongo_blogs()
+            if m_blogs:
+                class MongoBlog:
+                    def __init__(self, doc):
+                        self.id = doc.get('id', 1)
+                        self.pk = self.id
+                        self.title = doc.get('title', '')
+                        self.slug = doc.get('slug', '')
+                        self.category = doc.get('category', 'WILDLIFE')
+                        self.author = doc.get('author', 'Senior Naturalist Desk')
+                        self.imageUrl = doc.get('imageUrl', '') or '/static/images/yala-wildlife-hero.jpg'
+                        self.content = doc.get('content', '')
+                        self.featured = doc.get('featured', False)
+                        self.created_at = 'August 2026'
+
+                    def get_paragraphs(self):
+                        if not self.content:
+                            return []
+                        return [p.strip() for p in self.content.split('\n\n') if p.strip()]
+
+                all_posts = [MongoBlog(b) for b in m_blogs]
+        except Exception:
+            pass
+
+    featured_post = next((p for p in all_posts if getattr(p, 'featured', False)), all_posts[0] if all_posts else None)
     other_posts = [p for p in all_posts if p != featured_post]
 
     context = {
@@ -629,7 +654,39 @@ def blog(request):
     return render(request, 'core/blog.html', context)
 
 def blog_detail(request, slug):
-    all_posts = list(BlogPost.objects.all())
+    all_posts = []
+    try:
+        all_posts = list(BlogPost.objects.all())
+    except Exception:
+        all_posts = []
+
+    if not all_posts:
+        try:
+            from .mongodb import fetch_mongo_blogs
+            m_blogs = fetch_mongo_blogs()
+            if m_blogs:
+                class MongoBlog:
+                    def __init__(self, doc):
+                        self.id = doc.get('id', 1)
+                        self.pk = self.id
+                        self.title = doc.get('title', '')
+                        self.slug = doc.get('slug', '')
+                        self.category = doc.get('category', 'WILDLIFE')
+                        self.author = doc.get('author', 'Senior Naturalist Desk')
+                        self.imageUrl = doc.get('imageUrl', '') or '/static/images/yala-wildlife-hero.jpg'
+                        self.content = doc.get('content', '')
+                        self.featured = doc.get('featured', False)
+                        self.created_at = 'August 2026'
+
+                    def get_paragraphs(self):
+                        if not self.content:
+                            return []
+                        return [p.strip() for p in self.content.split('\n\n') if p.strip()]
+
+                all_posts = [MongoBlog(b) for b in m_blogs]
+        except Exception:
+            pass
+
     post = next((p for p in all_posts if p.slug == slug), None)
     if not post and slug.isdigit():
         post = next((p for p in all_posts if str(p.pk) == slug or str(getattr(p, 'id', '')) == slug), None)
@@ -648,6 +705,65 @@ def blog_detail(request, slug):
     return render(request, 'core/blog_detail.html', context)
 
 def tours(request):
+    tours_list = []
+    try:
+        tours_queryset = Tour.objects.all()
+        for tr in tours_queryset:
+            clean_p = tr.get_clean_price()
+            tours_list.append({
+                'id': tr.id,
+                'title': tr.title,
+                'slug': tr.slug,
+                'route': tr.route,
+                'duration': tr.duration,
+                'price': clean_p,
+                'get_clean_price': clean_p,
+                'imageUrl': tr.get_tour_image_url(),
+                'description': tr.description,
+                'highlights_list': tr.get_highlights_list(),
+                'inclusions_list': tr.get_inclusions_list(),
+                'isFeatured': tr.isFeatured,
+            })
+    except Exception:
+        tours_list = []
+
+    if not tours_list:
+        try:
+            from .mongodb import fetch_mongo_tours
+            m_tours = fetch_mongo_tours()
+            if m_tours:
+                for tr in m_tours:
+                    hl_raw = tr.get('highlights', '') or ''
+                    inc_raw = tr.get('inclusions', '') or ''
+                    hl_list = [h.strip() for h in hl_raw.split('\n') if h.strip()]
+                    inc_list = [i.strip() for i in inc_raw.split('\n') if i.strip()]
+                    clean_p = str(tr.get('price', '280')).replace('$', '').strip()
+                    tours_list.append({
+                        'id': tr.get('id', 1),
+                        'title': tr.get('title', ''),
+                        'slug': tr.get('slug', ''),
+                        'route': tr.get('route', ''),
+                        'duration': tr.get('duration', ''),
+                        'price': clean_p,
+                        'get_clean_price': clean_p,
+                        'imageUrl': tr.get('imageUrl', '') or '/static/images/yala-wildlife-hero.jpg',
+                        'description': tr.get('description', ''),
+                        'highlights_list': hl_list,
+                        'inclusions_list': inc_list,
+                        'isFeatured': tr.get('isFeatured', True),
+                    })
+        except Exception:
+            pass
+
+    featured_tour = next((t for t in tours_list if t.get('isFeatured')), tours_list[0] if tours_list else None)
+
+    context = {
+        'title': 'Sri Lanka Round Tours & Chauffeur Transport | Yala Leopard Tracks',
+        'tours_list': tours_list,
+        'featured_tour': featured_tour,
+    }
+    return render(request, 'core/tours.html', context)
+
     try:
         tours_queryset = list(Tour.objects.all())
     except Exception:

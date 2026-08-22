@@ -1,33 +1,55 @@
 import os
 import logging
-from django.conf import settings
 
 logger = logging.getLogger(__name__)
 _mongo_client = None
 
 DEFAULT_MONGODB_URI = 'mongodb+srv://pasinduwickramasooriya_db_user:mynameispasindu@cluster0.uj70orq.mongodb.net/leopardtracks_db?retryWrites=true&w=majority'
+DEFAULT_MONGODB_NAME = 'leopardtracks_db'
+
+def get_mongo_uri():
+    uri = os.getenv('MONGODB_URI', '').strip()
+    if not uri:
+        try:
+            from django.conf import settings
+            if getattr(settings, 'configured', False):
+                uri = getattr(settings, 'MONGODB_URI', '').strip()
+        except Exception:
+            pass
+    return uri if uri else DEFAULT_MONGODB_URI
+
+def get_mongo_dbname():
+    name = os.getenv('MONGODB_NAME', '').strip()
+    if not name:
+        try:
+            from django.conf import settings
+            if getattr(settings, 'configured', False):
+                name = getattr(settings, 'MONGODB_NAME', '').strip()
+        except Exception:
+            pass
+    return name if name else DEFAULT_MONGODB_NAME
 
 def is_mongodb_active():
-    """
-    Check if MongoDB Atlas is enabled via environment variables or settings.
-    """
-    val = os.getenv('USE_MONGODB', '')
+    val = os.getenv('USE_MONGODB', '').strip()
     if val:
         return val.lower() in ('true', '1', 'yes')
-    return getattr(settings, 'USE_MONGODB', False)
+    try:
+        from django.conf import settings
+        if getattr(settings, 'configured', False):
+            return getattr(settings, 'USE_MONGODB', False)
+    except Exception:
+        pass
+    return True
 
 def get_mongo_db():
-    """
-    Get active PyMongo database connection to MongoDB Atlas.
-    """
     global _mongo_client
     try:
         import pymongo
-        uri = os.getenv('MONGODB_URI', '') or getattr(settings, 'MONGODB_URI', '') or DEFAULT_MONGODB_URI
-        db_name = os.getenv('MONGODB_NAME', '') or getattr(settings, 'MONGODB_NAME', 'leopardtracks_db') or 'leopardtracks_db'
+        uri = get_mongo_uri()
+        db_name = get_mongo_dbname()
 
         if _mongo_client is None:
-            _mongo_client = pymongo.MongoClient(uri, serverSelectionTimeoutMS=5000)
+            _mongo_client = pymongo.MongoClient(uri, serverSelectionTimeoutMS=8000)
         
         return _mongo_client[db_name]
     except Exception as e:
