@@ -90,31 +90,29 @@ MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/leopardtracks_
 
 import shutil
 
-# Production database configuration: Copy pre-populated db_prod.sqlite3 to writable /tmp on Vercel
+# Production database configuration: Copy pre-populated db.sqlite3 to writable /tmp on Vercel
 if os.getenv('VERCEL') or os.getenv('VERCEL_ENV'):
     tmp_db = Path('/tmp') / 'db.sqlite3'
-    prod_db = BASE_DIR / 'db_prod.sqlite3'
-    if prod_db.exists() and not tmp_db.exists():
+    source_db = BASE_DIR / 'db.sqlite3'
+    if not source_db.exists():
+        source_db = BASE_DIR / 'db_prod.sqlite3'
+    
+    if source_db.exists() and not tmp_db.exists():
         try:
-            shutil.copyfile(prod_db, tmp_db)
+            shutil.copyfile(source_db, tmp_db)
         except Exception:
             pass
-    SQLITE_PATH = tmp_db if tmp_db.exists() else (prod_db if prod_db.exists() else BASE_DIR / 'db.sqlite3')
+    SQLITE_PATH = tmp_db if tmp_db.exists() else (source_db if source_db.exists() else BASE_DIR / 'db.sqlite3')
 else:
     SQLITE_PATH = BASE_DIR / 'db.sqlite3'
-
 
 
 djongo_available = False
 if USE_MONGODB:
     try:
         import djongo
-        # Test MongoDB connection to prevent server crash if Atlas SRV or credentials fail
-        from pymongo import MongoClient
-        test_client = MongoClient(MONGODB_URI, serverSelectionTimeoutMS=2000, connectTimeoutMS=2000)
-        test_client.admin.command('ping')
         djongo_available = True
-    except Exception as mongo_err:
+    except ImportError:
         djongo_available = False
 
 if USE_MONGODB and djongo_available:

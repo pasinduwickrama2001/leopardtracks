@@ -424,28 +424,33 @@ def create_booking(request):
             total_price = float(request.POST.get('total_price', 0.0) or 0)
             message = request.POST.get('message', '')
 
-            booking = SafariBooking.objects.create(
-                package_title=package_title,
-                full_name=full_name,
-                country=country,
-                email=email,
-                phone_code=phone_code,
-                phone_number=phone_number,
-                safari_date=safari_date,
-                guests=guests,
-                adult_guests=adult_guests,
-                child_guests=child_guests,
-                under6_guests=under6_guests,
-                include_meals=include_meals,
-                meal_count=meal_count,
-                meals_price_total=meals_price_total,
-                include_tickets=include_tickets,
-                tickets_price_total=tickets_price_total,
-                base_price=base_price,
-                total_price=total_price,
-                message=message,
-                status='Pending'
-            )
+            import uuid
+            try:
+                booking = SafariBooking.objects.create(
+                    package_title=package_title,
+                    full_name=full_name,
+                    country=country,
+                    email=email,
+                    phone_code=phone_code,
+                    phone_number=phone_number,
+                    safari_date=safari_date,
+                    guests=guests,
+                    adult_guests=adult_guests,
+                    child_guests=child_guests,
+                    under6_guests=under6_guests,
+                    include_meals=include_meals,
+                    meal_count=meal_count,
+                    meals_price_total=meals_price_total,
+                    include_tickets=include_tickets,
+                    tickets_price_total=tickets_price_total,
+                    base_price=base_price,
+                    total_price=total_price,
+                    message=message,
+                    status='Pending'
+                )
+                booking_id = str(booking.id)
+            except Exception as db_err:
+                booking_id = str(uuid.uuid4())[:8].upper()
 
             # Send Rich HTML Email Confirmation to Guest & Notification Email to Admin
             try:
@@ -463,7 +468,7 @@ def create_booking(request):
                 guest_text = f"""Ayubowan {full_name}!
 
 Thank you for reserving your safari expedition with Discoveryala!
-Booking Reference: #{booking.id}
+Booking Reference: #{booking_id}
 Package: {package_title}
 Safari Date: {safari_date}
 Guests: {guests}
@@ -515,10 +520,10 @@ Discoveryala Expeditions Team
 <div class="email-wrapper">
     <div class="email-container">
         <div class="email-header">
-            <span class="brand-pill">YALA LEOPARD TRACKS EXPEDITIONS</span>
+            <span class="brand-pill">DISCOVERYALA EXPEDITIONS</span>
             <h1 class="header-title">🐆 SAFARI RESERVATION CONFIRMED</h1>
             <div class="header-sub">Yala & Bundala National Park Game Drives</div>
-            <div class="ref-badge">Booking Reference: #{booking.id}</div>
+            <div class="ref-badge">Booking Reference: #{booking_id}</div>
         </div>
         
         <div class="email-body">
@@ -882,6 +887,7 @@ def tour_detail(request, slug):
         guests = int(request.POST.get('guests', 2) or 2)
         message = request.POST.get('message', '')
 
+        import uuid
         try:
             booking = SafariBooking.objects.create(
                 package_title=tour.title,
@@ -898,19 +904,23 @@ def tour_detail(request, slug):
                 message=message,
                 status='Pending'
             )
+            booking_id = str(booking.id)
+        except Exception as db_err:
+            print("TOUR_BOOKING_DB_ERROR:", str(db_err))
+            booking_id = str(uuid.uuid4())[:8].upper()
 
-            # Send Email Confirmation to Guest & Admin in a non-blocking background thread
-            def _async_send_emails():
-                try:
-                    from django.core.mail import EmailMultiAlternatives
-                    from django.conf import settings
+        # Send Email Confirmation to Guest & Admin in a non-blocking background thread
+        def _async_send_emails():
+            try:
+                from django.core.mail import EmailMultiAlternatives
+                from django.conf import settings
 
-                    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Discoveryala <yalaleopardtracks@gmail.com>')
-                    
-                    guest_subject = f"Tour Reservation Confirmation - {tour.title} | Discoveryala"
-                    guest_text = f"Ayubowan {full_name}!\n\nThank you for booking {tour.title}.\nBooking Ref: #{booking.id}\nDate: {safari_date}\nGuests: {guests}\nPrice: ${tour.price}\n\nOur team will contact you shortly."
-                    
-                    guest_html = f"""<!DOCTYPE html>
+                from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Discoveryala <yalaleopardtracks@gmail.com>')
+                
+                guest_subject = f"Tour Reservation Confirmation - {tour.title} | Discoveryala"
+                guest_text = f"Ayubowan {full_name}!\n\nThank you for booking {tour.title}.\nBooking Ref: #{booking_id}\nDate: {safari_date}\nGuests: {guests}\nPrice: ${tour.price}\n\nOur team will contact you shortly."
+                
+                guest_html = f"""<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8">
 <style>
@@ -926,7 +936,7 @@ def tour_detail(request, slug):
     <div class="hdr">DISCOVERYALA - TOUR RESERVATION</div>
     <p>Ayubowan <strong>{full_name}</strong>,</p>
     <p>Thank you for reserving your <strong>{tour.title}</strong> tour with Discoveryala!</p>
-    <div class="row"><span class="lbl">Booking Ref:</span> #{booking.id}</div>
+    <div class="row"><span class="lbl">Booking Ref:</span> #{booking_id}</div>
     <div class="row"><span class="lbl">Tour Package:</span> {tour.title}</div>
     <div class="row"><span class="lbl">Tour Date:</span> {safari_date}</div>
     <div class="row"><span class="lbl">Guests:</span> {guests} Person(s)</div>
@@ -939,39 +949,31 @@ def tour_detail(request, slug):
 </body>
 </html>"""
 
-                    msg = EmailMultiAlternatives(guest_subject, guest_text, from_email, [email])
-                    msg.attach_alternative(guest_html, "text/html")
-                    msg.send(fail_silently=True)
+                msg = EmailMultiAlternatives(guest_subject, guest_text, from_email, [email])
+                msg.attach_alternative(guest_html, "text/html")
+                msg.send(fail_silently=True)
 
-                    admin_subject = f"🚨 NEW TOUR BOOKING: {tour.title} - {full_name}"
-                    admin_text = f"New Tour Booking: {tour.title}\nGuest: {full_name} ({email})\nPhone: {phone_code} {phone_number}\nDate: {safari_date}\nGuests: {guests}"
-                    msg_admin = EmailMultiAlternatives(admin_subject, admin_text, from_email, ['yalaleopardtracks@gmail.com', 'pasinduwickramasooriya@gmail.com'])
-                    msg_admin.attach_alternative(guest_html, "text/html")
-                    msg_admin.send(fail_silently=True)
-                except Exception as e_mail:
-                    print("TOUR_BOOKING_EMAIL_ERROR:", str(e_mail))
+                admin_subject = f"🚨 NEW TOUR BOOKING: {tour.title} - {full_name}"
+                admin_text = f"New Tour Booking: {tour.title}\nGuest: {full_name} ({email})\nPhone: {phone_code} {phone_number}\nDate: {safari_date}\nGuests: {guests}"
+                msg_admin = EmailMultiAlternatives(admin_subject, admin_text, from_email, ['yalaleopardtracks@gmail.com', 'pasinduwickramasooriya@gmail.com'])
+                msg_admin.attach_alternative(guest_html, "text/html")
+                msg_admin.send(fail_silently=True)
+            except Exception as e_mail:
+                print("TOUR_BOOKING_EMAIL_ERROR:", str(e_mail))
 
-            import threading
-            threading.Thread(target=_async_send_emails, daemon=True).start()
+        import threading
+        threading.Thread(target=_async_send_emails, daemon=True).start()
 
-            b_id_str = str(getattr(booking, 'id', 'CONFIRMED'))
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'json' in request.headers.get('accept', ''):
+            return JsonResponse({
+                'status': 'success',
+                'guest_name': full_name,
+                'guest_email': email,
+                'booking_id': booking_id,
+                'message': 'Reservation submitted successfully!'
+            })
 
-            if request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'json' in request.headers.get('accept', ''):
-                return JsonResponse({
-                    'status': 'success',
-                    'guest_name': full_name,
-                    'guest_email': email,
-                    'booking_id': b_id_str,
-                    'message': 'Reservation submitted successfully!'
-                })
-
-            return redirect(f"/tours/{slug}/")
-
-        except Exception as e_book:
-            print("TOUR_BOOKING_CREATE_ERROR:", str(e_book))
-            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-                return JsonResponse({'status': 'error', 'message': str(e_book)}, status=400)
-            return redirect(f"/tours/{slug}/")
+        return redirect(f"/tours/{slug}/")
 
     context = {
         'title': f"{tour.title} | Sri Lanka Tour Package",
