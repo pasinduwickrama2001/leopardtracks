@@ -7,11 +7,13 @@
     <title>{% block title %}Yala National Park Safaris | Yala Leopards Sri Lanka{% endblock %}</title>
 
     {% block meta_description %}
-    <meta name="description" content="Book private 4x4 Yala National Park safari jeep game drives, luxury tented glamping camps & Sri Lanka round tours with certified naturalists. DWC entrance fee calculator.">
+    <meta name="description"
+        content="Book private 4x4 Yala National Park safari jeep game drives, luxury tented glamping camps & Sri Lanka round tours with certified naturalists. DWC entrance fee calculator.">
     {% endblock %}
 
     {% block meta_keywords %}
-    <meta name="keywords" content="Yala safari packages, Yala National Park safaris, luxury glamping Yala Sri Lanka, Yala jeep safari booking, Palatupana gate Yala, Panthera pardus kotiya, Yala entrance fees DWC">
+    <meta name="keywords"
+        content="Yala safari packages, Yala National Park safaris, luxury glamping Yala Sri Lanka, Yala jeep safari booking, Palatupana gate Yala, Panthera pardus kotiya, Yala entrance fees DWC">
     {% endblock %}
 
     <!-- Canonical URL & Indexing Directives -->
@@ -38,10 +40,12 @@
     <!-- Open Graph Social Media Meta Tags -->
     {% block og_tags %}
     <meta property="og:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Yala Leopard Tracks Sri Lanka">
-    <meta property="og:description" content="Book private 4x4 Yala National Park safari jeep game drives, luxury tented glamping camps & Sri Lanka round tours with certified naturalists.">
+    <meta property="og:description"
+        content="Book private 4x4 Yala National Park safari jeep game drives, luxury tented glamping camps & Sri Lanka round tours with certified naturalists.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
-    <meta property="og:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+    <meta property="og:image"
+        content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
     <meta property="og:site_name" content="Yala Leopard Tracks">
     <meta property="og:locale" content="en_US">
     {% endblock %}
@@ -50,8 +54,10 @@
     {% block twitter_tags %}
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Yala Leopard Tracks">
-    <meta name="twitter:description" content="Book private 4x4 Yala National Park safari jeep game drives & luxury glamping in Sri Lanka.">
-    <meta name="twitter:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+    <meta name="twitter:description"
+        content="Book private 4x4 Yala National Park safari jeep game drives & luxury glamping in Sri Lanka.">
+    <meta name="twitter:image"
+        content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
     {% endblock %}
 
     <!-- Structured Data (Schema.org JSON-LD) -->
@@ -95,7 +101,9 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
     <!-- Web Typography: Outfit, Inter, Plus Jakarta Sans, Roboto -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
 
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -345,91 +353,101 @@
         });
     </script>
 
-    <!-- August Special Discounts Popup Modal Component -->
-    <div class="promo-modal-overlay" id="promoModalOverlay" role="dialog" aria-modal="true" aria-labelledby="promoModalTitle">
-        <div class="promo-modal-card">
-            <button class="promo-modal-close" id="promoModalClose" aria-label="Close Promo Offer">&times;</button>
-            
-            <div class="promo-header">
-                <div class="promo-badge">
-                    <i class="fa-solid fa-circle-check"></i> Verified Official Operator
+    <!-- Exact Bottom-Left Pop-Up Card Component -->
+    <div class="exact-pop-container" id="exactPopContainer">
+        <!-- Minimized Trigger Badge Pill -->
+        <button class="exact-pop-trigger" id="exactPopTrigger" aria-label="Open August Discounts">
+            <span class="trigger-dot"></span>
+            <span>August Discounts</span>
+            <span class="trigger-price">$49</span>
+        </button>
+
+        <!-- Main Card -->
+        <div class="exact-pop-card" id="exactPopCard">
+            <!-- Top Row: Verified Badge & Close Button -->
+            <div class="exact-pop-top">
+                <div class="exact-verified-badge">
+                    <i class="fa-solid fa-shield-halved"></i> VERIFIED
                 </div>
-                <h2 class="promo-title" id="promoModalTitle">August Discounts</h2>
-                <div class="promo-sub-badge">
-                    <i class="fa-solid fa-sparkles"></i> Per Person • All Included
-                </div>
+                <button class="exact-pop-close" id="exactPopClose" aria-label="Close Pop-up">&times;</button>
             </div>
 
-            <div class="promo-inclusions-box">
-                <div class="promo-inc-item">
-                    <i class="fa-solid fa-utensils"></i>
-                    <span>Breakfast, lunch, fruits</span>
-                </div>
-                <div class="promo-inc-item">
-                    <i class="fa-solid fa-ticket"></i>
-                    <span>Yala entrance tickets</span>
-                </div>
-                <div class="promo-inc-item">
-                    <i class="fa-solid fa-bottle-water"></i>
-                    <span>Soft drinks, water</span>
-                </div>
-            </div>
+            <!-- Heading -->
+            <h2 class="exact-pop-title">
+                <span class="highlight-august">AUGUST</span> DISCOUNTS
+            </h2>
 
-            <div class="promo-deals-grid">
-                <!-- Morning Extended Deal -->
-                <div class="promo-deal-card">
-                    <div class="deal-name">Morning Extended</div>
-                    <div class="deal-time"><i class="fa-regular fa-clock"></i> 05:00 — 12:00</div>
-                    <div class="deal-pricing">
-                        <span class="deal-old-price">$75</span>
-                        <span class="deal-new-price">$49</span>
+            <!-- Subtitle & Included Items -->
+            <div class="exact-pop-sub">PER PERSON • ALL INCLUDED</div>
+            <ul class="exact-pop-list">
+                <li>BREAKFAST, LUNCH, FRUITS</li>
+                <li>YALA ENTRANCE TICKETS</li>
+                <li>SOFT DRINKS, WATER</li>
+            </ul>
+
+            <!-- Deals Box -->
+            <div class="exact-pop-deals">
+                <!-- Deal 1 -->
+                <div class="exact-deal-row">
+                    <div class="exact-deal-info">
+                        <div class="exact-deal-title">MORNING EXTENDED</div>
+                        <div class="exact-deal-time">05:00 — 12:00</div>
+                    </div>
+                    <div class="exact-deal-price-pill">
+                        <span class="exact-old-price">$75</span>
+                        <span class="exact-new-price">$49</span>
                     </div>
                 </div>
 
-                <!-- Full Day Shared Deal -->
-                <div class="promo-deal-card featured-deal">
-                    <div class="deal-badge-mini">MOST POPULAR</div>
-                    <div class="deal-name">Full Day Shared</div>
-                    <div class="deal-time"><i class="fa-regular fa-clock"></i> 05:00 — 18:00</div>
-                    <div class="deal-pricing">
-                        <span class="deal-old-price">$95</span>
-                        <span class="deal-new-price">$69</span>
+                <!-- Deal 2 -->
+                <div class="exact-deal-row">
+                    <div class="exact-deal-info">
+                        <div class="exact-deal-title">FULL DAY SHARED</div>
+                        <div class="exact-deal-time">05:00 — 18:00</div>
+                    </div>
+                    <div class="exact-deal-price-pill">
+                        <span class="exact-old-price">$95</span>
+                        <span class="exact-new-price">$69</span>
                     </div>
                 </div>
             </div>
 
-            <div class="promo-actions">
-                <a href="https://wa.me/94778158004?text=Hello!%20I%20would%20like%20to%20book%20the%20August%20Discount%20Safari%20Deal!" target="_blank" rel="noopener" class="btn-whatsapp-promo">
-                    <i class="fa-brands fa-whatsapp"></i> WhatsApp Direct Booking
-                </a>
-                <button class="btn-dismiss-promo" id="promoModalDismiss">Explore All Packages</button>
+            <!-- WhatsApp White Button -->
+            <a href="https://wa.me/94778158004?text=Hello!%20I%20saw%20the%20August%20Discount%20deal%20and%20would%20like%20to%20book." target="_blank" rel="noopener" class="exact-whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i> WHATSAPP
+            </a>
+
+            <!-- Footer Row -->
+            <div class="exact-pop-footer">
+                <i class="fa-solid fa-truck-monster"></i>
+                <i class="fa-solid fa-ticket"></i>
+                <span>OFFICIAL OPERATOR</span>
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var promoOverlay = document.getElementById('promoModalOverlay');
-            var closeBtn = document.getElementById('promoModalClose');
-            var dismissBtn = document.getElementById('promoModalDismiss');
+            var container = document.getElementById('exactPopContainer');
+            var closeBtn = document.getElementById('exactPopClose');
+            var triggerBtn = document.getElementById('exactPopTrigger');
 
-            if (promoOverlay) {
+            if (container) {
                 setTimeout(function () {
-                    promoOverlay.classList.add('active');
+                    container.classList.add('active');
                 }, 600);
 
-                function closePromoModal() {
-                    promoOverlay.classList.remove('active');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function () {
+                        container.classList.add('minimized');
+                    });
                 }
 
-                if (closeBtn) closeBtn.addEventListener('click', closePromoModal);
-                if (dismissBtn) dismissBtn.addEventListener('click', closePromoModal);
-
-                promoOverlay.addEventListener('click', function (e) {
-                    if (e.target === promoOverlay) {
-                        closePromoModal();
-                    }
-                });
+                if (triggerBtn) {
+                    triggerBtn.addEventListener('click', function () {
+                        container.classList.remove('minimized');
+                    });
+                }
             }
         });
     </script>
