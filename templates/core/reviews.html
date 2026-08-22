@@ -149,10 +149,9 @@
              data-category="{{ item.category }}"
              {% if forloop.counter > 11 %}style="display: none;"{% endif %}>
             {% if item.photo_url %}
-            <img src="{{ item.photo_url }}" alt="{{ item.name }} - Yala Safari Guest Review Photo" class="fs-bento-img" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg';">
-            {% else %}
-            <img src="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg" alt="{{ item.name }} - Yala Safari Guest Review Photo" class="fs-bento-img" loading="lazy" decoding="async">
+            <img src="{{ item.photo_url }}" alt="{{ item.name }} - Yala Safari Guest Review Photo" class="fs-bento-img" loading="lazy" decoding="async">
             {% endif %}
+
 
             <div class="fs-bento-overlay"></div>
             <div class="fs-bento-content">
