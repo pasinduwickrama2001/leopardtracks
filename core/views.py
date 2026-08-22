@@ -644,7 +644,7 @@ Safari Desk Hotline: +94 778158004
         Safari Hotline / WhatsApp: +94 778158004
     </div>
 
-    <a href="http://127.0.0.1:8000/admin/core/safaribooking/{booking.id}/change/" class="btn-admin">OPEN IN DJANGO ADMIN PANEL</a>
+    <a href="http://127.0.0.1:8000/admin/core/safaribooking/{booking_id}/change/" class="btn-admin">OPEN IN DJANGO ADMIN PANEL</a>
 </div>
 </body>
 </html>"""
@@ -657,7 +657,7 @@ Safari Desk Hotline: +94 778158004
             except Exception as mail_err:
                 print('EMAIL_SEND_ERROR_LOG:', str(mail_err))
 
-            return JsonResponse({'status': 'success', 'message': 'Thank you! Your safari reservation request has been submitted successfully. A confirmation email has been sent to your inbox.', 'booking_id': str(booking.id)})
+            return JsonResponse({'status': 'success', 'message': 'Thank you! Your safari reservation request has been submitted successfully. A confirmation email has been sent to your inbox.', 'booking_id': str(booking_id)})
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
