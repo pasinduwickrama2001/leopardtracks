@@ -1146,13 +1146,42 @@ def reviews(request):
             review_success = f"Thank you, {reviewer_name}! Your review has been recorded."
 
     import random
-    db_reviews = list(GuestReview.objects.all())
-    random.shuffle(db_reviews)
+    db_reviews = []
+    try:
+        db_reviews = list(GuestReview.objects.all())
+        random.shuffle(db_reviews)
+    except Exception:
+        db_reviews = []
+
+    if not db_reviews:
+        try:
+            from .mongodb import fetch_mongo_reviews
+            m_revs = fetch_mongo_reviews(limit=1000)
+            if m_revs:
+                class MongoReviewModel:
+                    def __init__(self, doc):
+                        self.id = doc.get('id', 1)
+                        self.pk = self.id
+                        self.name = doc.get('name', 'Safari Guest')
+                        self.origin = doc.get('origin', 'Google Reviewer')
+                        self.date = doc.get('date', 'August 2026')
+                        self.package = doc.get('package', 'Yala National Park Safari')
+                        self.rating = int(doc.get('rating', 5))
+                        self.rating_stars = range(self.rating)
+                        self.comment = doc.get('comment', '')
+                        self.verified = doc.get('verified', True)
+                        self.source = doc.get('source', 'Google Verified Review')
+                        self.category = doc.get('category', 'leopard')
+
+                db_reviews = [MongoReviewModel(r) for r in m_revs]
+                random.shuffle(db_reviews)
+        except Exception:
+            pass
 
     total_reviews_count = len(db_reviews)
     avg_score = "4.9"
     if total_reviews_count > 0:
-        avg_num = sum(r.rating for r in db_reviews) / float(total_reviews_count)
+        avg_num = sum(getattr(r, 'rating', 5) for r in db_reviews) / float(total_reviews_count)
         avg_score = f"{avg_num:.1f}"
 
     context = {
@@ -1165,6 +1194,7 @@ def reviews(request):
             'google_rating': f"{avg_score} / 5.0 (Google Maps Verified)"
         },
         'reviews_list': db_reviews,
+
         'gallery_items': [
             {
                 'title': 'Yala Leopard Resting on Palu Tree',
