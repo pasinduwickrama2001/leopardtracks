@@ -531,9 +531,11 @@ button[type="submit"]:hover,
     left: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
     background: rgba(35, 51, 37, 0.6);
     backdrop-filter: blur(6px);
-    z-index: 998;
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 9998;
     opacity: 0;
     visibility: hidden;
     transition: var(--transition);
@@ -551,15 +553,16 @@ button[type="submit"]:hover,
     width: 350px;
     max-width: 88vw;
     height: 100vh;
+    height: 100dvh;
     background-color: var(--bg-pastel-cream) !important;
     color: #233325 !important;
-    z-index: 999;
+    z-index: 9999;
     transform: translateX(-100%);
     transition: transform 0.38s cubic-bezier(0.25, 0.8, 0.25, 1);
-    padding: 40px 30px;
+    padding: max(24px, env(safe-area-inset-top)) 24px 24px 24px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     overflow-y: auto;
     box-shadow: 12px 0 40px rgba(35, 51, 37, 0.15);
     border-right: 1px solid rgba(96, 108, 56, 0.15);
@@ -569,10 +572,14 @@ button[type="submit"]:hover,
     transform: translateX(0);
 }
 
+.drawer-header {
+    margin-top: 4px;
+}
+
 .drawer-close {
     position: absolute;
-    top: 24px;
-    right: 24px;
+    top: max(20px, env(safe-area-inset-top));
+    right: 20px;
     background: rgba(96, 108, 56, 0.12);
     color: #233325;
     width: 36px;
@@ -594,7 +601,7 @@ button[type="submit"]:hover,
 
 .drawer-logo {
     font-family: var(--font-heading);
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-weight: 800;
     letter-spacing: 1px;
     color: #233325;
@@ -602,15 +609,16 @@ button[type="submit"]:hover,
 }
 
 .drawer-tagline {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: #606C38;
     font-weight: 700;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
 .drawer-nav {
-    margin: 30px 0;
+    margin: 20px 0 0 0;
 }
+
 
 .drawer-nav ul {
     list-style: none;
