@@ -4,19 +4,23 @@
 {% block title %}Yala National Park Safaris | Yala Leopards Sri Lanka{% endblock %}
 
 {% block meta_description %}
-<meta name="description" content="Book private 4x4 Yala National Park safari jeeps, luxury glamping camps & Sri Lanka round tours. Experience the highest leopard density on Earth with senior naturalists.">
+<meta name="description"
+    content="Book private 4x4 Yala National Park safari jeeps, luxury glamping camps & Sri Lanka round tours. Experience the highest leopard density on Earth with senior naturalists.">
 {% endblock %}
 
 {% block meta_keywords %}
-<meta name="keywords" content="Yala National Park, Yala safari packages, Yala National Park safaris, Yala safari jeep booking, luxury glamping Yala Sri Lanka, Yala entrance fees DWC, Palatupana gate Yala, Panthera pardus kotiya">
+<meta name="keywords"
+    content="Yala National Park, Yala safari packages, Yala National Park safaris, Yala safari jeep booking, luxury glamping Yala Sri Lanka, Yala entrance fees DWC, Palatupana gate Yala, Panthera pardus kotiya">
 {% endblock %}
 
 {% block og_tags %}
 <meta property="og:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Yala Leopard Tracks Sri Lanka">
-<meta property="og:description" content="Book private 4x4 Yala National Park safari jeep game drives, luxury tented glamping camps & Sri Lanka round tours with certified naturalists.">
+<meta property="og:description"
+    content="Book private 4x4 Yala National Park safari jeep game drives, luxury tented glamping camps & Sri Lanka round tours with certified naturalists.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
-<meta property="og:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+<meta property="og:image"
+    content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
 <meta property="og:site_name" content="Yala Leopard Tracks">
 <meta property="og:locale" content="en_US">
 {% endblock %}
@@ -24,8 +28,10 @@
 {% block twitter_tags %}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Yala Leopard Tracks Sri Lanka">
-<meta name="twitter:description" content="Private 4x4 Yala safari jeep drives & luxury camping in Sri Lanka with expert naturalists.">
-<meta name="twitter:image" content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
+<meta name="twitter:description"
+    content="Private 4x4 Yala safari jeep drives & luxury camping in Sri Lanka with expert naturalists.">
+<meta name="twitter:image"
+    content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
 {% endblock %}
 
 {% block schema_org %}
@@ -163,11 +169,13 @@
         {% endif %}
 
         <h1 class="hero-title">{{ hero.title|default:"YALA SAFARI PACKAGES & LUXURY TENTED CAMPS" }}</h1>
-        <p class="hero-subtitle">{{ hero.subtitle|default:"Ceylon's premier 4x4 game drives & luxury glamping expeditions in Yala National Park, Sri Lanka." }}</p>
+        <p class="hero-subtitle">{{ hero.subtitle|default:"Ceylon's premier 4x4 game drives & luxury glamping
+            expeditions in Yala National Park, Sri Lanka." }}</p>
 
         <div class="hero-buttons">
             {% if hero and hero.button_primary_text %}
-            <a href="{{ hero.button_primary_url|default:'/packages/' }}" class="btn-gold-pill" aria-label="{{ hero.button_primary_text }}">
+            <a href="{{ hero.button_primary_url|default:'/packages/' }}" class="btn-gold-pill"
+                aria-label="{{ hero.button_primary_text }}">
                 {{ hero.button_primary_text }} <i class="fa-solid fa-arrow-right"></i>
             </a>
             {% else %}
@@ -177,7 +185,8 @@
             {% endif %}
 
             {% if hero and hero.button_secondary_text %}
-            <a href="{{ hero.button_secondary_url|default:'/contact/' }}" class="btn-light-pill" aria-label="{{ hero.button_secondary_text }}">
+            <a href="{{ hero.button_secondary_url|default:'/contact/' }}" class="btn-light-pill"
+                aria-label="{{ hero.button_secondary_text }}">
                 {{ hero.button_secondary_text }}
             </a>
             {% else %}
@@ -297,7 +306,8 @@
         <div class="webflow-card">
             <div class="webflow-img-wrap" style="height: 420px; border-radius: 24px;">
                 <img src="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg"
-                    alt="Wild Sri Lankan Leopard Panthera pardus kotiya on Patanangala rock in Yala National Park" loading="lazy" decoding="async" width="600" height="420">
+                    alt="Wild Sri Lankan Leopard Panthera pardus kotiya on Patanangala rock in Yala National Park"
+                    loading="lazy" decoding="async" width="600" height="420">
                 <span class="webflow-floating-badge" style="font-size: 0.78rem; padding: 8px 16px;"><i
                         class="fa-solid fa-paw"></i> Panthera pardus kotiya</span>
             </div>
@@ -468,7 +478,8 @@
             EXPEDITIONS</span>
         <h2 class="section-title">PRIVATE 4X4 YALA SAFARI JEEP PACKAGES</h2>
         <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 720px; margin: 8px auto 0;">
-            Private Toyota Land Cruiser 4x4 game drives with certified naturalists, chilled refreshments, and park clearance support.
+            Private Toyota Land Cruiser 4x4 game drives with certified naturalists, chilled refreshments, and park
+            clearance support.
         </p>
     </div>
 
@@ -519,14 +530,16 @@
             </div>
 
             <div class="webflow-img-wrap" style="height: 340px; border-radius: 24px;">
-                <img src="{{ pkg.imageUrl }}" alt="{{ pkg.title }} - Yala National Park Safari Jeep Drive" loading="lazy" decoding="async">
+                <img src="{{ pkg.imageUrl }}" alt="{{ pkg.title }} - Yala National Park Safari Jeep Drive"
+                    loading="lazy" decoding="async">
                 <span class="webflow-floating-badge">{{ pkg.category_label }}</span>
                 <span class="webflow-price-badge">${{ pkg.clean_price }} USD</span>
             </div>
             {% else %}
             <!-- Card 1 & 3: Left Side Image, Right Side Description -->
             <div class="webflow-img-wrap" style="height: 340px; border-radius: 24px;">
-                <img src="{{ pkg.imageUrl }}" alt="{{ pkg.title }} - Yala National Park Safari Jeep Drive" loading="lazy" decoding="async">
+                <img src="{{ pkg.imageUrl }}" alt="{{ pkg.title }} - Yala National Park Safari Jeep Drive"
+                    loading="lazy" decoding="async">
                 <span class="webflow-floating-badge">{{ pkg.category_label }}</span>
                 <span class="webflow-price-badge">${{ pkg.clean_price }} USD</span>
             </div>
@@ -663,14 +676,16 @@
             </div>
 
             <div class="webflow-img-wrap" style="height: 340px; border-radius: 24px;">
-                <img src="{{ tr.imageUrl }}" alt="{{ tr.title }} - Sri Lanka Round Tour Expedition" loading="lazy" decoding="async">
+                <img src="{{ tr.imageUrl }}" alt="{{ tr.title }} - Sri Lanka Round Tour Expedition" loading="lazy"
+                    decoding="async">
                 <span class="webflow-floating-badge">{{ tr.duration }}</span>
                 <span class="webflow-price-badge">${{ tr.clean_price }} USD</span>
             </div>
             {% else %}
             <!-- Tour Card 1 & 3: Left Side Image, Right Side Description -->
             <div class="webflow-img-wrap" style="height: 340px; border-radius: 24px;">
-                <img src="{{ tr.imageUrl }}" alt="{{ tr.title }} - Sri Lanka Round Tour Expedition" loading="lazy" decoding="async">
+                <img src="{{ tr.imageUrl }}" alt="{{ tr.title }} - Sri Lanka Round Tour Expedition" loading="lazy"
+                    decoding="async">
                 <span class="webflow-floating-badge">{{ tr.duration }}</span>
                 <span class="webflow-price-badge">${{ tr.clean_price }} USD</span>
             </div>
@@ -846,7 +861,8 @@
                             style="font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800; color: #233325;">
                             {{ rv.name }}</div>
                         <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">{{ rv.origin }} •
-                            <span style="color: #606C38;">{{ rv.package }}</span></div>
+                            <span style="color: #606C38;">{{ rv.package }}</span>
+                        </div>
                     </div>
                     <div
                         style="background: rgba(96,108,56,0.1); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #606C38; font-size: 0.8rem;">
@@ -967,157 +983,101 @@
 </section>
 
 <!-- 11. Frequently Asked Questions (FAQ) Section for Google SERP Snippets & User Conversion -->
-<section class="faq-summary-section" id="yala-faq" style="background-color: var(--bg-pastel-cream); padding: 60px 0; border-top: 1px solid rgba(96,108,56,0.12);">
+<section class="faq-summary-section" id="yala-faq"
+    style="background-color: var(--bg-pastel-cream); padding: 60px 0; border-top: 1px solid rgba(96,108,56,0.12);">
     <div class="container text-center section-header" style="margin-bottom: 40px;">
-        <span class="section-tag tag-sage"><i class="fa-solid fa-circle-question font-gold"></i> FREQUENTLY ASKED QUESTIONS</span>
+        <span class="section-tag tag-sage"><i class="fa-solid fa-circle-question font-gold"></i> FREQUENTLY ASKED
+            QUESTIONS</span>
         <h2 class="section-title">YALA NATIONAL PARK SAFARIS FAQ</h2>
         <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 800px; margin: 8px auto 0;">
-            Everything you need to know about planning, booking, and enjoying private 4x4 game drives and luxury camping stays in Yala.
+            Everything you need to know about planning, booking, and enjoying private 4x4 game drives and luxury camping
+            stays in Yala.
         </p>
     </div>
 
     <div class="container" style="max-width: 920px; margin: 0 auto;">
         <div class="faq-accordion-list" style="display: flex; flex-direction: column; gap: 16px;">
-            <details style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
-                <summary style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
-                    <span><i class="fa-solid fa-sun font-gold" style="margin-right: 10px;"></i> What is the best time of day for a Yala National Park leopard safari?</span>
+            <details
+                style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
+                <summary
+                    style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                    <span><i class="fa-solid fa-sun font-gold" style="margin-right: 10px;"></i> What is the best time of
+                        day for a Yala National Park leopard safari?</span>
                     <i class="fa-solid fa-chevron-down font-gold"></i>
                 </summary>
-                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
-                    Early morning game drives (6:00 AM – 10:00 AM) and late afternoon game drives (2:30 PM – 6:00 PM) offer peak wildlife activity. Leopards are boldest at dawn and dusk, actively patrolling territory or resting atop granite rock outcrops.
+                <p
+                    style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
+                    Early morning game drives (6:00 AM – 10:00 AM) and late afternoon game drives (2:30 PM – 6:00 PM)
+                    offer peak wildlife activity. Leopards are boldest at dawn and dusk, actively patrolling territory
+                    or resting atop granite rock outcrops.
                 </p>
             </details>
 
-            <details style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
-                <summary style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
-                    <span><i class="fa-solid fa-door-open font-gold" style="margin-right: 10px;"></i> Which entrance gate is best for Yala Block 1 game drives?</span>
+            <details
+                style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
+                <summary
+                    style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                    <span><i class="fa-solid fa-door-open font-gold" style="margin-right: 10px;"></i> Which entrance
+                        gate is best for Yala Block 1 game drives?</span>
                     <i class="fa-solid fa-chevron-down font-gold"></i>
                 </summary>
-                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
-                    Palatupana Gate (near Tissamaharama) is the main entrance for Block 1 (Ruhuna), which holds the world's highest leopard density per square kilometer. Katagamuwa Gate serves guests staying near Kataragama or accessing Block 1 & 5.
+                <p
+                    style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
+                    Palatupana Gate (near Tissamaharama) is the main entrance for Block 1 (Ruhuna), which holds the
+                    world's highest leopard density per square kilometer. Katagamuwa Gate serves guests staying near
+                    Kataragama or accessing Block 1 & 5.
                 </p>
             </details>
 
-            <details style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
-                <summary style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
-                    <span><i class="fa-solid fa-ticket font-gold" style="margin-right: 10px;"></i> How much does a Yala National Park entrance permit cost?</span>
+            <details
+                style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
+                <summary
+                    style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                    <span><i class="fa-solid fa-ticket font-gold" style="margin-right: 10px;"></i> How much does a Yala
+                        National Park entrance permit cost?</span>
                     <i class="fa-solid fa-chevron-down font-gold"></i>
                 </summary>
-                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
-                    Department of Wildlife Conservation (DWC) gate tariffs are $25.00 USD for foreign adults, $15.00 USD for foreign children (ages 6–12), $20.00 USD for SAARC adults, plus LKR 300 vehicle entry licensing fee, vehicle service charge, and 18% government VAT.
+                <p
+                    style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
+                    Department of Wildlife Conservation (DWC) gate tariffs are $25.00 USD for foreign adults, $15.00 USD
+                    for foreign children (ages 6–12), $20.00 USD for SAARC adults, plus LKR 300 vehicle entry licensing
+                    fee, vehicle service charge, and 18% government VAT.
                 </p>
             </details>
 
-            <details style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
-                <summary style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
-                    <span><i class="fa-solid fa-truck-monster font-gold" style="margin-right: 10px;"></i> Are Yala Leopard Tracks safari jeeps private or shared?</span>
+            <details
+                style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
+                <summary
+                    style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                    <span><i class="fa-solid fa-truck-monster font-gold" style="margin-right: 10px;"></i> Are Yala
+                        Leopard Tracks safari jeeps private or shared?</span>
                     <i class="fa-solid fa-chevron-down font-gold"></i>
                 </summary>
-                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
-                    All our safari jeep packages are 100% private. You get a dedicated Toyota Land Cruiser 4x4 with elevated cushioned safari seating, experienced driver-trackers, chilled bottled water/refreshments, and park clearance support.
+                <p
+                    style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
+                    All our safari jeep packages are 100% private. You get a dedicated Toyota Land Cruiser 4x4 with
+                    elevated cushioned safari seating, experienced driver-trackers, chilled bottled water/refreshments,
+                    and park clearance support.
                 </p>
             </details>
 
-            <details style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
-                <summary style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
-                    <span><i class="fa-solid fa-paw font-gold" style="margin-right: 10px;"></i> What animals can I spot in Yala National Park besides leopards?</span>
+            <details
+                style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
+                <summary
+                    style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                    <span><i class="fa-solid fa-paw font-gold" style="margin-right: 10px;"></i> What animals can I spot
+                        in Yala National Park besides leopards?</span>
                     <i class="fa-solid fa-chevron-down font-gold"></i>
                 </summary>
-                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
-                    In addition to the Sri Lankan Leopard (Panthera pardus kotiya), Yala shelters Asian Elephants, Sloth Bears, Mugger Crocodiles, Spotted Deer, Wild Boar, Sambars, Water Buffaloes, Fishing Cats, and over 215 resident and migratory bird species.
+                <p
+                    style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
+                    In addition to the Sri Lankan Leopard (Panthera pardus kotiya), Yala shelters Asian Elephants, Sloth
+                    Bears, Mugger Crocodiles, Spotted Deer, Wild Boar, Sambars, Water Buffaloes, Fishing Cats, and over
+                    215 resident and migratory bird species.
                 </p>
             </details>
         </div>
     </div>
 </section>
-
-<!-- August Special Discounts Popup Modal -->
-<div class="promo-modal-overlay" id="promoModalOverlay" role="dialog" aria-modal="true" aria-labelledby="promoModalTitle">
-    <div class="promo-modal-card">
-        <button class="promo-modal-close" id="promoModalClose" aria-label="Close Promo Offer">&times;</button>
-        
-        <div class="promo-header">
-            <div class="promo-badge">
-                <i class="fa-solid fa-circle-check"></i> Verified Official Operator
-            </div>
-            <h2 class="promo-title" id="promoModalTitle">August Discounts</h2>
-            <div class="promo-sub-badge">
-                <i class="fa-solid fa-sparkles"></i> Per Person • All Included
-            </div>
-        </div>
-
-        <div class="promo-inclusions-box">
-            <div class="promo-inc-item">
-                <i class="fa-solid fa-utensils"></i>
-                <span>Breakfast, lunch, fruits</span>
-            </div>
-            <div class="promo-inc-item">
-                <i class="fa-solid fa-ticket"></i>
-                <span>Yala entrance tickets</span>
-            </div>
-            <div class="promo-inc-item">
-                <i class="fa-solid fa-bottle-water"></i>
-                <span>Soft drinks, water</span>
-            </div>
-        </div>
-
-        <div class="promo-deals-grid">
-            <!-- Morning Extended Deal -->
-            <div class="promo-deal-card">
-                <div class="deal-name">Morning Extended</div>
-                <div class="deal-time"><i class="fa-regular fa-clock"></i> 05:00 — 12:00</div>
-                <div class="deal-pricing">
-                    <span class="deal-old-price">$75</span>
-                    <span class="deal-new-price">$49</span>
-                </div>
-            </div>
-
-            <!-- Full Day Shared Deal -->
-            <div class="promo-deal-card featured-deal">
-                <div class="deal-badge-mini">MOST POPULAR</div>
-                <div class="deal-name">Full Day Shared</div>
-                <div class="deal-time"><i class="fa-regular fa-clock"></i> 05:00 — 18:00</div>
-                <div class="deal-pricing">
-                    <span class="deal-old-price">$95</span>
-                    <span class="deal-new-price">$69</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="promo-actions">
-            <a href="https://wa.me/94778158004?text=Hello!%20I%20would%20like%20to%20book%20the%20August%20Discount%20Safari%20Deal!" target="_blank" rel="noopener" class="btn-whatsapp-promo">
-                <i class="fa-brands fa-whatsapp"></i> WhatsApp Booking
-            </a>
-            <button class="btn-dismiss-promo" id="promoModalDismiss">Explore All Packages</button>
-        </div>
-    </div>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var promoOverlay = document.getElementById('promoModalOverlay');
-    var closeBtn = document.getElementById('promoModalClose');
-    var dismissBtn = document.getElementById('promoModalDismiss');
-
-    if (promoOverlay) {
-        setTimeout(function () {
-            promoOverlay.classList.add('active');
-        }, 600);
-
-        function closePromoModal() {
-            promoOverlay.classList.remove('active');
-        }
-
-        if (closeBtn) closeBtn.addEventListener('click', closePromoModal);
-        if (dismissBtn) dismissBtn.addEventListener('click', closePromoModal);
-
-        promoOverlay.addEventListener('click', function (e) {
-            if (e.target === promoOverlay) {
-                closePromoModal();
-            }
-        });
-    }
-});
-</script>
 
 {% endblock %}
