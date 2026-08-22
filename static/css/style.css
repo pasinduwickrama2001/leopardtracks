@@ -1842,23 +1842,23 @@ button[type="submit"]:hover,
     }
 }
 
-/* Exact Bottom-Left Pop-Up Card (Main Website Background Color #FAF6EE) */
+/* Exact Bottom-Left Pop-Up Card (Main Website Background Color #FAF6EE & Main Theme Fonts) */
 .exact-pop-container {
     position: fixed;
     bottom: 20px;
     left: 20px;
     z-index: 999999;
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-body, 'Plus Jakarta Sans', 'Inter', sans-serif);
 }
 
 .exact-pop-card {
-    background: #FAF6EE;
-    border: 1px solid rgba(96, 108, 56, 0.3);
+    background: var(--bg-pastel-cream, #FAF6EE);
+    border: 1px solid rgba(96, 108, 56, 0.35);
     border-radius: 20px;
     padding: 16px 14px 12px;
     width: 265px;
     box-shadow: 0 16px 40px rgba(35, 51, 37, 0.16), 0 0 20px rgba(96, 108, 56, 0.08);
-    color: #233325;
+    color: var(--text-primary, #233325);
     position: relative;
     transform: translateY(120%) scale(0.9);
     opacity: 0;
@@ -1883,21 +1883,21 @@ button[type="submit"]:hover,
 .exact-verified-badge {
     background: rgba(96, 108, 56, 0.12);
     border: 1px solid rgba(96, 108, 56, 0.3);
-    color: #606C38;
-    font-size: 0.6rem;
+    color: var(--pastel-sage-main, #606C38);
+    font-size: 0.62rem;
     font-weight: 800;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
     padding: 3px 10px;
     border-radius: 14px;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
 }
 
 .exact-pop-close {
     background: rgba(96, 108, 56, 0.08);
     border: 1px solid rgba(96, 108, 56, 0.18);
-    color: #233325;
+    color: var(--text-primary, #233325);
     font-size: 16px;
     width: 24px;
     height: 24px;
@@ -1910,34 +1910,35 @@ button[type="submit"]:hover,
 }
 
 .exact-pop-close:hover {
-    background: #606C38;
+    background: var(--pastel-sage-main, #606C38);
     color: #FFFFFF;
-    border-color: #606C38;
+    border-color: var(--pastel-sage-main, #606C38);
 }
 
-/* Heading */
+/* Heading - Theme Clear Fonts */
 .exact-pop-title {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
     font-size: 1.25rem;
-    font-weight: 900;
-    font-style: italic;
-    letter-spacing: 0.5px;
-    color: #233325;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: var(--text-primary, #233325);
     margin: 0 0 4px;
-    line-height: 1.1;
+    line-height: 1.15;
+    text-transform: uppercase;
 }
 
 .highlight-august {
-    color: #606C38;
+    color: var(--pastel-sage-main, #606C38);
 }
 
 /* Subtitle & List */
 .exact-pop-sub {
     font-size: 0.62rem;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 1px;
-    color: #606C38;
+    color: var(--pastel-sage-main, #606C38);
     margin-bottom: 6px;
+    text-transform: uppercase;
 }
 
 .exact-pop-list {
@@ -1946,23 +1947,22 @@ button[type="submit"]:hover,
     margin: 0 0 12px;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 4px;
 }
 
 .exact-pop-list li {
-    font-size: 0.66rem;
-    font-weight: 600;
-    letter-spacing: 0.6px;
-    color: #384d3b;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text-primary, #233325);
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
 }
 
-.exact-pop-list li::before {
-    content: "•";
-    color: #606C38;
-    font-size: 0.85rem;
+.exact-check-icon {
+    color: var(--pastel-sage-main, #606C38);
+    font-size: 0.75rem;
 }
 
 /* Deals */
@@ -1975,7 +1975,7 @@ button[type="submit"]:hover,
 
 .exact-deal-row {
     background: #FFFFFF;
-    border: 1px solid rgba(96, 108, 56, 0.2);
+    border: 1px solid rgba(96, 108, 56, 0.22);
     border-radius: 12px;
     padding: 8px 10px;
     display: flex;
@@ -1985,21 +1985,23 @@ button[type="submit"]:hover,
 }
 
 .exact-deal-title {
-    font-size: 0.66rem;
+    font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
+    font-size: 0.68rem;
     font-weight: 800;
-    letter-spacing: 0.6px;
-    color: #233325;
+    letter-spacing: 0.5px;
+    color: var(--text-primary, #233325);
 }
 
 .exact-deal-time {
     font-size: 0.6rem;
-    color: #586B5A;
+    font-weight: 600;
+    color: var(--text-muted, #586B5A);
     margin-top: 1px;
 }
 
 .exact-deal-price-pill {
     background: rgba(96, 108, 56, 0.1);
-    border: 1px solid rgba(96, 108, 56, 0.25);
+    border: 1px solid rgba(96, 108, 56, 0.28);
     padding: 4px 8px;
     border-radius: 10px;
     display: flex;
@@ -2009,20 +2011,22 @@ button[type="submit"]:hover,
 
 .exact-old-price {
     font-size: 0.75rem;
-    color: #778B78;
+    font-weight: 600;
+    color: var(--text-light, #778B78);
     text-decoration: line-through;
 }
 
 .exact-new-price {
-    font-size: 0.98rem;
+    font-size: 1rem;
     font-weight: 800;
-    color: #606C38;
+    color: var(--pastel-sage-main, #606C38);
 }
 
 /* WhatsApp Main Theme Button */
 .exact-whatsapp-btn {
-    background: #606C38;
+    background: var(--pastel-sage-main, #606C38);
     color: #FFFFFF;
+    font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
     font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 1px;
@@ -2040,7 +2044,7 @@ button[type="submit"]:hover,
 }
 
 .exact-whatsapp-btn:hover {
-    background: #475128;
+    background: var(--pastel-sage-dark, #475128);
     color: #FFFFFF;
     transform: translateY(-2px);
 }
@@ -2055,22 +2059,23 @@ button[type="submit"]:hover,
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: #606C38;
+    color: var(--pastel-sage-main, #606C38);
     font-size: 0.6rem;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 1.2px;
 }
 
 .exact-pop-footer span {
-    color: #586B5A;
+    color: var(--text-muted, #586B5A);
 }
 
 /* Minimized Trigger Badge Pill */
 .exact-pop-trigger {
     display: none;
-    background: #FAF6EE;
-    border: 1px solid #606C38;
-    color: #233325;
+    background: var(--bg-pastel-cream, #FAF6EE);
+    border: 1px solid var(--pastel-sage-main, #606C38);
+    color: var(--text-primary, #233325);
+    font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
     padding: 6px 12px;
     border-radius: 25px;
     font-size: 0.72rem;
@@ -2084,12 +2089,12 @@ button[type="submit"]:hover,
 .trigger-dot {
     width: 7px;
     height: 7px;
-    background: #606C38;
+    background: var(--pastel-sage-main, #606C38);
     border-radius: 50%;
 }
 
 .trigger-price {
-    color: #606C38;
+    color: var(--pastel-sage-main, #606C38);
     font-weight: 800;
 }
 
