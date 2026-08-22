@@ -1975,7 +1975,7 @@ button[type="submit"]:hover,
 }
 
 .exact-deal-row {
-    background: #FFFFFF;
+    /* background: #FFFFFF; */
     border: none !important;
     border-radius: 10px;
     padding: 7px 8px;

@@ -23,6 +23,13 @@ def home(request):
         except Exception:
             pass
 
+    if hero:
+        if not getattr(hero, 'title', None) or not str(getattr(hero, 'title', '')).strip():
+            hero.title = "YALA SAFARI PACKAGES & LUXURY TENTED CAMPS"
+        if not getattr(hero, 'subtitle', None) or not str(getattr(hero, 'subtitle', '')).strip():
+            hero.subtitle = "Ceylon's premier 4x4 game drives & luxury glamping expeditions in Yala National Park, Sri Lanka."
+
+
 
     # Fetch Dynamic Counts from Database with Safe Exception Handling
     try:
