@@ -1031,4 +1031,93 @@
     </div>
 </section>
 
+<!-- August Special Discounts Popup Modal -->
+<div class="promo-modal-overlay" id="promoModalOverlay" role="dialog" aria-modal="true" aria-labelledby="promoModalTitle">
+    <div class="promo-modal-card">
+        <button class="promo-modal-close" id="promoModalClose" aria-label="Close Promo Offer">&times;</button>
+        
+        <div class="promo-header">
+            <div class="promo-badge">
+                <i class="fa-solid fa-circle-check"></i> Verified Official Operator
+            </div>
+            <h2 class="promo-title" id="promoModalTitle">August Discounts</h2>
+            <div class="promo-sub-badge">
+                <i class="fa-solid fa-sparkles"></i> Per Person • All Included
+            </div>
+        </div>
+
+        <div class="promo-inclusions-box">
+            <div class="promo-inc-item">
+                <i class="fa-solid fa-utensils"></i>
+                <span>Breakfast, lunch, fruits</span>
+            </div>
+            <div class="promo-inc-item">
+                <i class="fa-solid fa-ticket"></i>
+                <span>Yala entrance tickets</span>
+            </div>
+            <div class="promo-inc-item">
+                <i class="fa-solid fa-bottle-water"></i>
+                <span>Soft drinks, water</span>
+            </div>
+        </div>
+
+        <div class="promo-deals-grid">
+            <!-- Morning Extended Deal -->
+            <div class="promo-deal-card">
+                <div class="deal-name">Morning Extended</div>
+                <div class="deal-time"><i class="fa-regular fa-clock"></i> 05:00 — 12:00</div>
+                <div class="deal-pricing">
+                    <span class="deal-old-price">$75</span>
+                    <span class="deal-new-price">$49</span>
+                </div>
+            </div>
+
+            <!-- Full Day Shared Deal -->
+            <div class="promo-deal-card featured-deal">
+                <div class="deal-badge-mini">MOST POPULAR</div>
+                <div class="deal-name">Full Day Shared</div>
+                <div class="deal-time"><i class="fa-regular fa-clock"></i> 05:00 — 18:00</div>
+                <div class="deal-pricing">
+                    <span class="deal-old-price">$95</span>
+                    <span class="deal-new-price">$69</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="promo-actions">
+            <a href="https://wa.me/94778158004?text=Hello!%20I%20would%20like%20to%20book%20the%20August%20Discount%20Safari%20Deal!" target="_blank" rel="noopener" class="btn-whatsapp-promo">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp Booking
+            </a>
+            <button class="btn-dismiss-promo" id="promoModalDismiss">Explore All Packages</button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var promoOverlay = document.getElementById('promoModalOverlay');
+    var closeBtn = document.getElementById('promoModalClose');
+    var dismissBtn = document.getElementById('promoModalDismiss');
+
+    if (promoOverlay) {
+        setTimeout(function () {
+            promoOverlay.classList.add('active');
+        }, 600);
+
+        function closePromoModal() {
+            promoOverlay.classList.remove('active');
+        }
+
+        if (closeBtn) closeBtn.addEventListener('click', closePromoModal);
+        if (dismissBtn) dismissBtn.addEventListener('click', closePromoModal);
+
+        promoOverlay.addEventListener('click', function (e) {
+            if (e.target === promoOverlay) {
+                closePromoModal();
+            }
+        });
+    }
+});
+</script>
+
 {% endblock %}

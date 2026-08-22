@@ -1841,3 +1841,250 @@ button[type="submit"]:hover,
         text-align: center !important;
     }
 }
+
+/* August Special Discounts Popup Modal */
+.promo-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(12, 22, 16, 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.promo-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.promo-modal-card {
+    background: linear-gradient(145deg, #122118, #1c3224);
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    border-radius: 24px;
+    padding: 30px 24px 24px;
+    max-width: 440px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 45px rgba(212, 175, 55, 0.2);
+    transform: scale(0.85) translateY(20px);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: #FFFFFF;
+}
+
+.promo-modal-overlay.active .promo-modal-card {
+    transform: scale(1) translateY(0);
+}
+
+.promo-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+    font-size: 22px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.promo-modal-close:hover {
+    background: #D4AF37;
+    color: #122118;
+    transform: rotate(90deg);
+}
+
+.promo-header {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.promo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #D4AF37;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 30px;
+    margin-bottom: 8px;
+}
+
+.promo-title {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin: 4px 0 6px;
+    letter-spacing: 0.5px;
+}
+
+.promo-sub-badge {
+    color: #E7EBD9;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+}
+
+.promo-inclusions-box {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px dashed rgba(212, 175, 55, 0.3);
+    border-radius: 16px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.promo-inc-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: #F0F4E8;
+    font-weight: 500;
+}
+
+.promo-inc-item i {
+    color: #D4AF37;
+    font-size: 0.95rem;
+    width: 18px;
+    text-align: center;
+}
+
+.promo-deals-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.promo-deal-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 14px 10px;
+    text-align: center;
+    position: relative;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.promo-deal-card:hover {
+    border-color: #D4AF37;
+    transform: translateY(-2px);
+}
+
+.featured-deal {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: rgba(212, 175, 55, 0.45);
+}
+
+.deal-badge-mini {
+    position: absolute;
+    top: -9px;
+    right: 10px;
+    background: #D4AF37;
+    color: #122118;
+    font-size: 0.56rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.8px;
+}
+
+.deal-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+}
+
+.deal-time {
+    font-size: 0.7rem;
+    color: #A3B19B;
+    margin-bottom: 10px;
+}
+
+.deal-pricing {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+}
+
+.deal-old-price {
+    font-size: 0.82rem;
+    color: #8A9A83;
+    text-decoration: line-through;
+}
+
+.deal-new-price {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #D4AF37;
+}
+
+.promo-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-whatsapp-promo {
+    background: #25D366;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 12px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 8px 22px rgba(37, 211, 102, 0.35);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.btn-whatsapp-promo:hover {
+    background: #20ba5a;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+}
+
+.btn-dismiss-promo {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #A3B19B;
+    font-size: 0.78rem;
+    padding: 8px 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-dismiss-promo:hover {
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.4);
+}
