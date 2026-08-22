@@ -1172,13 +1172,34 @@ def reviews(request):
             print("REVIEW_SAVE_ERROR:", str(e_rev))
             review_success = f"Thank you, {reviewer_name}! Your review has been recorded."
 
+    DEFAULT_REVIEW_PHOTOS = [
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg",
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1786355872/blogs/amvi8vrath9rtjzrk01m.jpg",
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1780047686/tours/yltrwtcjetsweu307nhc.jpg",
+        "https://res.cloudinary.com/ddcismwuy/image/upload/v1787109356/leopardtracks/packages/htla2ya4mzqnxheuujcg.jpg",
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1779297100/hero_sections/gmahc1wbil3xja4ohw1i.jpg",
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784456381/blogs/jqbr6khinkvptii7ax0c.jpg",
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1779352393/blogs/lww3k1nql9xpouch1ap6.jpg",
+        "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1781080452/blogs/ju0ukvrwuyvbfwpeinb0.jpg"
+    ]
+
+    def is_valid_photo_url(url):
+        if not url or not isinstance(url, str):
+            return False
+        u = url.strip()
+        if not u.startswith('http'):
+            return False
+        if 'googleusercontent.com' in u:
+            return False
+        return True
+
     import random
     db_reviews = []
     try:
         db_reviews = list(GuestReview.objects.all())
         random.shuffle(db_reviews)
         for idx, r in enumerate(db_reviews):
-            if not getattr(r, 'photo_url', None) or not str(getattr(r, 'photo_url', '')).startswith('http'):
+            if not is_valid_photo_url(getattr(r, 'photo_url', None)):
                 r.photo_url = DEFAULT_REVIEW_PHOTOS[idx % len(DEFAULT_REVIEW_PHOTOS)]
     except Exception:
         db_reviews = []
@@ -1204,13 +1225,13 @@ def reviews(request):
                         self.category = doc.get('category', 'leopard')
 
                         raw_photo = doc.get('photo_url') or doc.get('photo') or doc.get('imageUrl')
-                        if raw_photo and str(raw_photo).startswith('http'):
+                        if is_valid_photo_url(raw_photo):
                             self.photo_url = raw_photo
                         else:
                             self.photo_url = DEFAULT_REVIEW_PHOTOS[index % len(DEFAULT_REVIEW_PHOTOS)]
 
                         raw_avatar = doc.get('avatar_url') or doc.get('avatar')
-                        if raw_avatar and str(raw_avatar).startswith('http'):
+                        if is_valid_photo_url(raw_avatar):
                             self.avatar_url = raw_avatar
                         else:
                             self.avatar_url = self.photo_url
@@ -1219,6 +1240,7 @@ def reviews(request):
                 random.shuffle(db_reviews)
         except Exception:
             pass
+
 
 
     total_reviews_count = len(db_reviews)
