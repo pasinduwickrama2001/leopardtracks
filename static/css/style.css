@@ -1842,25 +1842,25 @@ button[type="submit"]:hover,
     }
 }
 
-/* Exact Bottom-Left Pop-Up Card (Yala Leopard Tracks Theme) */
+/* Exact Bottom-Left Pop-Up Card (Cute Compact Website Theme) */
 .exact-pop-container {
     position: fixed;
-    bottom: 24px;
-    left: 24px;
+    bottom: 20px;
+    left: 20px;
     z-index: 999999;
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .exact-pop-card {
-    background: linear-gradient(145deg, #122118, #1c3224);
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    border-radius: 24px;
-    padding: 22px 20px 18px;
-    width: 320px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 35px rgba(212, 175, 55, 0.15);
+    background: linear-gradient(145deg, #122118, #1b3023);
+    border: 1px solid rgba(96, 108, 56, 0.45);
+    border-radius: 20px;
+    padding: 16px 14px 12px;
+    width: 265px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(96, 108, 56, 0.2);
     color: #FFFFFF;
     position: relative;
-    transform: translateY(120%) scale(0.92);
+    transform: translateY(120%) scale(0.9);
     opacity: 0;
     visibility: hidden;
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease, visibility 0.35s ease;
@@ -1877,30 +1877,30 @@ button[type="submit"]:hover,
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
 }
 
 .exact-verified-badge {
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    color: #D4AF37;
-    font-size: 0.68rem;
+    background: rgba(96, 108, 56, 0.25);
+    border: 1px solid rgba(155, 179, 89, 0.4);
+    color: #9bb359;
+    font-size: 0.6rem;
     font-weight: 800;
-    letter-spacing: 1.2px;
-    padding: 4px 12px;
-    border-radius: 20px;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 14px;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
 }
 
 .exact-pop-close {
     background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     color: #E7EBD9;
-    font-size: 18px;
-    width: 28px;
-    height: 28px;
+    font-size: 16px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -1910,119 +1910,119 @@ button[type="submit"]:hover,
 }
 
 .exact-pop-close:hover {
-    background: #D4AF37;
-    color: #122118;
-    border-color: #D4AF37;
+    background: #606C38;
+    color: #FFFFFF;
+    border-color: #606C38;
 }
 
 /* Heading */
 .exact-pop-title {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 900;
     font-style: italic;
     letter-spacing: 0.5px;
     color: #FFFFFF;
-    margin: 0 0 6px;
+    margin: 0 0 4px;
     line-height: 1.1;
 }
 
 .highlight-august {
-    color: #D4AF37;
+    color: #9bb359;
 }
 
 /* Subtitle & List */
 .exact-pop-sub {
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     font-weight: 700;
-    letter-spacing: 1.2px;
-    color: #D4AF37;
-    margin-bottom: 8px;
+    letter-spacing: 1px;
+    color: #9bb359;
+    margin-bottom: 6px;
 }
 
 .exact-pop-list {
     list-style: none;
     padding: 0;
-    margin: 0 0 16px;
+    margin: 0 0 12px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
 }
 
 .exact-pop-list li {
-    font-size: 0.72rem;
+    font-size: 0.66rem;
     font-weight: 600;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.6px;
     color: #E7EBD9;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
 }
 
 .exact-pop-list li::before {
     content: "•";
-    color: #D4AF37;
-    font-size: 1rem;
+    color: #9bb359;
+    font-size: 0.85rem;
 }
 
 /* Deals */
 .exact-pop-deals {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 12px;
 }
 
 .exact-deal-row {
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(212, 175, 55, 0.22);
-    border-radius: 16px;
-    padding: 10px 14px;
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(96, 108, 56, 0.3);
+    border-radius: 12px;
+    padding: 8px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .exact-deal-title {
-    font-size: 0.72rem;
+    font-size: 0.66rem;
     font-weight: 800;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.6px;
     color: #FFFFFF;
 }
 
 .exact-deal-time {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     color: #A3B19B;
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
 .exact-deal-price-pill {
-    background: rgba(212, 175, 55, 0.12);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    padding: 6px 12px;
-    border-radius: 12px;
+    background: rgba(96, 108, 56, 0.2);
+    border: 1px solid rgba(155, 179, 89, 0.35);
+    padding: 4px 8px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .exact-old-price {
-    font-size: 0.82rem;
+    font-size: 0.75rem;
     color: #8A9A83;
     text-decoration: line-through;
 }
 
 .exact-new-price {
-    font-size: 1.1rem;
+    font-size: 0.98rem;
     font-weight: 800;
-    color: #D4AF37;
+    color: #9bb359;
 }
 
-/* WhatsApp White/Gold Pill Button */
+/* WhatsApp Main Theme Button */
 .exact-whatsapp-btn {
-    background: #25D366;
+    background: #606C38;
     color: #FFFFFF;
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 1px;
     text-decoration: none;
@@ -2030,22 +2030,22 @@ button[type="submit"]:hover,
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 13px;
-    border-radius: 30px;
-    margin-bottom: 14px;
-    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+    gap: 6px;
+    padding: 10px;
+    border-radius: 25px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 15px rgba(96, 108, 56, 0.4);
     transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .exact-whatsapp-btn:hover {
-    background: #20ba5a;
+    background: #475128;
     color: #FFFFFF;
     transform: translateY(-2px);
 }
 
 .exact-whatsapp-btn i {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
 }
 
 /* Footer Row */
@@ -2053,42 +2053,42 @@ button[type="submit"]:hover,
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    color: #D4AF37;
-    font-size: 0.65rem;
+    gap: 8px;
+    color: #9bb359;
+    font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.2px;
 }
 
 .exact-pop-footer span {
     color: #A3B19B;
 }
 
-/* Minimized Trigger Badge */
+/* Minimized Trigger Badge Pill */
 .exact-pop-trigger {
     display: none;
     background: #122118;
-    border: 1px solid #D4AF37;
+    border: 1px solid #606C38;
     color: #FFFFFF;
-    padding: 8px 16px;
-    border-radius: 30px;
-    font-size: 0.78rem;
+    padding: 6px 12px;
+    border-radius: 25px;
+    font-size: 0.72rem;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .trigger-dot {
-    width: 8px;
-    height: 8px;
-    background: #D4AF37;
+    width: 7px;
+    height: 7px;
+    background: #9bb359;
     border-radius: 50%;
 }
 
 .trigger-price {
-    color: #D4AF37;
+    color: #9bb359;
     font-weight: 800;
 }
 
@@ -2102,11 +2102,11 @@ button[type="submit"]:hover,
 
 @media (max-width: 480px) {
     .exact-pop-container {
-        bottom: 16px;
-        left: 16px;
+        bottom: 14px;
+        left: 14px;
     }
     .exact-pop-card {
-        width: 290px;
-        padding: 18px 16px 14px;
+        width: 250px;
+        padding: 14px 12px 10px;
     }
 }
