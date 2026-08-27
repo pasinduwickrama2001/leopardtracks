@@ -152,7 +152,7 @@
             <!-- Brand Logo -->
             <a href="/" class="header-brand">
                 <span class="brand-sub">LUXURY TENTED SAFARIS</span>
-                <span class="brand-main">DISCOVERYALA</span>
+                <span class="brand-main">Discoveryala</span>
             </a>
 
             <!-- CTA Button -->
@@ -428,8 +428,69 @@
         </div>
     </div>
 
+    <!-- Official Charming Borderless WhatsApp Chat Widget -->
+    <div class="gw-chat-widget" id="gwChatWidget">
+        <!-- Circular Floating Action Button -->
+        <button class="gw-chat-fab" id="gwChatFab" aria-label="Open Official WhatsApp Chat" aria-expanded="false">
+            <span class="gw-fab-pulse"></span>
+            <i class="fa-brands fa-whatsapp gw-fab-icon"></i>
+            <span class="gw-online-badge"></span>
+            <span class="gw-fab-tooltip">Chat with us</span>
+        </button>
+
+        <!-- Charming Borderless Popover Card -->
+        <div class="gw-chat-window" id="gwChatWindow" aria-hidden="true">
+            <!-- Header: Official Safari Theme -->
+            <div class="gw-chat-header">
+                <div class="gw-avatar-wrap">
+                    <img src="{% static 'images/logo-official.png' %}" alt="Discover Yala Logo" class="gw-avatar-img">
+                    <span class="gw-avatar-dot"></span>
+                </div>
+                <div class="gw-header-info">
+                    <div class="gw-header-brand-row">
+                        <h3 class="gw-header-title">DISCOVERYALA</h3>
+                        <span class="gw-verified-badge"><i class="fa-solid fa-shield-halved"></i> OFFICIAL</span>
+                    </div>
+                    <p class="gw-header-status"><span class="gw-dot-pulse"></span>Online</p>
+                </div>
+                <button class="gw-chat-close" id="gwChatClose" aria-label="Close Chat">&times;</button>
+            </div>
+
+            <!-- Chat Body -->
+            <div class="gw-chat-body">
+                <div class="gw-chat-time">Today</div>
+                <div class="gw-msg-bubble">
+                    <div class="gw-msg-sender"><i class="fa-solid fa-paw"></i> Discover Yala Expeditions</div>
+                    <p class="gw-msg-text">Jambo! 🐆 Welcome to Discover Yala. How can our naturalists assist your safari journey today?</p>
+                    <span class="gw-msg-timestamp">Just now</span>
+                </div>
+
+                <!-- Quick Action Chips -->
+                <div class="gw-quick-chips">
+                    <button type="button" class="gw-chip" data-msg="Hi! I want to inquire about safari packages.">🐆 Safari Packages</button>
+                    <button type="button" class="gw-chip" data-msg="Hi! I need help calculating Yala park ticket fees.">🎟️ Park Tickets</button>
+                    <button type="button" class="gw-chip" data-msg="Hi! I would like to book a private 4x4 Jeep game drive.">🚙 Jeep Booking</button>
+                </div>
+            </div>
+
+            <!-- Input Footer -->
+            <form class="gw-chat-footer" id="gwChatForm">
+                <div class="gw-input-wrap">
+                    <input type="text" id="gwChatInput" class="gw-chat-input" placeholder="Type your message..." autocomplete="off">
+                    <button type="submit" class="gw-send-btn" id="gwSendBtn" aria-label="Send via WhatsApp">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="gw-footer-note">
+                    <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> Official WhatsApp Comms
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // August pop-up logic
             var container = document.getElementById('exactPopContainer');
             var closeBtn = document.getElementById('exactPopClose');
             var triggerBtn = document.getElementById('exactPopTrigger');
@@ -451,6 +512,79 @@
                     });
                 }
             }
+
+            // Google-Styled WhatsApp Chat Widget Logic
+            (function() {
+                var widget = document.getElementById('gwChatWidget');
+                var fab = document.getElementById('gwChatFab');
+                var chatClose = document.getElementById('gwChatClose');
+                var form = document.getElementById('gwChatForm');
+                var input = document.getElementById('gwChatInput');
+                var chips = document.querySelectorAll('.gw-chip');
+
+                if (!widget || !fab) return;
+
+                function openChat() {
+                    widget.classList.add('open');
+                    fab.setAttribute('aria-expanded', 'true');
+                    if (input) setTimeout(function() { input.focus(); }, 150);
+                }
+
+                function closeChat() {
+                    widget.classList.remove('open');
+                    fab.setAttribute('aria-expanded', 'false');
+                }
+
+                fab.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (widget.classList.contains('open')) {
+                        closeChat();
+                    } else {
+                        openChat();
+                    }
+                });
+
+                if (chatClose) {
+                    chatClose.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        closeChat();
+                    });
+                }
+
+                document.addEventListener('click', function(e) {
+                    if (widget.classList.contains('open') && !widget.contains(e.target)) {
+                        closeChat();
+                    }
+                });
+
+                chips.forEach(function(chip) {
+                    chip.addEventListener('click', function() {
+                        var msg = this.getAttribute('data-msg');
+                        if (msg) {
+                            if (input) input.value = msg;
+                            sendToWhatsApp(msg);
+                        }
+                    });
+                });
+
+                if (form) {
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        var msg = input ? input.value.trim() : '';
+                        if (!msg) {
+                            msg = "Hello Discover Yala! I would like to inquire about safari bookings.";
+                        }
+                        sendToWhatsApp(msg);
+                    });
+                }
+
+                function sendToWhatsApp(messageText) {
+                    var phone = "94778158004";
+                    var encodedMsg = encodeURIComponent(messageText);
+                    var whatsappUrl = "https://wa.me/" + phone + "?text=" + encodedMsg;
+                    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+                }
+            })();
         });
     </script>
 </body>
