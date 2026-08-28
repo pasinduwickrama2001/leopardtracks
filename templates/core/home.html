@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Yala National Park Safaris | Discoveryala Sri Lanka{% endblock %}
+{% block title %}Yala National Park | official Safari Packages | Booking & Luxury Glamping Sri Lanka | Discoveryala{% endblock %}
 
 {% block meta_description %}
 <meta name="description"
-    content="Book private 4x4 Yala National Park safari jeeps, luxury glamping camps & Sri Lanka round tours. Experience the highest leopard density on Earth with senior naturalists.">
+    content="Book official private 4x4 Yala National Park safari jeep game drives, luxury tented glamping camps & Sri Lanka round tours with certified senior naturalists. DWC entrance fee calculator.">
 {% endblock %}
 
 {% block meta_keywords %}
 <meta name="keywords"
-    content="Yala National Park, Yala safari packages, Discoveryala, Yala safari jeep booking, luxury glamping Yala Sri Lanka, Yala entrance fees DWC, Palatupana gate Yala, Panthera pardus kotiya">
+    content="Yala National Park, Yala safari packages, Yala safari booking, private Yala jeep safari, Yala leopard safari Sri Lanka, luxury glamping Yala Sri Lanka, Yala entrance fees 2026, Palatupana gate Yala, Katagamuwa gate, Panthera pardus kotiya, Sri Lanka wildlife tours, best time to visit Yala, Sri Lanka safari itinerary, Discoveryala">
 {% endblock %}
 
 {% block og_tags %}
-<meta property="og:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Discoveryala Sri Lanka">
+<meta property="og:title" content="Yala National Park Safari Packages, 4x4 Jeep Booking & Luxury Glamping | Discoveryala">
 <meta property="og:description"
     content="Book private 4x4 Yala National Park safari jeep game drives, luxury tented glamping camps & Sri Lanka round tours with certified naturalists.">
 <meta property="og:type" content="website">
@@ -27,7 +27,7 @@
 
 {% block twitter_tags %}
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Discoveryala Sri Lanka">
+<meta name="twitter:title" content="Yala National Park Safari Packages, 4x4 Jeep Booking & Luxury Glamping | Discoveryala">
 <meta name="twitter:description"
     content="Private 4x4 Yala safari jeep drives & luxury camping in Sri Lanka with expert naturalists.">
 <meta name="twitter:image"
@@ -36,124 +36,154 @@
 
 {% block schema_org %}
 <script type="application/ld+json">
-[
-  {
-    "@context": "https://schema.org",
-    "@type": "TravelAgency",
-    "@id": "{{ request.scheme }}://{{ request.get_host }}#organization",
-    "name": "Discoveryala",
-    "url": "{{ request.scheme }}://{{ request.get_host }}",
-    "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}",
-    "image": "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg",
-    "description": "Ceylon's premier 4x4 game drives & luxury glamping expeditions in Yala National Park, Sri Lanka.",
-    "telephone": "+94778158004",
-    "email": "yalaleopardtracks@gmail.com",
-    "priceRange": "$$$",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Palatupana Gate Road",
-      "addressLocality": "Tissamaharama",
-      "addressRegion": "Southern Province",
-      "postalCode": "82000",
-      "addressCountry": "LK"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 6.3712,
-      "longitude": 81.3934
-    },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      "opens": "05:00",
-      "closes": "20:00"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5.0",
-      "reviewCount": "850",
-      "bestRating": "5"
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": "{{ request.scheme }}://{{ request.get_host }}#website",
-    "url": "{{ request.scheme }}://{{ request.get_host }}",
-    "name": "Discoveryala",
-    "description": "Private 4x4 Yala National Park Safari Jeep Booking & Luxury Tented Camps in Sri Lanka",
-    "publisher": {
-      "@id": "{{ request.scheme }}://{{ request.get_host }}#organization"
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "TouristAttraction",
-    "name": "Yala National Park (Ruhuna)",
-    "description": "Spanning 979 sq km in Sri Lanka, world-renowned for hosting the highest density of wild leopards on Earth.",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Tissamaharama",
-      "addressCountry": "LK"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 6.3712,
-      "longitude": 81.5167
-    },
-    "touristType": ["Wildlife Enthusiasts", "Photographers", "Safari Travelers"]
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Yala National Park Safaris Home",
-        "item": "{{ request.scheme }}://{{ request.get_host }}"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TravelAgency",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization",
+      "name": "Discoveryala",
+      "alternateName": ["Yala Leopard Tracks", "Discoveryala Safaris Sri Lanka"],
+      "url": "{{ request.scheme }}://{{ request.get_host }}/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg",
+      "description": "Bespoke 4x4 game drives, luxury tented glamping expeditions & islandwide wildlife tours in Yala National Park, Sri Lanka.",
+      "telephone": "+94778158004",
+      "email": "yalaleopardtracks@gmail.com",
+      "priceRange": "$$$",
+      "currenciesAccepted": "USD, LKR, EUR, GBP, AUD",
+      "paymentAccepted": "Cash, Credit Card, Visa, Mastercard, Bank Transfer",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Palatupana Gate Road",
+        "addressLocality": "Tissamaharama",
+        "addressRegion": "Southern Province",
+        "postalCode": "82000",
+        "addressCountry": "LK"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 6.3712,
+        "longitude": 81.3934
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "05:00",
+          "closes": "20:00"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/",
+        "https://www.instagram.com/",
+        "https://wa.me/94778158004"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "reviewCount": "850",
+        "bestRating": "5",
+        "worstRating": "1"
       }
-    ]
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is the best time for a Yala National Park safari?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Early morning (6:00 AM - 10:00 AM) and late afternoon (2:30 PM - 6:00 PM) game drives offer the best sightings of wild leopards, elephants, and sloth bears during active feeding and roaming hours."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Which entrance gate is best for Yala Block 1 game drives?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Palatupana Gate is the primary entrance for Block 1 (Ruhuna), which holds the world's highest leopard density. Katagamuwa Gate serves Katagamuwa and Block 1/5 western entries."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How much does a Yala National Park entrance ticket cost?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Official DWC gate tariffs are $25 USD for foreign adults, $15 USD for foreign children (6-12 yrs), $20 USD for SAARC adults, plus LKR 300 vehicle license fee and 18% VAT."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Are safari jeeps and luxury camping packages private?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, all Discoveryala safaris are conducted in private 4x4 modified Land Cruiser jeeps with experienced naturalists, cool refreshments, and DWC park clearance included."
-        }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}/#website",
+      "url": "{{ request.scheme }}://{{ request.get_host }}/",
+      "name": "Discoveryala - Yala National Park Safari Jeep Booking & Luxury Glamping Sri Lanka",
+      "publisher": {
+        "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization"
       }
-    ]
-  }
-]
+    },
+    {
+      "@type": "TouristAttraction",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}/#yala-national-park",
+      "name": "Yala National Park (Ruhuna)",
+      "alternateName": ["Ruhuna National Park", "Yala Wildlife Sanctuary"],
+      "sameAs": [
+        "https://en.wikipedia.org/wiki/Yala_National_Park",
+        "https://www.wikidata.org/wiki/Q1140158"
+      ],
+      "description": "World-famous national park in Sri Lanka hosting the highest recorded density of wild leopards (Panthera pardus kotiya) on Earth.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Tissamaharama",
+        "addressRegion": "Southern Province",
+        "addressCountry": "LK"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 6.3712,
+        "longitude": 81.5167
+      },
+      "touristType": ["Wildlife Safari", "Leopard Spotting", "Bird Watching", "Photography Expeditions"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.scheme }}://{{ request.get_host }}/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the best time of day for a Yala National Park leopard safari?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Early morning game drives (6:00 AM – 10:00 AM) and late afternoon game drives (2:30 PM – 6:00 PM) offer peak wildlife activity. Leopards are boldest at dawn and dusk, actively patrolling territory or resting atop granite rock outcrops."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which entrance gate is best for Yala Block 1 game drives?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Palatupana Gate (near Tissamaharama) is the main entrance for Block 1 (Ruhuna), which holds the world's highest leopard density per square kilometer. Katagamuwa Gate serves guests staying near Kataragama or accessing Block 1 & 5."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does a Yala National Park entrance permit cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Department of Wildlife Conservation (DWC) gate tariffs are $25.00 USD for foreign adults, $15.00 USD for foreign children (ages 6–12), $20.00 USD for SAARC adults, plus LKR 300 vehicle entry licensing fee, vehicle service charge, and 18% government VAT."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are Yala Leopard Tracks safari jeeps private or shared?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All our safari jeep packages are 100% private. You get a dedicated Toyota Land Cruiser 4x4 with elevated cushioned safari seating, experienced driver-trackers, chilled bottled water/refreshments, and park clearance support."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What animals can I spot in Yala National Park besides leopards?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In addition to the Sri Lankan Leopard (Panthera pardus kotiya), Yala shelters Asian Elephants, Sloth Bears, Mugger Crocodiles, Spotted Deer, Wild Boar, Sambars, Water Buffaloes, Fishing Cats, and over 215 resident and migratory bird species."
+          }
+        }
+      ]
+    }
+  ]
+}
 </script>
 {% endblock %}
 

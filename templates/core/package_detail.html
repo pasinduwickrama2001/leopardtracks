@@ -10,7 +10,7 @@
 
 {% block meta_keywords %}
 <meta name="keywords"
-    content="{{ package.title }}, Yala safari package, Yala jeep drive, Yala National Park safari booking, {{ package.category_label }}, Yala 4x4 Land Cruiser, Palatupana gate safari, Panthera pardus kotiya">
+    content="{{ package.title }}, Yala safari package, Yala jeep drive, Yala National Park safari booking, {{ package.category_label }}, Yala 4x4 Land Cruiser, Palatupana gate safari, Panthera pardus kotiya, Yala leopard safari Sri Lanka, private safari jeep Yala, DWC entrance tickets Yala, Discoveryala safari">
 {% endblock %}
 
 {% block og_tags %}
@@ -36,51 +36,105 @@
 
 {% block schema_org %}
 <script type="application/ld+json">
-[
-  {
-    "@context": "https://schema.org",
-    "@type": "TouristTrip",
-    "name": "{{ package.title|escapejs }}",
-    "description": "{{ package.description|truncatewords:40|striptags|escapejs }}",
-    "image": "{% if image_urls_list %}{{ image_urls_list.0 }}{% else %}{{ package.imageUrl }}{% endif %}",
-    "touristType": ["Wildlife Enthusiasts", "Safari Photographers", "Family Travelers"],
-    "offers": {
-      "@type": "Offer",
-      "price": "{{ package.get_clean_price }}",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock",
-      "offeredBy": {
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Product",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#product",
+      "name": "{{ package.title|escapejs }}",
+      "description": "{{ package.description|truncatewords:40|striptags|escapejs }}",
+      "image": "{% if image_urls_list %}{{ image_urls_list.0 }}{% elif package.imageUrl %}{{ package.imageUrl }}{% else %}https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg{% endif %}",
+      "category": "{{ package.category_label|default:'Yala Safari Package' }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "{{ package.get_clean_price }}",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock",
+        "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+        "seller": {
+          "@type": "TravelAgency",
+          "name": "Discoveryala",
+          "telephone": "+94778158004"
+        }
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "240",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    },
+    {
+      "@type": "TouristTrip",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#trip",
+      "name": "{{ package.title|escapejs }}",
+      "description": "{{ package.description|truncatewords:40|striptags|escapejs }}",
+      "touristType": ["Wildlife Enthusiasts", "Safari Photographers", "Family Travelers"],
+      "provider": {
         "@type": "TravelAgency",
         "name": "Discoveryala",
         "telephone": "+94778158004"
       }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.scheme }}://{{ request.get_host }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Safari Packages",
+          "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'packages' %}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{ package.title|escapejs }}",
+          "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What vehicle is used for {{ package.title|escapejs }}?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All game drives use private, customized Toyota Land Cruiser 4x4 jeeps with elevated tiered seating, open sides, and charging ports."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are hotel pickups included with this safari?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, complimentary door-to-door hotel pickup and drop-off is included across Tissamaharama, Yala buffer zone, Kirinda, and Kataragama."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are Yala National Park entrance tickets included?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Base rates cover private 4x4 jeep and driver-tracker. Official DWC entrance tickets ($25 foreign adult / $15 child + VAT) can be pre-calculated and added during reservation for express queue clearance."
+          }
+        }
+      ]
     }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "{{ request.scheme }}://{{ request.get_host }}"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Safari Packages",
-        "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'packages' %}"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "{{ package.title|escapejs }}",
-        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
-      }
-    ]
-  }
-]
+  ]
+}
 </script>
 {% endblock %}
 

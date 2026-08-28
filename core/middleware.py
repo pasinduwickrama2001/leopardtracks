@@ -7,7 +7,8 @@ _DB_INITIALIZED = False
 class AutoDatabaseInitMiddleware:
     """
     Middleware that automatically initializes migrations and seeds initial database
-    fixtures (packages, tours, blogs, reviews) on Vercel serverless cold-start.
+    fixtures (packages, tours, blogs, reviews) on Vercel serverless cold-start,
+    and sets high-performance SEO and security headers.
     """
     def __init__(self, get_response):
         self.get_response = get_response
@@ -37,4 +38,11 @@ class AutoDatabaseInitMiddleware:
                     pass
 
         response = self.get_response(request)
+
+        # Performance & SEO Crawl Headers
+        if not response.has_header('X-Content-Type-Options'):
+            response['X-Content-Type-Options'] = 'nosniff'
+        if not response.has_header('Referrer-Policy'):
+            response['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+
         return response

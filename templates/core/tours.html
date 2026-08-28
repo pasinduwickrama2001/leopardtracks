@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Sri Lanka Tour Packages | Discoveryala{% endblock %}
+{% block title %}Sri Lanka Wildlife Tours, Multi-Day Itineraries & Private Chauffeur 2026 | Discoveryala{% endblock %}
 
 {% block meta_description %}
 <meta name="description"
-    content="Book private islandwide Sri Lanka round tours & Yala National Park safari packages. Custom 3-day to 14-day itineraries with private luxury 4x4 AC vehicles & senior guide drivers.">
+    content="Book custom multi-day Sri Lanka round tours, wildlife safari itineraries & private chauffeur transport with Discoveryala. Explore Sigiriya, Kandy, Ella, and Yala National Park.">
 {% endblock %}
 
 {% block meta_keywords %}
 <meta name="keywords"
-    content="Sri Lanka tour packages, Sri Lanka islandwide round tours, Sigiriya Ella Yala tour, Sri Lanka chauffeur driver hire, private Sri Lanka vacation package, Discoveryala">
+    content="Sri Lanka tour packages 2026, Sri Lanka multi day wildlife tours, Yala national park itinerary, Sigiriya Kandy Ella Yala tour, Sri Lanka private driver hire, tailor made Sri Lanka tours, Sri Lanka custom travel itinerary, Sri Lanka family wildlife holiday, Sri Lanka 10 day itinerary, Discoveryala tours">
 {% endblock %}
 
 {% block og_tags %}
-<meta property="og:title" content="Sri Lanka Tour Packages & Yala Safari Expeditions | Discoveryala">
+<meta property="og:title" content="Sri Lanka Wildlife Tours & Multi-Day Itineraries | Discoveryala">
 <meta property="og:description"
     content="Book multi-day Sri Lanka round tours & Yala National Park safari packages with dedicated private drivers, luxury AC vehicles, and custom itineraries.">
 <meta property="og:type" content="website">
@@ -27,7 +27,7 @@
 
 {% block twitter_tags %}
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Sri Lanka Tour Packages | Discoveryala">
+<meta name="twitter:title" content="Sri Lanka Wildlife Tours & Multi-Day Itineraries | Discoveryala">
 <meta name="twitter:description"
     content="Custom islandwide Sri Lanka round tours & Yala safari game drives with private drivers.">
 <meta name="twitter:image"
@@ -36,34 +36,37 @@
 
 {% block schema_org %}
 <script type="application/ld+json">
-[
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Sri Lanka Islandwide Tour Expeditions & Safari Packages",
-    "description": "Curated multi-day Sri Lanka round tours including Yala National Park wildlife safaris, Cultural Triangle, Ella highlands, and coastal beaches.",
-    "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
-    "numberOfItems": {{ tours_list|length|default:1 }}
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "{{ request.scheme }}://{{ request.get_host }}"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Islandwide Tours",
-        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
-      }
-    ]
-  }
-]
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ItemList",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#list",
+      "name": "Sri Lanka Islandwide Tour Expeditions & Safari Packages",
+      "description": "Curated multi-day Sri Lanka round tours including Yala National Park wildlife safaris, Cultural Triangle, Ella highlands, and coastal beaches.",
+      "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+      "numberOfItems": {{ tours_list|length|default:1 }}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.scheme }}://{{ request.get_host }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Islandwide Tours",
+          "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+        }
+      ]
+    }
+  ]
+}
 </script>
 {% endblock %}
 

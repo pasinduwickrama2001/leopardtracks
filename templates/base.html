@@ -1,45 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Yala National Park Safaris | Yala Leopards Sri Lanka{% endblock %}</title>
+    <title>{% block title %}Yala National Park | Official Safari Packages Booking Sri Lanka | Discoveryala{% endblock %}</title>
 
     {% block meta_description %}
     <meta name="description"
-        content="Book private 4x4 Yala National Park safari jeep game drives, luxury tented glamping camps & Sri Lanka round tours with certified naturalists. DWC entrance fee calculator.">
+        content="Book official Yala National Park safari jeep game drives, luxury tented glamping camps & Sri Lanka wildlife tours with certified senior naturalists. Calculate DWC entrance fees & check leopard sighting logs.">
     {% endblock %}
 
     {% block meta_keywords %}
     <meta name="keywords"
-        content="Yala safari packages, Yala National Park safaris, luxury glamping Yala Sri Lanka, Yala jeep safari booking, Palatupana gate Yala, Panthera pardus kotiya, Yala entrance fees DWC">
+        content="Yala safari packages, Yala National Park safari booking, private 4x4 Yala jeep safari, Yala luxury glamping, Yala entrance fees 2026, Palatupana gate, Panthera pardus kotiya, Sri Lanka wildlife tours, Discoveryala, Yala safari packages, Yala National Park safari booking, private 4x4 Yala jeep safari, Yala luxury glamping, Yala entrance fees 2026, Palatupana gate, Katagamuwa gate safari, Panthera pardus kotiya, Sri Lanka wildlife tours, Discoveryala, best Yala safari driver guide, morning safari Yala, full day leopard safari Yala, Yala Block 1 safari jeep, Tissamaharama safari jeep booking, Yala safari cost per person, Sri Lankan leopard photography tour, yala national park, sri lanaka,torurs">
     {% endblock %}
 
-    <!-- Canonical URL & Indexing Directives -->
+    <!-- Canonical URL & Search Indexing Directives -->
     {% block canonical_url %}
     <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
     {% endblock %}
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="author" content="Discoveryala Senior Naturalists">
+    <meta name="author" content="Discoveryala Naturalists & Trackers">
+    <meta name="publisher" content="Discoveryala Sri Lanka">
 
-    <!-- Local & Geographic SEO Meta Tags -->
+    <!-- Geographic & Local Search Signals (Sri Lanka / Yala) -->
     <meta name="geo.region" content="LK-33">
-    <meta name="geo.placename" content="Yala National Park, Tissamaharama, Sri Lanka">
+    <meta name="geo.placename" content="Yala National Park, Tissamaharama, Southern Province, Sri Lanka">
     <meta name="geo.position" content="6.3712;81.3934">
     <meta name="ICBM" content="6.3712, 81.3934">
 
     {% load static %}
-    <!-- Google Favicon & Search Engine Branding -->
+    <!-- Google Favicon & Brand Icons -->
     <link rel="icon" type="image/png" sizes="192x192" href="{% static 'images/favicon.png' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-    <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
     <link rel="manifest" href="{% url 'site_webmanifest' %}">
     <link rel="image_src" href="{% static 'images/logo-official.png' %}">
 
-    <!-- Open Graph Social Media Meta Tags -->
+    <!-- Open Graph Social Media Protocol -->
     {% block og_tags %}
-    <meta property="og:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Discoveryala Sri Lanka">
+    <meta property="og:title" content="Yala National Park Safari Packages & 4x4 Jeep Booking | Discoveryala">
     <meta property="og:description"
         content="Book private 4x4 Yala National Park safari jeep game drives, luxury tented glamping camps & Sri Lanka round tours with certified naturalists.">
     <meta property="og:type" content="website">
@@ -50,55 +51,117 @@
     <meta property="og:locale" content="en_US">
     {% endblock %}
 
-    <!-- Twitter Card Meta Tags -->
+    <!-- Twitter Card Protocol -->
     {% block twitter_tags %}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Yala National Park Safaris & 4x4 Jeep Booking | Discoveryala">
+    <meta name="twitter:title" content="Yala National Park Safari Packages & 4x4 Jeep Booking | Discoveryala">
     <meta name="twitter:description"
-        content="Book private 4x4 Yala National Park safari jeep game drives & luxury glamping in Sri Lanka.">
+        content="Private 4x4 Yala safari jeep game drives & luxury glamping in Sri Lanka with expert naturalists.">
     <meta name="twitter:image"
         content="https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg">
     {% endblock %}
 
-    <!-- Structured Data (Schema.org JSON-LD) -->
+    <!-- Global JSON-LD Schema Graph -->
     {% block schema_org %}
     <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "TravelAgency",
-        "@id": "{{ request.scheme }}://{{ request.get_host }}#organization",
-        "name": "Discoveryala",
-        "url": "{{ request.scheme }}://{{ request.get_host }}",
-        "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}",
-        "image": "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg",
-        "description": "Bespoke 4x4 game drives, luxury tented glamping & islandwide tours in Yala National Park, Sri Lanka.",
-        "telephone": "+94778158004",
-        "email": "yalaleopardtracks@gmail.com",
-        "priceRange": "$$$",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Palatupana Gate Road",
-          "addressLocality": "Tissamaharama",
-          "addressRegion": "Southern Province",
-          "postalCode": "82000",
-          "addressCountry": "LK"
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "TravelAgency",
+          "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization",
+          "name": "Discoveryala",
+          "alternateName": "Yala Leopard Tracks",
+          "url": "{{ request.scheme }}://{{ request.get_host }}/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}",
+            "width": 512,
+            "height": 512
+          },
+          "image": "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg",
+          "description": "Bespoke 4x4 game drives, luxury tented glamping expeditions & islandwide wildlife tours in Yala National Park, Sri Lanka.",
+          "telephone": "+94778158004",
+          "email": "yalaleopardtracks@gmail.com",
+          "priceRange": "$$$",
+          "currenciesAccepted": "USD, LKR, EUR, GBP",
+          "paymentAccepted": "Cash, Credit Card, Bank Transfer",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Palatupana Gate Road, Kasingama",
+            "addressLocality": "Tissamaharama",
+            "addressRegion": "Southern Province",
+            "postalCode": "82000",
+            "addressCountry": "LK"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 6.3712,
+            "longitude": 81.3934
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+              "opens": "05:00",
+              "closes": "20:00"
+            }
+          ],
+          "sameAs": [
+            "https://www.facebook.com/",
+            "https://www.instagram.com/",
+            "https://wa.me/94778158004"
+          ],
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "850",
+            "bestRating": "5",
+            "worstRating": "1"
+          }
         },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 6.3712,
-          "longitude": 81.3934
+        {
+          "@type": "WebSite",
+          "@id": "{{ request.scheme }}://{{ request.get_host }}/#website",
+          "url": "{{ request.scheme }}://{{ request.get_host }}/",
+          "name": "Discoveryala - Yala Safari Expeditions Sri Lanka",
+          "publisher": {
+            "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization"
+          }
+        },
+        {
+          "@type": "TouristAttraction",
+          "@id": "{{ request.scheme }}://{{ request.get_host }}/#yala-national-park",
+          "name": "Yala National Park (Ruhuna)",
+          "alternateName": "Ruhuna National Park",
+          "description": "World-famous national park in Sri Lanka hosting the highest recorded density of wild leopards (Panthera pardus kotiya) on Earth.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Tissamaharama",
+            "addressRegion": "Southern Province",
+            "addressCountry": "LK"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 6.3712,
+            "longitude": 81.5167
+          },
+          "touristType": ["Wildlife Safari", "Leopard Spotting", "Bird Watching", "Photography Expeditions"]
         }
-      }
-    ]
+      ]
+    }
     </script>
     {% endblock %}
 
-    <!-- Resource Preconnects for Core Web Vitals Optimization -->
+    <!-- Resource Preconnects & DNS Prefetch for Core Web Vitals Optimization -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://res.cloudinary.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://res.cloudinary.com">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
     <!-- Web Typography: Outfit, Inter, Plus Jakarta Sans, Roboto -->
     <link

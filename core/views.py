@@ -1576,16 +1576,54 @@ def api_get_reviews(request):
 
 def robots_txt(request):
     """
-    Returns robots.txt for Googlebot and search engines.
+    Returns production-grade robots.txt for Googlebot, Bingbot, Applebot and search crawlers.
     """
     from django.http import HttpResponse
-    content = """User-agent: *
+    domain = f"{request.scheme}://{request.get_host()}"
+    content = f"""# ==============================================================================
+# Discoveryala (Yala Leopard Tracks) - Search Engine Directives
+# ==============================================================================
+User-agent: Googlebot
 Allow: /
 Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+Disallow: /api/
 
-Sitemap: {}://{}/sitemap.xml
-""".format(request.scheme, request.get_host())
-    return HttpResponse(content, content_type="text/plain")
+User-agent: Googlebot-Image
+Allow: /static/images/
+Allow: /media/
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+
+User-agent: Applebot
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+Disallow: /api/
+
+# Canonical Dynamic XML Sitemaps
+Sitemap: {domain}/sitemap.xml
+"""
+    return HttpResponse(content.strip() + "\n", content_type="text/plain")
 
 
 def site_webmanifest(request):
@@ -1594,8 +1632,9 @@ def site_webmanifest(request):
     """
     from django.http import JsonResponse
     data = {
-        "name": "Discoveryala",
+        "name": "Discoveryala - Yala Safaris Sri Lanka",
         "short_name": "Discoveryala",
+        "start_url": "/",
         "icons": [
             {
                 "src": f"{request.scheme}://{request.get_host()}/static/images/favicon.png",
@@ -1617,83 +1656,202 @@ def site_webmanifest(request):
 
 def sitemap_xml(request):
     """
-    Dynamically generates sitemap.xml listing all static pages and dynamic model pages.
+    Dynamically generates sitemap.xml with Google Image Sitemap schema (xmlns:image)
+    listing all static pillar pages, dynamic safari packages, multi-day tours, and wildlife journals.
     """
     from django.http import HttpResponse
     from django.urls import reverse
     from xml.sax.saxutils import escape
+    from datetime import datetime
 
     domain = f"{request.scheme}://{request.get_host()}"
+    today_str = datetime.utcnow().strftime('%Y-%m-%d')
     
-    # 1. Core Static Pages
+    # 1. Core Static Pillar Pages with Image Metadata
     static_urls = [
-        {'loc': domain + '/', 'changefreq': 'daily', 'priority': '1.0'},
-        {'loc': domain + reverse('packages'), 'changefreq': 'daily', 'priority': '0.9'},
-        {'loc': domain + reverse('tours'), 'changefreq': 'daily', 'priority': '0.9'},
-        {'loc': domain + reverse('tickets'), 'changefreq': 'weekly', 'priority': '0.8'},
-        {'loc': domain + reverse('blog'), 'changefreq': 'daily', 'priority': '0.8'},
-        {'loc': domain + reverse('about'), 'changefreq': 'monthly', 'priority': '0.7'},
-        {'loc': domain + reverse('contact'), 'changefreq': 'monthly', 'priority': '0.7'},
-        {'loc': domain + reverse('reviews'), 'changefreq': 'weekly', 'priority': '0.7'},
-        {'loc': domain + reverse('policies'), 'changefreq': 'monthly', 'priority': '0.5'},
+        {
+            'loc': domain + '/',
+            'changefreq': 'daily',
+            'priority': '1.0',
+            'lastmod': today_str,
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg',
+            'image_title': 'Yala National Park Safari Game Drives & Luxury Glamping Sri Lanka'
+        },
+        {
+            'loc': domain + reverse('packages'),
+            'changefreq': 'daily',
+            'priority': '0.95',
+            'lastmod': today_str,
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1786355872/blogs/amvi8vrath9rtjzrk01m.jpg',
+            'image_title': 'Yala Safari Packages & Private 4x4 Land Cruiser Game Drives'
+        },
+        {
+            'loc': domain + reverse('tickets'),
+            'changefreq': 'weekly',
+            'priority': '0.90',
+            'lastmod': today_str,
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1786355872/blogs/amvi8vrath9rtjzrk01m.jpg',
+            'image_title': 'Yala National Park Entrance Fees & DWC Official Ticket Prices'
+        },
+        {
+            'loc': domain + reverse('tours'),
+            'changefreq': 'daily',
+            'priority': '0.90',
+            'lastmod': today_str,
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1780047686/tours/yltrwtcjetsweu307nhc.jpg',
+            'image_title': 'Sri Lanka Multi-Day Wildlife Tours & Private Chauffeur Transport'
+        },
+        {
+            'loc': domain + reverse('blog'),
+            'changefreq': 'daily',
+            'priority': '0.85',
+            'lastmod': today_str,
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg',
+            'image_title': 'Yala Wildlife Journal & Field Sighting Guides'
+        },
+        {
+            'loc': domain + reverse('reviews'),
+            'changefreq': 'weekly',
+            'priority': '0.80',
+            'lastmod': today_str,
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg',
+            'image_title': 'Verified Google Maps Reviews & Safari Gallery Discoveryala'
+        },
+        {
+            'loc': domain + reverse('about'),
+            'changefreq': 'monthly',
+            'priority': '0.75',
+            'lastmod': today_str,
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg',
+            'image_title': 'About Discoveryala Senior Naturalists & Eco-Expeditions Desk'
+        },
+        {
+            'loc': domain + reverse('contact'),
+            'changefreq': 'monthly',
+            'priority': '0.75',
+            'lastmod': today_str,
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg',
+            'image_title': 'Contact Discoveryala 24/7 Safari Desk'
+        },
+        {
+            'loc': domain + reverse('policies'),
+            'changefreq': 'monthly',
+            'priority': '0.50',
+            'lastmod': today_str,
+            'image': '',
+            'image_title': ''
+        },
     ]
 
     xml_entries = []
     for item in static_urls:
+        img_xml = ""
+        if item.get('image'):
+            img_xml = f"""
+    <image:image>
+      <image:loc>{escape(item['image'])}</image:loc>
+      <image:title>{escape(item['image_title'])}</image:title>
+    </image:image>"""
         xml_entries.append(f"""  <url>
     <loc>{escape(item['loc'])}</loc>
+    <lastmod>{item['lastmod']}</lastmod>
     <changefreq>{item['changefreq']}</changefreq>
-    <priority>{item['priority']}</priority>
+    <priority>{item['priority']}</priority>{img_xml}
   </url>""")
 
-    # 2. Dynamic Safari Packages
-    for pkg in SafariPackage.objects.all():
-        if pkg.slug:
-            try:
-                url = f"{domain}{reverse('package_detail', kwargs={'slug': pkg.slug})}"
-                xml_entries.append(f"""  <url>
+    # 2. Dynamic Safari Packages with Cloudinary Image Extensions
+    try:
+        for pkg in SafariPackage.objects.all():
+            if pkg.slug:
+                try:
+                    url = f"{domain}{reverse('package_detail', kwargs={'slug': pkg.slug})}"
+                    lastmod = pkg.updated_at.strftime('%Y-%m-%d') if getattr(pkg, 'updated_at', None) else today_str
+                    img_url = pkg.imageUrl or (pkg.image_file.url if pkg.image_file else '')
+                    img_tag = ""
+                    if img_url:
+                        if not img_url.startswith('http'):
+                            img_url = f"{domain}{img_url}"
+                        img_tag = f"""
+    <image:image>
+      <image:loc>{escape(img_url)}</image:loc>
+      <image:title>{escape(pkg.title)}</image:title>
+    </image:image>"""
+                    xml_entries.append(f"""  <url>
     <loc>{escape(url)}</loc>
+    <lastmod>{lastmod}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.90</priority>{img_tag}
   </url>""")
-            except Exception:
-                pass
+                except Exception:
+                    pass
+    except Exception:
+        pass
 
-    # 3. Dynamic Tours
-    for tr in Tour.objects.all():
-        if tr.slug:
-            try:
-                url = f"{domain}{reverse('tour_detail', kwargs={'slug': tr.slug})}"
-                xml_entries.append(f"""  <url>
+    # 3. Dynamic Multi-Day Tours with Image Extensions
+    try:
+        for tr in Tour.objects.all():
+            if tr.slug:
+                try:
+                    url = f"{domain}{reverse('tour_detail', kwargs={'slug': tr.slug})}"
+                    lastmod = tr.updated_at.strftime('%Y-%m-%d') if getattr(tr, 'updated_at', None) else today_str
+                    img_url = tr.get_tour_image_url()
+                    img_tag = ""
+                    if img_url:
+                        if not img_url.startswith('http'):
+                            img_url = f"{domain}{img_url}"
+                        img_tag = f"""
+    <image:image>
+      <image:loc>{escape(img_url)}</image:loc>
+      <image:title>{escape(tr.title)}</image:title>
+    </image:image>"""
+                    xml_entries.append(f"""  <url>
     <loc>{escape(url)}</loc>
+    <lastmod>{lastmod}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.90</priority>{img_tag}
   </url>""")
-            except Exception:
-                pass
+                except Exception:
+                    pass
+    except Exception:
+        pass
 
-    # 4. Dynamic Blog Posts
-    for post in BlogPost.objects.all():
-        if post.slug:
-            try:
-                url = f"{domain}{reverse('blog_detail', kwargs={'slug': post.slug})}"
-                lastmod = post.updated_at.strftime('%Y-%m-%d') if getattr(post, 'updated_at', None) else (post.created_at.strftime('%Y-%m-%d') if getattr(post, 'created_at', None) else '')
-                lastmod_tag = f"\n    <lastmod>{lastmod}</lastmod>" if lastmod else ""
-                xml_entries.append(f"""  <url>
-    <loc>{escape(url)}</loc>{lastmod_tag}
+    # 4. Dynamic Wildlife Blog Posts with Image Extensions
+    try:
+        for post in BlogPost.objects.all():
+            if post.slug:
+                try:
+                    url = f"{domain}{reverse('blog_detail', kwargs={'slug': post.slug})}"
+                    lastmod = post.updated_at.strftime('%Y-%m-%d') if getattr(post, 'updated_at', None) else (post.created_at.strftime('%Y-%m-%d') if getattr(post, 'created_at', None) else today_str)
+                    img_url = post.imageUrl or (post.image_file.url if post.image_file else '')
+                    img_tag = ""
+                    if img_url:
+                        if not img_url.startswith('http'):
+                            img_url = f"{domain}{img_url}"
+                        img_tag = f"""
+    <image:image>
+      <image:loc>{escape(img_url)}</image:loc>
+      <image:title>{escape(post.title)}</image:title>
+    </image:image>"""
+                    xml_entries.append(f"""  <url>
+    <loc>{escape(url)}</loc>
+    <lastmod>{lastmod}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>{img_tag}
   </url>""")
-            except Exception:
-                pass
+                except Exception:
+                    pass
+    except Exception:
+        pass
 
     joined_entries = "\n".join(xml_entries)
     xml_content = f"""<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 {joined_entries}
 </urlset>"""
 
     return HttpResponse(xml_content, content_type="application/xml")
+
 
 
 

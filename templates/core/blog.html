@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Yala National Park Wildlife Blog & Safari Field Journal | Discoveryala{% endblock %}
+{% block title %}Yala National Park | Wild Blogs | Safari Field Sri Lanka Travel Guides | Discoveryala{% endblock %}
 
 {% block meta_description %}
 <meta name="description"
-    content="Explore Yala National Park wildlife field logs, leopard tracking reports, photography tips & naturalist articles by Discoveryala Sri Lanka.">
+    content="Explore Yala National Park wildlife field logs, leopard tracking guides, safari cost breakdowns & Sri Lanka travel insights written by senior naturalists.">
 {% endblock %}
 
 {% block meta_keywords %}
 <meta name="keywords"
-    content="Yala National Park blog, Yala wildlife journal, Sri Lanka leopard tracking, Yala safari guide, Panthera pardus kotiya, Yala Block 1 Ruhuna, Yala wildlife photography, Discoveryala">
+    content="Yala National Park blog, Yala wildlife field journal, Sri Lanka leopard tracking guide, best time to visit Yala, Yala safari cost breakdown, Sri Lanka vs Maldives comparison, Sri Lanka adventure activities, Yala Block 1 Ruhuna guide, Panthera pardus kotiya, Discoveryala journal">
 {% endblock %}
 
 {% block og_tags %}
-<meta property="og:title" content="Yala National Park Wildlife Blog & Safari Field Journal | Discoveryala">
+<meta property="og:title" content="Yala Wildlife Blog & Safari Field Journal | Discoveryala">
 <meta property="og:description"
     content="Field tracking logs, senior naturalist insights, wildlife photography guides, and habitat conservation updates from Yala National Park, Sri Lanka.">
 <meta property="og:type" content="website">
@@ -27,7 +27,7 @@
 
 {% block twitter_tags %}
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Yala National Park Wildlife Blog & Safari Journal | Discoveryala">
+<meta name="twitter:title" content="Yala Wildlife Blog & Safari Journal | Discoveryala">
 <meta name="twitter:description"
     content="Field tracking logs, senior naturalist insights & photography guides from Yala National Park, Sri Lanka.">
 <meta name="twitter:image"
@@ -36,43 +36,49 @@
 
 {% block schema_org %}
 <script type="application/ld+json">
-[
-  {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "Discoveryala Wildlife Journal",
-    "description": "Field tracking logs, senior naturalist insights, wildlife photography guides, and habitat conservation updates from Yala National Park, Sri Lanka.",
-    "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Discoveryala",
-      "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}"
-    },
-    "about": {
-      "@type": "TouristAttraction",
-      "name": "Yala National Park (Ruhuna)",
-      "description": "Spanning 979 sq km in Sri Lanka's dry zone, world-renowned for the highest wild leopard density on Earth."
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "{{ request.scheme }}://{{ request.get_host }}"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Blog",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#blog",
+      "name": "Discoveryala Wildlife Journal & Field Guides",
+      "description": "Field tracking logs, senior naturalist insights, wildlife photography guides, and habitat conservation updates from Yala National Park, Sri Lanka.",
+      "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Discoveryala",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo-official.png' %}"
+        }
       },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Wildlife Blog & Journal",
-        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+      "about": {
+        "@type": "TouristAttraction",
+        "name": "Yala National Park (Ruhuna)",
+        "description": "Spanning 979 sq km in Sri Lanka's dry zone, world-renowned for the highest wild leopard density on Earth."
       }
-    ]
-  }
-]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.scheme }}://{{ request.get_host }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Wildlife Blog & Journal",
+          "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+        }
+      ]
+    }
+  ]
+}
 </script>
 {% endblock %}
 
