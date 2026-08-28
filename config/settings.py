@@ -18,7 +18,19 @@ load_dotenv(BASE_DIR / '.env')
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-yalatrails-fallback-key')
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = [h.strip() for h in os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost,.vercel.app,*').split(',') if h.strip()]
-CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.getenv('CSRF_TRUSTED_ORIGINS', 'https://*.vercel.app,https://*.now.sh,https://*').split(',') if o.strip()]
+
+raw_csrf = os.getenv('CSRF_TRUSTED_ORIGINS', 'https://*.vercel.app,https://*.now.sh')
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in raw_csrf.split(',') if o.strip() and not o.strip().endswith('://*')]
+for host in ALLOWED_HOSTS:
+    if host and host not in ('*', '127.0.0.1', 'localhost'):
+        clean_h = host.lstrip('.')
+        h_url = f"https://{clean_h}"
+        h_sub = f"https://*.{clean_h}"
+        if h_url not in CSRF_TRUSTED_ORIGINS:
+            CSRF_TRUSTED_ORIGINS.append(h_url)
+        if h_sub not in CSRF_TRUSTED_ORIGINS:
+            CSRF_TRUSTED_ORIGINS.append(h_sub)
+
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
@@ -77,20 +89,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Database Configuration (Supports SQLite3 & MongoDB via Djongo / PyMongo)
+# Database Configuration (Supports SQLite3 & MongoDB Atlas via PyMongo Real-Time Sync)
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-import os
-from dotenv import load_dotenv
-
-load_dotenv(BASE_DIR / '.env')
-
-USE_MONGODB = os.getenv('USE_MONGODB', 'False').lower() in ('true', '1', 'yes')
+USE_MONGODB = os.getenv('USE_MONGODB', 'True').lower() in ('true', '1', 'yes')
 MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/leopardtracks_db')
+MONGODB_NAME = os.getenv('MONGODB_NAME', 'leopardtracks_db')
 
 import shutil
 
-# Production database configuration: Copy pre-populated db.sqlite3 to writable /tmp on Vercel
+# Production database configuration: Always use writable /tmp on Vercel
 if os.getenv('VERCEL') or os.getenv('VERCEL_ENV'):
     tmp_db = Path('/tmp') / 'db.sqlite3'
     source_db = BASE_DIR / 'db.sqlite3'
@@ -102,37 +110,17 @@ if os.getenv('VERCEL') or os.getenv('VERCEL_ENV'):
             shutil.copyfile(source_db, tmp_db)
         except Exception:
             pass
-    SQLITE_PATH = tmp_db if tmp_db.exists() else (source_db if source_db.exists() else BASE_DIR / 'db.sqlite3')
+    SQLITE_PATH = tmp_db
 else:
     SQLITE_PATH = BASE_DIR / 'db.sqlite3'
 
-
-djongo_available = False
-if USE_MONGODB:
-    try:
-        import djongo
-        djongo_available = True
-    except ImportError:
-        djongo_available = False
-
-if USE_MONGODB and djongo_available:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'djongo',
-            'NAME': os.getenv('MONGODB_NAME', 'leopardtracks_db'),
-            'ENFORCE_SCHEMA': False,
-            'CLIENT': {
-                'host': MONGODB_URI
-            }
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': SQLITE_PATH,
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': SQLITE_PATH,
-        }
-    }
+}
+
 
 
 
