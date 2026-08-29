@@ -70,6 +70,14 @@ class AutoDatabaseInitMiddleware:
             except Exception as e:
                 logger.error(f"AutoDatabaseInit error: {e}")
 
+        # If accessing the Admin dashboard index, ensure SQLite has the freshest live MongoDB records
+        if request.path == '/admin/' and getattr(request, 'user', None) and request.user.is_authenticated and request.user.is_staff:
+            try:
+                from core.mongodb import sync_all_from_mongo_to_sqlite
+                sync_all_from_mongo_to_sqlite()
+            except Exception:
+                pass
+
         response = self.get_response(request)
 
         # Performance & SEO Crawl Headers
@@ -79,4 +87,5 @@ class AutoDatabaseInitMiddleware:
             response['Referrer-Policy'] = 'strict-origin-when-cross-origin'
 
         return response
+
 

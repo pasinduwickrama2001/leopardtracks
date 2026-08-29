@@ -1,7 +1,15 @@
-from django.contrib import admin
-from .models import SafariPackage, SafariBooking, BlogPost, HeroSection, Tour
+from django.contrib import admin, messages
+from .models import SafariPackage, SafariBooking, BlogPost, HeroSection, Tour, GuestReview
+from .mongodb import sync_model_to_mongo
 
+def sync_selected_to_mongodb(modeladmin, request, queryset):
+    count = 0
+    for item in queryset:
+        if sync_model_to_mongo(item):
+            count += 1
+    messages.success(request, f"Successfully synced {count} record(s) to MongoDB Atlas.")
 
+sync_selected_to_mongodb.short_description = "🔄 Sync selected items directly to MongoDB Atlas"
 
 # Customize Django Admin Panel Titles & Branding
 admin.site.site_header = "Discoveryala Administration"
@@ -17,6 +25,7 @@ class TourAdmin(admin.ModelAdmin):
     search_fields = ('title', 'slug', 'route', 'description', 'longDescription')
     prepopulated_fields = {'slug': ('title',)}
     list_per_page = 20
+    actions = [sync_selected_to_mongodb]
 
     fieldsets = (
         ('1. Tour Overview & Route', {
@@ -43,6 +52,7 @@ class HeroSectionAdmin(admin.ModelAdmin):
     list_filter = ('is_active', 'created_at')
     search_fields = ('title', 'subtitle', 'badge_text')
     list_per_page = 20
+    actions = [sync_selected_to_mongodb]
 
     fieldsets = (
         ('1. Hero Headlines & Badge Tag', {
@@ -69,6 +79,7 @@ class SafariPackageAdmin(admin.ModelAdmin):
     search_fields = ('title', 'slug', 'subtitle', 'description', 'highlights', 'inclusions', 'exclusions')
     prepopulated_fields = {'slug': ('title',)}
     list_per_page = 20
+    actions = [sync_selected_to_mongodb]
 
     fieldsets = (
         ('1. Basic Package Information', {
@@ -96,6 +107,7 @@ class SafariBookingAdmin(admin.ModelAdmin):
     search_fields = ('full_name', 'email', 'phone_number', 'package_title', 'country')
     list_editable = ('status',)
     readonly_fields = ('created_at',)
+    actions = [sync_selected_to_mongodb]
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
@@ -106,6 +118,7 @@ class BlogPostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'slug', 'content', 'author', 'category')
     prepopulated_fields = {'slug': ('title',)}
     list_per_page = 20
+    actions = [sync_selected_to_mongodb]
 
     fieldsets = (
         ('1. Article Details & Branding', {
@@ -120,8 +133,6 @@ class BlogPostAdmin(admin.ModelAdmin):
         }),
     )
 
-from .models import GuestReview
-
 @admin.register(GuestReview)
 class GuestReviewAdmin(admin.ModelAdmin):
     list_display = ('name', 'package', 'rating', 'category', 'verified', 'source', 'created_at')
@@ -129,6 +140,8 @@ class GuestReviewAdmin(admin.ModelAdmin):
     search_fields = ('name', 'origin', 'comment', 'package')
     list_editable = ('rating', 'verified')
     list_per_page = 20
+    actions = [sync_selected_to_mongodb]
+
 
 
 

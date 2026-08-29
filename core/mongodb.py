@@ -424,83 +424,87 @@ def sync_all_from_mongo_to_sqlite():
         if db is None:
             return False
 
-        from .models import SafariPackage, Tour, BlogPost, HeroSection, GuestReview
+        from .models import SafariPackage, Tour, BlogPost, HeroSection, GuestReview, SafariBooking
+        from datetime import datetime, date
 
         # 1. Sync Safari Packages
         mongo_pkgs = list(db.core_safaripackage.find()) or list(db.packages.find())
         if mongo_pkgs:
             for d in mongo_pkgs:
-                slug_val = d.get('slug') or str(d.get('id', ''))
-                SafariPackage.objects.update_or_create(
-                    slug=slug_val,
-                    defaults={
-                        'title': d.get('title', ''),
-                        'subtitle': d.get('subtitle', ''),
-                        'imageUrl': d.get('imageUrl', ''),
-                        'image_urls': d.get('image_urls', ''),
-                        'description': d.get('description', ''),
-                        'category': d.get('category', 'half-day'),
-                        'category_label': d.get('category_label', 'HALF-DAY GAME DRIVE'),
-                        'tag_class': d.get('tag_class', 'tag-sage'),
-                        'price_type': d.get('price_type', 'jeep_only'),
-                        'price': str(d.get('price', '$120')),
-                        'price_unit': d.get('price_unit', 'per 4x4 jeep (up to 6 guests)'),
-                        'mealPrice': str(d.get('mealPrice', '0')),
-                        'ticketPrice': str(d.get('ticketPrice', '0')),
-                        'childTicketPrice': str(d.get('childTicketPrice', '20')),
-                        'includes_tickets': bool(d.get('includes_tickets', False)),
-                        'ticket_addon_price': d.get('ticket_addon_price', ''),
-                        'includes_breakfast': bool(d.get('includes_breakfast', False)),
-                        'breakfast_addon_price': d.get('breakfast_addon_price', ''),
-                        'duration': d.get('duration', '5 Hours'),
-                        'vehicle': d.get('vehicle', 'Private 4x4 Jeep'),
-                        'inclusions': d.get('inclusions', ''),
-                        'exclusions': d.get('exclusions', ''),
-                        'highlights': d.get('highlights', ''),
-                        'featured': bool(d.get('featured', False)),
-                    }
-                )
+                slug_val = str(d.get('slug') or d.get('id') or '')
+                defaults = {
+                    'title': str(d.get('title') or ''),
+                    'subtitle': str(d.get('subtitle') or ''),
+                    'imageUrl': str(d.get('imageUrl') or ''),
+                    'image_urls': str(d.get('image_urls') or ''),
+                    'description': str(d.get('description') or ''),
+                    'category': str(d.get('category') or 'half-day'),
+                    'category_label': str(d.get('category_label') or 'HALF-DAY GAME DRIVE'),
+                    'tag_class': str(d.get('tag_class') or 'tag-sage'),
+                    'price_type': str(d.get('price_type') or 'jeep_only'),
+                    'price': str(d.get('price') or '$120'),
+                    'price_unit': str(d.get('price_unit') or 'per 4x4 jeep (up to 6 guests)'),
+                    'mealPrice': str(d.get('mealPrice') or '0'),
+                    'ticketPrice': str(d.get('ticketPrice') or '0'),
+                    'childTicketPrice': str(d.get('childTicketPrice') or '20'),
+                    'includes_tickets': bool(d.get('includes_tickets')),
+                    'ticket_addon_price': str(d.get('ticket_addon_price') or ''),
+                    'includes_breakfast': bool(d.get('includes_breakfast')),
+                    'breakfast_addon_price': str(d.get('breakfast_addon_price') or ''),
+                    'duration': str(d.get('duration') or '5 Hours'),
+                    'vehicle': str(d.get('vehicle') or 'Private 4x4 Jeep'),
+                    'inclusions': str(d.get('inclusions') or ''),
+                    'exclusions': str(d.get('exclusions') or ''),
+                    'highlights': str(d.get('highlights') or ''),
+                    'featured': bool(d.get('featured')),
+                }
+                if 'id' in d and isinstance(d['id'], int):
+                    SafariPackage.objects.update_or_create(id=d['id'], defaults=defaults)
+                else:
+                    SafariPackage.objects.update_or_create(slug=slug_val, defaults=defaults)
 
         # 2. Sync Tours
         mongo_tours = list(db.core_tour.find())
         if mongo_tours:
             for t in mongo_tours:
-                slug_val = t.get('slug') or str(t.get('id', ''))
-                Tour.objects.update_or_create(
-                    slug=slug_val,
-                    defaults={
-                        'title': t.get('title', ''),
-                        'route': t.get('route', ''),
-                        'price': str(t.get('price', '280')),
-                        'duration': t.get('duration', '5 Days / 4 Nights'),
-                        'imageUrl': t.get('imageUrl', ''),
-                        'isFeatured': bool(t.get('isFeatured', True)),
-                        'description': t.get('description', ''),
-                        'longDescription': t.get('longDescription', ''),
-                        'highlights': t.get('highlights', ''),
-                        'inclusions': t.get('inclusions', ''),
-                        'exclusions': t.get('exclusions', ''),
-                        'seoKeywords': t.get('seoKeywords', ''),
-                        'itinerary_json': t.get('itinerary_json', ''),
-                    }
-                )
+                slug_val = str(t.get('slug') or t.get('id') or '')
+                defaults = {
+                    'title': str(t.get('title') or ''),
+                    'route': str(t.get('route') or ''),
+                    'price': str(t.get('price') or '280'),
+                    'duration': str(t.get('duration') or '5 Days / 4 Nights'),
+                    'imageUrl': str(t.get('imageUrl') or ''),
+                    'isFeatured': bool(t.get('isFeatured', True)),
+                    'description': str(t.get('description') or ''),
+                    'longDescription': str(t.get('longDescription') or ''),
+                    'highlights': str(t.get('highlights') or ''),
+                    'inclusions': str(t.get('inclusions') or ''),
+                    'exclusions': str(t.get('exclusions') or ''),
+                    'seoKeywords': str(t.get('seoKeywords') or ''),
+                    'itinerary_json': str(t.get('itinerary_json') or ''),
+                }
+                if 'id' in t and isinstance(t['id'], int):
+                    Tour.objects.update_or_create(id=t['id'], defaults=defaults)
+                else:
+                    Tour.objects.update_or_create(slug=slug_val, defaults=defaults)
 
         # 3. Sync Blog Posts
         mongo_blogs = list(db.core_blogpost.find())
         if mongo_blogs:
             for b in mongo_blogs:
-                slug_val = b.get('slug') or str(b.get('id', ''))
-                BlogPost.objects.update_or_create(
-                    slug=slug_val,
-                    defaults={
-                        'title': b.get('title', ''),
-                        'category': b.get('category', 'WILDLIFE LOG'),
-                        'author': b.get('author', 'Discoveryala Naturalist'),
-                        'imageUrl': b.get('imageUrl', ''),
-                        'content': b.get('content', ''),
-                        'featured': bool(b.get('featured', False)),
-                    }
-                )
+                slug_val = str(b.get('slug') or b.get('id') or '')
+                defaults = {
+                    'title': str(b.get('title') or ''),
+                    'category': str(b.get('category') or 'WILDLIFE LOG'),
+                    'author': str(b.get('author') or 'Discoveryala Naturalist'),
+                    'imageUrl': str(b.get('imageUrl') or ''),
+                    'content': str(b.get('content') or ''),
+                    'featured': bool(b.get('featured')),
+                }
+                if 'id' in b and isinstance(b['id'], int):
+                    BlogPost.objects.update_or_create(id=b['id'], defaults=defaults)
+                else:
+                    BlogPost.objects.update_or_create(slug=slug_val, defaults=defaults)
 
         # 4. Sync Hero Sections
         mongo_heroes = list(db.core_herosection.find())
@@ -509,14 +513,14 @@ def sync_all_from_mongo_to_sqlite():
                 HeroSection.objects.update_or_create(
                     id=h.get('id', 1),
                     defaults={
-                        'title': h.get('title', 'WILD YALA SAFARIS'),
-                        'subtitle': h.get('subtitle', "Ceylon's premier 4x4 game drives & luxury glamping."),
-                        'badge_text': h.get('badge_text', '🌿 YALA LEOPARD TRACKS'),
-                        'imageUrl': h.get('imageUrl', '') or h.get('bg_image_url', ''),
-                        'button_primary_text': h.get('button_primary_text', 'EXPLORE PACKAGES'),
-                        'button_primary_url': h.get('button_primary_url', '/packages/'),
-                        'button_secondary_text': h.get('button_secondary_text', 'BOOK SAFARI'),
-                        'button_secondary_url': h.get('button_secondary_url', '/contact/'),
+                        'title': str(h.get('title') or 'WILD YALA SAFARIS'),
+                        'subtitle': str(h.get('subtitle') or "Ceylon's premier 4x4 game drives & luxury glamping."),
+                        'badge_text': str(h.get('badge_text') or '🌿 YALA LEOPARD TRACKS'),
+                        'imageUrl': str(h.get('imageUrl') or h.get('bg_image_url') or ''),
+                        'button_primary_text': str(h.get('button_primary_text') or 'EXPLORE PACKAGES'),
+                        'button_primary_url': str(h.get('button_primary_url') or '/packages/'),
+                        'button_secondary_text': str(h.get('button_secondary_text') or 'BOOK SAFARI'),
+                        'button_secondary_url': str(h.get('button_secondary_url') or '/contact/'),
                         'is_active': bool(h.get('is_active', True)),
                     }
                 )
@@ -525,27 +529,79 @@ def sync_all_from_mongo_to_sqlite():
         mongo_revs = list(db.core_guestreview.find())
         if mongo_revs:
             for r in mongo_revs:
-                GuestReview.objects.update_or_create(
-                    id=r.get('id', 1),
-                    defaults={
-                        'category': r.get('category', 'leopard'),
-                        'name': r.get('name', ''),
-                        'origin': r.get('origin', 'London, UK'),
-                        'date': r.get('date', 'August 2026'),
-                        'package': r.get('package', 'Yala Block 1 Morning Leopard Game Drive'),
-                        'rating': int(r.get('rating', 5)),
-                        'comment': r.get('comment', ''),
-                        'verified': bool(r.get('verified', True)),
-                        'avatar_url': r.get('avatar_url', ''),
-                        'photo_url': r.get('photo_url', ''),
-                        'source': r.get('source', 'Google Maps'),
-                    }
-                )
+                r_id = r.get('id')
+                defaults = {
+                    'category': str(r.get('category') or 'leopard'),
+                    'name': str(r.get('name') or ''),
+                    'origin': str(r.get('origin') or 'London, UK'),
+                    'date': str(r.get('date') or 'August 2026'),
+                    'package': str(r.get('package') or 'Yala Block 1 Morning Leopard Game Drive'),
+                    'rating': int(r.get('rating') or 5),
+                    'comment': str(r.get('comment') or ''),
+                    'verified': bool(r.get('verified', True)),
+                    'avatar_url': str(r['avatar_url']) if r.get('avatar_url') else None,
+                    'photo_url': str(r['photo_url']) if r.get('photo_url') else None,
+                    'source': str(r.get('source') or 'Google Maps'),
+                }
+                if r_id and isinstance(r_id, int):
+                    GuestReview.objects.update_or_create(id=r_id, defaults=defaults)
+                else:
+                    GuestReview.objects.update_or_create(name=defaults['name'], comment=defaults['comment'], defaults=defaults)
+
+        # 6. Sync Safari Bookings
+        mongo_books = list(db.core_safaribooking.find())
+        if mongo_books:
+            for bk in mongo_books:
+                raw_date = bk.get('safari_date')
+                if isinstance(raw_date, str) and raw_date:
+                    try:
+                        s_date = datetime.strptime(raw_date[:10], '%Y-%m-%d').date()
+                    except Exception:
+                        s_date = date.today()
+                elif isinstance(raw_date, (datetime, date)):
+                    s_date = raw_date if isinstance(raw_date, date) else raw_date.date()
+                else:
+                    s_date = date.today()
+
+                bk_id = bk.get('id')
+                defaults = {
+                    'package_title': str(bk.get('package_title') or ''),
+                    'full_name': str(bk.get('full_name') or ''),
+                    'country': str(bk.get('country') or ''),
+                    'email': str(bk.get('email') or ''),
+                    'phone_code': str(bk.get('phone_code') or '+94'),
+                    'phone_number': str(bk.get('phone_number') or ''),
+                    'safari_date': s_date,
+                    'guests': int(bk.get('guests') or 2),
+                    'adult_guests': int(bk.get('adult_guests') or 2),
+                    'child_guests': int(bk.get('child_guests') or 0),
+                    'under6_guests': int(bk.get('under6_guests') or 0),
+                    'include_meals': bool(bk.get('include_meals')),
+                    'meal_count': int(bk.get('meal_count') or 0),
+                    'meals_price_total': str(bk.get('meals_price_total') or '0.00'),
+                    'include_tickets': bool(bk.get('include_tickets')),
+                    'tickets_price_total': str(bk.get('tickets_price_total') or '0.00'),
+                    'base_price': str(bk.get('base_price') or '0.00'),
+                    'total_price': str(bk.get('total_price') or '0.00'),
+                    'message': str(bk.get('message') or ''),
+                    'status': str(bk.get('status') or 'Pending'),
+                }
+                if bk_id and isinstance(bk_id, int):
+                    SafariBooking.objects.update_or_create(id=bk_id, defaults=defaults)
+                else:
+                    SafariBooking.objects.update_or_create(
+                        full_name=defaults['full_name'],
+                        email=defaults['email'],
+                        safari_date=s_date,
+                        defaults=defaults
+                    )
 
         return True
     except Exception as e:
         logger.error(f"Error hydrating SQLite from MongoDB Atlas: {e}")
         return False
+
+
 
 def sync_all_from_sqlite_to_mongo():
     """
