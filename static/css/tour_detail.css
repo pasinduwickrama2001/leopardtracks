@@ -155,18 +155,18 @@
 .tour-sidebar-form select,
 .tour-sidebar-form textarea {
     width: 100%;
-    padding: 5px 9px;
+    padding: 8px 10px;
     border-radius: 8px;
     border: 1px solid rgba(96, 108, 56, 0.2);
     background: #FAF6EE;
     font-family: var(--font-body);
-    font-size: 0.78rem;
+    font-size: 16px;
     color: #233325;
     transition: var(--transition);
 }
 
 .tour-sidebar-form textarea {
-    height: 38px;
+    height: 48px;
     resize: vertical;
 }
 
@@ -181,8 +181,8 @@
 
 .phone-input-row {
     display: grid;
-    grid-template-columns: 70px 1fr;
-    gap: 5px;
+    grid-template-columns: 85px 1fr;
+    gap: 6px;
 }
 
 .form-row-2col {
@@ -565,6 +565,13 @@
     .tour-booking-cta .btn-jungle-pill {
         width: 100% !important;
         text-align: center !important;
+    }
+
+    .tour-sidebar-form input,
+    .tour-sidebar-form select,
+    .tour-sidebar-form textarea,
+    .country-select-dropdown {
+        font-size: 16px !important;
     }
 }
 

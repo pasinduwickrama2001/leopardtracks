@@ -533,7 +533,7 @@
     border: 1px solid rgba(71, 81, 40, 0.25);
     background: #FFFFFF;
     font-family: var(--font-body);
-    font-size: 0.9rem;
+    font-size: 16px;
     color: #233325;
     outline: none;
     transition: var(--transition);
@@ -682,6 +682,7 @@
     border: 1px solid rgba(71, 81, 40, 0.3);
     text-align: center;
     font-weight: 700;
+    font-size: 16px;
 }
 
 /* Ultra-Charming Success Confirmation Modal */
@@ -828,6 +829,13 @@
 
     .package-price-amount {
         font-size: 2.2rem !important;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea,
+    .meal-count-input {
+        font-size: 16px !important;
     }
 }
 

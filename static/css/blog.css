@@ -373,7 +373,7 @@
     background: rgba(255, 255, 255, 0.15);
     color: #FFFFFF;
     font-family: var(--font-body);
-    font-size: 0.9rem;
+    font-size: 16px;
 }
 
 .newsletter-form input::placeholder {
