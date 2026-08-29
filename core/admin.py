@@ -120,4 +120,15 @@ class BlogPostAdmin(admin.ModelAdmin):
         }),
     )
 
+from .models import GuestReview
+
+@admin.register(GuestReview)
+class GuestReviewAdmin(admin.ModelAdmin):
+    list_display = ('name', 'package', 'rating', 'category', 'verified', 'source', 'created_at')
+    list_filter = ('category', 'rating', 'verified', 'source')
+    search_fields = ('name', 'origin', 'comment', 'package')
+    list_editable = ('rating', 'verified')
+    list_per_page = 20
+
+
 

@@ -6,19 +6,19 @@ from .mongodb import sync_model_to_mongo, delete_model_from_mongo
 
 logger = logging.getLogger(__name__)
 
-# Models to synchronize in real time with MongoDB Atlas
-SYNC_MODELS = [SafariPackage, Tour, BlogPost, HeroSection, GuestReview, SafariBooking]
+SYNC_MODELS = (SafariPackage, Tour, BlogPost, HeroSection, GuestReview, SafariBooking)
 
-for model_cls in SYNC_MODELS:
-    @receiver(post_save, sender=model_cls, weak=False)
-    def handle_mongo_post_save(sender, instance, **kwargs):
+@receiver(post_save)
+def handle_mongo_post_save(sender, instance, **kwargs):
+    if sender in SYNC_MODELS:
         try:
             sync_model_to_mongo(instance)
         except Exception as e:
             logger.error(f"Failed to sync {sender.__name__} save to MongoDB: {e}")
 
-    @receiver(post_delete, sender=model_cls, weak=False)
-    def handle_mongo_post_delete(sender, instance, **kwargs):
+@receiver(post_delete)
+def handle_mongo_post_delete(sender, instance, **kwargs):
+    if sender in SYNC_MODELS:
         try:
             delete_model_from_mongo(instance)
         except Exception as e:

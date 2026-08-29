@@ -15,15 +15,15 @@ class SafariPackage(models.Model):
     ]
 
     title = models.CharField(max_length=200)
-    subtitle = models.CharField(max_length=300, blank=True)
-    slug = models.CharField(max_length=200, blank=True, help_text="URL friendly slug identifier e.g. bundala-tour-7-hours")
+    subtitle = models.CharField(max_length=300, blank=True, default='')
+    slug = models.CharField(max_length=200, blank=True, default='', help_text="URL friendly slug identifier e.g. bundala-tour-7-hours")
     
     # Dual Image Options: Local File Upload or Cloudinary URL link
     image_file = models.ImageField(upload_to='packages/', blank=True, null=True, help_text="Upload image file from local device (auto-uploads to Cloudinary if configured) OR paste direct URL in Image URL field below")
-    imageUrl = models.CharField(max_length=500, blank=True, help_text="Primary Cloudinary or image URL (Auto-filled when uploading local image file)")
-    image_urls = models.TextField(blank=True, help_text="Additional image URLs / Cloudinary URLs for gallery (Separate multiple URLs with newlines)")
+    imageUrl = models.CharField(max_length=500, blank=True, default='', help_text="Primary Cloudinary or image URL (Auto-filled when uploading local image file)")
+    image_urls = models.TextField(blank=True, default='', help_text="Additional image URLs / Cloudinary URLs for gallery (Separate multiple URLs with newlines)")
     
-    description = models.TextField(blank=True, help_text="Detailed description of the safari package experience")
+    description = models.TextField(blank=True, default='', help_text="Detailed description of the safari package experience")
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='half-day')
     category_label = models.CharField(max_length=100, default='HALF-DAY GAME DRIVE')
     tag_class = models.CharField(max_length=50, default='tag-sage')
@@ -47,9 +47,9 @@ class SafariPackage(models.Model):
     duration = models.CharField(max_length=100, default='5 Hours (05:30 AM – 10:30 AM)')
     vehicle = models.CharField(max_length=200, default='Private Modified Toyota Land Cruiser 4x4')
     
-    inclusions = models.TextField(help_text="Items included (Separate with newlines)")
-    exclusions = models.TextField(blank=True, help_text="Items NOT included (Separate with newlines e.g. Park Tickets, Tips)")
-    highlights = models.TextField(help_text="Key safari attraction points (Separate with newlines)")
+    inclusions = models.TextField(blank=True, default='', help_text="Items included (Separate with newlines)")
+    exclusions = models.TextField(blank=True, default='', help_text="Items NOT included (Separate with newlines e.g. Park Tickets, Tips)")
+    highlights = models.TextField(blank=True, default='', help_text="Key safari attraction points (Separate with newlines)")
     
     featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -122,10 +122,10 @@ class SafariPackage(models.Model):
 class SafariBooking(models.Model):
     package_title = models.CharField(max_length=200)
     full_name = models.CharField(max_length=200)
-    country = models.CharField(max_length=100)
+    country = models.CharField(max_length=100, blank=True, default='')
     email = models.EmailField()
     phone_code = models.CharField(max_length=10, default='+94')
-    phone_number = models.CharField(max_length=50)
+    phone_number = models.CharField(max_length=50, blank=True, default='')
     
     safari_date = models.DateField()
     guests = models.IntegerField(default=2)
@@ -143,7 +143,7 @@ class SafariBooking(models.Model):
     base_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     
-    message = models.TextField(blank=True)
+    message = models.TextField(blank=True, default='')
     status = models.CharField(max_length=30, default='Pending')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -156,15 +156,15 @@ class SafariBooking(models.Model):
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=250)
-    slug = models.CharField(max_length=250, blank=True, help_text="URL slug identifier e.g. Yala-National-Park-The-Wildlife-Paradise-of-Sri-Lanka")
+    slug = models.CharField(max_length=250, blank=True, default='', help_text="URL slug identifier e.g. Yala-National-Park-The-Wildlife-Paradise-of-Sri-Lanka")
     category = models.CharField(max_length=100, default='WILDLIFE LOG')
     author = models.CharField(max_length=100, default='Discoveryala Naturalist')
     
     # Dual Image: Local Device File Upload or Cloudinary URL link
     image_file = models.ImageField(upload_to='blogs/', blank=True, null=True, help_text="Upload image file from local device (auto-uploads to Cloudinary) OR paste Cloudinary URL below")
-    imageUrl = models.CharField(max_length=500, blank=True, help_text="Cloudinary or image URL")
+    imageUrl = models.CharField(max_length=500, blank=True, default='', help_text="Cloudinary or image URL")
     
-    content = models.TextField(help_text="Full blog post story & article content")
+    content = models.TextField(blank=True, default='', help_text="Full blog post story & article content")
     featured = models.BooleanField(default=False, help_text="Check if this blog post should be highlighted as Featured Hero story")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -233,14 +233,6 @@ class HeroSection(models.Model):
         verbose_name_plural = 'Hero Sections'
 
     def save(self, *args, **kwargs):
-        # Auto-assign integer id if missing for Djongo/Mongo compatibility
-        if not self.id:
-            try:
-                max_id = HeroSection.objects.aggregate(models.Max('id'))['id__max']
-                self.id = (max_id or 0) + 1
-            except Exception:
-                pass
-
         # Handle local device file upload -> Cloudinary or local media storage
         if self.image_file and not getattr(self.image_file, '_committed', True):
             try:
@@ -277,26 +269,26 @@ class HeroSection(models.Model):
 
 class Tour(models.Model):
     title = models.CharField(max_length=250)
-    slug = models.CharField(max_length=250, blank=True, help_text="URL friendly slug identifier e.g. 5-day-sri-lanka-escape")
-    route = models.CharField(max_length=500, blank=True, help_text="Tour route overview e.g. Colombo → Sigiriya → Kandy → Ella → Colombo")
+    slug = models.CharField(max_length=250, blank=True, default='', help_text="URL friendly slug identifier e.g. 5-day-sri-lanka-escape")
+    route = models.CharField(max_length=500, blank=True, default='', help_text="Tour route overview e.g. Colombo → Sigiriya → Kandy → Ella → Colombo")
     price = models.CharField(max_length=50, default="280", help_text="Tour price string e.g. 280 or $280")
     duration = models.CharField(max_length=100, default="5 Days / 4 Nights", help_text="Tour duration e.g. 5 Days / 4 Nights")
     
     # Tour Cover Image Options (Local Device Upload or Cloudinary URL)
     image_file = models.ImageField(upload_to='tours/', blank=True, null=True, help_text="Upload tour image file from local device")
-    imageUrl = models.CharField(max_length=500, blank=True, help_text="Cloudinary or direct image URL")
+    imageUrl = models.CharField(max_length=500, blank=True, default='', help_text="Cloudinary or direct image URL")
     
     isFeatured = models.BooleanField(default=False, help_text="Check if this tour should be highlighted on the tours page")
-    description = models.TextField(help_text="Short description overview")
-    longDescription = models.TextField(blank=True, help_text="Detailed journey overview story")
+    description = models.TextField(blank=True, default='', help_text="Short description overview")
+    longDescription = models.TextField(blank=True, default='', help_text="Detailed journey overview story")
     
-    highlights = models.TextField(help_text="Key highlights (Separate multiple points with newlines)")
-    inclusions = models.TextField(help_text="Service inclusions (Separate multiple points with newlines)")
-    exclusions = models.TextField(help_text="Service exclusions (Separate multiple points with newlines)")
-    seoKeywords = models.TextField(blank=True, help_text="SEO keywords separated by commas")
+    highlights = models.TextField(blank=True, default='', help_text="Key highlights (Separate multiple points with newlines)")
+    inclusions = models.TextField(blank=True, default='', help_text="Service inclusions (Separate multiple points with newlines)")
+    exclusions = models.TextField(blank=True, default='', help_text="Service exclusions (Separate multiple points with newlines)")
+    seoKeywords = models.TextField(blank=True, default='', help_text="SEO keywords separated by commas")
     
     # Store day-by-day itinerary formatted as JSON
-    itinerary_json = models.TextField(blank=True, help_text="JSON string array of day-by-day itinerary items")
+    itinerary_json = models.TextField(blank=True, default='', help_text="JSON string array of day-by-day itinerary items")
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -310,14 +302,6 @@ class Tour(models.Model):
         if not self.slug and self.title:
             from django.utils.text import slugify
             self.slug = slugify(self.title)
-
-        # Auto-assign integer id if missing for Djongo/Mongo compatibility
-        if not self.id:
-            try:
-                max_id = Tour.objects.aggregate(models.Max('id'))['id__max']
-                self.id = (max_id or 0) + 1
-            except Exception:
-                pass
 
         # Handle local device file upload -> Cloudinary or local media storage
         if self.image_file and not getattr(self.image_file, '_committed', True):
@@ -395,7 +379,7 @@ class GuestReview(models.Model):
     date = models.CharField(max_length=50, default='August 2026')
     package = models.CharField(max_length=200, default='Yala Block 1 Morning Leopard Game Drive')
     rating = models.IntegerField(default=5)
-    comment = models.TextField()
+    comment = models.TextField(blank=True, default='')
     verified = models.BooleanField(default=True)
     avatar_url = models.URLField(max_length=500, blank=True, null=True)
     photo_url = models.URLField(max_length=500, blank=True, null=True)
@@ -409,5 +393,3 @@ class GuestReview(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.package} ({self.rating} Stars)"
-
-

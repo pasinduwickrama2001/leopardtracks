@@ -208,13 +208,12 @@ def get_mongo_db():
         import pymongo
         uri = get_mongo_uri()
         if not uri:
-            logger.warning("No MONGODB_URI found in environment variables.")
             return None
 
         db_name = get_mongo_dbname()
 
         if _mongo_client is None:
-            _mongo_client = pymongo.MongoClient(uri, serverSelectionTimeoutMS=8000)
+            _mongo_client = pymongo.MongoClient(uri, serverSelectionTimeoutMS=4000)
         
         return _mongo_client[db_name]
     except Exception as e:
@@ -350,10 +349,10 @@ def sync_model_to_mongo(instance):
     Called whenever an instance is created or updated in Django Admin.
     Upserts the corresponding document in MongoDB Atlas in real time.
     """
-    db = get_mongo_db()
-    if db is None:
-        return False
     try:
+        db = get_mongo_db()
+        if db is None:
+            return False
         model_name = instance.__class__.__name__
         if model_name == 'SafariPackage':
             doc = package_to_dict(instance)
@@ -387,10 +386,10 @@ def delete_model_from_mongo(instance):
     Called whenever an instance is deleted in Django Admin.
     Deletes the corresponding document from MongoDB Atlas in real time.
     """
-    db = get_mongo_db()
-    if db is None:
-        return False
     try:
+        db = get_mongo_db()
+        if db is None:
+            return False
         model_name = instance.__class__.__name__
         filter_query = {'slug': instance.slug} if getattr(instance, 'slug', None) else {'id': instance.id}
         if model_name == 'SafariPackage':
@@ -420,11 +419,11 @@ def sync_all_from_mongo_to_sqlite():
     Loads latest documents from MongoDB Atlas into SQLite so Django Admin
     always displays the true live database content upon cold start.
     """
-    db = get_mongo_db()
-    if db is None:
-        return False
-
     try:
+        db = get_mongo_db()
+        if db is None:
+            return False
+
         from .models import SafariPackage, Tour, BlogPost, HeroSection, GuestReview
 
         # 1. Sync Safari Packages
@@ -552,11 +551,11 @@ def sync_all_from_sqlite_to_mongo():
     """
     Pushes all existing Django models from SQLite to MongoDB Atlas.
     """
-    db = get_mongo_db()
-    if db is None:
-        return False
-
     try:
+        db = get_mongo_db()
+        if db is None:
+            return False
+
         from .models import SafariPackage, Tour, BlogPost, HeroSection, GuestReview, SafariBooking
 
         for pkg in SafariPackage.objects.all():
@@ -674,4 +673,3 @@ def fetch_mongo_heroes():
     except Exception as e:
         logger.error(f"Error fetching hero sections from MongoDB: {e}")
         return None
-
