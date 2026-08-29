@@ -33,16 +33,23 @@ class AutoDatabaseInitMiddleware:
                     from django.contrib.auth import get_user_model
                     User = get_user_model()
                     admin_user = os.getenv('DJANGO_SUPERUSER_USERNAME', 'admin')
-                    admin_pass = os.getenv('DJANGO_SUPERUSER_PASSWORD', 'admin12345')
+                    admin_pass = os.getenv('DJANGO_SUPERUSER_PASSWORD', 'admin123')
                     admin_email = os.getenv('DJANGO_SUPERUSER_EMAIL', 'admin@discoveryala.com')
 
-                    if not User.objects.filter(username=admin_user).exists():
+                    user_obj = User.objects.filter(username=admin_user).first()
+                    if not user_obj:
                         User.objects.create_superuser(
                             username=admin_user,
                             email=admin_email,
                             password=admin_pass
                         )
+                    else:
+                        if not user_obj.is_staff or not user_obj.is_superuser:
+                            user_obj.is_staff = True
+                            user_obj.is_superuser = True
+                            user_obj.save()
                 except Exception as e:
+
                     logger.warning(f"Superuser auto-check notice: {e}")
 
                 # 3. Hydrate SQLite from live MongoDB Atlas
