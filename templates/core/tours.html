@@ -165,9 +165,9 @@
 {% endwith %}
 {% endif %}
 
-<!-- Bento 4-Column x 2-Row Full Screen Image Grid for Tours (Matching blog.html grid) -->
+<!-- Bento 4-Column Full Screen Image Grid for Tours (Matching blog.html grid) -->
 <section class="blog-grid-section" id="tours-grid"
-    style="padding: 0; margin: 0; width: 100vw; max-width: 100vw; background: var(--bg-pastel-cream); overflow-x: hidden;">
+    style="padding: 0; margin: 0; width: 100%; max-width: 100%; background: var(--bg-pastel-cream); overflow-x: hidden;">
     <div style="width: 100%; padding: 40px 20px 20px; text-align: center;">
         <span class="section-tag tag-sage">ALL EXPEDITIONS & TOURS</span>
         <h2 class="section-title" style="margin-top: 6px;">EXPLORE SRI LANKA PACKAGES</h2>
@@ -175,49 +175,68 @@
 
     <div class="full-screen-bento-grid" id="tours-articles-grid">
         {% for item in tours_list %}
-        {% if forloop.first %}
-        <!-- Big Bento Card (Combines 2 Columns & 2 Rows) -->
-        <a href="{% url 'tour_detail' slug=item.slug %}" class="fs-bento-card fs-bento-large"
-            style="text-decoration: none;">
+        <!-- Square Bento Tour Card -->
+        <a href="{% url 'tour_detail' slug=item.slug %}"
+            class="fs-bento-card {% cycle 'fs-bento-square-large' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-large' 'fs-bento-square-small' 'fs-bento-square-small' %} tour-bento-item {% if forloop.counter > 10 %}tour-item-hidden{% endif %}"
+            style="text-decoration: none;{% if forloop.counter > 10 %} display: none;{% endif %}"
+            aria-label="{{ item.title }}">
             {% if item.imageUrl %}
-            <img src="{{ item.imageUrl }}" alt="{{ item.title }}" class="fs-bento-img">
+            <img src="{{ item.imageUrl }}" alt="{{ item.title }} - Sri Lanka Wildlife Expedition" class="fs-bento-img"
+                loading="lazy" decoding="async">
             {% else %}
-            <img src="{% static 'images/yala-wildlife-hero.jpg' %}" alt="{{ item.title }}" class="fs-bento-img">
+            <img src="{% static 'images/yala-wildlife-hero.jpg' %}" alt="{{ item.title }} - Sri Lanka Wildlife Expedition"
+                class="fs-bento-img" loading="lazy" decoding="async">
             {% endif %}
+
             <div class="fs-bento-overlay"></div>
             <div class="fs-bento-content">
-                <h3 class="fs-bento-title fs-title-large">{{ item.title }}</h3>
-                <span class="fs-bento-date">
-                    <i class="fa-solid fa-route"></i> {{ item.route }} •
-                    <strong>${{ item.get_clean_price }} USD</strong>
-                </span>
-            </div>
-        </a>
-        {% else %}
-        <!-- Small Bento Card (1 Column x 1 Row) -->
-        <a href="{% url 'tour_detail' slug=item.slug %}" class="fs-bento-card fs-bento-small"
-            style="text-decoration: none;">
-            {% if item.imageUrl %}
-            <img src="{{ item.imageUrl }}" alt="{{ item.title }}" class="fs-bento-img">
-            {% else %}
-            <img src="{% static 'images/yala-wildlife-hero.jpg' %}" alt="{{ item.title }}" class="fs-bento-img">
-            {% endif %}
-            <div class="fs-bento-overlay"></div>
-            <div class="fs-bento-content">
+               
                 <h3 class="fs-bento-title fs-title-small">{{ item.title }}</h3>
+                <p style="font-size: 0.85rem; color: rgba(255,255,255,0.92); line-height: 1.45; margin: 4px 0 6px;">
+                    {{ item.description|truncatewords:6 }}
+                </p>
                 <span class="fs-bento-date">
                     <i class="fa-regular fa-clock"></i> {{ item.duration }} •
-                    <strong>${{ item.get_clean_price }} USD</strong>
+                    <strong style="color: #FAF6EE; font-weight: 800;">${{ item.get_clean_price }} USD</strong>
                 </span>
             </div>
         </a>
-        {% endif %}
         {% empty %}
         <p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1; padding: 40px 0;">No tour packages
             found in database.</p>
         {% endfor %}
     </div>
+
+    <!-- Show All Tours Button Container -->
+    <div class="text-center" style="padding: 40px 20px 60px; background: var(--bg-pastel-cream);">
+        <button id="show-all-tours-btn" class="btn-gold-pill"
+            style="font-size: 0.92rem; padding: 16px 40px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); margin: 0 auto;">
+            <span>SHOW ALL </span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+    </div>
 </section>
+
+<!-- Show All Button JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const showAllBtn = document.getElementById('show-all-tours-btn');
+        if (showAllBtn) {
+            const hiddenItems = document.querySelectorAll('.tour-item-hidden');
+            if (hiddenItems.length === 0) {
+                showAllBtn.style.display = 'none';
+            } else {
+                showAllBtn.addEventListener('click', function () {
+                    hiddenItems.forEach(item => {
+                        item.classList.remove('tour-item-hidden');
+                        item.style.display = 'block';
+                    });
+                    showAllBtn.style.display = 'none';
+                });
+            }
+        }
+    });
+</script>
 
 <!-- Vehicle Fleet Showcase Section -->
 <section class="fleet-section">

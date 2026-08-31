@@ -174,8 +174,8 @@
 </section>
 {% endif %}
 
-<!-- Blog Cards Grid Section (4 Column x 2 Row Full-Screen Image Grid, Title + Date Only) -->
-<section class="blog-grid-section" id="blog-grid"
+<!-- Blog-Style Full Screen Bento Grid for Articles -->
+<section class="blog-grid-section" id="blog-grid-section"
     style="padding: 0; margin: 0; width: 100%; max-width: 100%; background: var(--bg-pastel-cream); overflow-x: hidden;">
     <div style="width: 100%; padding: 40px 20px 20px; text-align: center;">
         <span class="section-tag tag-sage">ALL FIELD LOGS & ARTICLES</span>
@@ -184,10 +184,11 @@
 
     <div class="full-screen-bento-grid" id="blog-articles-grid">
         {% for post in other_posts|default:all_posts %}
-        {% if forloop.first %}
-        <!-- Big Bento Card (Combines 2 Columns & 2 Rows) -->
-        <a href="{% url 'blog_detail' slug=post.slug %}" class="fs-bento-card fs-bento-large"
-            style="text-decoration: none;" aria-label="{{ post.title }}">
+        <!-- Square Bento Blog Card -->
+        <a href="{% url 'blog_detail' slug=post.slug %}"
+            class="fs-bento-card {% cycle 'fs-bento-square-large' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-large' 'fs-bento-square-small' 'fs-bento-square-small' %} blog-bento-item {% if forloop.counter > 10 %}blog-item-hidden{% endif %}"
+            style="text-decoration: none;{% if forloop.counter > 10 %} display: none;{% endif %}"
+            aria-label="{{ post.title }}">
             {% if post.imageUrl %}
             <img src="{{ post.imageUrl }}" alt="{{ post.title }} - Yala National Park Wildlife Journal"
                 class="fs-bento-img" loading="lazy" decoding="async">
@@ -196,36 +197,57 @@
                 alt="{{ post.title }} - Yala National Park Wildlife Journal" class="fs-bento-img" loading="lazy"
                 decoding="async">
             {% endif %}
+
             <div class="fs-bento-overlay"></div>
             <div class="fs-bento-content">
-                <h3 class="fs-bento-title fs-title-large">{{ post.title }}</h3>
-                <span class="fs-bento-date"><i class="fa-regular fa-calendar-days"></i> {{ post.created_at|date:"M d, Y" }}</span>
-            </div>
-        </a>
-        {% else %}
-        <!-- Small Bento Card (1 Column x 1 Row) -->
-        <a href="{% url 'blog_detail' slug=post.slug %}" class="fs-bento-card fs-bento-small"
-            style="text-decoration: none;" aria-label="{{ post.title }}">
-            {% if post.imageUrl %}
-            <img src="{{ post.imageUrl }}" alt="{{ post.title }} - Yala National Park Safari Guide" class="fs-bento-img"
-                loading="lazy" decoding="async">
-            {% else %}
-            <img src="{% static 'images/yala-wildlife-hero.jpg' %}"
-                alt="{{ post.title }} - Yala National Park Safari Guide" class="fs-bento-img" loading="lazy"
-                decoding="async">
-            {% endif %}
-            <div class="fs-bento-overlay"></div>
-            <div class="fs-bento-content">
+                <div style="margin-bottom: 6px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                    <!-- <span class="verified-badge"
+                        style="background: transparent; color: #FFFFFF; font-size: 0.68rem; padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">
+                        <i class="fa-solid fa-leaf"></i> {{ post.category|default:"WILDLIFE" }}
+                    </span> -->
+                </div>
                 <h3 class="fs-bento-title fs-title-small">{{ post.title }}</h3>
-                <span class="fs-bento-date"><i class="fa-regular fa-calendar-days"></i> {{ post.created_at|date:"M d, Y" }}</span>
+                <p style="font-size: 0.85rem; color: rgba(255,255,255,0.92); line-height: 1.45; margin: 4px 0 6px;">
+                    {{ post.content|truncatewords:5 }}
+                </p>
+                <span class="fs-bento-date"><i class="fa-regular fa-calendar-days"></i> {{ post.created_at|date:"M d, Y"|default:post.created_at }}</span>
             </div>
         </a>
-        {% endif %}
         {% empty %}
         <p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1; padding: 40px 0;">No blog posts
             found in database.</p>
         {% endfor %}
     </div>
+
+    <!-- Show All Blogs Button Container -->
+    <div class="text-center" style="padding: 40px 20px 60px; background: var(--bg-pastel-cream);">
+        <button id="show-all-blogs-btn" class="btn-gold-pill"
+            style="font-size: 0.92rem; padding: 16px 40px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); margin: 0 auto;">
+            <span>SHOW ALL </span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+    </div>
 </section>
+
+<!-- Show All Button JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const showAllBtn = document.getElementById('show-all-blogs-btn');
+        if (showAllBtn) {
+            const hiddenItems = document.querySelectorAll('.blog-item-hidden');
+            if (hiddenItems.length === 0) {
+                showAllBtn.style.display = 'none';
+            } else {
+                showAllBtn.addEventListener('click', function () {
+                    hiddenItems.forEach(item => {
+                        item.classList.remove('blog-item-hidden');
+                        item.style.display = 'block';
+                    });
+                    showAllBtn.style.display = 'none';
+                });
+            }
+        }
+    });
+</script>
 
 {% endblock %}
