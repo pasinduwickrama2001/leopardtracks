@@ -1,0 +1,208 @@
+/* ==========================================================================
+   Bungalows & Wilderness Lodges Stylesheet - Discoveryala
+   Clean, Full-Screen Responsive Layout with Balanced Breathable Spacing
+   ========================================================================== */
+
+/* Full-Screen Fluid Container */
+.bungalows-full-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+/* Editorial Item Grid */
+.bungalow-editorial-item {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 64px;
+    align-items: center;
+    padding: 48px 0;
+    border-bottom: 1px solid rgba(96, 108, 56, 0.16);
+}
+
+.bungalow-editorial-item:last-child {
+    border-bottom: none;
+}
+
+.bungalow-editorial-item.reversed {
+    grid-template-columns: 1fr 1.15fr;
+}
+
+.bungalow-editorial-item.reversed .editorial-media {
+    order: 1;
+}
+
+.bungalow-editorial-item.reversed .editorial-info {
+    order: 2;
+}
+
+.editorial-media {
+    background: #FFFFFF;
+    border-radius: var(--radius-card, 22px);
+    overflow: hidden;
+    border: 1px solid rgba(96, 108, 56, 0.18);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.editorial-media img {
+    width: 100%;
+    height: 390px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+}
+
+.editorial-media:hover img {
+    transform: scale(1.03);
+}
+
+.editorial-specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background: rgba(96, 108, 56, 0.06);
+    padding: 14px 16px;
+    border-radius: 16px;
+    margin: 16px 0;
+    font-size: 0.86rem;
+    color: #233325;
+}
+
+.editorial-sightings-box {
+    background: rgba(96, 108, 56, 0.07);
+    border-left: 3px solid #606C38;
+    padding: 12px 16px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 18px;
+    font-size: 0.84rem;
+    color: #233325;
+    line-height: 1.6;
+}
+
+.form-input-clean {
+    width: 100%;
+    background-color: var(--bg-pastel-cream, #FAF6EE);
+    border: 1px solid rgba(96, 108, 56, 0.22);
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-family: var(--font-body, inherit);
+    font-size: 0.95rem;
+    color: #233325;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+}
+
+.form-input-clean:focus {
+    background-color: #FFFFFF;
+    border-color: #606C38;
+    box-shadow: 0 0 0 3px rgba(96, 108, 56, 0.15);
+}
+
+/* Facts Grid Responsive */
+.facts-grid-responsive {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    width: 100%;
+}
+
+/* Cute & Compact Centered Confirmation Modal */
+#bookingModalOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(18, 28, 18, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+#bookingModalBox {
+    background-color: var(--bg-pastel-cream, #FAF6EE);
+    border-radius: 24px;
+    max-width: 390px;
+    width: 100%;
+    padding: 26px 20px 22px;
+    text-align: center;
+    border: 1px solid rgba(96, 108, 56, 0.25);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    position: relative;
+    box-sizing: border-box;
+    animation: modalScaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalScaleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.88) translateY(14px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Tablet & Mobile Responsive Adjustments */
+@media (max-width: 1024px) {
+    .bungalows-full-container {
+        padding: 0 18px;
+    }
+
+    .bungalow-editorial-item,
+    .bungalow-editorial-item.reversed {
+        grid-template-columns: 1fr;
+        gap: 26px;
+        padding: 36px 0;
+    }
+
+    .bungalow-editorial-item.reversed .editorial-media {
+        order: 2;
+    }
+
+    .bungalow-editorial-item.reversed .editorial-info {
+        order: 1;
+    }
+
+    .editorial-media img {
+        height: 310px;
+    }
+}
+
+@media (max-width: 768px) {
+    .facts-grid-responsive {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .editorial-media img {
+        height: 240px;
+    }
+
+    .editorial-specs-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        font-size: 0.8rem;
+        padding: 12px;
+    }
+
+    .form-input-clean {
+        font-size: 16px;
+        /* Prevents auto-zoom on iOS */
+        padding: 12px 14px;
+    }
+}
+
+@media (max-width: 520px) {
+    .form-dates-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+}

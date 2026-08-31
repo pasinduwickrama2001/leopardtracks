@@ -1532,6 +1532,402 @@ def tickets(request):
     return render(request, 'core/tickets.html', context)
 
 
+def bungalows(request):
+    """
+    Yala National Park Bungalow Bookings View:
+    Showcases inside-park DWC wildlife bungalows (Mahaseelawa, Patanangala, Buthawa, Heenwewa, Ondatje, Kosgasmankada),
+    expedition packages (all-inclusive with 4x4 jeep, private cook, food provisioning, tickets), guidelines, and handles booking inquiries.
+    """
+    booking_success = None
+    if request.method == 'GET' and request.GET.get('success') == '1':
+        name = request.GET.get('name', 'Valued Guest')
+        email = request.GET.get('email', '')
+        bungalow = request.GET.get('bungalow', 'Yala Bungalow')
+        dates = request.GET.get('dates', '')
+        booking_success = {
+            'name': name,
+            'email': email,
+            'bungalow': bungalow,
+            'dates': dates,
+            'message': f"Thank you, {name}! Your Yala bungalow booking request for '{bungalow}' ({dates}) has been successfully received. A confirmation email has been sent to {email}."
+        }
+
+    if request.method == 'POST':
+        full_name = request.POST.get('full_name', '').strip()
+        email = request.POST.get('email_address', '').strip()
+        phone_code = request.POST.get('phone_code', '+94').strip()
+        phone_number = request.POST.get('phone_number', '').strip()
+        country = request.POST.get('country', '').strip()
+        check_in_date = request.POST.get('check_in_date', '').strip()
+        check_out_date = request.POST.get('check_out_date', '').strip()
+
+        try:
+            adult_guests = int(request.POST.get('adult_guests', 2) or 2)
+            child_guests = int(request.POST.get('child_guests', 0) or 0)
+            infant_guests = int(request.POST.get('infant_guests', 0) or 0)
+        except (ValueError, TypeError):
+            adult_guests, child_guests, infant_guests = 2, 0, 0
+
+        total_guests = adult_guests + child_guests + infant_guests
+        bungalow_choice = request.POST.get('bungalow_choice', 'Best Available Bungalow').strip()
+        package_type = request.POST.get('package_type', 'All-Inclusive Bungalow Safari (Jeep + Cook + Food + Permits)').strip()
+        meals_provisioning = request.POST.get('meals_provisioning', 'Full-Service Chef & Grocery Provisioning').strip()
+        message = request.POST.get('message', '').strip()
+
+        # Send Email Notification to Admin & Guest Confirmation
+        try:
+            from django.core.mail import EmailMultiAlternatives
+            from django.conf import settings
+            import threading
+
+            from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Discoveryala <yalaleopardtracks@gmail.com>')
+            raw_admin = getattr(settings, 'ADMIN_NOTIFICATION_EMAIL', 'yalaleopardtracks@gmail.com')
+            if isinstance(raw_admin, str):
+                admin_recipients = [e.strip() for e in raw_admin.split(',') if e.strip()]
+            else:
+                admin_recipients = list(raw_admin)
+            if not admin_recipients:
+                admin_recipients = ['yalaleopardtracks@gmail.com']
+
+            full_phone = f"{phone_code} {phone_number}".strip()
+
+            def _async_send_bungalow_emails():
+                try:
+                    # 1. Admin Email
+                    admin_subject = f"🏡 NEW BUNGALOW INQUIRY: {bungalow_choice} - {full_name} ({check_in_date})"
+                    admin_body = f"""New Yala National Park Bungalow Booking Inquiry:
+==================================================
+Guest Name: {full_name}
+Country: {country}
+Email: {email}
+Phone / WhatsApp: {full_phone}
+
+DATES & GUESTS:
+Check-in Date: {check_in_date}
+Check-out Date: {check_out_date}
+Total Guests: {total_guests} (Adults: {adult_guests}, Children: {child_guests}, Infants: {infant_guests})
+
+PREFERENCES & SERVICES:
+Preferred Bungalow: {bungalow_choice}
+Selected Package: {package_type}
+Meal Provisioning: {meals_provisioning}
+
+Special Notes / Requests:
+--------------------------------------------------
+{message}
+==================================================
+"""
+                    admin_html = f"""
+                    <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 650px; margin: 0 auto; background: #FAF6EE; border-radius: 12px; padding: 24px; border: 1px solid #E7EBD9;">
+                        <div style="background: #475128; color: #FFFFFF; padding: 18px 24px; border-radius: 8px; text-align: center;">
+                            <h2 style="margin: 0; font-size: 20px; letter-spacing: 0.5px;">🏡 New Yala Park Bungalow Booking Request</h2>
+                            <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">Discoveryala Expeditions • DWC In-Park Lodges</p>
+                        </div>
+                        <div style="background: #FFFFFF; border-radius: 8px; padding: 20px; margin-top: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #233325;">
+                                <tr style="border-bottom: 1px solid #F0EAE1;"><td style="padding: 10px; font-weight: bold; width: 38%;">Guest Full Name:</td><td style="padding: 10px;">{full_name}</td></tr>
+                                <tr style="border-bottom: 1px solid #F0EAE1;"><td style="padding: 10px; font-weight: bold;">Country of Origin:</td><td style="padding: 10px;">{country or 'Not Specified'}</td></tr>
+                                <tr style="border-bottom: 1px solid #F0EAE1;"><td style="padding: 10px; font-weight: bold;">Email Address:</td><td style="padding: 10px;"><a href="mailto:{email}" style="color: #606C38;">{email}</a></td></tr>
+                                <tr style="border-bottom: 1px solid #F0EAE1;"><td style="padding: 10px; font-weight: bold;">Phone / WhatsApp:</td><td style="padding: 10px;"><a href="https://wa.me/{phone_number.replace('+', '').replace(' ', '')}" style="color: #606C38; font-weight: bold;">{full_phone}</a></td></tr>
+                                <tr style="border-bottom: 1px solid #F0EAE1;"><td style="padding: 10px; font-weight: bold;">Check-in Date:</td><td style="padding: 10px; font-weight: bold; color: #475128;">{check_in_date} (12:00 PM)</td></tr>
+                                <tr style="border-bottom: 1px solid #F0EAE1;"><td style="padding: 10px; font-weight: bold;">Check-out Date:</td><td style="padding: 10px; font-weight: bold; color: #475128;">{check_out_date} (10:00 AM)</td></tr>
+                                <tr style="border-bottom: 1px solid #F0EAE1;"><td style="padding: 10px; font-weight: bold;">Total Guests:</td><td style="padding: 10px;">{total_guests} (Adults: {adult_guests}, Children: {child_guests}, Infants: {infant_guests})</td></tr>
+                                <tr style="border-bottom: 1px solid #F0EAE1;"><td style="padding: 10px; font-weight: bold;">Preferred Bungalow:</td><td style="padding: 10px; font-weight: bold; color: #606C38;">{bungalow_choice}</td></tr>
+                                <tr style="border-bottom: 1px solid #F0EAE1;"><td style="padding: 10px; font-weight: bold;">Service Package:</td><td style="padding: 10px;">{package_type}</td></tr>
+                                <tr style="border-bottom: 1px solid #F0EAE1;"><td style="padding: 10px; font-weight: bold;">Meal Provisioning:</td><td style="padding: 10px;">{meals_provisioning}</td></tr>
+                                <tr><td style="padding: 10px; font-weight: bold; vertical-align: top;">Special Requests:</td><td style="padding: 10px; line-height: 1.6;">{message or 'None specified'}</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    """
+                    admin_msg = EmailMultiAlternatives(admin_subject, admin_body, from_email, admin_recipients)
+                    admin_msg.attach_alternative(admin_html, "text/html")
+                    if email:
+                        admin_msg.reply_to = [email]
+                    admin_msg.send(fail_silently=True)
+
+                    # 2. Guest Confirmation Email
+                    if email:
+                        guest_subject = f"🌿 Yala Bungalow Booking Inquiry Received | Discoveryala"
+                        guest_body = f"""Ayubowan {full_name}!
+
+Thank you for your inquiry for a Yala National Park Bungalow Stay with Discoveryala Sri Lanka.
+
+We have received your reservation request for "{bungalow_choice}".
+
+BOOKING INQUIRY SUMMARY:
+• Check-in: {check_in_date} (Check-in 12:00 PM)
+• Check-out: {check_out_date} (Check-out 10:00 AM)
+• Guests: {total_guests} (Adults: {adult_guests}, Children: {child_guests})
+• Preferred Bungalow: {bungalow_choice}
+• Package: {package_type}
+• Provisions: {meals_provisioning}
+• Special Requests / Notes: {message or 'None specified'}
+
+WHAT HAPPENS NEXT:
+1. Availability Verification: Our senior DWC wildlife desk coordinator is checking current official permit availability for your requested dates.
+2. Custom Quotation: We will send you a complete breakdown including DWC bungalow tariff, private 4x4 safari jeep, chef/cook coordination, and entrance fees.
+3. Fast Contact: A naturalist coordinator will reach out to you via WhatsApp / Email within 15-30 minutes.
+
+If you have urgent questions, connect directly with our 24/7 Safari Desk:
+WhatsApp / Hotline: +94 77 815 8004
+Email: yalaleopardtracks@gmail.com
+Location: Palatupana Gate Road, Yala National Park, Sri Lanka
+
+Warm wildlife regards,
+The Discoveryala Safari Team
+"""
+                        guest_html = f"""
+                        <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 650px; margin: 0 auto; background: #FAF6EE; border-radius: 12px; padding: 24px; border: 1px solid #E7EBD9;">
+                            <div style="background: #475128; color: #FFFFFF; padding: 20px; border-radius: 8px; text-align: center;">
+                                <h2 style="margin: 0; font-size: 22px;">🌿 Yala Bungalow Stay Request Received</h2>
+                                <p style="margin: 6px 0 0 0; font-size: 14px; opacity: 0.9;">Discoveryala Eco-Expeditions Sri Lanka</p>
+                            </div>
+                            <div style="background: #FFFFFF; border-radius: 8px; padding: 22px; margin-top: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); color: #233325; font-size: 14px; line-height: 1.7;">
+                                <p style="font-size: 16px; font-weight: bold; margin-top: 0;">Ayubowan {full_name},</p>
+                                <p>Thank you for choosing Discoveryala for your inside-park wilderness stay in <strong>Yala National Park</strong>. We have logged your request for <strong>{bungalow_choice}</strong>.</p>
+                                
+                                <div style="background: #FAF6EE; border-left: 4px solid #606C38; padding: 14px; border-radius: 4px; margin: 16px 0;">
+                                    <h4 style="margin: 0 0 8px 0; color: #475128;">📋 Request Overview:</h4>
+                                    <p style="margin: 2px 0;"><strong>Dates:</strong> {check_in_date} to {check_out_date}</p>
+                                    <p style="margin: 2px 0;"><strong>Bungalow:</strong> {bungalow_choice}</p>
+                                    <p style="margin: 2px 0;"><strong>Guests:</strong> {total_guests} ({adult_guests} Adults, {child_guests} Children)</p>
+                                    <p style="margin: 2px 0;"><strong>Package:</strong> {package_type}</p>
+                                    <p style="margin: 2px 0;"><strong>Special Notes / Requests:</strong> {message or 'None specified'}</p>
+                                </div>
+
+                                <h4 style="color: #475128; margin-top: 18px;">✨ Next Steps:</h4>
+                                <p>Our senior wildlife desk coordinator is checking real-time DWC permit availability and will send your detailed itinerary & pricing quote within <strong>15–30 minutes</strong>.</p>
+                                
+                                <div style="text-align: center; margin: 24px 0;">
+                                    <a href="https://wa.me/94778158004?text=Hello%20Discoveryala!%20I%20just%20submitted%20a%20bungalow%20request%20for%20{check_in_date}" style="background: #25D366; color: #FFFFFF; text-decoration: none; padding: 12px 24px; border-radius: 30px; font-weight: bold; display: inline-block; font-size: 14px;">
+                                        💬 Chat on WhatsApp with Desk (+94 77 815 8004)
+                                    </a>
+                                </div>
+
+                                <hr style="border: 0; border-top: 1px solid #E7EBD9; margin: 20px 0;">
+                                <p style="font-size: 12px; color: #778B78; margin-bottom: 0;">
+                                    Discoveryala Safari Team • Palatupana Gate Road, Tissamaharama, Sri Lanka<br>
+                                    Hotline / WhatsApp: +94 77 815 8004 | Email: yalaleopardtracks@gmail.com
+                                </p>
+                            </div>
+                        </div>
+                        """
+                        guest_msg = EmailMultiAlternatives(guest_subject, guest_body, from_email, [email])
+                        guest_msg.attach_alternative(guest_html, "text/html")
+                        guest_msg.send(fail_silently=True)
+
+                except Exception as ex:
+                    print("Async bungalow email sending error:", ex)
+
+            t = threading.Thread(target=_async_send_bungalow_emails)
+            t.daemon = True
+            t.start()
+
+        except Exception as e:
+            print("Bungalow inquiry error:", e)
+
+        booking_success = {
+            'name': full_name,
+            'email': email,
+            'bungalow': bungalow_choice,
+            'dates': f"{check_in_date} – {check_out_date}",
+            'package': package_type,
+            'message': f"Thank you, {full_name}! Your Yala bungalow booking request for '{bungalow_choice}' ({check_in_date}) has been successfully submitted. We have sent a confirmation email copy to {email}. Our senior safari desk coordinator will contact you via WhatsApp / Phone within 15–30 minutes."
+        }
+
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.POST.get('is_ajax') == '1':
+            return JsonResponse({'status': 'success', 'data': booking_success})
+
+        # Post-Redirect-Get (PRG) fallback for standard non-AJAX POST to prevent browser reload duplicate submission
+        from django.shortcuts import redirect
+        from django.urls import reverse
+        from urllib.parse import urlencode
+        params = urlencode({
+            'success': '1',
+            'name': full_name,
+            'email': email,
+            'bungalow': bungalow_choice,
+            'dates': f"{check_in_date} – {check_out_date}"
+        })
+        return redirect(f"{reverse('bungalows')}?{params}#bookingFormSection")
+
+    bungalows_data = [
+        {
+            'id': 'mahaseelawa',
+            'name': 'Mahaseelawa Bungalow',
+            'block': 'Block 1 (Palatupana Access)',
+            'tag': 'Coastal Lagoon & Leopard Territory',
+            'badge_color': 'bg-amber-100 text-amber-900 border-amber-300',
+            'capacity': '10 Guests',
+            'bedrooms': '2 Large Bedrooms (5 beds each)',
+            'bathrooms': '2 Attached Bathrooms',
+            'power': 'Solar Night Lighting & Fan System',
+            'water': 'Fresh Tube-Well Supply',
+            'view': 'Mahaseelawa Lagoon & Sand Dunes',
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784456381/blogs/jqbr6khinkvptii7ax0c.jpg',
+            'key_sightings': 'High-density leopard territory, mugger crocodiles on lagoon banks, spotted deer herds, migratory waterbirds, white-bellied sea eagles',
+            'description': 'Nestled directly between the serene Mahaseelawa lagoon and the wild southern coastline, Mahaseelawa is widely celebrated as one of the most productive wildlife locations in all of Sri Lanka. Elephants and leopards frequently drink from the lagoon shores directly in front of the veranda at dawn and dusk.',
+            'features': ['Dedicated DWC Caretaker & Safari Cook', 'Dining Veranda with Lagoon View', 'Private Coastal Sand Dunes', 'Direct Game Track Access'],
+            'highlights': ['Premier spot for early morning leopard sightings', 'Tranquil evening lagoon ambience', 'Scenic coastal breeze and privacy']
+        },
+        {
+            'id': 'patanangala',
+            'name': 'Patanangala Bungalow',
+            'block': 'Block 1 (Palatupana Access)',
+            'tag': 'Coastal Rock Outcrop & Ocean Breeze',
+            'badge_color': 'bg-emerald-100 text-emerald-900 border-emerald-300',
+            'capacity': '10 Guests',
+            'bedrooms': '2 Spacious Bedrooms + Linen',
+            'bathrooms': '2 Attached Modern Bathrooms',
+            'power': 'Solar Lighting + Generator Backup',
+            'water': 'Fresh Water Tank System',
+            'view': 'Patanangala Beach, Rocks & Open Plains',
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1779352393/blogs/lww3k1nql9xpouch1ap6.jpg',
+            'key_sightings': 'Leopards stalking rock outcrops at dusk, wild boars, sambar deer, raptors, sea birds and occasional sloth bears',
+            'description': 'Perched adjacent to the iconic Patanangala rock on Yala\'s coastal perimeter, this bungalow combines refreshing Indian Ocean breezes with unmatched wildlife vantage points. Watch leopards scout the plains from nearby granite boulders just minutes from your front porch.',
+            'features': ['Panoramic Coastal & Rock Views', 'Caretaker & Cook On-Site', 'Spacious Veranda & Dining Table', 'Historic Ocean Viewpoint'],
+            'highlights': ['Direct access to coastal wildlife game tracks', 'Natural sea breeze ventilation', 'Spectacular sunrise and sunset vistas']
+        },
+        {
+            'id': 'buthawa',
+            'name': 'New Buthawa Bungalow',
+            'block': 'Block 1 (Central Game Area)',
+            'tag': 'Panoramic Plains & Freshwater Tank',
+            'badge_color': 'bg-blue-100 text-blue-900 border-blue-300',
+            'capacity': '10 Guests',
+            'bedrooms': '2 Double Bedrooms + Linen',
+            'bathrooms': '2 Attached Washrooms',
+            'power': 'Solar Energy System with Device Charging',
+            'water': 'Continuous Clean Water Storage',
+            'view': 'Buthawa Plain & Coastal Scrubland',
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1786355872/blogs/amvi8vrath9rtjzrk01m.jpg',
+            'key_sightings': 'Elephants feeding across scrubland, leopards crossing open grasslands, sloth bears in seasonal fruit trees, water buffaloes',
+            'description': 'One of the most famous and historical bungalows in Sri Lanka\'s wildlife lore. Expertly rebuilt with modern comforts while retaining classic safari architecture, New Buthawa overlooks expansive grasslands where massive herds gather to feed and drink.',
+            'features': ['Elevated Wildlife Viewing Platform', 'Dedicated DWC Kitchen Staff', 'Prime Central Block 1 Location', 'Excellent Night Ambience'],
+            'highlights': ['Unobstructed 180° views across plains', 'Frequent elephant herds around bungalow', 'Central access to all Block 1 safari tracks']
+        },
+        {
+            'id': 'heenwewa',
+            'name': 'Heenwewa Bungalow',
+            'block': 'Block 1 (Interior Lake Zone)',
+            'tag': 'Freshwater Lake & Elephant Bathing Haven',
+            'badge_color': 'bg-teal-100 text-teal-900 border-teal-300',
+            'capacity': '10 Guests',
+            'bedrooms': '2 Air-Cooled Bedrooms (5 beds each)',
+            'bathrooms': '2 Attached Washrooms',
+            'power': 'Eco Solar Night Lighting',
+            'water': 'Fresh Borewell Supply',
+            'view': 'Direct Waterfront View of Heenwewa Reservoir',
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1781080452/blogs/ju0ukvrwuyvbfwpeinb0.jpg',
+            'key_sightings': 'Continuous elephant bathing and drinking activity, grey-headed fish eagles, painted storks, spotted deer, marsh crocodiles',
+            'description': 'Situated right on the edge of the ancient Heenwewa reservoir, this bungalow is an absolute paradise for birdwatchers and elephant lovers. Witness wild elephants cooling off in the lake just meters away from your morning tea veranda.',
+            'features': ['Direct Lakefront Viewing Terrace', 'In-House Cook Available', 'Unmatched Birdlife Photography', 'Serene Forest Canopy Surroundings'],
+            'highlights': ['Elephants drinking right in front of the deck', 'Over 100 bird species recorded on lake', 'Completely serene forest ambiance']
+        },
+        {
+            'id': 'ondatje',
+            'name': 'Ondatje / Yala Bungalow',
+            'block': 'Block 1 (Menik River Bank)',
+            'tag': 'Ancient Kumbuk Riverine Canopy',
+            'badge_color': 'bg-amber-100 text-amber-900 border-amber-300',
+            'capacity': '10 Guests',
+            'bedrooms': '2 Forest Rooms + Attached Bathrooms',
+            'power': 'Solar Night Lighting',
+            'water': 'Running Fresh Water',
+            'view': 'Menik Riverbed & Lush Riverine Forest',
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1777690831/blogs/ituwsxwpjiy93mlmmctx.jpg',
+            'key_sightings': 'Elephants crossing Menik river, Tufted Grey Langurs, fish owls, leopards resting in giant Kumbuk branches, axis deer',
+            'description': 'Shaded by towering Kumbuk trees along the sacred Menik River, Ondatje Bungalow provides natural cooling and deep forest tranquility. Experience the timeless rhythm of river wildlife coming down to drink throughout the heat of the day.',
+            'features': ['Lush Riverside Shaded Deck', 'Natural Tree Canopy Cooling', 'DWC Cook & Helper Support', 'True Wilderness Solitude'],
+            'highlights': ['Cool microclimate beneath huge Kumbuk trees', 'River crossings right beside bungalow', 'Rich birdlife and monkey troops']
+        },
+        {
+            'id': 'kosgasmankada',
+            'name': 'Kosgasmankada & Thalgasmankada',
+            'block': 'Block 2 (Deep Wilderness / River Crossing)',
+            'tag': 'Untamed Raw Jungle & Ultimate Seclusion',
+            'badge_color': 'bg-purple-100 text-purple-900 border-purple-300',
+            'capacity': '10 Guests',
+            'bedrooms': 'Rustic Wilderness Rooms + Facilities',
+            'power': 'Solar Emergency Lighting',
+            'water': 'Fresh Natural Supply',
+            'view': 'Block 2 Riverbank & Dense Pristine Jungles',
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784715720/blogs/ijydonzyl3r272lpluln.jpg',
+            'key_sightings': 'Solitary bull elephants, leopard breeding pairs, sloth bears, rare forest raptors, untouched wildlife',
+            'description': 'For true adventurers seeking the rawest wilderness experience in Sri Lanka. Located in Block 2 across the Menik River, accessible only via modified 4x4 river crossing. Absolute serenity with zero tourist crowds.',
+            'features': ['4x4 River Crossing Entry', 'Ultimate Wildlife Seclusion', 'Dedicated Jungle Tracker & Cook', 'Zero Commercial Disturbance'],
+            'highlights': ['Zero tourist jeep congestion', 'Deepest immersion in untouched wild', 'Unforgettable 4x4 river crossing adventure']
+        }
+    ]
+
+    faqs_list = [
+        {
+            'q': 'How does staying in an inside-park Yala bungalow work?',
+            'a': 'DWC wildlife bungalows are located deep inside the protected boundaries of Yala National Park. When you stay in a park bungalow, you enter through the official park gate (check-in at 12:00 PM) and remain inside the park overnight after all regular daytime safari jeeps leave at 6:00 PM. You have full private access to dawn and dusk wildlife movements right from your veranda.'
+        },
+        {
+            'q': 'What is the early morning safari advantage of staying inside Yala National Park?',
+            'a': 'Because you are already situated deep inside the park, you do not have to wait in the long 5:30 AM gate queues at Palatupana or Katagamuwa. Your private 4x4 safari jeep can start tracking fresh leopard tracks at first light (5:45 AM) across undisturbed game trails, hours before day-tripper jeeps reach the interior.'
+        },
+        {
+            'q': 'Which Yala bungalow is best for leopard sightings?',
+            'a': 'Mahaseelawa and Patanangala bungalows are historically celebrated as the premier locations for leopard sightings due to their proximity to coastal lagoons, sand dunes, and granite rock outcrops. New Buthawa is also exceptional for open-plains leopard and sloth bear sightings.'
+        },
+        {
+            'q': 'Which Yala bungalow is best for elephants and birdwatching?',
+            'a': 'Heenwewa Bungalow sits directly on the edge of the ancient Heenwewa reservoir, making it the top choice for witnessing wild elephant herds bathing at sunrise and sunset, alongside over 100 wetland bird species. Ondatje Bungalow is ideal for viewing elephants drinking along the Menik River.'
+        },
+        {
+            'q': 'How are meals and food provisioning handled at the bungalow?',
+            'a': 'Every DWC bungalow has a dedicated in-house caretaker and safari cook. The cook prepares delicious traditional Sri Lankan dishes, barbecue, and safari breakfast packs. With Discoveryala\'s All-Inclusive Expedition package, our team handles all fresh groceries, meats, vegetables, spices, and drinking water. Alternatively, guests can bring their own dry and fresh provisions for the cook to prepare.'
+        },
+        {
+            'q': 'What is the booking window for Yala DWC bungalows?',
+            'a': 'The Department of Wildlife Conservation (DWC) allows bungalow bookings up to 90 days in advance. Because there are only a handful of inside-park bungalows and global demand is exceptionally high (especially for peak wildlife months from December to July and weekends), we strongly recommend submitting your reservation inquiry as early as possible.'
+        },
+        {
+            'q': 'What are the official DWC check-in, check-out, and gate curfew times?',
+            'a': 'Official DWC check-in is at 12:00 PM (noon) on your arrival date, and check-out is strictly at 10:00 AM on your departure date. Park entrance gates close strictly at 6:00 PM, meaning all arriving guests must clear the park gate before 6:00 PM.'
+        },
+        {
+            'q': 'Do I need a private 4x4 safari jeep while staying in the bungalow?',
+            'a': 'Yes! A 4x4 safari vehicle is legally required for park entry, gate transfers, and safari game drives throughout your stay. Discoveryala provides customized modified 4x4 Toyota Land Cruiser safari jeeps with experienced trackers on standby for morning, evening, and full-day game drives.'
+        },
+        {
+            'q': 'What is the difference between Block 1 and Block 2 Yala bungalows?',
+            'a': 'Block 1 bungalows (Mahaseelawa, Patanangala, New Buthawa, Heenwewa, Ondatje) have easy access via Palatupana and high leopard density. Block 2 bungalows (Kosgasmankada & Thalgasmankada) require an adventurous 4x4 river crossing across the Menik River and offer total untouched wilderness with zero commercial tourist crowds.'
+        },
+        {
+            'q': 'Is it safe to stay inside Yala National Park with children?',
+            'a': 'Yes, staying in an inside-park bungalow is an unforgettable family adventure. All bungalows are fenced with elephant protection trenches or electric fences. However, guests must strictly follow wildlife safety rules: never step outside the bungalow clearing after dark, keep doors closed, and listen to the park tracker\'s instructions at all times.'
+        },
+        {
+            'q': 'What amenities and electricity are available in the bungalows?',
+            'a': 'Bungalows are equipped with solar-powered lighting, ceiling/table fans, clean beds with fresh linen, running water, and attached flush toilets and showers. Some bungalows offer generator backup for charging cameras and mobile phones. Wi-Fi is intentionally not provided to preserve the authentic off-grid wilderness immersion.'
+        },
+        {
+            'q': 'Can Discoveryala arrange airport pickups and islandwide transfers to Yala?',
+            'a': 'Yes! We provide private luxury air-conditioned vehicle transfers from Colombo Bandaranaike International Airport (CMB), Mattala Airport (HRI), Galle, Ella, Mirissa, Tangalle, and Kandy directly to the Yala National Park entrance gate.'
+        }
+    ]
+
+    context = {
+        'title': 'Yala National Park Bungalow Bookings | DWC Wilderness Safari Lodges Sri Lanka',
+        'bungalows': bungalows_data,
+        'faqs': faqs_list,
+        'booking_success': booking_success,
+        'contact_info': {
+            'phone': '+94 77 815 8004',
+            'phone_clean': '+94778158004',
+            'email': 'yalaleopardtracks@gmail.com',
+            'address': 'Palatupana Gate Road, Yala National Park, Sri Lanka',
+            'whatsapp_url': 'https://wa.me/94778158004?text=Hello%20Discoveryala!%20I%20would%20like%20to%20inquire%20about%20Yala%20National%20Park%20Bungalow%20Bookings.'
+        }
+    }
+    return render(request, 'core/bungalows.html', context)
+
+
 def policies(request):
     """
     Legal Policies View: Consolidates Privacy Policy, Terms of Service, and Refund Policy.
@@ -1692,6 +2088,14 @@ def sitemap_xml(request):
             'lastmod': today_str,
             'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1786355872/blogs/amvi8vrath9rtjzrk01m.jpg',
             'image_title': 'Yala National Park Entrance Fees & DWC Official Ticket Prices'
+        },
+        {
+            'loc': domain + reverse('bungalows'),
+            'changefreq': 'daily',
+            'priority': '0.92',
+            'lastmod': today_str,
+            'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784456381/blogs/jqbr6khinkvptii7ax0c.jpg',
+            'image_title': 'Yala National Park Bungalow Bookings & DWC In-Park Wildlife Lodges'
         },
         {
             'loc': domain + reverse('tours'),
