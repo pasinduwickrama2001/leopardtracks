@@ -174,10 +174,8 @@
                 {% endif %}
 
                 <div class="detail-meta-pills-row">
-                    <span class="meta-pill-dark"><i class="fa-solid fa-clock font-jungle"></i> {{ package.duration
-                        }}</span>
-                    <span class="meta-pill-dark"><i class="fa-solid fa-truck-monster font-jungle"></i> {{
-                        package.vehicle }}</span>
+                    <span class="meta-pill-dark"><i class="fa-solid fa-clock font-jungle"></i> {{ package.duration }}</span>
+                    <span class="meta-pill-dark"><i class="fa-solid fa-truck-monster font-jungle"></i> {{ package.vehicle }}</span>
                     <span class="meta-pill-dark"><i class="fa-solid fa-users font-jungle"></i> Up to 7 Passengers</span>
                 </div>
             </div>
@@ -996,8 +994,7 @@
                                 {% if package.price_type == 'per_person' %}
                                 Full Adult Rate ({{ package.price }}/person)
                                 {% else %}
-                                {% if package.includes_tickets or package.ticketPrice == '0' %}Included ($0){% else
-                                %}Full Rate Ticket (${{ package.ticketPrice }}){% endif %}
+                                {% if package.includes_tickets or package.ticketPrice == '0' %}Included ($0){% else %}Full Rate Ticket (${{ package.ticketPrice }}){% endif %}
                                 {% endif %}
                             </span>
                             <input type="number" id="adult_guests" name="adult_guests" class="form-input" min="1"
@@ -1010,8 +1007,7 @@
                                 {% if package.price_type == 'per_person' %}
                                 Child Rate (${{ package.childTicketPrice }} USD)
                                 {% else %}
-                                {% if package.includes_tickets or package.childTicketPrice == '0' %}Included ($0){% else
-                                %}Child Ticket (${{ package.childTicketPrice }} USD){% endif %}
+                                {% if package.includes_tickets or package.childTicketPrice == '0' %}Included ($0){% else %}Child Ticket (${{ package.childTicketPrice }} USD){% endif %}
                                 {% endif %}
                             </span>
                             <input type="number" id="child_guests" name="child_guests" class="form-input" min="0"
@@ -1057,8 +1053,7 @@
                                 class="addon-toggle-checkbox">
                             <span>Entry Tickets (Yala Permits)</span>
                         </div>
-                        <span class="addon-toggle-price" id="tickets_addon_label" style="font-size: 0.78rem;">${{
-                            package.ticketPrice }} Adult | ${{ package.childTicketPrice }} Child | Under 6 Free</span>
+                        <span class="addon-toggle-price" id="tickets_addon_label" style="font-size: 0.78rem;">${{ package.ticketPrice }} Adult | ${{ package.childTicketPrice }} Child | Under 6 Free</span>
                     </label>
                     {% else %}
                     <!-- Shared Safari Add-on Toggles (Included) -->
