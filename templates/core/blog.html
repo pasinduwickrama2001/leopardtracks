@@ -186,8 +186,8 @@
         {% for post in other_posts|default:all_posts %}
         <!-- Square Bento Blog Card -->
         <a href="{% url 'blog_detail' slug=post.slug %}"
-            class="fs-bento-card {% cycle 'fs-bento-square-large' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-large' 'fs-bento-square-small' 'fs-bento-square-small' %} blog-bento-item {% if forloop.counter > 10 %}blog-item-hidden{% endif %}"
-            {% if forloop.counter > 10 %}style="display: none;"{% endif %}
+            class="fs-bento-card {% cycle 'fs-bento-square-large' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-large' 'fs-bento-square-small' 'fs-bento-square-small' %} blog-bento-item {% if forloop.counter > 11 %}blog-item-hidden{% endif %}"
+            {% if forloop.counter > 11 %}style="display: none;"{% endif %}
             aria-label="{{ post.title }}">
             {% if post.imageUrl %}
             <img src="{{ post.imageUrl }}" alt="{{ post.title }} - Yala National Park Wildlife Journal"
