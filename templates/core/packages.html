@@ -192,7 +192,7 @@
         <a href="{% url 'package_detail' slug=item.slug %}"
             class="fs-bento-card {% cycle 'fs-bento-square-large' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-small' 'fs-bento-square-large' 'fs-bento-square-small' 'fs-bento-square-small' %} package-bento-item {% if forloop.counter > 10 %}package-item-hidden{% endif %}"
             data-category="{{ item.category }}"
-            style="text-decoration: none;{% if forloop.counter > 10 %} display: none;{% endif %}"
+            {% if forloop.counter > 10 %}style="display: none;"{% endif %}
             aria-label="{{ item.title }}">
             {% if item.imageUrl %}
             <img src="{{ item.imageUrl }}" alt="{{ item.title }} - Yala National Park 4x4 Safari Jeep Drive"

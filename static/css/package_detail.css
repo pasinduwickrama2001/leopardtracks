@@ -109,6 +109,40 @@
     transform: scale(1.03);
 }
 
+/* Gallery Thumbnails */
+.gallery-thumbs-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.gallery-thumb-item {
+    width: 70px;
+    height: 50px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    flex-shrink: 0;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.gallery-thumb-item:hover {
+    transform: translateY(-2px);
+}
+
+.gallery-thumb-item.active {
+    border-color: #606C38;
+}
+
+.gallery-thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 /* Package Main Section - Seamless Background */
 .package-detail-section {
     padding: 50px 0 90px;

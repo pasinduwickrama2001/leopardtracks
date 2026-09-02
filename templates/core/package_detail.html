@@ -188,13 +188,11 @@
                 </div>
 
                 {% if image_urls_list|length > 1 %}
-                <div style="display: flex; gap: 8px; margin-top: 12px; overflow-x: auto; padding-bottom: 4px;">
+                <div class="gallery-thumbs-row">
                     {% for img_url in image_urls_list %}
-                    <div style="width: 70px; height: 50px; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid {% if forloop.first %}#606C38{% else %}transparent{% endif %}; flex-shrink: 0;"
-                        class="gallery-thumb-item"
-                        onclick="document.getElementById('mainHeaderImage').src='{{ img_url }}'; document.querySelectorAll('.gallery-thumb-item').forEach(el => el.style.borderColor='transparent'); this.style.borderColor='#606C38';">
-                        <img src="{{ img_url }}" alt="Gallery Image {{ forloop.counter }}"
-                            style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="gallery-thumb-item{% if forloop.first %} active{% endif %}"
+                        onclick="document.getElementById('mainHeaderImage').src='{{ img_url }}'; document.querySelectorAll('.gallery-thumb-item').forEach(el => el.classList.remove('active')); this.classList.add('active');">
+                        <img src="{{ img_url }}" alt="Gallery Image {{ forloop.counter }}">
                     </div>
                     {% endfor %}
                 </div>
