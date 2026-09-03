@@ -1,5 +1,17 @@
 from django.db import models
 
+def optimize_cloudinary_url(url, width=None):
+    if not url or not isinstance(url, str):
+        return url
+    url = url.strip()
+    if 'res.cloudinary.com' not in url or '/image/upload/' not in url:
+        return url
+    if 'f_auto' in url or 'q_auto' in url:
+        return url
+    transform = f"f_auto,q_auto,w_{width}/" if width else "f_auto,q_auto/"
+    return url.replace('/image/upload/', f'/image/upload/{transform}')
+
+
 class SafariPackage(models.Model):
     CATEGORY_CHOICES = [
         ('half-day', 'Half-Day Game Drive'),
@@ -254,14 +266,17 @@ class HeroSection(models.Model):
         super().save(*args, **kwargs)
 
     def get_hero_image_url(self):
+        url = ""
         if self.imageUrl and self.imageUrl.strip():
-            return self.imageUrl.strip()
-        if self.image_file:
+            url = self.imageUrl.strip()
+        elif self.image_file:
             try:
-                return self.image_file.url
+                url = self.image_file.url
             except Exception:
                 pass
-        return "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1786355872/blogs/amvi8vrath9rtjzrk01m.jpg"
+        if not url:
+            url = "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg"
+        return optimize_cloudinary_url(url, 1200)
 
     def __str__(self):
         return f"{self.title} ({'Active' if self.is_active else 'Inactive'})"
@@ -324,14 +339,17 @@ class Tour(models.Model):
         super().save(*args, **kwargs)
 
     def get_tour_image_url(self):
+        url = ""
         if self.imageUrl and self.imageUrl.strip():
-            return self.imageUrl.strip()
-        if self.image_file:
+            url = self.imageUrl.strip()
+        elif self.image_file:
             try:
-                return self.image_file.url
+                url = self.image_file.url
             except Exception:
                 pass
-        return "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1780047686/tours/yltrwtcjetsweu307nhc.jpg"
+        if not url:
+            url = "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1780047686/tours/yltrwtcjetsweu307nhc.jpg"
+        return optimize_cloudinary_url(url, 800)
 
     def get_highlights_list(self):
         if not self.highlights:

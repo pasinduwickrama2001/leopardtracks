@@ -1,12 +1,38 @@
-/* Tailwind CSS Directives */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Core Utility Classes (Zero-Dependency) */
+.hidden {
+    display: none !important;
+}
+
+.block {
+    display: block !important;
+}
+
+.flex {
+    display: flex !important;
+}
+
+.grid {
+    display: grid !important;
+}
+
+@media (min-width: 640px) {
+    .sm\:block {
+        display: block !important;
+    }
+
+    .sm\:flex {
+        display: flex !important;
+    }
+
+    .sm\:hidden {
+        display: none !important;
+    }
+}
 
 /* ==========================================================================
-   Yala Leopard Tracks - Tailwind CSS & Luxury Pastel Stylesheet
+   Yala Leopard Tracks - Luxury Pastel Stylesheet
    - Button Accent Color: #606C38 (Earth Olive Green)
-   - Fonts: Poppins & Roboto
+   - Typography: Plus Jakarta Sans, Outfit & Inter
    ========================================================================== */
 
 :root {
@@ -43,13 +69,13 @@
     --pastel-rose-main: #D9A59E;
     --pastel-rose-light: #F5EAE8;
 
-    /* Deep Soft Forest Moss (For readable text & deep contrast) */
+    /* Deep Soft Forest Moss (WCAG AAA compliant text contrast) */
     --forest-dark: #233325;
     --forest-medium: #2C3E2E;
 
     --text-primary: #233325;
-    --text-muted: #586B5A;
-    --text-light: #778B78;
+    --text-muted: #3D4F3F;
+    --text-light: #4D614F;
     --text-white: #FFFFFF;
 
     --font-heading: 'Plus Jakarta Sans', 'Google Sans', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -2125,6 +2151,7 @@ button[type="submit"]:hover,
         bottom: 12px;
         left: 12px;
     }
+
     .exact-pop-card {
         width: 230px;
         padding: 12px 10px 8px;
@@ -2205,10 +2232,12 @@ button[type="submit"]:hover,
         transform: scale(0.95);
         opacity: 0.8;
     }
+
     70% {
         transform: scale(1.35);
         opacity: 0;
     }
+
     100% {
         transform: scale(1.35);
         opacity: 0;
@@ -2293,7 +2322,7 @@ button[type="submit"]:hover,
     border-radius: 50%;
     object-fit: cover;
     border: none !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     background: #FFFFFF;
 }
 
@@ -2496,7 +2525,8 @@ button[type="submit"]:hover,
     border: none !important;
     outline: none !important;
     background: transparent;
-    font-size: 16px !important; /* 16px minimum prevents iOS / mobile browser viewport auto-zoom */
+    font-size: 16px !important;
+    /* 16px minimum prevents iOS / mobile browser viewport auto-zoom */
     color: #233325;
     font-family: inherit;
     padding: 6px 0;
@@ -2546,16 +2576,21 @@ button[type="submit"]:hover,
         bottom: 16px;
         right: 16px;
     }
+
     .gw-chat-fab {
         width: 50px;
         height: 50px;
     }
+
     .gw-fab-icon {
         font-size: 24px;
     }
+
     .gw-fab-tooltip {
-        display: none !important; /* Hide hover tooltip on touch devices */
+        display: none !important;
+        /* Hide hover tooltip on touch devices */
     }
+
     .gw-chat-window {
         bottom: 60px;
         right: 0;
@@ -2563,10 +2598,12 @@ button[type="submit"]:hover,
         max-width: 330px;
         border-radius: 20px;
     }
+
     .gw-chat-body {
         max-height: 240px;
         -webkit-overflow-scrolling: touch;
     }
+
     .gw-chip {
         font-size: 0.78rem;
         padding: 7px 12px;
@@ -2579,13 +2616,16 @@ button[type="submit"]:hover,
         bottom: 12px;
         right: 12px;
     }
+
     .gw-chat-window {
         width: calc(100vw - 24px);
         bottom: 58px;
     }
+
     .gw-header-title {
         font-size: 0.88rem;
     }
+
     .gw-msg-text {
         font-size: 0.82rem;
     }
@@ -2593,6 +2633,7 @@ button[type="submit"]:hover,
 
 /* Universal iOS Safari / Mobile Input Auto-Zoom Prevention */
 @media screen and (max-width: 850px) {
+
     input,
     select,
     textarea,

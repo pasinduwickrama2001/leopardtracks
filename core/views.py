@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib import messages
-from .models import SafariPackage, SafariBooking, BlogPost, HeroSection, Tour, GuestReview
+from .models import SafariPackage, SafariBooking, BlogPost, HeroSection, Tour, GuestReview, optimize_cloudinary_url
 
 
 
@@ -50,7 +50,7 @@ def home(request):
                 'title': pkg.title,
                 'subtitle': pkg.subtitle,
                 'slug': pkg.slug,
-                'imageUrl': pkg.imageUrl or '/static/images/yala-tent.jpg',
+                'imageUrl': optimize_cloudinary_url(pkg.imageUrl or '/static/images/yala-tent.jpg', 800),
                 'description': pkg.description,
                 'category_label': pkg.category_label,
                 'tag_class': pkg.tag_class,
@@ -77,7 +77,7 @@ def home(request):
                         'title': pkg.get('title', ''),
                         'subtitle': pkg.get('subtitle', ''),
                         'slug': pkg.get('slug', ''),
-                        'imageUrl': pkg.get('imageUrl', '') or '/static/images/yala-tent.jpg',
+                        'imageUrl': optimize_cloudinary_url(pkg.get('imageUrl', '') or '/static/images/yala-tent.jpg', 800),
                         'description': pkg.get('description', ''),
                         'category_label': pkg.get('category_label', 'SAFARI DRIVE'),
                         'tag_class': pkg.get('tag_class', 'tag-sage'),
@@ -125,7 +125,7 @@ def home(request):
                         'route': tr.get('route', ''),
                         'duration': tr.get('duration', ''),
                         'clean_price': price_str,
-                        'imageUrl': tr.get('imageUrl', '') or '/static/images/yala-wildlife-hero.jpg',
+                        'imageUrl': optimize_cloudinary_url(tr.get('imageUrl', '') or '/static/images/yala-wildlife-hero.jpg', 800),
                         'description': tr.get('description', ''),
                         'highlights_list': hl_list,
                     })
@@ -148,7 +148,7 @@ def home(request):
                 'slug': b.slug,
                 'category': b.category,
                 'author': b.author,
-                'imageUrl': b.imageUrl or '/static/images/yala-wildlife-hero.jpg',
+                'imageUrl': optimize_cloudinary_url(b.imageUrl or '/static/images/yala-wildlife-hero.jpg', 800),
                 'excerpt': excerpt[:140] + ("..." if len(excerpt) > 140 else ""),
                 'created_at': b.created_at.strftime('%b %d, %Y') if getattr(b, 'created_at', None) else 'Aug 2026',
             })
@@ -168,7 +168,7 @@ def home(request):
                         'slug': b.get('slug', ''),
                         'category': b.get('category', 'WILDLIFE'),
                         'author': b.get('author', 'Senior Naturalist Desk'),
-                        'imageUrl': b.get('imageUrl', '') or '/static/images/yala-wildlife-hero.jpg',
+                        'imageUrl': optimize_cloudinary_url(b.get('imageUrl', '') or '/static/images/yala-wildlife-hero.jpg', 800),
                         'excerpt': content_text[:140] + "...",
                         'created_at': 'Aug 2026',
                     })

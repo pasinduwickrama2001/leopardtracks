@@ -163,40 +163,19 @@
     <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <!-- Web Typography: Outfit, Inter, Plus Jakarta Sans, Roboto -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Roboto:wght@400;500;700&display=swap"
-        rel="stylesheet">
+    <!-- Web Typography: Plus Jakarta Sans, Inter, Outfit, Roboto -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Roboto:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Roboto:wght@400;500;700&display=swap"></noscript>
 
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Tailwind CSS v3 CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'olive-btn': '#606C38',
-                        'olive-dark': '#475128',
-                        'pastel-cream': '#FAF6EE',
-                        'pastel-sage': '#EBF3EA',
-                        'pastel-sand': '#F7EFE2',
-                        'pastel-amber': '#E0AA60',
-                        'forest-dark': '#233325',
-                    },
-                    fontFamily: {
-                        heading: ['Poppins', 'Roboto', 'sans-serif'],
-                        body: ['Roboto', 'Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- FontAwesome Icons (Asynchronous non-render-blocking) -->
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <!-- Primary Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_head %}{% endblock %}
     {% block extra_css %}{% endblock %}
 </head>
 
@@ -220,8 +199,8 @@
 
             <!-- CTA Button -->
             <div class="header-actions">
-                <a href="/packages" class="btn-gold-pill header-cta-btn">
-                    <i class="fa-solid fa-compass"></i>
+                <a href="/packages" class="btn-gold-pill header-cta-btn" aria-label="Book Safari Packages Now">
+                    <i class="fa-solid fa-compass" aria-hidden="true"></i>
                     <span class="btn-text">Book now</span>
                 </a>
             </div>
@@ -296,7 +275,7 @@
 
             <!-- Col 2: Explore Links -->
             <div class="footer-col">
-                <h4 class="footer-heading">EXPLORE</h4>
+                <h3 class="footer-heading">EXPLORE</h3>
                 <ul class="footer-links">
                     <li><a href="{% url 'packages' %}"><i class="fa-solid fa-chevron-right"></i> Safari Packages</a></li>
                     <li><a href="{% url 'bungalows' %}"><i class="fa-solid fa-chevron-right"></i> Yala Bungalows</a></li>
@@ -308,7 +287,7 @@
 
             <!-- Col 3: Support Links -->
             <div class="footer-col">
-                <h4 class="footer-heading">SUPPORT</h4>
+                <h3 class="footer-heading">SUPPORT</h3>
                 <ul class="footer-links">
                     <li><a href="{% url 'tickets' %}"><i class="fa-solid fa-chevron-right"></i> Booking & Tickets</a>
                     </li>
@@ -322,7 +301,7 @@
 
             <!-- Col 4: Location & Secure Comms -->
             <div class="footer-col contact-col">
-                <h4 class="footer-heading">LOCATION & COMMS</h4>
+                <h3 class="footer-heading">LOCATION & COMMS</h3>
                 <ul class="footer-contact-list">
                     <li><span class="contact-icon-bubble"><i class="fa-solid fa-phone"></i></span> +94 77 815 8004</li>
                     <li><span class="contact-icon-bubble"><i class="fa-solid fa-envelope"></i></span>
@@ -338,7 +317,7 @@
             <div class="footer-bottom-container">
                 <div class="legal-credits">
                     <p>&copy; {% now "Y" %} Discover Yala. All Rights Reserved. Ethical Safari Expeditions Sri
-                        Lanka. • <span style="color: #606C38; font-weight: 700;"><i
+                        Lanka. • <span style="color: #475128; font-weight: 700;"><i
                                 class="fa-solid fa-code font-gold"></i> Architected by Pasindu</span></p>
                     <span class="legal-links">
                         <a href="{% url 'policies' %}#privacy">Privacy Policy</a> •
@@ -437,9 +416,9 @@
             </div>
 
             <!-- Heading -->
-            <h2 class="exact-pop-title">
+            <div class="exact-pop-title" role="heading" aria-level="3">
                 <span class="highlight-august">AUGUST</span> DISCOUNTS
-            </h2>
+            </div>
 
             <!-- Subtitle & Included Items -->
             <div class="exact-pop-sub">PER PERSON • ALL INCLUDED</div>

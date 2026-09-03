@@ -596,6 +596,10 @@
     </div>
 </div>
 
+{% if booking_success %}
+{{ booking_success|json_script:"booking-success-data" }}
+{% endif %}
+
 <!-- Interactive JavaScript Helpers -->
 <script>
     function openBookingModal() {
@@ -766,13 +770,32 @@
         });
 
         // Trigger modal if loaded via GET success redirect
-        {% if booking_success %}
-        document.getElementById('modalGuestGreeting').textContent = "Ayubowan, {{ booking_success.name|escapejs }}!";
-        document.getElementById('modalBungalowName').textContent = "{{ booking_success.bungalow|escapejs }}";
-        document.getElementById('modalStayDates').textContent = "{{ booking_success.dates|escapejs }}";
-        document.getElementById('modalGuestEmail').textContent = "{{ booking_success.email|escapejs }}";
-        openBookingModal();
-        {% endif %}
+        const bookingSuccessEl = document.getElementById('booking-success-data');
+        if (bookingSuccessEl) {
+            try {
+                const bookingData = JSON.parse(bookingSuccessEl.textContent);
+                if (bookingData) {
+                    const guestGreeting = document.getElementById('modalGuestGreeting');
+                    if (guestGreeting) guestGreeting.textContent = `Ayubowan, ${bookingData.name || 'Valued Guest'}!`;
+                    const bungalowEl = document.getElementById('modalBungalowName');
+                    if (bungalowEl) bungalowEl.textContent = bookingData.bungalow || 'Yala Bungalow';
+                    const stayDatesEl = document.getElementById('modalStayDates');
+                    if (stayDatesEl) stayDatesEl.textContent = bookingData.dates || '';
+                    const guestEmailEl = document.getElementById('modalGuestEmail');
+                    if (guestEmailEl) guestEmailEl.textContent = bookingData.email || '';
+
+                    const modalWaBtn = document.getElementById('modalWhatsAppBtn');
+                    if (modalWaBtn) {
+                        const waText = encodeURIComponent(`Hello Discoveryala! I just submitted a bungalow booking request for ${bookingData.bungalow || 'Yala Bungalow'} (${bookingData.dates || ''}) under ${bookingData.name || 'Valued Guest'}.`);
+                        modalWaBtn.href = `https://wa.me/94778158004?text=${waText}`;
+                    }
+
+                    openBookingModal();
+                }
+            } catch (err) {
+                console.error('Error reading booking success data:', err);
+            }
+        }
     });
 </script>
 {% endblock %}
