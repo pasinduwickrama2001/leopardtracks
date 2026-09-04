@@ -33,7 +33,7 @@ class SafariPackage(models.Model):
     # Dual Image Options: Local File Upload or Cloudinary URL link
     image_file = models.ImageField(upload_to='packages/', blank=True, null=True, help_text="Upload image file from local device (auto-uploads to Cloudinary if configured) OR paste direct URL in Image URL field below")
     imageUrl = models.CharField(max_length=500, blank=True, default='', help_text="Primary Cloudinary or image URL (Auto-filled when uploading local image file)")
-    image_urls = models.TextField(blank=True, default='', help_text="Additional image URLs / Cloudinary URLs for gallery (Separate multiple URLs with newlines)")
+    image_urls = models.TextField(blank=True, null=True, default='', help_text="Additional image URLs / Cloudinary URLs for gallery (Separate multiple URLs with newlines)")
     
     description = models.TextField(blank=True, default='', help_text="Detailed description of the safari package experience")
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='half-day')
@@ -84,16 +84,27 @@ class SafariPackage(models.Model):
 
                 if cloud_name or cloud_url:
                     import cloudinary.uploader
+                    if hasattr(self.image_file, 'seek'):
+                        self.image_file.seek(0)
                     res = cloudinary.uploader.upload(self.image_file, folder="leopardtracks/packages")
                     if res and 'secure_url' in res:
                         self.imageUrl = res['secure_url']
+                        self.image_file._committed = True
                 elif hasattr(self.image_file, 'url'):
                     self.imageUrl = self.image_file.url
             except Exception:
                 if hasattr(self.image_file, 'url'):
-                    self.imageUrl = self.image_file.url
+                    try:
+                        self.imageUrl = self.image_file.url
+                    except Exception:
+                        pass
 
-        super().save(*args, **kwargs)
+        try:
+            super().save(*args, **kwargs)
+        except OSError:
+            if self.image_file:
+                self.image_file._committed = True
+            super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -198,16 +209,27 @@ class BlogPost(models.Model):
 
                 if cloud_name or cloud_url:
                     import cloudinary.uploader
+                    if hasattr(self.image_file, 'seek'):
+                        self.image_file.seek(0)
                     res = cloudinary.uploader.upload(self.image_file, folder="leopardtracks/blogs")
                     if res and 'secure_url' in res:
                         self.imageUrl = res['secure_url']
+                        self.image_file._committed = True
                 elif hasattr(self.image_file, 'url'):
                     self.imageUrl = self.image_file.url
             except Exception:
                 if hasattr(self.image_file, 'url'):
-                    self.imageUrl = self.image_file.url
+                    try:
+                        self.imageUrl = self.image_file.url
+                    except Exception:
+                        pass
 
-        super().save(*args, **kwargs)
+        try:
+            super().save(*args, **kwargs)
+        except OSError:
+            if self.image_file:
+                self.image_file._committed = True
+            super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -254,16 +276,27 @@ class HeroSection(models.Model):
 
                 if cloud_name or cloud_url:
                     import cloudinary.uploader
+                    if hasattr(self.image_file, 'seek'):
+                        self.image_file.seek(0)
                     res = cloudinary.uploader.upload(self.image_file, folder="leopardtracks/hero")
                     if res and 'secure_url' in res:
                         self.imageUrl = res['secure_url']
+                        self.image_file._committed = True
                 elif hasattr(self.image_file, 'url'):
                     self.imageUrl = self.image_file.url
             except Exception:
                 if hasattr(self.image_file, 'url'):
-                    self.imageUrl = self.image_file.url
+                    try:
+                        self.imageUrl = self.image_file.url
+                    except Exception:
+                        pass
 
-        super().save(*args, **kwargs)
+        try:
+            super().save(*args, **kwargs)
+        except OSError:
+            if self.image_file:
+                self.image_file._committed = True
+            super().save(*args, **kwargs)
 
     def get_hero_image_url(self):
         url = ""
@@ -327,16 +360,27 @@ class Tour(models.Model):
 
                 if cloud_name or cloud_url:
                     import cloudinary.uploader
+                    if hasattr(self.image_file, 'seek'):
+                        self.image_file.seek(0)
                     res = cloudinary.uploader.upload(self.image_file, folder="leopardtracks/tours")
                     if res and 'secure_url' in res:
                         self.imageUrl = res['secure_url']
+                        self.image_file._committed = True
                 elif hasattr(self.image_file, 'url'):
                     self.imageUrl = self.image_file.url
             except Exception:
                 if hasattr(self.image_file, 'url'):
-                    self.imageUrl = self.image_file.url
+                    try:
+                        self.imageUrl = self.image_file.url
+                    except Exception:
+                        pass
 
-        super().save(*args, **kwargs)
+        try:
+            super().save(*args, **kwargs)
+        except OSError:
+            if self.image_file:
+                self.image_file._committed = True
+            super().save(*args, **kwargs)
 
     def get_tour_image_url(self):
         url = ""

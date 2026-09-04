@@ -119,8 +119,17 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': SQLITE_PATH,
+        'OPTIONS': {
+            'timeout': 30,
+        },
     }
 }
+
+# Session Configuration (Signed cookie sessions for stateless serverless environments)
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_AGE = 86400 * 30  # 30 days
+
 
 
 
@@ -171,7 +180,10 @@ except ImportError:
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+if os.getenv('VERCEL') or os.getenv('VERCEL_ENV'):
+    MEDIA_ROOT = Path('/tmp') / 'media'
+else:
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

@@ -1963,7 +1963,7 @@ button[type="submit"]:hover,
     color: var(--text-primary, #233325);
     margin: 0 0 3px;
     line-height: 1.1;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 .highlight-august {

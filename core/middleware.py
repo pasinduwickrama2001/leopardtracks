@@ -5,6 +5,7 @@ from django.core.management import call_command
 
 logger = logging.getLogger(__name__)
 _DB_INITIALIZED = False
+_LAST_ADMIN_SYNC = 0
 
 class AutoDatabaseInitMiddleware:
     """
@@ -57,26 +58,30 @@ class AutoDatabaseInitMiddleware:
                     from core.mongodb import sync_all_from_mongo_to_sqlite, sync_all_from_sqlite_to_mongo
                     hydrated = sync_all_from_mongo_to_sqlite()
                     
-                    # If MongoDB had no records, load initial fixture and sync UP to MongoDB
+                    # If database is completely empty (no packages), load initial fixture
                     from core.models import SafariPackage
-                    if not hydrated or SafariPackage.objects.count() == 0:
+                    if SafariPackage.objects.count() == 0:
                         fixture = Path(__file__).resolve().parent.parent / 'initial_data.json'
                         if fixture.exists():
                             call_command('loaddata', str(fixture), interactive=False)
-                            sync_all_from_sqlite_to_mongo()
                 except Exception as e:
                     logger.warning(f"MongoDB hydration notice: {e}")
 
             except Exception as e:
                 logger.error(f"AutoDatabaseInit error: {e}")
 
-        # If accessing the Admin dashboard index, ensure SQLite has the freshest live MongoDB records
+        # In Admin panel, ensure SQLite periodically has fresh MongoDB records (at most once every 5 minutes)
+        global _LAST_ADMIN_SYNC
+        import time
+        now = time.time()
         if request.path == '/admin/' and getattr(request, 'user', None) and request.user.is_authenticated and request.user.is_staff:
-            try:
-                from core.mongodb import sync_all_from_mongo_to_sqlite
-                sync_all_from_mongo_to_sqlite()
-            except Exception:
-                pass
+            if now - _LAST_ADMIN_SYNC > 300:
+                _LAST_ADMIN_SYNC = now
+                try:
+                    from core.mongodb import sync_all_from_mongo_to_sqlite
+                    sync_all_from_mongo_to_sqlite()
+                except Exception:
+                    pass
 
         response = self.get_response(request)
 

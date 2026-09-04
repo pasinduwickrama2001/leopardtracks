@@ -5,4 +5,4 @@ gunicorn>=21.0.0
 whitenoise>=6.5.0
 pymongo>=4.6.0
 dnspython>=2.4.0
-
+cloudinary>=1.36.0
