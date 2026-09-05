@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ post.title }} | yala National park | Wildlife Sri Lanka{% endblock %}
-
+<!-- {% block title %}{{ post.title }} | yala National park | Wildlife Sri Lanka{% endblock %} -->
+{% block title %}{{ post.title }}{% endblock %}
 {% block meta_description %}
 <meta name="description"
     content="{% if paragraphs %}{{ paragraphs.0|truncatewords:26|striptags }}{% else %}{{ post.content|truncatewords:26|striptags }}{% endif %} Read full Yala National Park safari guide by Discoveryala.">
