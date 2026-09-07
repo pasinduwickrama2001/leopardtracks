@@ -42,8 +42,8 @@
     {
       "@type": "ItemList",
       "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#list",
-      "name": "Yala National Park Safari Packages & Expeditions",
-      "description": "Curated 4x4 game drives, full-day leopard tracking, and luxury tented glamping camp stays in Yala National Park.",
+      "name": "Yala National Park Safari Packages & Game Drives",
+      "description": "Curated private 4x4 Land Cruiser game drives, full-day leopard tracking, and luxury tented glamping camp stays in Yala National Park.",
       "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
       "numberOfItems": {{ packages_list|length|default:1 }}
     },
@@ -62,6 +62,52 @@
           "position": 2,
           "name": "Safari Packages",
           "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does a Yala safari cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A private 4x4 safari jeep in Yala costs between $55 and $120 USD per vehicle (accommodating up to 6–7 passengers), depending on duration (4-hour morning, 4-hour evening, or 12-hour full day). Shared budget safari tours start from $14 USD per person. Official DWC entrance tickets are approximately $30–$46 USD per adult depending on group size and current VAT."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What time does a Yala safari start?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Morning game drives depart hotel pickups at 05:00 AM to queue at Palatupana or Katagamuwa gate before official entry at 06:00 AM. Afternoon safaris enter the park at 02:30 PM and exit at 06:00 PM. Full-day expeditions operate from 06:00 AM until 06:00 PM with a designated midday rest inside the park."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many people can travel in a private safari jeep?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standard modified Toyota Land Cruiser and Hilux 4x4 safari jeeps accommodate up to 6 to 7 adult passengers with individual tiered forward-facing seats, open viewing sides, and cushioned roll cages."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a morning or afternoon safari better in Yala?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both offer excellent wildlife opportunities. Morning safaris (06:00 AM – 10:00 AM) are optimal for seeing leopards stalking in the cool morning air and active birds. Afternoon safaris (02:30 PM – 06:00 PM) offer dramatic golden-hour photography and elephants gathering near waterholes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where does Discoveryala pick up guests for Yala safaris?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Discoveryala provides door-to-door hotel and villa pickups across Tissamaharama, Kirinda, Palatupana, Kataragama, and Weerawila at no additional fee."
+          }
         }
       ]
     }
@@ -108,6 +154,82 @@
             <span
                 style="font-size: 0.82rem; font-weight: 800; color: #606C38; background: rgba(96,108,56,0.08); padding: 6px 14px; border-radius: 50px;"><i
                     class="fa-solid fa-truck-monster font-gold"></i> Private Land Cruisers</span>
+        </div>
+    </div>
+</section>
+
+<!-- Answer-First Direct Answer & Safari Comparison Table (AEO Optimized) -->
+<section style="background-color: var(--bg-pastel-cream); padding: 10px 0 20px;">
+    <div class="container">
+        <!-- Direct Answer Card -->
+        <div class="aeo-direct-answer-card">
+            <span class="aeo-badge"><i class="fa-solid fa-bolt font-gold"></i> Quick Answer for Travelers</span>
+            <h2 class="aeo-question">What is a Yala Safari Package and What Does It Include?</h2>
+            <p class="aeo-answer-p">
+                A Yala safari package with <strong>Discoveryala</strong> provides private or shared 4x4 modified Toyota Land Cruiser game drives into Yala National Park (Block 1 Ruhuna or Block 5) with a certified local driver-tracker. Available in morning (05:30 AM – 10:30 AM), afternoon (02:30 PM – 06:00 PM), or full-day (05:30 AM – 06:00 PM) formats, packages range from $55 to $120 USD per private jeep (up to 7 guests) or from $14 USD per person for shared tours. Complimentary hotel pickup is included across Tissamaharama, Palatupana, and Kataragama.
+            </p>
+            <div class="aeo-key-points">
+                <span><i class="fa-solid fa-truck-pickup"></i> Private 4x4 Land Cruiser</span>
+                <span><i class="fa-solid fa-tag"></i> From $55/jeep ($14/person shared)</span>
+                <span><i class="fa-solid fa-hotel"></i> Free Hotel Pickup Included</span>
+                <span><i class="fa-solid fa-paw"></i> Leopards, Elephants, Sloth Bears</span>
+            </div>
+        </div>
+
+        <!-- Structured Comparison Table -->
+        <div style="margin-top: 24px;">
+            <span class="section-tag tag-sage"><i class="fa-solid fa-scale-balanced"></i> SAFARI COMPARISON GUIDE</span>
+            <h3 style="font-family: var(--font-heading); font-size: 1.35rem; color: #233325; margin: 8px 0 16px;">Comparing Yala Safari Formats & Best Viewing Windows</h3>
+            <div class="aeo-table-wrapper">
+                <table class="aeo-comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Safari Format</th>
+                            <th>Hours & Timing</th>
+                            <th>Primary Wildlife Focus</th>
+                            <th>Vehicle & Group Setup</th>
+                            <th>Base Starting Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Morning Leopard Drive</strong></td>
+                            <td>05:30 AM – 10:30 AM (5h)</td>
+                            <td>Leopard territorial patrol, birds, sloth bears</td>
+                            <td>Private 4x4 Toyota (up to 7)</td>
+                            <td>$55 – $75 per jeep</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Evening Wildlife Drive</strong></td>
+                            <td>02:30 PM – 06:00 PM (3.5–4h)</td>
+                            <td>Elephants at waterholes, golden-hour light</td>
+                            <td>Private 4x4 Toyota (up to 7)</td>
+                            <td>$55 – $65 per jeep</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Full-Day Deep Expedition</strong></td>
+                            <td>05:30 AM – 06:00 PM (12h)</td>
+                            <td>Comprehensive Block 1 & 2 tracking, maximum coverage</td>
+                            <td>Private 4x4 Toyota (up to 7)</td>
+                            <td>$110 – $130 per jeep</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Shared Budget Safari</strong></td>
+                            <td>05:30 AM / 02:30 PM</td>
+                            <td>General wildlife, elephants, deer, crocodiles</td>
+                            <td>Shared 4x4 Jeep (per-seat)</td>
+                            <td>$14 – $25 per person</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bundala Birding Safari</strong></td>
+                            <td>05:45 AM – 10:30 AM / 7h</td>
+                            <td>Ramsar wetlands, flamingos, migratory waders</td>
+                            <td>Private 4x4 Toyota (up to 7)</td>
+                            <td>$60 – $85 per jeep</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
@@ -237,7 +359,81 @@
     </div>
 </section>
 
-<!-- Show All Button JavaScript -->
+<!-- Frequently Asked Questions Section (AEO Schema 1:1 Verified) -->
+<section style="padding: 50px 0 20px; background-color: var(--bg-pastel-cream);">
+    <div class="container">
+        <div class="aeo-faq-wrapper">
+            <span class="section-tag tag-sage"><i class="fa-solid fa-circle-question font-gold"></i> VERIFIED TRAVEL ADVICE</span>
+            <h2 class="aeo-faq-title">Frequently Asked Questions About Yala Safaris</h2>
+            
+            <div class="aeo-faq-list">
+                <div class="aeo-faq-item active">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>How much does a Yala safari cost?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        A private 4x4 safari jeep in Yala costs between $55 and $120 USD per vehicle (accommodating up to 6–7 passengers), depending on duration (4-hour morning, 4-hour evening, or 12-hour full day). Shared budget safari tours start from $14 USD per person. Official DWC entrance tickets are approximately $30–$46 USD per adult depending on group size and current VAT.
+                    </div>
+                </div>
+
+                <div class="aeo-faq-item">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>What time does a Yala safari start?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        Morning game drives depart hotel pickups at 05:00 AM to queue at Palatupana or Katagamuwa gate before official entry at 06:00 AM. Afternoon safaris enter the park at 02:30 PM and exit at 06:00 PM. Full-day expeditions operate from 06:00 AM until 06:00 PM with a designated midday rest inside the park.
+                    </div>
+                </div>
+
+                <div class="aeo-faq-item">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>How many people can travel in a private safari jeep?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        Standard modified Toyota Land Cruiser and Hilux 4x4 safari jeeps accommodate up to 6 to 7 adult passengers with individual tiered forward-facing seats, open viewing sides, and cushioned roll cages.
+                    </div>
+                </div>
+
+                <div class="aeo-faq-item">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>Is a morning or afternoon safari better in Yala?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        Both offer excellent wildlife opportunities. Morning safaris (06:00 AM – 10:00 AM) are optimal for seeing leopards stalking in the cool morning air and active birds. Afternoon safaris (02:30 PM – 06:00 PM) offer dramatic golden-hour photography and elephants gathering near waterholes.
+                    </div>
+                </div>
+
+                <div class="aeo-faq-item">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>Where does Discoveryala pick up guests for Yala safaris?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        Discoveryala provides door-to-door hotel and villa pickups across Tissamaharama, Kirinda, Palatupana, Kataragama, and Weerawila at no additional fee.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Semantic Cluster Links (Topic Authority Interlinking) -->
+        <div class="aeo-cluster-nav">
+            <h4><i class="fa-solid fa-compass font-gold"></i> Explore Related Yala Resources & Guides</h4>
+            <div class="aeo-cluster-pills">
+                <a href="{% url 'tickets' %}" class="aeo-cluster-link"><i class="fa-solid fa-ticket"></i> Official DWC Entrance Fees Calculator</a>
+                <a href="{% url 'bungalows' %}" class="aeo-cluster-link"><i class="fa-solid fa-house-chimney-window"></i> Yala Park Wildlife Bungalow Bookings</a>
+                <a href="{% url 'tours' %}" class="aeo-cluster-link"><i class="fa-solid fa-route"></i> Islandwide Sri Lanka Round Tours</a>
+                <a href="{% url 'blog' %}" class="aeo-cluster-link"><i class="fa-solid fa-book-open"></i> Wildlife Field Logs & Leopard Tracking Guide</a>
+                <a href="{% url 'about' %}" class="aeo-cluster-link"><i class="fa-solid fa-shield-halved"></i> About Discoveryala & Ethical Tracking</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Show All Button & FAQ JavaScript -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const showAllBtn = document.getElementById('show-all-packages-btn');

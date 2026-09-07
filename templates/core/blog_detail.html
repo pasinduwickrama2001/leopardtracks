@@ -128,6 +128,14 @@
             "@type": "Answer",
             "text": "Early morning 5:30 AM – 10:30 AM and afternoon 2:30 PM – 6:00 PM game drives offer the highest probability of leopard, elephant, and sloth bear sightings."
           }
+        },
+        {
+          "@type": "Question",
+          "name": "Which animals are commonly spotted alongside Sri Lankan leopards in Yala?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In addition to leopards, visitors frequently observe Asian elephants, sloth bears, spotted deer, sambar deer, mugger crocodiles, water monitors, and over 215 resident and migratory bird species."
+          }
         }
       ]
     }
@@ -172,6 +180,24 @@
                 class="blog-detail-hero-img" loading="eager" decoding="async">
             {% endif %}
 
+            <!-- Answer-First Direct Takeaway Card (AEO Optimized) -->
+            <div class="aeo-direct-answer-card">
+                <span class="aeo-badge"><i class="fa-solid fa-bolt font-gold"></i> Key Takeaway</span>
+                <h2 class="aeo-question">Article Summary: {{ post.title }}</h2>
+                <p class="aeo-answer-p">
+                    {% if paragraphs %}
+                    {{ paragraphs.0 }}
+                    {% else %}
+                    {{ post.content|truncatewords:60 }}
+                    {% endif %}
+                </p>
+                <div class="aeo-key-points">
+                    <span><i class="fa-solid fa-user-check"></i> Field Verified by Discoveryala Naturalists</span>
+                    <span><i class="fa-solid fa-location-dot"></i> Yala National Park, Sri Lanka</span>
+                    <span><i class="fa-solid fa-calendar-check"></i> 2026 Field Insights</span>
+                </div>
+            </div>
+
             <!-- Article Story Body -->
             <article class="blog-content-body">
                 {% for paragraph in paragraphs %}
@@ -181,9 +207,68 @@
                 {% endfor %}
             </article>
 
+            <!-- Author Expertise & E-E-A-T Bio Box -->
+            <div class="aeo-tracker-tip">
+                <div class="tip-icon"><i class="fa-solid fa-user-ninja"></i></div>
+                <div class="tip-content">
+                    <h4>About the Author: {{ post.author|default:"Discoveryala Senior Naturalist & Tracker" }}</h4>
+                    <p>
+                        Field observations and insights verified by senior trackers and licensed naturalists from Discoveryala based on-ground at Palatupana Gate, Yala National Park. Our tracking desk monitors daily leopard movements across Ruhuna Block 1, elephant migratory paths, and dry-zone birding conditions with an unwavering commitment to ethical, respectful wildlife observation.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Visible FAQ Accordion (1:1 Schema Parity) -->
+            <div class="aeo-faq-wrapper" style="margin: 36px 0;">
+                <h3 style="font-family: var(--font-heading); font-size: 1.35rem; color: #233325; margin-bottom: 16px;"><i class="fa-solid fa-circle-question font-gold"></i> Frequently Asked Questions</h3>
+                <div class="aeo-faq-list">
+                    <div class="aeo-faq-item active">
+                        <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                            <span>How to book a private 4x4 safari related to {{ post.title }}?</span>
+                            <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                        </button>
+                        <div class="aeo-faq-answer">
+                            You can book custom 4x4 game drives in Yala Block 1 directly online with Discoveryala or message the 24/7 safari desk on WhatsApp (+94 77 815 8004).
+                        </div>
+                    </div>
+
+                    <div class="aeo-faq-item">
+                        <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                            <span>What is the best time of day for wildlife sightings in Yala?</span>
+                            <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                        </button>
+                        <div class="aeo-faq-answer">
+                            Early morning 5:30 AM – 10:30 AM and afternoon 2:30 PM – 6:00 PM game drives offer the highest probability of leopard, elephant, and sloth bear sightings.
+                        </div>
+                    </div>
+
+                    <div class="aeo-faq-item">
+                        <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                            <span>Which animals are commonly spotted alongside Sri Lankan leopards in Yala?</span>
+                            <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                        </button>
+                        <div class="aeo-faq-answer">
+                            In addition to leopards, visitors frequently observe Asian elephants, sloth bears, spotted deer, sambar deer, mugger crocodiles, water monitors, and over 215 resident and migratory bird species.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Semantic Cluster Links -->
+            <div class="aeo-cluster-nav">
+                <h4><i class="fa-solid fa-compass font-gold"></i> Related Yala National Park Expeditions & Guides</h4>
+                <div class="aeo-cluster-pills">
+                    <a href="{% url 'packages' %}" class="aeo-cluster-link"><i class="fa-solid fa-truck-monster"></i> Yala Safari Packages & Jeep Bookings</a>
+                    <a href="{% url 'tickets' %}" class="aeo-cluster-link"><i class="fa-solid fa-ticket"></i> DWC Official Park Entrance Fees</a>
+                    <a href="{% url 'bungalows' %}" class="aeo-cluster-link"><i class="fa-solid fa-house-chimney-window"></i> Inside-Park Wildlife Bungalows</a>
+                    <a href="{% url 'tours' %}" class="aeo-cluster-link"><i class="fa-solid fa-route"></i> Sri Lanka Wildlife Multi-Day Tours</a>
+                    <a href="{% url 'blog' %}" class="aeo-cluster-link"><i class="fa-solid fa-newspaper"></i> More Wildlife Journal Logs</a>
+                </div>
+            </div>
+
             <!-- Yala National Park Safari Feature Callout -->
             <div
-                style="background: rgba(96,108,56,0.08); border-left: 4px solid #606C38; border-radius: 16px; padding: 22px 28px; margin: 36px 0;">
+                style="background-color: transparent; border: none; padding: 16px 0; margin: 28px 0;">
                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
                     <i class="fa-solid fa-paw font-gold" style="font-size: 1.2rem;"></i>
                     <strong style="font-family: var(--font-heading); font-size: 1.1rem; color: #233325;">YALA NATIONAL

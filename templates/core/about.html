@@ -36,79 +36,84 @@
 
 {% block schema_org %}
 <script type="application/ld+json">
-[
-  {
-    "@context": "https://schema.org",
-    "@type": "AboutPage",
-    "name": "About Yala National Park & Discoveryala",
-    "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
-    "description": "Information on Yala National Park (Ruhuna), home to the world's highest wild leopard density, and Discoveryala ethical safari team.",
-    "mainEntity": {
-      "@type": "TouristAttraction",
-      "name": "Yala National Park (Ruhuna National Park)",
-      "description": "Spanning 979 square kilometers in Sri Lanka's dry zone, Yala National Park is world-renowned for hosting the highest density of wild leopards on Earth.",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Tissamaharama",
-        "addressRegion": "Southern Province",
-        "addressCountry": "LK"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 6.3712,
-        "longitude": 81.5167
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#webpage",
+      "name": "About Discoveryala & Yala National Park",
+      "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+      "description": "Comprehensive information on Yala National Park (Ruhuna), the Sri Lankan leopard sanctuary, and Discoveryala ethical safari team.",
+      "mainEntity": {
+        "@type": "TouristAttraction",
+        "@id": "{{ request.scheme }}://{{ request.get_host }}/#yala-national-park",
+        "name": "Yala National Park (Ruhuna National Park)",
+        "description": "Spanning 979 square kilometers in Sri Lanka's southeastern dry zone, Yala National Park hosts the highest wild leopard density on Earth.",
+        "sameAs": [
+          "https://en.wikipedia.org/wiki/Yala_National_Park",
+          "https://www.wikidata.org/wiki/Q1140158"
+        ]
       }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.scheme }}://{{ request.get_host }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "About Yala National Park",
+          "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Where is Yala National Park located in Sri Lanka?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yala National Park is situated in Sri Lanka's southeastern dry zone spanning Hambantota district (Southern Province) and Monaragala district (Uva Province), approximately 260 km from Colombo near Tissamaharama."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does Yala have the world's highest wild leopard density?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because Sri Lanka has no larger apex predators such as lions, tigers, or hyenas, the Sri Lankan Leopard (Panthera pardus kotiya) has evolved as the undisputed ruler of the food chain, resulting in high population density and fearless daytime visibility."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Discoveryala practice ethical eco-safaris?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We strictly follow a Nature First policy: maintaining respectful buffer distance from wildlife, adhering to DWC park speed limits, eliminating single-use plastics, using low-emission 4x4 Land Cruisers, and employing exclusively local community naturalists."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many blocks does Yala National Park have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yala National Park comprises 5 designated administrative blocks spanning 979 sq km, with Block 1 (Ruhuna) and Block 5 (Weheragala) serving as the primary zones for wildlife game drives."
+          }
+        }
+      ]
     }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "{{ request.scheme }}://{{ request.get_host }}"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "About Yala National Park",
-        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
-      }
-    ]
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Where is Yala National Park located in Sri Lanka?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yala National Park is located in the southeastern dry zone of Sri Lanka spanning Southern and Uva provinces, approximately 260 km from Colombo near Tissamaharama."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Why is Yala National Park famous worldwide?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yala National Park is internationally famous for having the highest wild leopard concentration per square kilometer on Earth (Panthera pardus kotiya), alongside Asian Elephants, Sloth Bears, and ancient monastic ruins."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How many blocks does Yala National Park have?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yala National Park comprises 5 administrative blocks (Block 1 Ruhuna, Block 2, Block 3, Block 4, and Block 5 Weheragala) spanning 979 sq km."
-        }
-      }
-    ]
-  }
-]
+  ]
+}
 </script>
 {% endblock %}
 
@@ -329,6 +334,31 @@
                     hiring local community naturalists.
                 </p>
             </details>
+
+            <details
+                style="background: rgba(96,108,56,0.06); border-radius: 16px; padding: 18px 24px; cursor: pointer;">
+                <summary
+                    style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #233325; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                    <span><i class="fa-solid fa-layer-group font-gold" style="margin-right: 10px;"></i> How many blocks does Yala National Park have?</span>
+                    <i class="fa-solid fa-chevron-down font-gold"></i>
+                </summary>
+                <p
+                    style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(96,108,56,0.18);">
+                    Yala National Park comprises 5 designated administrative blocks spanning 979 sq km, with Block 1 (Ruhuna) and Block 5 (Weheragala) serving as the primary zones for wildlife game drives.
+                </p>
+            </details>
+        </div>
+
+        <!-- Semantic Cluster Links (Topic Authority Interlinking) -->
+        <div class="aeo-cluster-nav" style="margin-top: 40px;">
+            <h4><i class="fa-solid fa-compass font-gold"></i> Explore More Yala Resources</h4>
+            <div class="aeo-cluster-pills">
+                <a href="{% url 'packages' %}" class="aeo-cluster-link"><i class="fa-solid fa-compass"></i> Safari Packages & Game Drives</a>
+                <a href="{% url 'tickets' %}" class="aeo-cluster-link"><i class="fa-solid fa-ticket"></i> DWC Official Park Tickets & Fees</a>
+                <a href="{% url 'bungalows' %}" class="aeo-cluster-link"><i class="fa-solid fa-house-chimney-window"></i> Yala Wilderness Bungalows</a>
+                <a href="{% url 'tours' %}" class="aeo-cluster-link"><i class="fa-solid fa-route"></i> Islandwide Sri Lanka Round Tours</a>
+                <a href="{% url 'blog' %}" class="aeo-cluster-link"><i class="fa-solid fa-newspaper"></i> Wildlife Field Journal</a>
+            </div>
         </div>
     </div>
 </section>

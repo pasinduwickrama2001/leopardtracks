@@ -53,16 +53,10 @@
         "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
         "seller": {
           "@type": "TravelAgency",
+          "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization",
           "name": "Discoveryala",
           "telephone": "+94778158004"
         }
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "180",
-        "bestRating": "5",
-        "worstRating": "1"
       }
     },
     {
@@ -73,6 +67,7 @@
       "touristType": ["Wildlife Enthusiasts", "Culture Seekers", "Island Expeditioners"],
       "provider": {
         "@type": "TravelAgency",
+        "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization",
         "name": "Discoveryala",
         "telephone": "+94778158004"
       }
@@ -107,7 +102,7 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "Is private transportation and English-speaking chauffeur included?",
+          "name": "Is private transportation and English-speaking chauffeur included in {{ tour.title|escapejs }}?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Yes, dedicated private air-conditioned vehicle with fuel, expressway tolls, parking fees, and a certified tourist chauffeur is provided throughout the entire tour."
@@ -119,6 +114,22 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Absolutely. All Discoveryala round tours are 100% bespoke and can be adjusted with custom hotel tiers, additional safari drives in Yala/Udawalawe, or extra nights."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does this tour incorporate Yala National Park safari experiences?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This tour includes coordinated private 4x4 Land Cruiser game drives in Yala National Park with experienced local trackers, managing all entry permits and timing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What luggage capacity is available for this tour?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Depending on party size, sedans accommodate up to 2 large suitcases plus hand luggage, while luxury high-roof KDH passenger vans comfortably hold 7 large suitcases."
           }
         }
       ]
@@ -217,6 +228,21 @@
             <span class="tour-breadcrumb-active">{{ tour.title }}</span>
         </div>
 
+        <!-- Answer-First Direct Answer Block (AEO Optimized) -->
+        <div class="aeo-direct-answer-card">
+            <span class="aeo-badge"><i class="fa-solid fa-bolt font-gold"></i> Direct Tour Overview</span>
+            <h2 class="aeo-question">What is the {{ tour.title }} Itinerary & What Does It Include?</h2>
+            <p class="aeo-answer-p">
+                <strong>{{ tour.title }}</strong> is a private {{ tour.duration }} Sri Lanka round tour operated by Discoveryala. Featuring dedicated air-conditioned vehicle transport with a certified English-speaking chauffeur-guide, the tour covers: <em>{{ tour.route|default:"Cultural Triangle to Yala National Park and Southern Coast" }}</em>. Starting from ${{ tour.get_clean_price }} USD per tour, all fuel, expressway tolls, driver accommodations, and private game drive logistics are managed seamlessly.
+            </p>
+            <div class="aeo-key-points">
+                <span><i class="fa-solid fa-clock"></i> {{ tour.duration }}</span>
+                <span><i class="fa-solid fa-car-side"></i> Dedicated Private A/C Vehicle</span>
+                <span><i class="fa-solid fa-tag"></i> From ${{ tour.get_clean_price }} USD</span>
+                <span><i class="fa-solid fa-route"></i> {{ tour.route|truncatewords:6 }}</span>
+            </div>
+        </div>
+
         <!-- Journey Overview Block -->
         {% if tour.longDescription %}
         <div class="tour-journey-block">
@@ -283,6 +309,102 @@
                     </li>
                     {% endfor %}
                 </ul>
+            </div>
+        </div>
+
+        <!-- Tour Fleet Specifications & Logistics -->
+        <div style="margin: 40px 0;">
+            <h3 class="tour-section-heading"><i class="fa-solid fa-car font-gold"></i> Tour Transport & Vehicle Standards</h3>
+            <div class="aeo-table-wrapper">
+                <table class="aeo-comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Specification</th>
+                            <th>Sedan Option (1–3 Guests)</th>
+                            <th>Luxury Van Option (4–7 Guests)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Model Types</strong></td>
+                            <td>Toyota Prius / Axio / Premio A/C</td>
+                            <td>Toyota KDH High-Roof Luxury Passenger Van</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Chauffeur Guide</strong></td>
+                            <td>Licensed tourist chauffeur (English speaking)</td>
+                            <td>Licensed senior tourist chauffeur (English speaking)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Luggage Allowance</strong></td>
+                            <td>2 Large Suitcases + Hand Luggage</td>
+                            <td>7 Large Suitcases + Hand Luggage</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Included Expenses</strong></td>
+                            <td>Fuel, Expressway Tolls, Parking, Driver Lodging</td>
+                            <td>Fuel, Expressway Tolls, Parking, Driver Lodging</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Visible FAQ Accordion (1:1 Schema Parity) -->
+        <div class="aeo-faq-wrapper" style="margin: 40px 0;">
+            <h3 class="tour-section-heading"><i class="fa-solid fa-circle-question font-gold"></i> Frequently Asked Questions</h3>
+            <div class="aeo-faq-list">
+                <div class="aeo-faq-item active">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>Is private transportation and English-speaking chauffeur included in {{ tour.title }}?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        Yes, dedicated private air-conditioned vehicle with fuel, expressway tolls, parking fees, and a certified tourist chauffeur is provided throughout the entire tour.
+                    </div>
+                </div>
+
+                <div class="aeo-faq-item">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>Can this {{ tour.title }} itinerary be customized?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        Absolutely. All Discoveryala round tours are 100% bespoke and can be adjusted with custom hotel tiers, additional safari drives in Yala/Udawalawe, or extra nights.
+                    </div>
+                </div>
+
+                <div class="aeo-faq-item">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>How does this tour incorporate Yala National Park safari experiences?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        This tour includes coordinated private 4x4 Land Cruiser game drives in Yala National Park with experienced local trackers, managing all entry permits and timing.
+                    </div>
+                </div>
+
+                <div class="aeo-faq-item">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>What luggage capacity is available for this tour?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        Depending on party size, sedans accommodate up to 2 large suitcases plus hand luggage, while luxury high-roof KDH passenger vans comfortably hold 7 large suitcases.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Semantic Cluster Links -->
+        <div class="aeo-cluster-nav">
+            <h4><i class="fa-solid fa-compass font-gold"></i> Related Sri Lanka Tour & Safari Links</h4>
+            <div class="aeo-cluster-pills">
+                <a href="{% url 'tours' %}" class="aeo-cluster-link"><i class="fa-solid fa-route"></i> All Islandwide Tour Packages</a>
+                <a href="{% url 'packages' %}" class="aeo-cluster-link"><i class="fa-solid fa-compass"></i> Yala 4x4 Safari Game Drives</a>
+                <a href="{% url 'tickets' %}" class="aeo-cluster-link"><i class="fa-solid fa-ticket"></i> National Park Entrance Fees</a>
+                <a href="{% url 'bungalows' %}" class="aeo-cluster-link"><i class="fa-solid fa-house-chimney-window"></i> In-Park Wilderness Bungalow Stays</a>
+                <a href="{% url 'contact' %}" class="aeo-cluster-link"><i class="fa-solid fa-headset"></i> Request Custom Route Quote</a>
             </div>
         </div>
 

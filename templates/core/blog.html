@@ -76,6 +76,36 @@
           "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
         }
       ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What topics does the Discoveryala Wildlife Journal cover?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The journal covers Sri Lankan leopard tracking reports, Yala park blocks and gate logistics, official DWC entrance fee breakdowns, wildlife photography techniques, and ethical safari guidelines."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who writes the Yala field logs and safari guides?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All articles and sighting logs are authored by Discoveryala's licensed senior naturalists and local trackers based full-time near Palatupana Gate, Yala National Park."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are leopard sightings guaranteed on a Yala safari?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No ethical safari operator guarantees wildlife sightings. However, Yala Block 1 hosts the highest recorded wild leopard density on Earth (approximately 1 leopard per square kilometer), resulting in exceptionally high observation probabilities during morning and afternoon drives."
+          }
+        }
+      ]
     }
   ]
 }
@@ -120,6 +150,25 @@
             <span
                 style="font-size: 0.82rem; font-weight: 800; color: #606C38; background: rgba(96,108,56,0.08); padding: 6px 14px; border-radius: 50px;"><i
                     class="fa-solid fa-leaf font-gold"></i> Conservation Updates</span>
+        </div>
+    </div>
+</section>
+
+<!-- Answer-First Direct Answer Hub (AEO Optimized) -->
+<section style="background-color: var(--bg-pastel-cream); padding: 10px 0 20px;">
+    <div class="container">
+        <div class="aeo-direct-answer-card">
+            <span class="aeo-badge"><i class="fa-solid fa-bolt font-gold"></i> Naturalist Field Insights</span>
+            <h2 class="aeo-question">What is the Discoveryala Wildlife Journal?</h2>
+            <p class="aeo-answer-p">
+                The <strong>Discoveryala Wildlife Journal</strong> is an authoritative field publication authored by resident senior naturalists and safari trackers operating in Yala National Park, Sri Lanka. Covering Panthera pardus kotiya tracking logs, seasonal elephant corridors, official DWC entrance ticket guides, and park block analyses (Block 1 Ruhuna, Block 5, and Bundala wetlands), every article provides actionable, fact-checked advice for international wildlife travelers.
+            </p>
+            <div class="aeo-key-points">
+                <span><i class="fa-solid fa-binoculars"></i> Ground-Verified Field Observations</span>
+                <span><i class="fa-solid fa-shield-cat"></i> Strict Ethical Wildlife Etiquette</span>
+                <span><i class="fa-solid fa-map-location-dot"></i> Yala Block 1, 3, 4, 5 & Bundala</span>
+                <span><i class="fa-solid fa-book-open"></i> Updated for 2026 Season</span>
+            </div>
         </div>
     </div>
 </section>
@@ -226,6 +275,60 @@
             <span>SHOW ALL </span>
             <i class="fa-solid fa-chevron-down"></i>
         </button>
+    </div>
+</section>
+
+<!-- Frequently Asked Questions Section (AEO Schema 1:1 Verified) -->
+<section style="padding: 50px 0 20px; background-color: var(--bg-pastel-cream);">
+    <div class="container">
+        <div class="aeo-faq-wrapper">
+            <span class="section-tag tag-sage"><i class="fa-solid fa-circle-question font-gold"></i> WILDLIFE DESK FAQ</span>
+            <h2 class="aeo-faq-title">Frequently Asked Questions: Yala Wildlife & Planning</h2>
+            
+            <div class="aeo-faq-list">
+                <div class="aeo-faq-item active">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>What topics does the Discoveryala Wildlife Journal cover?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        The journal covers Sri Lankan leopard tracking reports, Yala park blocks and gate logistics, official DWC entrance fee breakdowns, wildlife photography techniques, and ethical safari guidelines.
+                    </div>
+                </div>
+
+                <div class="aeo-faq-item">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>Who writes the Yala field logs and safari guides?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        All articles and sighting logs are authored by Discoveryala's licensed senior naturalists and local trackers based full-time near Palatupana Gate, Yala National Park.
+                    </div>
+                </div>
+
+                <div class="aeo-faq-item">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>Are leopard sightings guaranteed on a Yala safari?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        No ethical safari operator guarantees wildlife sightings. However, Yala Block 1 hosts the highest recorded wild leopard density on Earth (approximately 1 leopard per square kilometer), resulting in exceptionally high observation probabilities during morning and afternoon drives.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Semantic Cluster Links (Topic Authority Interlinking) -->
+        <div class="aeo-cluster-nav">
+            <h4><i class="fa-solid fa-compass font-gold"></i> Explore Related Yala Resources & Guides</h4>
+            <div class="aeo-cluster-pills">
+                <a href="{% url 'packages' %}" class="aeo-cluster-link"><i class="fa-solid fa-truck-monster"></i> Safari Packages & 4x4 Jeep Drives</a>
+                <a href="{% url 'tickets' %}" class="aeo-cluster-link"><i class="fa-solid fa-ticket"></i> DWC Official Park Entrance Fees</a>
+                <a href="{% url 'bungalows' %}" class="aeo-cluster-link"><i class="fa-solid fa-house-chimney-window"></i> Inside-Park Wildlife Bungalows</a>
+                <a href="{% url 'tours' %}" class="aeo-cluster-link"><i class="fa-solid fa-route"></i> Islandwide Sri Lanka Round Tours</a>
+                <a href="{% url 'about' %}" class="aeo-cluster-link"><i class="fa-solid fa-shield-halved"></i> About Discoveryala & Conservation</a>
+            </div>
+        </div>
     </div>
 </section>
 

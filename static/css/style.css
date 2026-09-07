@@ -2653,3 +2653,295 @@ button[type="submit"]:hover,
         font-size: 16px !important;
     }
 }
+
+/* ==========================================================================
+   AEO (Answer Engine Optimization) & Semantic SEO Component Styles
+   Theme: Unified Single Background & Borderless Clean Design
+   ========================================================================== */
+
+/* 1. Direct Answer Quick-Extract Box (40-80 Word AI Extraction Target) */
+.aeo-direct-answer-card {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 10px 0 20px;
+    margin: 16px 0 24px;
+}
+
+.aeo-direct-answer-card .aeo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(96, 108, 56, 0.08);
+    color: #475128;
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 5px 14px;
+    border-radius: 50px;
+    border: none;
+    margin-bottom: 12px;
+}
+
+.aeo-direct-answer-card .aeo-question {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: #233325;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+}
+
+.aeo-direct-answer-card .aeo-answer-p {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: #2D3748;
+    margin: 0 0 14px 0;
+}
+
+.aeo-key-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    padding-top: 8px;
+    border-top: none;
+    font-size: 0.88rem;
+    color: #4A5568;
+}
+
+.aeo-key-points span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+}
+
+.aeo-key-points span i {
+    color: #606C38;
+}
+
+/* 2. Structured Comparison & Facts Tables (Single Seamless Background & Borderless) */
+.aeo-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 16px 0 28px;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.aeo-comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: transparent;
+    font-size: 0.92rem;
+    text-align: left;
+}
+
+.aeo-comparison-table th {
+    background-color: transparent;
+    color: #233325;
+    padding: 14px 16px;
+    font-weight: 800;
+    font-family: var(--font-heading);
+    letter-spacing: 0.5px;
+    border: none;
+    border-bottom: 2px solid rgba(96, 108, 56, 0.2);
+}
+
+.aeo-comparison-table td {
+    padding: 14px 16px;
+    border: none;
+    border-bottom: 1px solid rgba(96, 108, 56, 0.1);
+    color: #2D3748;
+    line-height: 1.55;
+    vertical-align: top;
+    background-color: transparent;
+}
+
+.aeo-comparison-table tr:nth-child(even) td {
+    background-color: transparent;
+}
+
+.aeo-comparison-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* 3. Field Naturalist Tracker Tip Box */
+.aeo-tracker-tip {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 16px 0;
+    margin: 20px 0;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+}
+
+.aeo-tracker-tip .tip-icon {
+    background: #606C38;
+    color: #FFFFFF;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.aeo-tracker-tip .tip-content h4 {
+    margin: 0 0 6px 0;
+    font-family: var(--font-heading);
+    color: #233325;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.aeo-tracker-tip .tip-content p {
+    margin: 0;
+    font-size: 0.93rem;
+    color: #4A5568;
+    line-height: 1.65;
+}
+
+/* 4. Semantic Internal Linking Cluster Matrix */
+.aeo-cluster-nav {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 20px 0;
+    margin: 28px 0;
+}
+
+.aeo-cluster-nav h4 {
+    margin: 0 0 14px 0;
+    font-family: var(--font-heading);
+    color: #233325;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.aeo-cluster-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.aeo-cluster-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: rgba(96, 108, 56, 0.08);
+    border: none;
+    color: #475128;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.aeo-cluster-link:hover {
+    background-color: #606C38;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(96,108,56,0.18);
+}
+
+/* 5. Clean Accordion FAQ Component (Single Seamless Background & Borderless) */
+.aeo-faq-wrapper {
+    margin: 28px 0 40px;
+}
+
+.aeo-faq-title {
+    font-family: var(--font-heading);
+    font-size: 1.55rem;
+    color: #233325;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.aeo-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.aeo-faq-item {
+    border: none;
+    border-radius: 16px;
+    background-color: rgba(96, 108, 56, 0.05);
+    overflow: hidden;
+    transition: background-color 0.2s ease;
+}
+
+.aeo-faq-item.active {
+    border: none;
+    background-color: rgba(96, 108, 56, 0.07);
+}
+
+.aeo-faq-q-btn {
+    width: 100%;
+    padding: 18px 22px;
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #233325;
+    gap: 16px;
+    transition: background-color 0.2s;
+}
+
+.aeo-faq-q-btn:hover {
+    background-color: rgba(96, 108, 56, 0.04);
+}
+
+.aeo-faq-icon {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(96,108,56,0.12);
+    color: #606C38;
+    font-size: 0.85rem;
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+}
+
+.aeo-faq-item.active .aeo-faq-icon {
+    transform: rotate(180deg);
+    background: #606C38;
+    color: #FFFFFF;
+}
+
+.aeo-faq-answer {
+    display: none;
+    padding: 0 22px 20px;
+    color: #3D4F3F;
+    font-size: 0.96rem;
+    line-height: 1.7;
+    background-color: transparent;
+}
+
+.aeo-faq-item.active .aeo-faq-answer {
+    display: block;
+}

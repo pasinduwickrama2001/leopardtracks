@@ -42,7 +42,7 @@
     {
       "@type": "ItemList",
       "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#list",
-      "name": "Sri Lanka Islandwide Tour Expeditions & Safari Packages",
+      "name": "Sri Lanka Multi-Day Wildlife Tours & Private Transfers",
       "description": "Curated multi-day Sri Lanka round tours including Yala National Park wildlife safaris, Cultural Triangle, Ella highlands, and coastal beaches.",
       "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
       "numberOfItems": {{ tours_list|length|default:1 }}
@@ -62,6 +62,44 @@
           "position": 2,
           "name": "Islandwide Tours",
           "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is included in Discoveryala Sri Lanka multi-day tours?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Multi-day tours include dedicated private air-conditioned vehicles (sedan or luxury van), professional English-speaking chauffeur-guide, fuel, expressway tolls, parking fees, hotel pickups, and customized Yala National Park 4x4 game drives."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can we customize our Sri Lanka wildlife and cultural itinerary?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, every Discoveryala round tour is 100% tailor-made. You can select route durations (from 3 to 14 days), hotel tiers (boutique, eco-lodges, or luxury tented glamping), and add extra safari drives across Yala, Udawalawe, or Bundala."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do transfers between Yala and other Sri Lankan destinations work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We operate direct private transfers connecting Yala and Tissamaharama with Ella (2 hours), Mirissa and Weligama (2.5 hours), Galle Fort (3 hours), Kandy (5 hours), and Colombo Airport CMB (4.5 hours via Southern Expressway)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What types of vehicles are used for multi-day tours?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We operate modern Toyota Prius and Axio sedans for couples (up to 3 guests) and high-roof Toyota KDH luxury passenger vans for families and small groups (up to 7 guests with full luggage)."
+          }
         }
       ]
     }
@@ -106,6 +144,81 @@
             <span
                 style="font-size: 0.82rem; font-weight: 800; color: #606C38; background: rgba(96,108,56,0.08); padding: 6px 14px; border-radius: 50px;"><i
                     class="fa-solid fa-car font-gold"></i> Luxury A/C Private Chauffeur</span>
+        </div>
+    </div>
+</section>
+
+<!-- Answer-First Direct Answer & Geographic Route Hub (AEO Optimized) -->
+<section style="background-color: var(--bg-pastel-cream); padding: 10px 0 20px;">
+    <div class="container">
+        <div class="aeo-direct-answer-card">
+            <span class="aeo-badge"><i class="fa-solid fa-bolt font-gold"></i> Quick Answer for Sri Lanka Travelers</span>
+            <h2 class="aeo-question">What Are Discoveryala Sri Lanka Multi-Day Wildlife Tours?</h2>
+            <p class="aeo-answer-p">
+                Discoveryala multi-day tours are private, tailor-made Sri Lankan journeys pairing dedicated air-conditioned vehicles and licensed English-speaking chauffeur-guides with immersive wildlife safaris in Yala, Udawalawe, and Bundala. Ranging from 3 to 14 days, itineraries seamlessly link Yala National Park with iconic cultural hubs including Sigiriya, Kandy, Nuwara Eliya, Ella, and southern beaches (Mirissa, Galle). All fuel, expressway tolls, driver lodging, and park logistics are fully included.
+            </p>
+            <div class="aeo-key-points">
+                <span><i class="fa-solid fa-car-side"></i> Dedicated Private A/C Transport</span>
+                <span><i class="fa-solid fa-user-tie"></i> Certified English-Speaking Chauffeur</span>
+                <span><i class="fa-solid fa-paw"></i> Yala & Udawalawe Safari Logistics</span>
+                <span><i class="fa-solid fa-map-pin"></i> Tailor-Made 3 to 14-Day Routes</span>
+            </div>
+        </div>
+
+        <!-- Geographic Travel Hub Table -->
+        <div style="margin-top: 24px;">
+            <span class="section-tag tag-sage"><i class="fa-solid fa-route"></i> SRI LANKA TRAVEL LOGISTICS</span>
+            <h3 style="font-family: var(--font-heading); font-size: 1.35rem; color: #233325; margin: 8px 0 16px;">Key Travel Times & Distances to Yala National Park</h3>
+            <div class="aeo-table-wrapper">
+                <table class="aeo-comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Origin / Destination</th>
+                            <th>Driving Time</th>
+                            <th>Distance</th>
+                            <th>Recommended Route Highlights</th>
+                            <th>Transfer Vehicle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Ella to Yala</strong></td>
+                            <td>~2 Hours</td>
+                            <td>90 km</td>
+                            <td>Ravana Falls, Wellawaya scenic foothills</td>
+                            <td>Private Sedan / Mini Van</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mirissa / Weligama to Yala</strong></td>
+                            <td>~2.5 Hours</td>
+                            <td>120 km</td>
+                            <td>Matara coast, Tangalle beaches, Hambantota</td>
+                            <td>Private Sedan / Mini Van</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Galle Fort to Yala</strong></td>
+                            <td>~3 Hours</td>
+                            <td>155 km</td>
+                            <td>Southern Coastal Highway / B422 scenic drive</td>
+                            <td>Private Sedan / Mini Van</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Colombo Airport (CMB) to Yala</strong></td>
+                            <td>~4.5 Hours</td>
+                            <td>260 km</td>
+                            <td>Southern Expressway (E01) direct to Mattala exit</td>
+                            <td>Private Sedan / Mini Van</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kandy to Yala</strong></td>
+                            <td>~5 Hours</td>
+                            <td>210 km</td>
+                            <td>Hill country vistas, Randenigala / Victoria reservoir</td>
+                            <td>Private Sedan / Mini Van</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
@@ -271,6 +384,70 @@
                 <p class="fleet-desc">Modified open-air heavy-duty 4x4 safari cruiser for national park game drives &
                     rough terrain.</p>
                 <span class="fleet-capacity"><i class="fa-solid fa-users"></i> Up to 6 Safari Guests</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Frequently Asked Questions Section (AEO Schema 1:1 Verified) -->
+<section style="padding: 50px 0 20px; background-color: var(--bg-pastel-cream);">
+    <div class="container">
+        <div class="aeo-faq-wrapper">
+            <span class="section-tag tag-sage"><i class="fa-solid fa-circle-question font-gold"></i> ISLANDWIDE TRAVEL FAQ</span>
+            <h2 class="aeo-faq-title">Frequently Asked Questions About Sri Lanka Tours</h2>
+            
+            <div class="aeo-faq-list">
+                <div class="aeo-faq-item active">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>What is included in Discoveryala Sri Lanka multi-day tours?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        Multi-day tours include dedicated private air-conditioned vehicles (sedan or luxury van), professional English-speaking chauffeur-guide, fuel, expressway tolls, parking fees, hotel pickups, and customized Yala National Park 4x4 game drives.
+                    </div>
+                </div>
+
+                <div class="aeo-faq-item">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>Can we customize our Sri Lanka wildlife and cultural itinerary?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        Yes, every Discoveryala round tour is 100% tailor-made. You can select route durations (from 3 to 14 days), hotel tiers (boutique, eco-lodges, or luxury tented glamping), and add extra safari drives across Yala, Udawalawe, or Bundala.
+                    </div>
+                </div>
+
+                <div class="aeo-faq-item">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>How do transfers between Yala and other Sri Lankan destinations work?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        We operate direct private transfers connecting Yala and Tissamaharama with Ella (2 hours), Mirissa and Weligama (2.5 hours), Galle Fort (3 hours), Kandy (5 hours), and Colombo Airport CMB (4.5 hours via Southern Expressway).
+                    </div>
+                </div>
+
+                <div class="aeo-faq-item">
+                    <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
+                        <span>What types of vehicles are used for multi-day tours?</span>
+                        <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="aeo-faq-answer">
+                        We operate modern Toyota Prius and Axio sedans for couples (up to 3 guests) and high-roof Toyota KDH luxury passenger vans for families and small groups (up to 7 guests with full luggage).
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Semantic Cluster Links (Topic Authority Interlinking) -->
+        <div class="aeo-cluster-nav">
+            <h4><i class="fa-solid fa-route font-gold"></i> Related Sri Lanka Wildlife & Travel Guides</h4>
+            <div class="aeo-cluster-pills">
+                <a href="{% url 'packages' %}" class="aeo-cluster-link"><i class="fa-solid fa-compass"></i> Yala Safari Packages & Day Game Drives</a>
+                <a href="{% url 'tickets' %}" class="aeo-cluster-link"><i class="fa-solid fa-ticket"></i> Yala Entrance Fees & Ticket Pricing Guide</a>
+                <a href="{% url 'bungalows' %}" class="aeo-cluster-link"><i class="fa-solid fa-house-chimney-window"></i> Yala Deep Wilderness Bungalow Bookings</a>
+                <a href="{% url 'blog' %}" class="aeo-cluster-link"><i class="fa-solid fa-book-open"></i> Sri Lanka Wildlife Field Logs & Itinerary Tips</a>
+                <a href="{% url 'contact' %}" class="aeo-cluster-link"><i class="fa-solid fa-headset"></i> Plan a Custom Round Tour Itinerary</a>
             </div>
         </div>
     </div>

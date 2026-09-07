@@ -1972,12 +1972,13 @@ def api_get_reviews(request):
 
 def robots_txt(request):
     """
-    Returns production-grade robots.txt for Googlebot, Bingbot, Applebot and search crawlers.
+    Returns production-grade robots.txt for Googlebot, Bingbot, Applebot,
+    and legitimate AI search crawlers (GPTBot, ChatGPT-User, PerplexityBot, ClaudeBot, Google-Extended).
     """
     from django.http import HttpResponse
     domain = f"{request.scheme}://{request.get_host()}"
     content = f"""# ==============================================================================
-# Discoveryala (Yala Leopard Tracks) - Search Engine Directives
+# Discoveryala.com - Search Engine & AI Search Agent Directives
 # ==============================================================================
 User-agent: Googlebot
 Allow: /
@@ -2004,6 +2005,52 @@ Disallow: /book/
 Disallow: /*?*
 
 User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+
+# Legitimate AI Answer Engines & Search Agents
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+Disallow: /api/
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+
+User-agent: cohere-ai
 Allow: /
 Disallow: /admin/
 Disallow: /book/

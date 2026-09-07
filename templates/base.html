@@ -72,7 +72,7 @@
           "@type": "TravelAgency",
           "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization",
           "name": "Discoveryala",
-          "alternateName": "Yala Leopard Tracks",
+          "legalName": "Discover yala Sri Lanka",
           "url": "{{ request.scheme }}://{{ request.get_host }}/",
           "logo": {
             "@type": "ImageObject",
@@ -81,11 +81,11 @@
             "height": 512
           },
           "image": "https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg",
-          "description": "Bespoke 4x4 game drives, luxury tented glamping expeditions & islandwide wildlife tours in Yala National Park, Sri Lanka.",
+          "description": "Premier ethical 4x4 game drives, leopard tracking expeditions, official DWC park bungalow bookings, and multi-day Sri Lanka wildlife tours headquartered at Yala National Park.",
           "telephone": "+94778158004",
           "email": "yalaleopardtracks@gmail.com",
-          "priceRange": "$$$",
-          "currenciesAccepted": "USD, LKR, EUR, GBP",
+          "priceRange": "$$",
+          "currenciesAccepted": "USD, EUR, GBP, AUD, LKR",
           "paymentAccepted": "Cash, Credit Card, Bank Transfer",
           "address": {
             "@type": "PostalAddress",
@@ -100,26 +100,33 @@
             "latitude": 6.3712,
             "longitude": 81.3934
           },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Yala National Park"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Tissamaharama"
+            },
+            {
+              "@type": "Country",
+              "name": "Sri Lanka"
+            }
+          ],
           "openingHoursSpecification": [
             {
               "@type": "OpeningHoursSpecification",
               "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
               "opens": "05:00",
-              "closes": "20:00"
+              "closes": "21:00"
             }
           ],
           "sameAs": [
             "https://www.facebook.com/",
             "https://www.instagram.com/",
             "https://wa.me/94778158004"
-          ],
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "reviewCount": "850",
-            "bestRating": "5",
-            "worstRating": "1"
-          }
+          ]
         },
         {
           "@type": "WebSite",
@@ -134,8 +141,12 @@
           "@type": "TouristAttraction",
           "@id": "{{ request.scheme }}://{{ request.get_host }}/#yala-national-park",
           "name": "Yala National Park (Ruhuna)",
-          "alternateName": "Ruhuna National Park",
-          "description": "World-famous national park in Sri Lanka hosting the highest recorded density of wild leopards (Panthera pardus kotiya) on Earth.",
+          "alternateName": ["Ruhuna National Park", "Yala Wildlife Sanctuary"],
+          "sameAs": [
+            "https://en.wikipedia.org/wiki/Yala_National_Park",
+            "https://www.wikidata.org/wiki/Q1140158"
+          ],
+          "description": "World-famous national park in Sri Lanka hosting the highest recorded density of wild leopards (Panthera pardus kotiya) on Earth, spanning 979 sq km across Southern and Uva Provinces.",
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Tissamaharama",
@@ -226,7 +237,7 @@
 
         <div class="drawer-header">
             <div class="drawer-brand-wrap">
-                <img src="{% static 'images/logo-official.png' %}" alt="Discover Yala Logo" class="drawer-logo-img"
+                <img src="{% static 'images/logo-official.png' %}" alt="Discoveryala Logo" class="drawer-logo-img"
                     width="40" height="40">
                 <div>
                     <span class="drawer-logo">DISCOVERYALA</span>
@@ -261,19 +272,19 @@
     <!-- Charming Safari Footer (#475128 Deep Olive Theme) -->
     <footer class="site-footer" id="contact">
         <div class="footer-grid-container">
-            <!-- Col 1: About Discover Yala & Nature First Policy -->
+            <!-- Col 1: About Discoveryala & Nature First Policy -->
             <div class="footer-col brand-col">
                 <div class="footer-brand-header">
                     <span class="brand-icon-glow">
-                        <img src="{% static 'images/logo-official.png' %}" alt="Discover Yala Logo"
+                        <img src="{% static 'images/logo-official.png' %}" alt="Discoveryala Logo"
                             class="footer-logo-img" width="28" height="28">
                     </span>
                     <span class="footer-brand-title">DISCOVERYALA</span>
                 </div>
                 <p class="footer-brand-desc">
-                    As Sri Lanka's premier eco-expedition partner, Discover Yala operates with a strict "Nature
+                    As Sri Lanka's premier eco-expedition partner, Discoveryala operates with a strict "Nature
                     First" policy. We bridge luxury and raw wilderness, ensuring every journey supports local
-                    conservation efforts and ethical wildlife tracking.
+                    conservation efforts and ethical wildlife tracking in Yala National Park.
                 </p>
                 <div class="footer-highlights">
                     <p class="highlight-text"><i class="fa-solid fa-shield-cat"></i> Licensed Trackers Only • Guaranteed
@@ -329,7 +340,7 @@
         <div class="footer-bottom-wrap">
             <div class="footer-bottom-container">
                 <div class="legal-credits">
-                    <p>&copy; {% now "Y" %} Discover Yala. All Rights Reserved. Ethical Safari Expeditions Sri
+                    <p>&copy; {% now "Y" %} Discoveryala. All Rights Reserved. Ethical Safari Expeditions Sri
                         Lanka. • <span style="color: #475128; font-weight: 700;"><i
                                 class="fa-solid fa-code font-gold"></i> Architected by Pasindu</span></p>
                     <span class="legal-links">
@@ -339,13 +350,13 @@
                     </span>
                 </div>
                 <div class="social-icons">
-                    <a href="https://api.whatsapp.com/send/?phone=94778158004&text=Hello+Yala+Leopard+Tracks%21+I+would+like+to+inquire+about+safari+packages.&type=phone_number&app_absent=0"
+                    <a href="https://api.whatsapp.com/send/?phone=94778158004&text=Hello+Discoveryala%21+I+would+like+to+inquire+about+safari+packages.&type=phone_number&app_absent=0"
                         target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="https://api.whatsapp.com/send/?phone=94778158004&text=Hello+Yala+Leopard+Tracks%21+I+would+like+to+inquire+about+safari+packages.&type=phone_number&app_absent=0"
+                    <a href="https://api.whatsapp.com/send/?phone=94778158004&text=Hello+Discoveryala%21+I+would+like+to+inquire+about+safari+packages.&type=phone_number&app_absent=0"
                         target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="https://api.whatsapp.com/send/?phone=94778158004&text=Hello+Yala+Leopard+Tracks%21+I+would+like+to+inquire+about+safari+packages.&type=phone_number&app_absent=0"
+                    <a href="https://api.whatsapp.com/send/?phone=94778158004&text=Hello+Discoveryala%21+I+would+like+to+inquire+about+safari+packages.&type=phone_number&app_absent=0"
                         target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://api.whatsapp.com/send/?phone=94778158004&text=Hello+Yala+Leopard+Tracks%21+I+would+like+to+inquire+about+safari+packages.&type=phone_number&app_absent=0"
+                    <a href="https://api.whatsapp.com/send/?phone=94778158004&text=Hello+Discoveryala%21+I+would+like+to+inquire+about+safari+packages.&type=phone_number&app_absent=0"
                         target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
                 </div>
             </div>
@@ -407,6 +418,20 @@
                 revealObserver.observe(el);
             });
         });
+
+        // Global AEO FAQ Accordion Toggle Function
+        function toggleAeoFaq(btn) {
+            const item = btn.closest('.aeo-faq-item');
+            if (!item) return;
+            const isActive = item.classList.contains('active');
+            const parentList = item.closest('.aeo-faq-list');
+            if (parentList) {
+                parentList.querySelectorAll('.aeo-faq-item').forEach(el => el.classList.remove('active'));
+            }
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
     </script>
 
     <!-- Exact Bottom-Left Pop-Up Card Component -->
