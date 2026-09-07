@@ -1251,7 +1251,7 @@ def reviews(request):
                 'credit': 'Photo by Sahan W.'
             },
             {
-                'title': 'High-Performance Safari Land Cruiser',
+                'title': 'High-Performance 4x4 Safari Jeep',
                 'category': 'drives',
                 'image': 'images/hero-safari-jeep.jpg',
                 'location': 'Wickrama Desk Desk',
@@ -1892,7 +1892,7 @@ The Discoveryala Safari Team
         },
         {
             'q': 'Do I need a private 4x4 safari jeep while staying in the bungalow?',
-            'a': 'Yes! A 4x4 safari vehicle is legally required for park entry, gate transfers, and safari game drives throughout your stay. Discoveryala provides customized modified 4x4 Toyota Land Cruiser safari jeeps with experienced trackers on standby for morning, evening, and full-day game drives.'
+            'a': 'Yes! A 4x4 safari vehicle is legally required for park entry, gate transfers, and safari game drives throughout your stay. Discoveryala provides customized modified 4x4 safari jeeps with experienced trackers on standby for morning, evening, and full-day game drives.'
         },
         {
             'q': 'What is the difference between Block 1 and Block 2 Yala bungalows?',
@@ -2126,7 +2126,7 @@ def sitemap_xml(request):
             'priority': '0.95',
             'lastmod': today_str,
             'image': 'https://res.cloudinary.com/dkfnpmzpv/image/upload/v1786355872/blogs/amvi8vrath9rtjzrk01m.jpg',
-            'image_title': 'Yala Safari Packages & Private 4x4 Land Cruiser Game Drives'
+            'image_title': 'Yala Safari Packages & Private 4x4 Safari Jeep Game Drives'
         },
         {
             'loc': domain + reverse('tickets'),

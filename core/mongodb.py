@@ -274,7 +274,7 @@ def package_to_dict(pkg):
         'includes_breakfast': bool(pkg.includes_breakfast),
         'breakfast_addon_price': pkg.breakfast_addon_price or '',
         'duration': pkg.duration or '5 Hours (05:30 AM – 10:30 AM)',
-        'vehicle': pkg.vehicle or 'Private Modified Toyota Land Cruiser 4x4',
+        'vehicle': pkg.vehicle or 'Private 4x4 Safari Jeep',
         'inclusions': pkg.inclusions or '',
         'exclusions': pkg.exclusions or '',
         'highlights': pkg.highlights or '',

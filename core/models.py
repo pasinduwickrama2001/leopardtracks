@@ -57,7 +57,7 @@ class SafariPackage(models.Model):
     breakfast_addon_price = models.CharField(max_length=100, blank=True, default='+$10 USD / Person (Optional Add-on)')
     
     duration = models.CharField(max_length=100, default='5 Hours (05:30 AM – 10:30 AM)')
-    vehicle = models.CharField(max_length=200, default='Private Modified Toyota Land Cruiser 4x4')
+    vehicle = models.CharField(max_length=200, default='Private 4x4 Safari Jeep')
     
     inclusions = models.TextField(blank=True, default='', help_text="Items included (Separate with newlines)")
     exclusions = models.TextField(blank=True, default='', help_text="Items NOT included (Separate with newlines e.g. Park Tickets, Tips)")
