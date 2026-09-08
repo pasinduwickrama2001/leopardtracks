@@ -158,6 +158,74 @@
     </div>
 </section>
 
+
+<!-- Featured Hero Package Section -->
+{% if featured_package %}
+<section class="about-section" id="featured-package">
+    <div class="container grid-2-col align-center">
+        <div class="about-text-content">
+            <span class="section-tag font-gold"><i class="fa-solid fa-fire"></i> FEATURED SAFARI PACKAGE</span>
+            <h2 class="section-title">
+                <a href="{% url 'package_detail' slug=featured_package.slug %}"
+                    style="color: inherit; text-decoration: none;">
+                    {{ featured_package.title }}
+                </a>
+            </h2>
+
+            <div class="article-meta-row" style="margin-bottom: 16px;">
+                <span class="author-chip"><i class="fa-regular fa-clock"></i> {{ featured_package.duration }}</span>
+                <span>
+                    <i class="fa-solid fa-tag font-gold"></i>
+                    <strong>${{ featured_package.get_clean_price }} USD</strong>
+                </span>
+                <span><i class="fa-solid fa-truck-monster font-gold"></i> {{ featured_package.vehicle }}</span>
+            </div>
+
+            <p class="paragraph-lead">
+                {{ featured_package.description|truncatewords:45 }}
+            </p>
+
+            {% if featured_package.highlights_list %}
+            <ul class="camp-features" style="margin: 16px 0 20px; list-style: none; padding: 0;">
+                {% for hl in featured_package.highlights_list|slice:":3" %}
+                <li style="margin-bottom: 6px; font-size: 0.9rem; color: var(--forest-dark); font-weight: 600;">
+                    <i class="fa-solid fa-circle-check" style="color: #606C38; margin-right: 8px;"></i> {{ hl }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <div style="margin-top: 20px;">
+                <a href="{% url 'package_detail' slug=featured_package.slug %}" class="btn-gold-pill"
+                    aria-label="Explore {{ featured_package.title }}">
+                    EXPLORE FULL PACKAGE <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <a href="{% url 'package_detail' slug=featured_package.slug %}" class="about-image-card"
+            style="display: block; text-decoration: none;" aria-label="{{ featured_package.title }}">
+            {% if featured_package.imageUrl %}
+            <img src="{{ featured_package.imageUrl }}"
+                alt="{{ featured_package.title }} - Yala National Park Safari Package" class="rounded-img shadow-clean"
+                loading="eager" decoding="async">
+            {% else %}
+            <img src="{% static 'images/yala-tent.jpg' %}"
+                alt="{{ featured_package.title }} - Yala National Park Safari Package" class="rounded-img shadow-clean"
+                loading="eager" decoding="async">
+            {% endif %}
+            <div class="image-overlay-badge">
+                <span class="overlay-title">Yala National Park</span>
+                <span class="overlay-sub">
+                    ${{ featured_package.get_clean_price }} USD
+                </span>
+            </div>
+        </a>
+    </div>
+</section>
+{% endif %}
+
+
 <!-- Answer-First Direct Answer & Safari Comparison Table (AEO Optimized) -->
 <section style="background-color: var(--bg-pastel-cream); padding: 10px 0 20px;">
     <div class="container">
@@ -234,71 +302,6 @@
     </div>
 </section>
 
-<!-- Featured Hero Package Section -->
-{% if featured_package %}
-<section class="about-section" id="featured-package">
-    <div class="container grid-2-col align-center">
-        <div class="about-text-content">
-            <span class="section-tag font-gold"><i class="fa-solid fa-fire"></i> FEATURED SAFARI PACKAGE</span>
-            <h2 class="section-title">
-                <a href="{% url 'package_detail' slug=featured_package.slug %}"
-                    style="color: inherit; text-decoration: none;">
-                    {{ featured_package.title }}
-                </a>
-            </h2>
-
-            <div class="article-meta-row" style="margin-bottom: 16px;">
-                <span class="author-chip"><i class="fa-regular fa-clock"></i> {{ featured_package.duration }}</span>
-                <span>
-                    <i class="fa-solid fa-tag font-gold"></i>
-                    <strong>${{ featured_package.get_clean_price }} USD</strong>
-                </span>
-                <span><i class="fa-solid fa-truck-monster font-gold"></i> {{ featured_package.vehicle }}</span>
-            </div>
-
-            <p class="paragraph-lead">
-                {{ featured_package.description|truncatewords:45 }}
-            </p>
-
-            {% if featured_package.highlights_list %}
-            <ul class="camp-features" style="margin: 16px 0 20px; list-style: none; padding: 0;">
-                {% for hl in featured_package.highlights_list|slice:":3" %}
-                <li style="margin-bottom: 6px; font-size: 0.9rem; color: var(--forest-dark); font-weight: 600;">
-                    <i class="fa-solid fa-circle-check" style="color: #606C38; margin-right: 8px;"></i> {{ hl }}
-                </li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-
-            <div style="margin-top: 20px;">
-                <a href="{% url 'package_detail' slug=featured_package.slug %}" class="btn-gold-pill"
-                    aria-label="Explore {{ featured_package.title }}">
-                    EXPLORE FULL PACKAGE <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-
-        <a href="{% url 'package_detail' slug=featured_package.slug %}" class="about-image-card"
-            style="display: block; text-decoration: none;" aria-label="{{ featured_package.title }}">
-            {% if featured_package.imageUrl %}
-            <img src="{{ featured_package.imageUrl }}"
-                alt="{{ featured_package.title }} - Yala National Park Safari Package" class="rounded-img shadow-clean"
-                loading="eager" decoding="async">
-            {% else %}
-            <img src="{% static 'images/yala-tent.jpg' %}"
-                alt="{{ featured_package.title }} - Yala National Park Safari Package" class="rounded-img shadow-clean"
-                loading="eager" decoding="async">
-            {% endif %}
-            <div class="image-overlay-badge">
-                <span class="overlay-title">Yala National Park</span>
-                <span class="overlay-sub">
-                    ${{ featured_package.get_clean_price }} USD
-                </span>
-            </div>
-        </a>
-    </div>
-</section>
-{% endif %}
 
 <!-- Safari Packages Grid Section (Full-Screen Bento Grid matching blog.html) -->
 <section class="blog-grid-section" id="packages-bento-section"
