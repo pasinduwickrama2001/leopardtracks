@@ -1763,17 +1763,17 @@ button[type="submit"]:hover,
     position: absolute;
     top: 14px;
     left: 14px;
-    background: rgba(18, 33, 24, 0.75);
+    /* background: rgba(18, 33, 24, 0.75); */
     backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(1px);
     color: #FAF6EE;
     font-size: 0.72rem;
     font-weight: 800;
     letter-spacing: 0.5px;
     padding: 6px 14px;
-    border-radius: 50px;
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    /* border-radius: 50px; */
+    /* border: 1px solid rgba(212, 175, 55, 0.4); */
+    /* box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2); */
     z-index: 2;
 }
 
@@ -2854,7 +2854,7 @@ button[type="submit"]:hover,
     background-color: #606C38;
     color: #FFFFFF;
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(96,108,56,0.18);
+    box-shadow: 0 4px 10px rgba(96, 108, 56, 0.18);
 }
 
 /* 5. Clean Accordion FAQ Component (Single Seamless Background & Borderless) */
@@ -2920,7 +2920,7 @@ button[type="submit"]:hover,
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(96,108,56,0.12);
+    background: rgba(96, 108, 56, 0.12);
     color: #606C38;
     font-size: 0.85rem;
     transition: transform 0.25s ease;
