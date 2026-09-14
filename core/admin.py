@@ -44,6 +44,18 @@ class TourAdmin(admin.ModelAdmin):
         }),
     )
 
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        try:
+            from .mongodb import sync_model_to_mongo
+            synced = sync_model_to_mongo(obj)
+            if synced:
+                messages.success(request, f"✓ Synced '{getattr(obj, 'title', obj)}' to MongoDB Atlas Cloud.")
+            else:
+                messages.warning(request, f"⚠ Saved locally, but MongoDB Atlas Cloud sync timed out. Please select the item and use the 'Sync selected items directly to MongoDB Atlas' action to ensure cloud sync.")
+        except Exception as e:
+            messages.warning(request, f"⚠ Saved locally, but MongoDB sync notice: {e}")
+
 @admin.register(HeroSection)
 class HeroSectionAdmin(admin.ModelAdmin):
     list_display = ('title', 'subtitle', 'badge_text', 'is_active', 'updated_at')
@@ -53,6 +65,18 @@ class HeroSectionAdmin(admin.ModelAdmin):
     search_fields = ('title', 'subtitle', 'badge_text')
     list_per_page = 20
     actions = [sync_selected_to_mongodb]
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        try:
+            from .mongodb import sync_model_to_mongo
+            synced = sync_model_to_mongo(obj)
+            if synced:
+                messages.success(request, f"✓ Synced '{getattr(obj, 'title', obj)}' to MongoDB Atlas Cloud.")
+            else:
+                messages.warning(request, f"⚠ Saved locally, but MongoDB Atlas Cloud sync timed out. Please select the item and use the 'Sync selected items directly to MongoDB Atlas' action to ensure cloud sync.")
+        except Exception as e:
+            messages.warning(request, f"⚠ Saved locally, but MongoDB sync notice: {e}")
 
     fieldsets = (
         ('1. Hero Headlines & Badge Tag', {
@@ -80,6 +104,18 @@ class SafariPackageAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_per_page = 20
     actions = [sync_selected_to_mongodb]
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        try:
+            from .mongodb import sync_model_to_mongo
+            synced = sync_model_to_mongo(obj)
+            if synced:
+                messages.success(request, f"✓ Synced '{getattr(obj, 'title', obj)}' to MongoDB Atlas Cloud.")
+            else:
+                messages.warning(request, f"⚠ Saved locally, but MongoDB Atlas Cloud sync timed out. Please select the item and use the 'Sync selected items directly to MongoDB Atlas' action to ensure cloud sync.")
+        except Exception as e:
+            messages.warning(request, f"⚠ Saved locally, but MongoDB sync notice: {e}")
 
     fieldsets = (
         ('1. Basic Package Information', {
@@ -119,6 +155,18 @@ class BlogPostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_per_page = 20
     actions = [sync_selected_to_mongodb]
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        try:
+            from .mongodb import sync_model_to_mongo
+            synced = sync_model_to_mongo(obj)
+            if synced:
+                messages.success(request, f"✓ Synced '{getattr(obj, 'title', obj)}' to MongoDB Atlas Cloud.")
+            else:
+                messages.warning(request, f"⚠ Saved locally, but MongoDB Atlas Cloud sync timed out. Please select the item and use the 'Sync selected items directly to MongoDB Atlas' action to ensure cloud sync.")
+        except Exception as e:
+            messages.warning(request, f"⚠ Saved locally, but MongoDB sync notice: {e}")
 
     fieldsets = (
         ('1. Article Details & Branding', {

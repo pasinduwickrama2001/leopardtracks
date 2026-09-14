@@ -236,15 +236,18 @@ def get_mongo_db():
         if _mongo_client is None:
             _mongo_client = pymongo.MongoClient(
                 uri,
-                serverSelectionTimeoutMS=3000,
-                connectTimeoutMS=3000,
-                socketTimeoutMS=4000,
+                serverSelectionTimeoutMS=10000,
+                connectTimeoutMS=10000,
+                socketTimeoutMS=15000,
                 maxPoolSize=10,
+                retryWrites=True,
             )
         
+        # Test connection ping if needed
         return _mongo_client[db_name]
     except Exception as e:
         logger.error(f"MongoDB connection error: {e}")
+        _mongo_client = None
         return None
 
 # ==============================================================================
@@ -279,6 +282,7 @@ def package_to_dict(pkg):
         'exclusions': pkg.exclusions or '',
         'highlights': pkg.highlights or '',
         'featured': bool(pkg.featured),
+        'updated_at': pkg.updated_at.isoformat() if getattr(pkg, 'updated_at', None) else '',
     }
 
 def tour_to_dict(tour):
@@ -298,6 +302,7 @@ def tour_to_dict(tour):
         'exclusions': tour.exclusions or '',
         'seoKeywords': tour.seoKeywords or '',
         'itinerary_json': tour.itinerary_json or '',
+        'updated_at': tour.updated_at.isoformat() if getattr(tour, 'updated_at', None) else '',
     }
 
 def blog_to_dict(blog):
@@ -310,6 +315,7 @@ def blog_to_dict(blog):
         'imageUrl': blog.imageUrl or '',
         'content': blog.content or '',
         'featured': bool(blog.featured),
+        'updated_at': blog.updated_at.isoformat() if getattr(blog, 'updated_at', None) else '',
     }
 
 def hero_to_dict(hero):
@@ -324,6 +330,7 @@ def hero_to_dict(hero):
         'button_secondary_text': hero.button_secondary_text or 'BOOK SAFARI',
         'button_secondary_url': hero.button_secondary_url or '/contact/',
         'is_active': bool(hero.is_active),
+        'updated_at': hero.updated_at.isoformat() if getattr(hero, 'updated_at', None) else '',
     }
 
 def review_to_dict(rev):
@@ -374,39 +381,45 @@ def booking_to_dict(b):
 def sync_model_to_mongo(instance):
     """
     Called whenever an instance is created or updated in Django Admin.
-    Upserts the corresponding document in MongoDB Atlas in real time.
+    Upserts the corresponding document in MongoDB Atlas in real time with automatic retry.
     """
-    try:
-        db = get_mongo_db()
-        if db is None:
-            return False
-        model_name = instance.__class__.__name__
-        if model_name == 'SafariPackage':
-            doc = package_to_dict(instance)
-            filter_query = {'slug': instance.slug} if instance.slug else {'id': instance.id}
-            db.core_safaripackage.replace_one(filter_query, doc, upsert=True)
-            db.packages.replace_one(filter_query, doc, upsert=True)
-        elif model_name == 'Tour':
-            doc = tour_to_dict(instance)
-            filter_query = {'slug': instance.slug} if instance.slug else {'id': instance.id}
-            db.core_tour.replace_one(filter_query, doc, upsert=True)
-        elif model_name == 'BlogPost':
-            doc = blog_to_dict(instance)
-            filter_query = {'slug': instance.slug} if instance.slug else {'id': instance.id}
-            db.core_blogpost.replace_one(filter_query, doc, upsert=True)
-        elif model_name == 'HeroSection':
-            doc = hero_to_dict(instance)
-            db.core_herosection.replace_one({'id': instance.id}, doc, upsert=True)
-        elif model_name == 'GuestReview':
-            doc = review_to_dict(instance)
-            db.core_guestreview.replace_one({'id': instance.id}, doc, upsert=True)
-        elif model_name == 'SafariBooking':
-            doc = booking_to_dict(instance)
-            db.core_safaribooking.replace_one({'id': instance.id}, doc, upsert=True)
-        return True
-    except Exception as e:
-        logger.error(f"Error syncing {instance.__class__.__name__} to MongoDB Atlas: {e}")
-        return False
+    global _mongo_client
+    import time
+    for attempt in range(2):
+        try:
+            db = get_mongo_db()
+            if db is None:
+                time.sleep(0.5)
+                continue
+            model_name = instance.__class__.__name__
+            if model_name == 'SafariPackage':
+                doc = package_to_dict(instance)
+                filter_query = {'$or': [{'id': instance.id}, {'slug': instance.slug}]} if instance.slug and instance.id else ({'slug': instance.slug} if instance.slug else {'id': instance.id})
+                db.core_safaripackage.replace_one(filter_query, doc, upsert=True)
+                db.packages.replace_one(filter_query, doc, upsert=True)
+            elif model_name == 'Tour':
+                doc = tour_to_dict(instance)
+                filter_query = {'$or': [{'id': instance.id}, {'slug': instance.slug}]} if instance.slug and instance.id else ({'slug': instance.slug} if instance.slug else {'id': instance.id})
+                db.core_tour.replace_one(filter_query, doc, upsert=True)
+            elif model_name == 'BlogPost':
+                doc = blog_to_dict(instance)
+                filter_query = {'$or': [{'id': instance.id}, {'slug': instance.slug}]} if instance.slug and instance.id else ({'slug': instance.slug} if instance.slug else {'id': instance.id})
+                db.core_blogpost.replace_one(filter_query, doc, upsert=True)
+            elif model_name == 'HeroSection':
+                doc = hero_to_dict(instance)
+                db.core_herosection.replace_one({'id': instance.id}, doc, upsert=True)
+            elif model_name == 'GuestReview':
+                doc = review_to_dict(instance)
+                db.core_guestreview.replace_one({'id': instance.id}, doc, upsert=True)
+            elif model_name == 'SafariBooking':
+                doc = booking_to_dict(instance)
+                db.core_safaribooking.replace_one({'id': instance.id}, doc, upsert=True)
+            return True
+        except Exception as e:
+            logger.error(f"Error syncing {instance.__class__.__name__} to MongoDB Atlas (attempt {attempt+1}): {e}")
+            _mongo_client = None
+            time.sleep(0.5)
+    return False
 
 def delete_model_from_mongo(instance):
     """
@@ -440,6 +453,22 @@ def delete_model_from_mongo(instance):
 # ==============================================================================
 # Bi-Directional Database Hydration (Cold-Start & Seeding)
 # ==============================================================================
+
+def _parse_timestamp(val):
+    if not val:
+        return 0.0
+    from datetime import datetime, date
+    if isinstance(val, (datetime, date)):
+        if isinstance(val, datetime):
+            return val.timestamp()
+        return datetime.combine(val, datetime.min.time()).timestamp()
+    if isinstance(val, str):
+        try:
+            clean_val = val.replace('Z', '+00:00')
+            return datetime.fromisoformat(clean_val).timestamp()
+        except Exception:
+            return 0.0
+    return 0.0
 
 def sync_all_from_mongo_to_sqlite():
     """
@@ -497,6 +526,18 @@ def sync_all_from_mongo_to_sqlite():
                             pkg_obj = SafariPackage.objects.filter(slug=slug_val).first()
 
                         if pkg_obj:
+                            local_ts = _parse_timestamp(getattr(pkg_obj, 'updated_at', None))
+                            mongo_ts = _parse_timestamp(d.get('updated_at'))
+                            if local_ts > 0 and mongo_ts > 0 and (local_ts - mongo_ts > 2.0):
+                                try:
+                                    sync_model_to_mongo(pkg_obj)
+                                except Exception:
+                                    pass
+                                continue
+
+                            if getattr(pkg_obj, 'imageUrl', None) and not defaults.get('imageUrl'):
+                                defaults['imageUrl'] = pkg_obj.imageUrl
+
                             for k, v in defaults.items():
                                 setattr(pkg_obj, k, v)
                             pkg_obj.save()
@@ -533,6 +574,18 @@ def sync_all_from_mongo_to_sqlite():
                             tour_obj = Tour.objects.filter(slug=slug_val).first()
 
                         if tour_obj:
+                            local_ts = _parse_timestamp(getattr(tour_obj, 'updated_at', None))
+                            mongo_ts = _parse_timestamp(t.get('updated_at'))
+                            if local_ts > 0 and mongo_ts > 0 and (local_ts - mongo_ts > 2.0):
+                                try:
+                                    sync_model_to_mongo(tour_obj)
+                                except Exception:
+                                    pass
+                                continue
+
+                            if getattr(tour_obj, 'imageUrl', None) and not defaults.get('imageUrl'):
+                                defaults['imageUrl'] = tour_obj.imageUrl
+
                             for k, v in defaults.items():
                                 setattr(tour_obj, k, v)
                             tour_obj.save()
@@ -562,6 +615,18 @@ def sync_all_from_mongo_to_sqlite():
                             blog_obj = BlogPost.objects.filter(slug=slug_val).first()
 
                         if blog_obj:
+                            local_ts = _parse_timestamp(getattr(blog_obj, 'updated_at', None))
+                            mongo_ts = _parse_timestamp(b.get('updated_at'))
+                            if local_ts > 0 and mongo_ts > 0 and (local_ts - mongo_ts > 2.0):
+                                try:
+                                    sync_model_to_mongo(blog_obj)
+                                except Exception:
+                                    pass
+                                continue
+
+                            if getattr(blog_obj, 'imageUrl', None) and not defaults.get('imageUrl'):
+                                defaults['imageUrl'] = blog_obj.imageUrl
+
                             for k, v in defaults.items():
                                 setattr(blog_obj, k, v)
                             blog_obj.save()
@@ -588,6 +653,18 @@ def sync_all_from_mongo_to_sqlite():
                         h_id = h.get('id', 1)
                         hero_obj = HeroSection.objects.filter(id=h_id).first()
                         if hero_obj:
+                            local_ts = _parse_timestamp(getattr(hero_obj, 'updated_at', None))
+                            mongo_ts = _parse_timestamp(h.get('updated_at'))
+                            if local_ts > 0 and mongo_ts > 0 and (local_ts - mongo_ts > 2.0):
+                                try:
+                                    sync_model_to_mongo(hero_obj)
+                                except Exception:
+                                    pass
+                                continue
+
+                            if getattr(hero_obj, 'imageUrl', None) and not defaults.get('imageUrl'):
+                                defaults['imageUrl'] = hero_obj.imageUrl
+
                             for k, v in defaults.items():
                                 setattr(hero_obj, k, v)
                             hero_obj.save()
