@@ -523,19 +523,6 @@
 </section>
 {% endif %}
 
-<!-- Mobile Floating Sticky Bottom Reservation Bar (Visible on mobile & tablet <=992px) -->
-<div class="mobile-sticky-bottom-bar" id="mobileStickyBar">
-    <div class="mobile-bar-info">
-        <span class="mobile-bar-label">STARTING FROM</span>
-        <div class="mobile-bar-price-row">
-            <span class="mobile-bar-amount">{{ package.price }}</span>
-            <span class="mobile-bar-unit">{{ package.price_unit }}</span>
-        </div>
-    </div>
-    <button type="button" class="btn-mobile-reserve" id="openMobileBookingModalBtn">
-        <i class="fa-solid fa-calendar-check"></i> RESERVE NOW
-    </button>
-</div>
 
 <!-- Interactive Reservation Form Modal -->
 <div class="booking-modal-overlay" id="bookingModalOverlay">
@@ -1389,9 +1376,7 @@
             document.body.style.overflow = '';
         }
 
-        const mobileOpenBtn = document.getElementById('openMobileBookingModalBtn');
         if (openBtn) openBtn.addEventListener('click', openModal);
-        if (mobileOpenBtn) mobileOpenBtn.addEventListener('click', openModal);
         if (closeBtn) closeBtn.addEventListener('click', closeModal);
         if (modalOverlay) {
             modalOverlay.addEventListener('click', (e) => {
