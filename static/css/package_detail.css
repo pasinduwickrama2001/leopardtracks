@@ -1,10 +1,17 @@
-/* Package Detail Page Styles - Ultra Clean & Seamless Design */
+/* ==========================================================================
+   PACKAGE DETAIL PAGE STYLES - FULLY RESPONSIVE ACROSS ALL DEVICES
+   Discoveryala - Safari Jeep Tours & Wildlife Expeditions
+   ========================================================================== */
 
-/* Clean Header Section with Right-Side Image */
+/* --------------------------------------------------------------------------
+   1. Package Detail Header (Hero / Title / Standalone Image & Gallery)
+   -------------------------------------------------------------------------- */
 .package-detail-header-section {
-    padding: 120px 0 40px;
+    padding: 120px 0 44px;
     background-color: var(--bg-pastel-cream);
     border-bottom: 1px solid rgba(71, 81, 40, 0.12);
+    position: relative;
+    overflow: hidden;
 }
 
 .package-header-grid {
@@ -14,30 +21,36 @@
     align-items: center;
 }
 
-@media (max-width: 992px) {
-    .package-header-grid {
-        grid-template-columns: 1fr;
-        gap: 28px;
-    }
+.package-header-left {
+    min-width: 0; /* Prevents flex/grid blowouts */
 }
 
 .breadcrumb-nav {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.8rem;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    font-size: 0.82rem;
     color: #666666;
     margin-bottom: 16px;
+    line-height: 1.4;
+    word-break: break-word;
 }
 
 .breadcrumb-nav a {
     color: #475128;
     text-decoration: none;
     font-weight: 700;
+    transition: color 0.2s ease;
 }
 
 .breadcrumb-nav a:hover {
+    color: #233325;
     text-decoration: underline;
+}
+
+.breadcrumb-nav span {
+    color: #999999;
 }
 
 .active-crumb {
@@ -54,18 +67,19 @@
 }
 
 .detail-header-title {
-    font-size: 2.6rem;
+    font-size: 2.5rem;
     color: #233325;
-    line-height: 1.2;
+    line-height: 1.22;
     margin-bottom: 12px;
     font-family: var(--font-heading);
     font-weight: 800;
+    word-break: break-word;
 }
 
 .detail-header-subtitle {
     font-size: 1.02rem;
     color: #475128;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
     font-weight: 500;
     line-height: 1.6;
 }
@@ -86,23 +100,33 @@
     font-size: 0.78rem;
     font-weight: 700;
     padding: 7px 16px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-pill, 50px);
+    white-space: nowrap;
+    transition: background 0.2s ease;
 }
 
-/* Right-Side Clean Image Container */
+/* Right-Side Standalone Image & Gallery Container */
+.package-header-right {
+    min-width: 0;
+    width: 100%;
+}
+
 .header-img-container {
     width: 100%;
-    height: 320px;
-    border-radius: var(--radius-card);
+    height: 330px;
+    border-radius: var(--radius-card, 18px);
     overflow: hidden;
-    box-shadow: 0 12px 35px rgba(71, 81, 40, 0.12);
+    box-shadow: 0 14px 38px rgba(71, 81, 40, 0.12);
+    position: relative;
+    background: #E5EAD8;
 }
 
 .header-img-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .header-img-container:hover img {
@@ -112,21 +136,33 @@
 /* Gallery Thumbnails */
 .gallery-thumbs-row {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     margin-top: 12px;
     overflow-x: auto;
     padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+.gallery-thumbs-row::-webkit-scrollbar {
+    height: 4px;
+}
+
+.gallery-thumbs-row::-webkit-scrollbar-thumb {
+    background: rgba(96, 108, 56, 0.3);
+    border-radius: 4px;
 }
 
 .gallery-thumb-item {
-    width: 70px;
-    height: 50px;
+    width: 72px;
+    height: 52px;
     border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
     border: 2px solid transparent;
     flex-shrink: 0;
     transition: border-color 0.2s ease, transform 0.2s ease;
+    background: #E5EAD8;
 }
 
 .gallery-thumb-item:hover {
@@ -141,11 +177,14 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
-/* Package Main Section - Seamless Background */
+/* --------------------------------------------------------------------------
+   2. Main Package Detail Layout (Two Columns)
+   -------------------------------------------------------------------------- */
 .package-detail-section {
-    padding: 50px 0 90px;
+    padding: 48px 0 90px;
     background-color: var(--bg-pastel-cream);
 }
 
@@ -153,26 +192,31 @@
     display: grid;
     grid-template-columns: 1fr 360px;
     gap: 56px;
+    align-items: start;
 }
 
-@media (max-width: 992px) {
-    .package-detail-grid {
-        grid-template-columns: 1fr;
-    }
+.detail-left-col {
+    min-width: 0; /* Prevents overflow from tables / code blocks */
 }
 
-/* Left Column Content - Clean & Borderless */
+.detail-right-col {
+    min-width: 0;
+}
+
+/* Detail Blocks */
 .detail-block {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    padding: 0 0 36px 0;
-    margin-bottom: 36px;
+    padding: 0 0 34px 0;
+    margin-bottom: 34px;
     border-bottom: 1px solid rgba(71, 81, 40, 0.12) !important;
 }
 
 .detail-block:last-child {
     border-bottom: none !important;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 .detail-block-title {
@@ -182,8 +226,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    border-bottom: none !important;
-    padding-bottom: 0 !important;
+    font-family: var(--font-heading);
+    font-weight: 700;
 }
 
 .detail-description-p {
@@ -193,7 +237,7 @@
     white-space: pre-line;
 }
 
-/* Specs Grid - Clean Minimal Lines */
+/* Specs Grid */
 .specs-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -204,9 +248,8 @@
 .spec-item {
     background: transparent !important;
     padding: 2px 0 2px 14px;
-    border-radius: 0 !important;
     border: none !important;
-    border-left: 2px solid #606C38 !important;
+    border-left: 2.5px solid #606C38 !important;
 }
 
 .spec-label {
@@ -219,16 +262,17 @@
 }
 
 .spec-value {
-    font-size: 0.92rem;
+    font-size: 0.94rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--text-primary, #233325);
+    word-break: break-word;
 }
 
-/* Highlights List - Seamless */
+/* Highlights Grid */
 .highlights-grid {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .highlight-row {
@@ -236,40 +280,34 @@
     align-items: flex-start;
     gap: 12px;
     background: transparent !important;
-    padding: 4px 0;
+    padding: 2px 0;
     border: none !important;
-    border-radius: 0 !important;
 }
 
 .highlight-icon {
     color: #606C38;
     font-size: 0.95rem;
     margin-top: 4px;
+    flex-shrink: 0;
 }
 
 .highlight-text {
     font-size: 0.92rem;
-    color: var(--text-primary);
+    color: var(--text-primary, #233325);
     line-height: 1.55;
+    word-break: break-word;
 }
 
-/* Inclusions & Exclusions Side-by-Side - Seamless */
+/* Inclusions & Exclusions Grid */
 .inc-exc-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 32px;
 }
 
-@media (max-width: 768px) {
-    .inc-exc-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 .inc-card, .exc-card {
     background: transparent !important;
     border: none !important;
-    border-radius: 0 !important;
     padding: 0 !important;
 }
 
@@ -314,6 +352,7 @@
 .inc-list li i {
     color: #606C38;
     margin-top: 3px;
+    flex-shrink: 0;
 }
 
 .exc-list li {
@@ -328,23 +367,317 @@
 .exc-list li i {
     color: #C0392B;
     margin-top: 3px;
+    flex-shrink: 0;
 }
 
-/* Right Column Booking Sticky Widget - Clean Seamless */
+/* --------------------------------------------------------------------------
+   3. AEO Optimized Components (Direct Answers, Comparison Table, Tracker Tip)
+   -------------------------------------------------------------------------- */
+.aeo-direct-answer-card {
+    background-color: transparent;
+    border: none;
+    padding: 10px 0 20px;
+    margin: 16px 0 28px;
+}
+
+.aeo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(96, 108, 56, 0.08);
+    color: #475128;
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 5px 14px;
+    border-radius: 50px;
+    margin-bottom: 12px;
+}
+
+.aeo-question {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: #233325;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.aeo-answer-p {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: #2D3748;
+    margin: 0 0 14px 0;
+}
+
+.aeo-key-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    padding-top: 8px;
+    font-size: 0.88rem;
+    color: #4A5568;
+}
+
+.aeo-key-points span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+}
+
+.aeo-key-points span i {
+    color: #606C38;
+}
+
+/* Table Scroll Hint (Visible on mobile touch screens) */
+.table-scroll-hint {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #606C38;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.aeo-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 16px 0 28px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+.aeo-table-wrapper::-webkit-scrollbar {
+    height: 5px;
+}
+
+.aeo-table-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(96, 108, 56, 0.3);
+    border-radius: 4px;
+}
+
+.aeo-comparison-table {
+    width: 100%;
+    min-width: 520px; /* Crucial: stops narrow phones from squishing table cells */
+    border-collapse: collapse;
+    background-color: transparent;
+    font-size: 0.92rem;
+    text-align: left;
+}
+
+.aeo-comparison-table th {
+    background-color: transparent;
+    color: #233325;
+    padding: 14px 16px;
+    font-weight: 800;
+    font-family: var(--font-heading);
+    letter-spacing: 0.5px;
+    border: none;
+    border-bottom: 2px solid rgba(96, 108, 56, 0.2);
+}
+
+.aeo-comparison-table td {
+    padding: 14px 16px;
+    border: none;
+    border-bottom: 1px solid rgba(96, 108, 56, 0.1);
+    color: #2D3748;
+    line-height: 1.55;
+    vertical-align: top;
+    background-color: transparent;
+}
+
+.aeo-comparison-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Tracker Tip Box */
+.aeo-tracker-tip {
+    background-color: transparent;
+    border: none;
+    padding: 16px 0;
+    margin: 20px 0;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+}
+
+.aeo-tracker-tip .tip-icon {
+    background: #606C38;
+    color: #FFFFFF;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.aeo-tracker-tip .tip-content h4 {
+    margin: 0 0 6px 0;
+    font-family: var(--font-heading);
+    color: #233325;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.aeo-tracker-tip .tip-content p {
+    margin: 0;
+    font-size: 0.93rem;
+    color: #4A5568;
+    line-height: 1.65;
+}
+
+/* FAQ Accordion */
+.aeo-faq-wrapper {
+    margin: 28px 0 36px;
+}
+
+.aeo-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.aeo-faq-item {
+    border: none;
+    border-radius: 16px;
+    background-color: rgba(96, 108, 56, 0.05);
+    overflow: hidden;
+    transition: background-color 0.2s ease;
+}
+
+.aeo-faq-item.active {
+    background-color: rgba(96, 108, 56, 0.08);
+}
+
+.aeo-faq-q-btn {
+    width: 100%;
+    min-height: 48px;
+    padding: 18px 22px;
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #233325;
+    gap: 16px;
+    transition: background-color 0.2s;
+}
+
+.aeo-faq-q-btn:hover {
+    background-color: rgba(96, 108, 56, 0.04);
+}
+
+.aeo-faq-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(96, 108, 56, 0.12);
+    color: #606C38;
+    font-size: 0.85rem;
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+}
+
+.aeo-faq-item.active .aeo-faq-icon {
+    transform: rotate(180deg);
+    background: #606C38;
+    color: #FFFFFF;
+}
+
+.aeo-faq-answer {
+    display: none;
+    padding: 0 22px 20px;
+    color: #3D4F3F;
+    font-size: 0.96rem;
+    line-height: 1.7;
+    background-color: transparent;
+}
+
+.aeo-faq-item.active .aeo-faq-answer {
+    display: block;
+}
+
+/* Cluster Nav */
+.aeo-cluster-nav {
+    background-color: transparent;
+    border: none;
+    padding: 20px 0;
+    margin: 28px 0;
+}
+
+.aeo-cluster-nav h4 {
+    margin: 0 0 14px 0;
+    font-family: var(--font-heading);
+    color: #233325;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.aeo-cluster-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.aeo-cluster-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: rgba(96, 108, 56, 0.08);
+    border: none;
+    color: #475128;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.aeo-cluster-link:hover {
+    background-color: #606C38;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(96, 108, 56, 0.18);
+}
+
+/* --------------------------------------------------------------------------
+   4. Right Column Sticky Reservation Card
+   -------------------------------------------------------------------------- */
 .booking-sticky-card {
     position: sticky;
-    top: 90px;
-    background: transparent !important;
-    border-radius: 0 !important;
-    border: none !important;
-    padding: 0 !important;
-    box-shadow: none !important;
+    top: 96px;
+    background: transparent;
+    border-radius: 0;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    transition: all 0.3s ease;
 }
 
 .booking-price-header {
     margin-bottom: 16px;
     padding-bottom: 0;
-    border-bottom: none !important;
 }
 
 .booking-price-amount {
@@ -352,7 +685,7 @@
     font-size: 2.6rem;
     font-weight: 800;
     color: #475128;
-    line-height: 1;
+    line-height: 1.05;
     margin-top: 4px;
 }
 
@@ -364,11 +697,9 @@
 }
 
 .addons-breakdown-box {
-    background: transparent !important;
-    border: none !important;
-    border-top: 1px solid rgba(71, 81, 40, 0.12) !important;
-    border-bottom: 1px solid rgba(71, 81, 40, 0.12) !important;
-    border-radius: 0 !important;
+    background: transparent;
+    border-top: 1px solid rgba(71, 81, 40, 0.12);
+    border-bottom: 1px solid rgba(71, 81, 40, 0.12);
     padding: 16px 0;
     margin-bottom: 24px;
 }
@@ -380,6 +711,7 @@
     font-size: 0.85rem;
     margin-bottom: 10px;
     color: #333333;
+    gap: 8px;
 }
 
 .addon-row:last-child {
@@ -389,6 +721,8 @@
 .addon-val {
     font-weight: 700;
     color: #475128;
+    text-align: right;
+    word-break: break-word;
 }
 
 .btn-reserve-package {
@@ -397,17 +731,18 @@
     text-align: center;
     background: #606C38;
     color: #FFFFFF;
-    padding: 16px;
-    border-radius: var(--radius-pill);
-    font-family: var(--font-brand);
+    padding: 16px 20px;
+    border-radius: var(--radius-pill, 50px);
+    font-family: var(--font-brand, inherit);
     font-size: 0.88rem;
     font-weight: 800;
     letter-spacing: 1.5px;
     text-decoration: none;
     box-shadow: 0 6px 20px rgba(96, 108, 56, 0.25);
-    transition: var(--transition);
+    transition: var(--transition, all 0.3s ease);
     border: none;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .btn-reserve-package:hover {
@@ -416,7 +751,132 @@
     box-shadow: 0 10px 25px rgba(96, 108, 56, 0.4);
 }
 
-/* Interactive Booking Modal Styles */
+/* --------------------------------------------------------------------------
+   5. Mobile Persistent Sticky Bottom Reservation Bar
+   -------------------------------------------------------------------------- */
+.mobile-sticky-bottom-bar {
+    display: none; /* Hidden on desktop, enabled in media query below <= 992px */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 990;
+    background: rgba(250, 246, 238, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(71, 81, 40, 0.16);
+    padding: 10px 18px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom, 10px));
+    box-shadow: 0 -4px 20px rgba(35, 51, 37, 0.1);
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.mobile-bar-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.mobile-bar-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #475128;
+    text-transform: uppercase;
+}
+
+.mobile-bar-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.mobile-bar-amount {
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #475128;
+    line-height: 1.1;
+}
+
+.mobile-bar-unit {
+    font-size: 0.72rem;
+    color: #666666;
+    font-weight: 600;
+}
+
+.btn-mobile-reserve {
+    background: #606C38;
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 22px;
+    border-radius: var(--radius-pill, 50px);
+    font-size: 0.84rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(96, 108, 56, 0.35);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-mobile-reserve:hover {
+    background: #475128;
+    transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   6. Related Safari Packages Section
+   -------------------------------------------------------------------------- */
+.other-packages-section {
+    padding: 70px 0;
+    background: var(--bg-pastel-cream);
+}
+
+.other-packages-header {
+    margin-bottom: 44px;
+}
+
+.other-camp-card {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    margin-bottom: 48px;
+}
+
+.other-camp-image {
+    border-radius: var(--radius-card, 16px);
+    overflow: hidden;
+    position: relative;
+    height: 320px;
+}
+
+.other-camp-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.other-camp-details {
+    padding: 14px 28px;
+}
+
+.other-camp-price {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #475128;
+    margin-bottom: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   7. Interactive Reservation Form Modal
+   -------------------------------------------------------------------------- */
 .booking-modal-overlay {
     position: fixed;
     top: 0;
@@ -425,6 +885,7 @@
     height: 100vh;
     background: rgba(18, 33, 24, 0.75);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     z-index: 1000;
     display: flex;
     justify-content: center;
@@ -433,6 +894,7 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.35s ease, visibility 0.35s ease;
+    box-sizing: border-box;
 }
 
 .booking-modal-overlay.active {
@@ -446,22 +908,24 @@
     max-width: 680px;
     max-height: 90vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     border-radius: 24px;
     padding: 36px;
     position: relative;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
     border: 1px solid rgba(71, 81, 40, 0.2);
-    animation: modalSlideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    animation: modalSlideUp 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-sizing: border-box;
 }
 
 @keyframes modalSlideUp {
     from {
         opacity: 0;
-        transform: translateY(40px);
+        transform: translateY(30px) scale(0.98);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -480,7 +944,8 @@
     justify-content: center;
     font-size: 1.1rem;
     cursor: pointer;
-    transition: var(--transition);
+    transition: var(--transition, all 0.2s ease);
+    z-index: 10;
 }
 
 .modal-close-btn:hover {
@@ -497,7 +962,7 @@
     font-weight: 800;
     letter-spacing: 1.5px;
     padding: 6px 16px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-pill, 50px);
     margin-bottom: 8px;
 }
 
@@ -508,12 +973,14 @@
     font-weight: 800;
     margin-bottom: 24px;
     line-height: 1.25;
+    padding-right: 40px; /* Space for close button */
+    word-break: break-word;
 }
 
-/* Form Steps */
+/* Modal Form Fields */
 .form-step-section {
-    margin-bottom: 24px;
-    padding-bottom: 20px;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
     border-bottom: 1px solid rgba(71, 81, 40, 0.12);
 }
 
@@ -522,7 +989,7 @@
 }
 
 .step-num-title {
-    font-family: var(--font-brand);
+    font-family: var(--font-brand, inherit);
     font-size: 0.88rem;
     font-weight: 800;
     letter-spacing: 1.5px;
@@ -538,20 +1005,14 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-    margin-bottom: 16px;
-}
-
-@media (max-width: 600px) {
-    .form-grid-2 {
-        grid-template-columns: 1fr;
-    }
+    margin-bottom: 14px;
 }
 
 .form-field-group {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 .form-field-group label {
@@ -562,15 +1023,15 @@
 
 .form-input, .form-select, .form-textarea {
     width: 100%;
-    padding: 12px 16px;
+    padding: 12px 14px;
     border-radius: 12px;
     border: 1px solid rgba(71, 81, 40, 0.25);
     background: #FFFFFF;
-    font-family: var(--font-body);
-    font-size: 16px;
+    font-family: var(--font-body, inherit);
+    font-size: 16px; /* Prevents auto-zoom on iOS */
     color: #233325;
     outline: none;
-    transition: var(--transition);
+    transition: var(--transition, all 0.2s ease);
     box-sizing: border-box;
 }
 
@@ -581,11 +1042,17 @@
 
 .phone-input-group {
     display: grid;
-    grid-template-columns: 90px 1fr;
+    grid-template-columns: 105px 1fr;
     gap: 8px;
 }
 
-/* Checkbox Toggle Items */
+#phone_code {
+    min-width: 0;
+    font-size: 15px;
+    padding: 12px 8px;
+}
+
+/* Checkbox Toggle Addon Items */
 .toggle-addon-item {
     display: flex;
     justify-content: space-between;
@@ -596,7 +1063,8 @@
     border: 1px solid rgba(71, 81, 40, 0.18);
     margin-bottom: 10px;
     cursor: pointer;
-    transition: var(--transition);
+    transition: var(--transition, all 0.2s ease);
+    gap: 10px;
 }
 
 .toggle-addon-item:hover {
@@ -618,20 +1086,23 @@
     height: 18px;
     accent-color: #606C38;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .addon-toggle-price {
     font-weight: 800;
     color: #475128;
     font-size: 0.9rem;
+    text-align: right;
+    white-space: nowrap;
 }
 
-/* Summary Box inside Modal */
+/* Modal Summary Box */
 .modal-summary-box {
     background: #E7EBD9;
     border-radius: 16px;
     padding: 20px;
-    margin: 24px 0;
+    margin: 22px 0;
 }
 
 .summary-line {
@@ -641,6 +1112,7 @@
     font-size: 0.88rem;
     margin-bottom: 8px;
     color: #333333;
+    gap: 10px;
 }
 
 .summary-line.total-line {
@@ -660,12 +1132,6 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
     margin-bottom: 16px;
-}
-
-@media (max-width: 600px) {
-    .guest-breakdown-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 .guest-type-box {
@@ -719,7 +1185,9 @@
     font-size: 16px;
 }
 
-/* Ultra-Charming Success Confirmation Modal */
+/* --------------------------------------------------------------------------
+   8. Success Confirmation Modal
+   -------------------------------------------------------------------------- */
 .success-modal-overlay {
     position: fixed;
     top: 0;
@@ -728,6 +1196,7 @@
     height: 100vh;
     background: rgba(18, 33, 24, 0.85);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 2000;
     display: flex;
     justify-content: center;
@@ -736,6 +1205,7 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.35s ease, visibility 0.35s ease;
+    box-sizing: border-box;
 }
 
 .success-modal-overlay.active {
@@ -754,12 +1224,13 @@
     border: 2px solid #D4AF37;
     position: relative;
     animation: successBadgePop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-sizing: border-box;
 }
 
 @keyframes successBadgePop {
     from {
         opacity: 0;
-        transform: scale(0.8) translateY(30px);
+        transform: scale(0.85) translateY(25px);
     }
     to {
         opacity: 1;
@@ -768,8 +1239,8 @@
 }
 
 .success-icon-ring {
-    width: 80px;
-    height: 80px;
+    width: 76px;
+    height: 76px;
     background: linear-gradient(135deg, #606C38 0%, #475128 100%);
     color: #D4AF37;
     border-radius: 50%;
@@ -777,14 +1248,14 @@
     align-items: center;
     justify-content: center;
     font-size: 2.2rem;
-    margin: 0 auto 20px;
+    margin: 0 auto 18px;
     box-shadow: 0 10px 25px rgba(96, 108, 56, 0.3);
     border: 3px solid #D4AF37;
 }
 
 .success-modal-title {
     font-family: var(--font-heading);
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     font-weight: 800;
     color: #233325;
     margin-bottom: 10px;
@@ -794,7 +1265,7 @@
 .success-modal-subtitle {
     font-size: 0.95rem;
     color: #475128;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
     line-height: 1.6;
 }
 
@@ -802,11 +1273,11 @@
     background: #E7EBD9;
     border: 1px dashed rgba(71, 81, 40, 0.3);
     border-radius: 14px;
-    padding: 12px 20px;
+    padding: 10px 20px;
     font-size: 0.85rem;
     font-weight: 700;
     color: #475128;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
     display: inline-block;
 }
 
@@ -815,12 +1286,12 @@
     color: #FFFFFF;
     border: none;
     padding: 14px 32px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-pill, 50px);
     font-size: 0.9rem;
     font-weight: 800;
     letter-spacing: 1.5px;
     cursor: pointer;
-    transition: var(--transition);
+    transition: var(--transition, all 0.2s ease);
     box-shadow: 0 6px 20px rgba(96, 108, 56, 0.25);
 }
 
@@ -829,62 +1300,415 @@
     transform: translateY(-2px);
 }
 
-/* Responsive Media Queries for Package Detail Page */
-@media (max-width: 992px) {
-    .package-detail-layout {
-        grid-template-columns: 1fr !important;
-        gap: 36px !important;
+
+/* ==========================================================================
+   MULTI-DEVICE RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   A. Small Laptops & Desktops (max-width: 1200px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+    .package-header-grid {
+        grid-template-columns: 1fr 420px;
+        gap: 36px;
     }
 
+    .package-detail-grid {
+        grid-template-columns: 1fr 330px;
+        gap: 40px;
+    }
+
+    .detail-header-title {
+        font-size: 2.3rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   B. Tablets (Landscape & Portrait) (max-width: 992px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 992px) {
+    .package-detail-header-section {
+        padding: 100px 0 32px;
+    }
+
+    .package-header-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .header-img-container {
+        height: clamp(250px, 48vw, 360px);
+    }
+
+    .detail-header-title {
+        font-size: 2.05rem;
+    }
+
+    .package-detail-section {
+        padding: 32px 0 70px;
+    }
+
+    .package-detail-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    /* Elevated Booking Card when stacked on Tablet & Mobile */
     .booking-sticky-card {
         position: static !important;
         top: auto !important;
+        background: #FFFFFF !important;
+        border-radius: 20px !important;
+        padding: 28px 24px !important;
+        border: 1px solid rgba(71, 81, 40, 0.16) !important;
+        box-shadow: 0 8px 30px rgba(71, 81, 40, 0.08) !important;
+        margin-top: 10px;
+    }
+
+    .addons-breakdown-box {
+        background: #FAF8F2 !important;
+        border-radius: 12px;
+        padding: 14px 16px !important;
+        border: 1px solid rgba(71, 81, 40, 0.1) !important;
+    }
+
+    /* Enable Mobile Sticky Bottom Reservation Bar */
+    .mobile-sticky-bottom-bar {
+        display: flex;
+    }
+
+    /* Ensure other packages section has spacing before fixed bottom bar */
+    .other-packages-section {
+        padding-bottom: 100px !important;
     }
 }
 
+/* --------------------------------------------------------------------------
+   C. Large Phones & Small Tablets (max-width: 768px)
+   -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
-    .package-detail-hero {
-        padding: 95px 16px 30px !important;
+    .package-detail-header-section {
+        padding: 85px 0 24px;
     }
 
-    .package-detail-title {
-        font-size: 1.7rem !important;
+    .detail-header-title {
+        font-size: 1.7rem;
+        line-height: 1.25;
+        margin-bottom: 10px;
     }
 
-    .package-gallery-grid {
-        grid-template-columns: 1fr !important;
-        height: auto !important;
+    .detail-header-subtitle {
+        font-size: 0.92rem;
+        margin-bottom: 16px;
+    }
+
+    .header-img-container {
+        height: clamp(210px, 55vw, 290px);
+        border-radius: 16px;
+    }
+
+    .gallery-thumb-item {
+        width: 64px;
+        height: 46px;
+    }
+
+    .package-detail-section {
+        padding: 24px 0 50px;
+    }
+
+    .detail-block {
+        padding: 0 0 24px 0;
+        margin-bottom: 24px;
+    }
+
+    .detail-block-title {
+        font-size: 1.15rem;
+        margin-bottom: 12px;
+    }
+
+    .specs-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 14px 12px;
+    }
+
+    .inc-exc-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    /* Comparison Table Horizontal Touch Scrolling */
+    .table-scroll-hint {
+        display: flex;
+    }
+
+    .aeo-table-wrapper {
+        margin: 12px 0 20px;
+    }
+
+    .aeo-comparison-table th,
+    .aeo-comparison-table td {
+        padding: 11px 12px;
+        font-size: 0.86rem;
+    }
+
+    .aeo-faq-q-btn {
+        padding: 14px 16px;
+        font-size: 0.95rem;
+        gap: 12px;
+    }
+
+    .aeo-faq-answer {
+        padding: 0 16px 16px;
+        font-size: 0.9rem;
+    }
+
+    .aeo-tracker-tip {
+        gap: 14px;
+        padding: 14px 0;
+    }
+
+    .aeo-tracker-tip .tip-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 1.05rem;
+    }
+
+    .aeo-tracker-tip .tip-content h4 {
+        font-size: 0.98rem;
+    }
+
+    .aeo-tracker-tip .tip-content p {
+        font-size: 0.88rem;
+        line-height: 1.6;
+    }
+
+    /* Related Packages Section */
+    .other-packages-section {
+        padding: 44px 0 100px !important;
+    }
+
+    .other-packages-header {
+        margin-bottom: 28px;
+    }
+
+    .other-camp-card {
+        margin-bottom: 32px;
+    }
+
+    .other-camp-image {
+        height: 220px;
+        border-radius: 14px;
+    }
+
+    .other-camp-details {
+        padding: 16px 4px !important;
+    }
+
+    .other-camp-price {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+
+    /* Booking Modal Responsive Adjustments */
+    .booking-modal-overlay {
+        padding: 12px;
     }
 
     .booking-modal-card {
-        padding: 24px 18px !important;
-        max-height: 85vh !important;
+        padding: 24px 18px;
+        border-radius: 20px;
+        max-height: 88vh;
     }
 
-    .package-price-amount {
-        font-size: 2.2rem !important;
+    .modal-close-btn {
+        top: 14px;
+        right: 14px;
+        width: 32px;
+        height: 32px;
+        font-size: 0.95rem;
     }
 
-    .form-input,
-    .form-select,
-    .form-textarea,
-    .meal-count-input {
-        font-size: 16px !important;
+    .modal-package-title {
+        font-size: 1.35rem;
+        margin-bottom: 18px;
+        padding-right: 32px;
+    }
+
+    .form-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .phone-input-group {
+        grid-template-columns: 96px 1fr;
     }
 }
 
-@media (max-width: 480px) {
-    .package-detail-title {
-        font-size: 1.4rem !important;
+/* --------------------------------------------------------------------------
+   D. Standard Mobile Phones (max-width: 560px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 560px) {
+    .package-detail-header-section {
+        padding: 78px 0 20px;
     }
 
-    .btn-reserve-package,
-    .btn-gold-pill,
+    .breadcrumb-nav {
+        font-size: 0.75rem;
+        margin-bottom: 10px;
+    }
+
+    .detail-header-title {
+        font-size: 1.45rem;
+        line-height: 1.25;
+    }
+
+    .meta-pill-dark {
+        font-size: 0.72rem;
+        padding: 5px 12px;
+    }
+
+    .header-img-container {
+        height: 200px;
+        border-radius: 14px;
+    }
+
+    .gallery-thumb-item {
+        width: 56px;
+        height: 40px;
+        border-radius: 6px;
+    }
+
+    .aeo-key-points {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 10px;
+        font-size: 0.8rem;
+    }
+
+    .booking-sticky-card {
+        padding: 20px 16px !important;
+        border-radius: 16px !important;
+    }
+
+    .booking-price-amount {
+        font-size: 2.15rem;
+    }
+
+    /* Smart Mobile Guest Breakdown: Horizontal Row saves 200px vertical space */
+    .guest-breakdown-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .guest-type-box {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 14px;
+        gap: 8px;
+    }
+
+    .guest-type-box .form-input {
+        width: 76px;
+        margin-top: 0 !important;
+        padding: 8px 10px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .modal-summary-box {
+        padding: 14px;
+        margin: 16px 0;
+    }
+
+    .summary-line {
+        font-size: 0.82rem;
+    }
+
+    .summary-line.total-line {
+        font-size: 1.15rem;
+    }
+
+    .toggle-addon-item {
+        padding: 12px 14px;
+        flex-wrap: wrap;
+    }
+
+    .addon-toggle-left {
+        font-size: 0.84rem;
+    }
+
+    .addon-toggle-price {
+        font-size: 0.82rem;
+    }
+
+    .success-modal-card {
+        padding: 28px 16px;
+        border-radius: 20px;
+    }
+
+    .success-icon-ring {
+        width: 60px;
+        height: 60px;
+        font-size: 1.6rem;
+        margin-bottom: 14px;
+    }
+
+    .success-modal-title {
+        font-size: 1.35rem;
+    }
+
+    .success-modal-subtitle {
+        font-size: 0.88rem;
+        margin-bottom: 18px;
+    }
+
     .btn-success-close {
-        width: 100% !important;
-        text-align: center !important;
-        padding: 12px 18px !important;
+        width: 100%;
+        padding: 12px 16px;
+        font-size: 0.84rem;
     }
 }
 
+/* --------------------------------------------------------------------------
+   E. Ultra-Compact Mobile Phones (max-width: 380px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 380px) {
+    .detail-header-title {
+        font-size: 1.3rem;
+    }
 
+    .specs-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .aeo-key-points {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .phone-input-group {
+        grid-template-columns: 86px 1fr;
+    }
+
+    .booking-price-amount {
+        font-size: 1.95rem;
+    }
+
+    .btn-reserve-package {
+        font-size: 0.82rem;
+        padding: 13px 14px;
+        letter-spacing: 1px;
+    }
+
+    .btn-mobile-reserve {
+        padding: 10px 14px;
+        font-size: 0.78rem;
+    }
+
+    .mobile-bar-amount {
+        font-size: 1.25rem;
+    }
+}
