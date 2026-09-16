@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ tour.title }} | Sri Lanka Tour | Yala Safari Expeditions{% endblock %}
+{% block title %}{{ tour.title }} | Sri Lanka Tours | Yala Safari Expeditions{% endblock %}
 
 {% block meta_description %}
 <meta name="description"
@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block og_tags %}
-<meta property="og:title" content="{{ tour.title }} | Sri Lanka Tour Expeditions">
+<meta property="og:title" content="{{ tour.title }} | Sri Lanka Tours Expeditions">
 <meta property="og:description" content="{{ tour.description|truncatewords:28|striptags }}">
 <meta property="og:type" content="product">
 <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
