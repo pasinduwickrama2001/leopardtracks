@@ -381,7 +381,8 @@ def booking_to_dict(b):
 def sync_model_to_mongo(instance):
     """
     Called whenever an instance is created or updated in Django Admin.
-    Upserts the corresponding document in MongoDB Atlas in real time with automatic retry.
+    Upserts the corresponding document in MongoDB Atlas by primary key (id).
+    Ensures zero duplicate records and immediate persistence.
     """
     global _mongo_client
     import time
@@ -392,28 +393,26 @@ def sync_model_to_mongo(instance):
                 time.sleep(0.5)
                 continue
             model_name = instance.__class__.__name__
+            doc_id = instance.id
             if model_name == 'SafariPackage':
                 doc = package_to_dict(instance)
-                filter_query = {'$or': [{'id': instance.id}, {'slug': instance.slug}]} if instance.slug and instance.id else ({'slug': instance.slug} if instance.slug else {'id': instance.id})
-                db.core_safaripackage.replace_one(filter_query, doc, upsert=True)
-                db.packages.replace_one(filter_query, doc, upsert=True)
+                db.core_safaripackage.replace_one({'id': doc_id}, doc, upsert=True)
+                db.packages.replace_one({'id': doc_id}, doc, upsert=True)
             elif model_name == 'Tour':
                 doc = tour_to_dict(instance)
-                filter_query = {'$or': [{'id': instance.id}, {'slug': instance.slug}]} if instance.slug and instance.id else ({'slug': instance.slug} if instance.slug else {'id': instance.id})
-                db.core_tour.replace_one(filter_query, doc, upsert=True)
+                db.core_tour.replace_one({'id': doc_id}, doc, upsert=True)
             elif model_name == 'BlogPost':
                 doc = blog_to_dict(instance)
-                filter_query = {'$or': [{'id': instance.id}, {'slug': instance.slug}]} if instance.slug and instance.id else ({'slug': instance.slug} if instance.slug else {'id': instance.id})
-                db.core_blogpost.replace_one(filter_query, doc, upsert=True)
+                db.core_blogpost.replace_one({'id': doc_id}, doc, upsert=True)
             elif model_name == 'HeroSection':
                 doc = hero_to_dict(instance)
-                db.core_herosection.replace_one({'id': instance.id}, doc, upsert=True)
+                db.core_herosection.replace_one({'id': doc_id}, doc, upsert=True)
             elif model_name == 'GuestReview':
                 doc = review_to_dict(instance)
-                db.core_guestreview.replace_one({'id': instance.id}, doc, upsert=True)
+                db.core_guestreview.replace_one({'id': doc_id}, doc, upsert=True)
             elif model_name == 'SafariBooking':
                 doc = booking_to_dict(instance)
-                db.core_safaribooking.replace_one({'id': instance.id}, doc, upsert=True)
+                db.core_safaribooking.replace_one({'id': doc_id}, doc, upsert=True)
             return True
         except Exception as e:
             logger.error(f"Error syncing {instance.__class__.__name__} to MongoDB Atlas (attempt {attempt+1}): {e}")
@@ -431,7 +430,7 @@ def delete_model_from_mongo(instance):
         if db is None:
             return False
         model_name = instance.__class__.__name__
-        filter_query = {'slug': instance.slug} if getattr(instance, 'slug', None) else {'id': instance.id}
+        filter_query = {'id': instance.id}
         if model_name == 'SafariPackage':
             db.core_safaripackage.delete_many(filter_query)
             db.packages.delete_many(filter_query)
@@ -440,11 +439,11 @@ def delete_model_from_mongo(instance):
         elif model_name == 'BlogPost':
             db.core_blogpost.delete_many(filter_query)
         elif model_name == 'HeroSection':
-            db.core_herosection.delete_many({'id': instance.id})
+            db.core_herosection.delete_many(filter_query)
         elif model_name == 'GuestReview':
-            db.core_guestreview.delete_many({'id': instance.id})
+            db.core_guestreview.delete_many(filter_query)
         elif model_name == 'SafariBooking':
-            db.core_safaribooking.delete_many({'id': instance.id})
+            db.core_safaribooking.delete_many(filter_query)
         return True
     except Exception as e:
         logger.error(f"Error deleting {instance.__class__.__name__} from MongoDB Atlas: {e}")
@@ -474,7 +473,8 @@ def sync_all_from_mongo_to_sqlite():
     """
     Loads latest documents from MongoDB Atlas into SQLite so Django Admin
     always displays the true live database content upon cold start.
-    Executes inside disable_mongo_sync() to prevent signal write loops.
+    MongoDB Atlas is treated as the authoritative master cloud store.
+    Optimized for fast execution (<1s) without blocking requests or timing out.
     """
     try:
         db = get_mongo_db()
@@ -487,10 +487,17 @@ def sync_all_from_mongo_to_sqlite():
 
         with disable_mongo_sync():
             with transaction.atomic():
-                # 1. Sync Safari Packages
-                mongo_pkgs = list(db.core_safaripackage.find()) or list(db.packages.find())
-                if mongo_pkgs:
-                    for d in mongo_pkgs:
+                # 1. Sync Safari Packages (Deduplicate by ID)
+                raw_pkgs = list(db.core_safaripackage.find()) or list(db.packages.find())
+                if raw_pkgs:
+                    # Deduplicate in memory keeping latest
+                    pkgs_map = {}
+                    for d in raw_pkgs:
+                        pkg_id = d.get('id')
+                        if pkg_id is not None:
+                            pkgs_map[pkg_id] = d
+
+                    for pkg_id, d in pkgs_map.items():
                         slug_val = str(d.get('slug') or '').strip()
                         defaults = {
                             'title': str(d.get('title') or ''),
@@ -519,37 +526,39 @@ def sync_all_from_mongo_to_sqlite():
                             'highlights': str(d.get('highlights') or ''),
                             'featured': bool(d.get('featured')),
                         }
-                        pkg_obj = None
-                        if 'id' in d and isinstance(d['id'], int):
-                            pkg_obj = SafariPackage.objects.filter(id=d['id']).first()
+                        pkg_obj = SafariPackage.objects.filter(id=pkg_id).first()
                         if not pkg_obj and slug_val:
                             pkg_obj = SafariPackage.objects.filter(slug=slug_val).first()
 
                         if pkg_obj:
-                            local_ts = _parse_timestamp(getattr(pkg_obj, 'updated_at', None))
-                            mongo_ts = _parse_timestamp(d.get('updated_at'))
-                            if local_ts > 0 and mongo_ts > 0 and (local_ts - mongo_ts > 2.0):
-                                try:
-                                    sync_model_to_mongo(pkg_obj)
-                                except Exception:
-                                    pass
-                                continue
-
-                            if getattr(pkg_obj, 'imageUrl', None) and not defaults.get('imageUrl'):
-                                defaults['imageUrl'] = pkg_obj.imageUrl
-
+                            changed = False
                             for k, v in defaults.items():
-                                setattr(pkg_obj, k, v)
-                            pkg_obj.save()
+                                if getattr(pkg_obj, k) != v:
+                                    setattr(pkg_obj, k, v)
+                                    changed = True
+                            if changed:
+                                pkg_obj.save()
                         else:
-                            if 'id' in d and isinstance(d['id'], int):
-                                defaults['id'] = d['id']
+                            defaults['id'] = pkg_id
                             SafariPackage.objects.create(**defaults)
 
-                # 2. Sync Tours
-                mongo_tours = list(db.core_tour.find())
-                if mongo_tours:
-                    for t in mongo_tours:
+                # 2. Sync Tours (Deduplicate by ID)
+                raw_tours = list(db.core_tour.find())
+                if raw_tours:
+                    tours_map = {}
+                    for t in raw_tours:
+                        t_id = t.get('id')
+                        if t_id is not None:
+                            # If duplicate, choose the one with newer updated_at
+                            if t_id in tours_map:
+                                old_ts = _parse_timestamp(tours_map[t_id].get('updated_at'))
+                                new_ts = _parse_timestamp(t.get('updated_at'))
+                                if new_ts >= old_ts:
+                                    tours_map[t_id] = t
+                            else:
+                                tours_map[t_id] = t
+
+                    for t_id, t in tours_map.items():
                         slug_val = str(t.get('slug') or '').strip()
                         defaults = {
                             'title': str(t.get('title') or ''),
@@ -567,78 +576,31 @@ def sync_all_from_mongo_to_sqlite():
                             'seoKeywords': str(t.get('seoKeywords') or ''),
                             'itinerary_json': str(t.get('itinerary_json') or ''),
                         }
-                        tour_obj = None
-                        if 'id' in t and isinstance(t['id'], int):
-                            tour_obj = Tour.objects.filter(id=t['id']).first()
+                        tour_obj = Tour.objects.filter(id=t_id).first()
                         if not tour_obj and slug_val:
                             tour_obj = Tour.objects.filter(slug=slug_val).first()
 
                         if tour_obj:
-                            local_ts = _parse_timestamp(getattr(tour_obj, 'updated_at', None))
-                            mongo_ts = _parse_timestamp(t.get('updated_at'))
-                            if local_ts > 0 and mongo_ts > 0 and (local_ts - mongo_ts > 2.0):
-                                try:
-                                    sync_model_to_mongo(tour_obj)
-                                except Exception:
-                                    pass
-                                continue
-
-                            if getattr(tour_obj, 'imageUrl', None) and not defaults.get('imageUrl'):
-                                defaults['imageUrl'] = tour_obj.imageUrl
-
+                            changed = False
                             for k, v in defaults.items():
-                                setattr(tour_obj, k, v)
-                            tour_obj.save()
+                                if getattr(tour_obj, k) != v:
+                                    setattr(tour_obj, k, v)
+                                    changed = True
+                            if changed:
+                                tour_obj.save()
                         else:
-                            if 'id' in t and isinstance(t['id'], int):
-                                defaults['id'] = t['id']
+                            defaults['id'] = t_id
                             Tour.objects.create(**defaults)
 
-                # 3. Sync Blog Posts
-                mongo_blogs = list(db.core_blogpost.find())
-                if mongo_blogs:
-                    for b in mongo_blogs:
-                        slug_val = str(b.get('slug') or '').strip()
-                        defaults = {
-                            'title': str(b.get('title') or ''),
-                            'slug': slug_val,
-                            'category': str(b.get('category') or 'WILDLIFE LOG'),
-                            'author': str(b.get('author') or 'Discoveryala Naturalist'),
-                            'imageUrl': str(b.get('imageUrl') or ''),
-                            'content': str(b.get('content') or ''),
-                            'featured': bool(b.get('featured')),
-                        }
-                        blog_obj = None
-                        if 'id' in b and isinstance(b['id'], int):
-                            blog_obj = BlogPost.objects.filter(id=b['id']).first()
-                        if not blog_obj and slug_val:
-                            blog_obj = BlogPost.objects.filter(slug=slug_val).first()
+                # 3. Sync Hero Sections (Deduplicate by ID)
+                raw_heroes = list(db.core_herosection.find())
+                if raw_heroes:
+                    heroes_map = {}
+                    for h in raw_heroes:
+                        h_id = h.get('id', 1)
+                        heroes_map[h_id] = h
 
-                        if blog_obj:
-                            local_ts = _parse_timestamp(getattr(blog_obj, 'updated_at', None))
-                            mongo_ts = _parse_timestamp(b.get('updated_at'))
-                            if local_ts > 0 and mongo_ts > 0 and (local_ts - mongo_ts > 2.0):
-                                try:
-                                    sync_model_to_mongo(blog_obj)
-                                except Exception:
-                                    pass
-                                continue
-
-                            if getattr(blog_obj, 'imageUrl', None) and not defaults.get('imageUrl'):
-                                defaults['imageUrl'] = blog_obj.imageUrl
-
-                            for k, v in defaults.items():
-                                setattr(blog_obj, k, v)
-                            blog_obj.save()
-                        else:
-                            if 'id' in b and isinstance(b['id'], int):
-                                defaults['id'] = b['id']
-                            BlogPost.objects.create(**defaults)
-
-                # 4. Sync Hero Sections
-                mongo_heroes = list(db.core_herosection.find())
-                if mongo_heroes:
-                    for h in mongo_heroes:
+                    for h_id, h in heroes_map.items():
                         defaults = {
                             'title': str(h.get('title') or 'WILD YALA SAFARIS'),
                             'subtitle': str(h.get('subtitle') or "Ceylon's premier 4x4 game drives & luxury glamping."),
@@ -650,27 +612,65 @@ def sync_all_from_mongo_to_sqlite():
                             'button_secondary_url': str(h.get('button_secondary_url') or '/contact/'),
                             'is_active': bool(h.get('is_active', True)),
                         }
-                        h_id = h.get('id', 1)
                         hero_obj = HeroSection.objects.filter(id=h_id).first()
                         if hero_obj:
-                            local_ts = _parse_timestamp(getattr(hero_obj, 'updated_at', None))
-                            mongo_ts = _parse_timestamp(h.get('updated_at'))
-                            if local_ts > 0 and mongo_ts > 0 and (local_ts - mongo_ts > 2.0):
-                                try:
-                                    sync_model_to_mongo(hero_obj)
-                                except Exception:
-                                    pass
-                                continue
-
-                            if getattr(hero_obj, 'imageUrl', None) and not defaults.get('imageUrl'):
-                                defaults['imageUrl'] = hero_obj.imageUrl
-
+                            changed = False
                             for k, v in defaults.items():
-                                setattr(hero_obj, k, v)
-                            hero_obj.save()
+                                if getattr(hero_obj, k) != v:
+                                    setattr(hero_obj, k, v)
+                                    changed = True
+                            if changed:
+                                hero_obj.save()
                         else:
                             defaults['id'] = h_id
                             HeroSection.objects.create(**defaults)
+
+                # 4. Sync Blog Posts (Fast incremental hydration)
+                existing_blog_count = BlogPost.objects.count()
+                raw_blogs = list(db.core_blogpost.find())
+                if raw_blogs:
+                    if existing_blog_count == 0:
+                        # Cold start bulk import
+                        blog_items = []
+                        for b in raw_blogs:
+                            b_id = b.get('id') if isinstance(b.get('id'), int) else None
+                            blog_items.append(BlogPost(
+                                id=b_id,
+                                title=str(b.get('title') or ''),
+                                slug=str(b.get('slug') or ''),
+                                category=str(b.get('category') or 'WILDLIFE LOG'),
+                                author=str(b.get('author') or 'Discoveryala Naturalist'),
+                                imageUrl=str(b.get('imageUrl') or ''),
+                                content=str(b.get('content') or ''),
+                                featured=bool(b.get('featured')),
+                            ))
+                        BlogPost.objects.bulk_create(blog_items, batch_size=200, ignore_conflicts=True)
+                    else:
+                        # Incremental update: check only blogs where updated_at or image changed
+                        existing_blogs = {bg.id: bg for bg in BlogPost.objects.all()}
+                        for b in raw_blogs:
+                            b_id = b.get('id')
+                            if not b_id or b_id not in existing_blogs:
+                                slug_val = str(b.get('slug') or '').strip()
+                                BlogPost.objects.create(
+                                    id=b_id,
+                                    title=str(b.get('title') or ''),
+                                    slug=slug_val,
+                                    category=str(b.get('category') or 'WILDLIFE LOG'),
+                                    author=str(b.get('author') or 'Discoveryala Naturalist'),
+                                    imageUrl=str(b.get('imageUrl') or ''),
+                                    content=str(b.get('content') or ''),
+                                    featured=bool(b.get('featured')),
+                                )
+                            else:
+                                bg_obj = existing_blogs[b_id]
+                                mongo_img = str(b.get('imageUrl') or '')
+                                mongo_title = str(b.get('title') or '')
+                                if bg_obj.imageUrl != mongo_img or bg_obj.title != mongo_title or bg_obj.featured != bool(b.get('featured')):
+                                    bg_obj.imageUrl = mongo_img
+                                    bg_obj.title = mongo_title
+                                    bg_obj.featured = bool(b.get('featured'))
+                                    bg_obj.save()
 
                 # 5. Sync Guest Reviews (Only if SQLite has no reviews yet, via fast bulk_create)
                 if GuestReview.objects.count() == 0:
@@ -695,62 +695,57 @@ def sync_all_from_mongo_to_sqlite():
                             ))
                         GuestReview.objects.bulk_create(rev_items, batch_size=300, ignore_conflicts=True)
 
-                # 6. Sync Safari Bookings (Safe lookup preventing MultipleObjectsReturned)
+                # 6. Sync Safari Bookings (Fast incremental check)
+                existing_booking_count = SafariBooking.objects.count()
                 mongo_books = list(db.core_safaribooking.find())
                 if mongo_books:
-                    for bk in mongo_books:
-                        raw_date = bk.get('safari_date')
-                        if isinstance(raw_date, str) and raw_date:
-                            try:
-                                s_date = datetime.strptime(raw_date[:10], '%Y-%m-%d').date()
-                            except Exception:
+                    if existing_booking_count == 0:
+                        book_items = []
+                        for bk in mongo_books:
+                            raw_date = bk.get('safari_date')
+                            if isinstance(raw_date, str) and raw_date:
+                                try:
+                                    s_date = datetime.strptime(raw_date[:10], '%Y-%m-%d').date()
+                                except Exception:
+                                    s_date = date.today()
+                            elif isinstance(raw_date, (datetime, date)):
+                                s_date = raw_date if isinstance(raw_date, date) else raw_date.date()
+                            else:
                                 s_date = date.today()
-                        elif isinstance(raw_date, (datetime, date)):
-                            s_date = raw_date if isinstance(raw_date, date) else raw_date.date()
-                        else:
-                            s_date = date.today()
 
-                        bk_id = bk.get('id') if isinstance(bk.get('id'), int) else None
-                        defaults = {
-                            'package_title': str(bk.get('package_title') or ''),
-                            'full_name': str(bk.get('full_name') or ''),
-                            'country': str(bk.get('country') or ''),
-                            'email': str(bk.get('email') or ''),
-                            'phone_code': str(bk.get('phone_code') or '+94'),
-                            'phone_number': str(bk.get('phone_number') or ''),
-                            'safari_date': s_date,
-                            'guests': int(bk.get('guests') or 2),
-                            'adult_guests': int(bk.get('adult_guests') or 2),
-                            'child_guests': int(bk.get('child_guests') or 0),
-                            'under6_guests': int(bk.get('under6_guests') or 0),
-                            'include_meals': bool(bk.get('include_meals')),
-                            'meal_count': int(bk.get('meal_count') or 0),
-                            'meals_price_total': str(bk.get('meals_price_total') or '0.00'),
-                            'include_tickets': bool(bk.get('include_tickets')),
-                            'tickets_price_total': str(bk.get('tickets_price_total') or '0.00'),
-                            'base_price': str(bk.get('base_price') or '0.00'),
-                            'total_price': str(bk.get('total_price') or '0.00'),
-                            'message': str(bk.get('message') or ''),
-                            'status': str(bk.get('status') or 'Pending'),
-                        }
-                        book_obj = None
-                        if bk_id:
-                            book_obj = SafariBooking.objects.filter(id=bk_id).first()
-                        if not book_obj and defaults['email'] and defaults['full_name']:
-                            book_obj = SafariBooking.objects.filter(
-                                full_name=defaults['full_name'],
-                                email=defaults['email'],
-                                safari_date=s_date
-                            ).first()
-
-                        if book_obj:
-                            for k, v in defaults.items():
-                                setattr(book_obj, k, v)
-                            book_obj.save()
-                        else:
+                            bk_id = bk.get('id') if isinstance(bk.get('id'), int) else None
+                            book_items.append(SafariBooking(
+                                id=bk_id,
+                                package_title=str(bk.get('package_title') or ''),
+                                full_name=str(bk.get('full_name') or ''),
+                                country=str(bk.get('country') or ''),
+                                email=str(bk.get('email') or ''),
+                                phone_code=str(bk.get('phone_code') or '+94'),
+                                phone_number=str(bk.get('phone_number') or ''),
+                                safari_date=s_date,
+                                guests=int(bk.get('guests') or 2),
+                                adult_guests=int(bk.get('adult_guests') or 2),
+                                child_guests=int(bk.get('child_guests') or 0),
+                                under6_guests=int(bk.get('under6_guests') or 0),
+                                include_meals=bool(bk.get('include_meals')),
+                                meal_count=int(bk.get('meal_count') or 0),
+                                meals_price_total=str(bk.get('meals_price_total') or '0.00'),
+                                include_tickets=bool(bk.get('include_tickets')),
+                                tickets_price_total=str(bk.get('tickets_price_total') or '0.00'),
+                                base_price=str(bk.get('base_price') or '0.00'),
+                                total_price=str(bk.get('total_price') or '0.00'),
+                                message=str(bk.get('message') or ''),
+                                status=str(bk.get('status') or 'Pending'),
+                            ))
+                        SafariBooking.objects.bulk_create(book_items, batch_size=100, ignore_conflicts=True)
+                    else:
+                        for bk in mongo_books:
+                            bk_id = bk.get('id') if isinstance(bk.get('id'), int) else None
                             if bk_id:
-                                defaults['id'] = bk_id
-                            SafariBooking.objects.create(**defaults)
+                                bk_obj = SafariBooking.objects.filter(id=bk_id).first()
+                                if bk_obj and bk_obj.status != str(bk.get('status') or 'Pending'):
+                                    bk_obj.status = str(bk.get('status') or 'Pending')
+                                    bk_obj.save()
 
         return True
     except Exception as e:

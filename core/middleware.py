@@ -55,12 +55,12 @@ class AutoDatabaseInitMiddleware:
 
                 # 3. Hydrate SQLite from live MongoDB Atlas
                 try:
-                    from core.mongodb import sync_all_from_mongo_to_sqlite, sync_all_from_sqlite_to_mongo
+                    from core.mongodb import sync_all_from_mongo_to_sqlite
                     hydrated = sync_all_from_mongo_to_sqlite()
                     
-                    # If database is completely empty (no packages), load initial fixture
+                    # Only fallback to initial fixture if MongoDB hydration was completely inactive/failed and table is empty
                     from core.models import SafariPackage
-                    if SafariPackage.objects.count() == 0:
+                    if SafariPackage.objects.count() == 0 and not hydrated:
                         fixture = Path(__file__).resolve().parent.parent / 'initial_data.json'
                         if fixture.exists():
                             call_command('loaddata', str(fixture), interactive=False)
@@ -74,7 +74,7 @@ class AutoDatabaseInitMiddleware:
         global _LAST_ADMIN_SYNC
         import time
         now = time.time()
-        if request.path == '/admin/' and getattr(request, 'user', None) and request.user.is_authenticated and request.user.is_staff:
+        if request.path.startswith('/admin/') and getattr(request, 'user', None) and request.user.is_authenticated and request.user.is_staff:
             if now - _LAST_ADMIN_SYNC > 300:
                 _LAST_ADMIN_SYNC = now
                 try:

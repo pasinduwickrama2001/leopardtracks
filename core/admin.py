@@ -145,6 +145,18 @@ class SafariBookingAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at',)
     actions = [sync_selected_to_mongodb]
 
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        try:
+            from .mongodb import sync_model_to_mongo
+            synced = sync_model_to_mongo(obj)
+            if synced:
+                messages.success(request, f"✓ Synced booking for '{getattr(obj, 'full_name', obj)}' to MongoDB Atlas Cloud.")
+            else:
+                messages.warning(request, "⚠ Saved locally, but MongoDB Atlas Cloud sync timed out.")
+        except Exception as e:
+            messages.warning(request, f"⚠ Saved locally, but MongoDB sync notice: {e}")
+
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'category', 'author', 'featured', 'created_at')
@@ -189,6 +201,18 @@ class GuestReviewAdmin(admin.ModelAdmin):
     list_editable = ('rating', 'verified')
     list_per_page = 20
     actions = [sync_selected_to_mongodb]
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        try:
+            from .mongodb import sync_model_to_mongo
+            synced = sync_model_to_mongo(obj)
+            if synced:
+                messages.success(request, f"✓ Synced review from '{getattr(obj, 'name', obj)}' to MongoDB Atlas Cloud.")
+            else:
+                messages.warning(request, "⚠ Saved locally, but MongoDB Atlas Cloud sync timed out.")
+        except Exception as e:
+            messages.warning(request, f"⚠ Saved locally, but MongoDB sync notice: {e}")
 
 
 
