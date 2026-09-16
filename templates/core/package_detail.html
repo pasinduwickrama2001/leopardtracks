@@ -155,7 +155,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-<link rel="stylesheet" href="{% static 'css/package_detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/package_detail.css' %}?v=1.2">
 {% endblock %}
 
 {% block content %}
@@ -232,7 +232,11 @@
                     <span class="aeo-badge"><i class="fa-solid fa-bolt font-gold"></i> Direct Package Facts</span>
                     <h2 class="aeo-question">What is {{ package.title }} & What Does It Include?</h2>
                     <p class="aeo-answer-p">
-                        <strong>{{ package.title }}</strong> is a private 4x4 safari expedition in Yala National Park conducted by licensed senior naturalists from Discoveryala. Operating for {{ package.duration }} in a {{ package.vehicle }}, this game drive includes professional wildlife tracking for Sri Lankan leopards, Asian elephants, and sloth bears. Pricing starts from ${{ package.get_clean_price }} USD per vehicle (up to 7 passengers) with complimentary door-to-door hotel pickup across Tissamaharama, Palatupana, and Kataragama.
+                        <strong>{{ package.title }}</strong> is a private 4x4 safari expedition in Yala National Park
+                        conducted by licensed senior naturalists from Discoveryala. Operating for {{ package.duration }}
+                        in a {{ package.vehicle }}, this game drive includes professional wildlife tracking for Sri
+                        Lankan leopards, Asian elephants, and sloth bears. Pricing starts from ${{ package.get_clean_price }} USD per vehicle (up to 7 passengers) with complimentary door-to-door
+                        hotel pickup across Tissamaharama, Palatupana, and Kataragama.
                     </p>
                     <div class="aeo-key-points">
                         <span><i class="fa-solid fa-clock"></i> {{ package.duration }}</span>
@@ -324,16 +328,22 @@
                     <div class="tip-content">
                         <h4>Field Naturalist Advice for {{ package.title }}</h4>
                         <p>
-                            We recommend being ready in your hotel lobby 15 minutes before the pickup window. At Palatupana gate, arriving early ensures optimal queue placement for morning gate opening at 06:00 AM. Bring a light dust scarf or neck gaiter, polarized sunglasses, and a telephoto lens (100–400mm or equivalent). Our drivers respect official DWC buffer distances to ensure ethical, disturbance-free wildlife observation.
+                            We recommend being ready in your hotel lobby 15 minutes before the pickup window. At
+                            Palatupana gate, arriving early ensures optimal queue placement for morning gate opening at
+                            06:00 AM. Bring a light dust scarf or neck gaiter, polarized sunglasses, and a telephoto
+                            lens (100–400mm or equivalent). Our drivers respect official DWC buffer distances to ensure
+                            ethical, disturbance-free wildlife observation.
                         </p>
                     </div>
                 </div>
 
                 <!-- Structured Comparison Table -->
                 <div class="detail-block">
-                    <h3 class="detail-block-title"><i class="fa-solid fa-scale-balanced font-jungle"></i> Private vs Shared Safari Comparison</h3>
+                    <h3 class="detail-block-title"><i class="fa-solid fa-scale-balanced font-jungle"></i> Private vs
+                        Shared Safari Comparison</h3>
                     <div class="aeo-table-wrapper">
-                        <div class="table-scroll-hint"><i class="fa-solid fa-arrows-left-right"></i> Scroll horizontally to view full comparison</div>
+                        <div class="table-scroll-hint"><i class="fa-solid fa-arrows-left-right"></i> Scroll horizontally
+                            to view full comparison</div>
                         <table class="aeo-comparison-table">
                             <thead>
                                 <tr>
@@ -370,7 +380,8 @@
 
                 <!-- Visible FAQ Accordion Section (1:1 Match with JSON-LD Schema) -->
                 <div class="detail-block aeo-faq-wrapper">
-                    <h3 class="detail-block-title"><i class="fa-solid fa-circle-question font-jungle"></i> Frequently Asked Questions</h3>
+                    <h3 class="detail-block-title"><i class="fa-solid fa-circle-question font-jungle"></i> Frequently
+                        Asked Questions</h3>
                     <div class="aeo-faq-list">
                         <div class="aeo-faq-item active">
                             <button class="aeo-faq-q-btn" onclick="toggleAeoFaq(this)">
@@ -378,7 +389,8 @@
                                 <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
                             </button>
                             <div class="aeo-faq-answer">
-                                All game drives use private, customized 4x4 safari jeeps with elevated tiered seating, open sides, and charging ports.
+                                All game drives use private, customized 4x4 safari jeeps with elevated tiered seating,
+                                open sides, and charging ports.
                             </div>
                         </div>
 
@@ -388,7 +400,8 @@
                                 <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
                             </button>
                             <div class="aeo-faq-answer">
-                                Yes, complimentary door-to-door hotel pickup and drop-off is included across Tissamaharama, Yala buffer zone, Kirinda, and Kataragama.
+                                Yes, complimentary door-to-door hotel pickup and drop-off is included across
+                                Tissamaharama, Yala buffer zone, Kirinda, and Kataragama.
                             </div>
                         </div>
 
@@ -398,7 +411,9 @@
                                 <span class="aeo-faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
                             </button>
                             <div class="aeo-faq-answer">
-                                Base rates cover private 4x4 jeep and driver-tracker. Official DWC entrance tickets ($25 foreign adult / $15 child + VAT) can be pre-calculated and added during reservation for express queue clearance.
+                                Base rates cover private 4x4 jeep and driver-tracker. Official DWC entrance tickets ($25
+                                foreign adult / $15 child + VAT) can be pre-calculated and added during reservation for
+                                express queue clearance.
                             </div>
                         </div>
                     </div>
@@ -408,14 +423,18 @@
                 <div class="aeo-cluster-nav">
                     <h4><i class="fa-solid fa-route font-gold"></i> Related Yala National Park Planning Resources</h4>
                     <div class="aeo-cluster-pills">
-                        <a href="{% url 'packages' %}" class="aeo-cluster-link"><i class="fa-solid fa-compass"></i> All Safari Packages</a>
-                        <a href="{% url 'tickets' %}" class="aeo-cluster-link"><i class="fa-solid fa-calculator"></i> Official Park Fees & Ticket Calculator</a>
-                        <a href="{% url 'bungalows' %}" class="aeo-cluster-link"><i class="fa-solid fa-campground"></i> DWC In-Park Wildlife Bungalows</a>
-                        <a href="{% url 'tours' %}" class="aeo-cluster-link"><i class="fa-solid fa-map-location-dot"></i> Multi-Day Sri Lanka Tours</a>
-                        <a href="{% url 'blog' %}" class="aeo-cluster-link"><i class="fa-solid fa-paw"></i> Wildlife Field Logs</a>
+                        <a href="{% url 'packages' %}" class="aeo-cluster-link"><i class="fa-solid fa-compass"></i> All
+                            Safari Packages</a>
+                        <a href="{% url 'tickets' %}" class="aeo-cluster-link"><i class="fa-solid fa-calculator"></i>
+                            Official Park Fees & Ticket Calculator</a>
+                        <a href="{% url 'bungalows' %}" class="aeo-cluster-link"><i class="fa-solid fa-campground"></i>
+                            DWC In-Park Wildlife Bungalows</a>
+                        <a href="{% url 'tours' %}" class="aeo-cluster-link"><i
+                                class="fa-solid fa-map-location-dot"></i> Multi-Day Sri Lanka Tours</a>
+                        <a href="{% url 'blog' %}" class="aeo-cluster-link"><i class="fa-solid fa-paw"></i> Wildlife
+                            Field Logs</a>
                     </div>
                 </div>
-
             </div>
 
             <!-- Right Column Sticky Reservation Card -->
@@ -472,7 +491,6 @@
             </div>
 
         </div>
-
     </div>
 </section>
 
@@ -489,12 +507,11 @@
         <div class="camp-card-row other-camp-card {% if forloop.counter|divisibleby:2 %}reverse{% endif %}">
             <div class="camp-image other-camp-image">
                 {% if item.imageUrl %}
-                <img src="{{ item.imageUrl }}" alt="{{ item.title }} - Yala National Park Safari Package"
-                    loading="lazy" decoding="async">
+                <img src="{{ item.imageUrl }}" alt="{{ item.title }} - Yala National Park Safari Package" loading="lazy"
+                    decoding="async">
                 {% else %}
                 <img src="{% static 'images/yala-tent.jpg' %}"
-                    alt="{{ item.title }} - Yala National Park Safari Package"
-                    loading="lazy" decoding="async">
+                    alt="{{ item.title }} - Yala National Park Safari Package" loading="lazy" decoding="async">
                 {% endif %}
                 <span class="camp-location-badge badge-sage">
                     <i class="fa-regular fa-clock"></i> {{ item.duration }}
@@ -503,7 +520,8 @@
             <div class="camp-details other-camp-details">
                 <span class="card-category tag-sage">{{ item.category_label|default:"YALA SAFARI EXPEDITION" }}</span>
                 <h3 class="camp-title">
-                    <a href="{% url 'package_detail' slug=item.slug %}">
+                    <a href="{% url 'package_detail' slug=item.slug %}" class="camp-title-link"
+                        style="color: #233325; text-decoration: none;">
                         {{ item.title }}
                     </a>
                 </h3>
@@ -1250,7 +1268,8 @@
         </div>
 
         <h3 class="success-modal-title">RESERVATION SUBMITTED!</h3>
-        <p class="success-modal-subtitle">Thank you for booking your safari expedition with <strong>Discoveryala</strong>. A confirmation email has been dispatched to your email address.</p>
+        <p class="success-modal-subtitle">Thank you for booking your safari expedition with
+            <strong>Discoveryala</strong>. A confirmation email has been dispatched to your email address.</p>
 
         <div class="success-ref-box" id="successBookingRef">
             Reference ID: #6a84...

@@ -195,7 +195,7 @@
     </noscript>
 
     <!-- Primary Stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.2">
     {% block extra_head %}{% endblock %}
     {% block extra_css %}{% endblock %}
 </head>
@@ -327,11 +327,22 @@
             <div class="footer-col contact-col">
                 <h3 class="footer-heading">LOCATION & COMMS</h3>
                 <ul class="footer-contact-list">
-                    <li><span class="contact-icon-bubble"><i class="fa-solid fa-phone"></i></span> +94 77 815 8004</li>
-                    <li><span class="contact-icon-bubble"><i class="fa-solid fa-envelope"></i></span>
-                        yalaleopardtracks@gmail.com</li>
-                    <li><span class="contact-icon-bubble"><i class="fa-solid fa-location-dot"></i></span> Wickrama,
-                        Kasingama,<br>Yala Entrance Road,<br>Southern Province, Sri Lanka</li>
+                    <li>
+                        <a href="tel:+94778158004" class="footer-contact-link" style="color: inherit; text-decoration: none; display: flex; align-items: flex-start; gap: 12px;" aria-label="Call Discoveryala at +94 77 815 8004">
+                            <span class="contact-icon-bubble"><i class="fa-solid fa-phone"></i></span>
+                            <span style="color: var(--text-muted, #555555); transition: color 0.2s ease;">+94 77 815 8004</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:yalaleopardtracks@gmail.com" class="footer-contact-link" style="color: inherit; text-decoration: none; display: flex; align-items: flex-start; gap: 12px;" aria-label="Email Discoveryala at yalaleopardtracks@gmail.com">
+                            <span class="contact-icon-bubble"><i class="fa-solid fa-envelope"></i></span>
+                            <span style="color: var(--text-muted, #555555); transition: color 0.2s ease;">yalaleopardtracks@gmail.com</span>
+                        </a>
+                    </li>
+                    <li>
+                        <span class="contact-icon-bubble"><i class="fa-solid fa-location-dot"></i></span>
+                        <span>Wickrama, Kasingama,<br>Yala Entrance Road,<br>Southern Province, Sri Lanka</span>
+                    </li>
                 </ul>
             </div>
         </div>

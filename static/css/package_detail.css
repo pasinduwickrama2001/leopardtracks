@@ -789,6 +789,39 @@
     padding: 14px 28px;
 }
 
+.other-camp-details .camp-title,
+.camp-title {
+    font-family: var(--font-heading);
+    font-size: 1.85rem;
+    color: var(--text-primary, #233325);
+    margin-bottom: 14px;
+    font-weight: 800;
+}
+
+.other-camp-details .camp-title a,
+.other-camp-details .camp-title a:link,
+.other-camp-details .camp-title a:visited,
+.other-camp-details .camp-title a:active,
+.camp-title a,
+.camp-title a:link,
+.camp-title a:visited,
+.camp-title a:active,
+.camp-title-link,
+.camp-title-link:link,
+.camp-title-link:visited,
+.camp-title-link:active {
+    color: #233325 !important;
+    text-decoration: none !important;
+    transition: color 0.25s ease;
+}
+
+.other-camp-details .camp-title a:hover,
+.camp-title a:hover,
+.camp-title-link:hover {
+    color: #606C38 !important;
+    text-decoration: none !important;
+}
+
 .other-camp-price {
     font-size: 1.3rem;
     font-weight: 800;
