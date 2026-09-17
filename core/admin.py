@@ -27,6 +27,9 @@ class TourAdmin(admin.ModelAdmin):
     list_per_page = 20
     actions = [sync_selected_to_mongodb]
 
+    class Media:
+        js = ('js/admin_image_compressor.js',)
+
     fieldsets = (
         ('1. Tour Overview & Route', {
             'fields': ('title', 'slug', 'route', 'duration', 'price', 'isFeatured')
@@ -122,6 +125,9 @@ class HeroSectionAdmin(admin.ModelAdmin):
         super().delete_queryset(request, queryset)
         messages.success(request, f"✓ Successfully deleted {count} hero section(s) from local database and removed {deleted_cloud} document(s) from MongoDB Atlas Cloud.")
 
+    class Media:
+        js = ('js/admin_image_compressor.js',)
+
     fieldsets = (
         ('1. Hero Headlines & Badge Tag', {
             'fields': ('title', 'subtitle', 'badge_text', 'is_active')
@@ -182,6 +188,9 @@ class SafariPackageAdmin(admin.ModelAdmin):
                 pass
         super().delete_queryset(request, queryset)
         messages.success(request, f"✓ Successfully deleted {count} package(s) from local database and removed {deleted_cloud} document(s) from MongoDB Atlas Cloud.")
+
+    class Media:
+        js = ('js/admin_image_compressor.js',)
 
     fieldsets = (
         ('1. Basic Package Information', {
@@ -297,6 +306,9 @@ class BlogPostAdmin(admin.ModelAdmin):
                 pass
         super().delete_queryset(request, queryset)
         messages.success(request, f"✓ Successfully deleted {count} blog post(s) from local database and removed {deleted_cloud} document(s) from MongoDB Atlas Cloud.")
+
+    class Media:
+        js = ('js/admin_image_compressor.js',)
 
     fieldsets = (
         ('1. Article Details & Branding', {
