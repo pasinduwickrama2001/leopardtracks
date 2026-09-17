@@ -91,11 +91,44 @@ class AutoDatabaseInitMiddleware:
 
         response = self.get_response(request)
 
-        # Performance & SEO Crawl Headers
+        # Performance & Security Headers
         if not response.has_header('X-Content-Type-Options'):
             response['X-Content-Type-Options'] = 'nosniff'
         if not response.has_header('Referrer-Policy'):
             response['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+
+        # Edge CDN Caching Optimization (Vercel & Global CDNs)
+        # Prevents serverless function exhaustion while maximizing Googlebot Core Web Vitals & TTFB
+        is_safe_method = request.method in ('GET', 'HEAD')
+        is_authed = getattr(request, 'user', None) and request.user.is_authenticated
+        is_private_path = request.path.startswith('/admin') or request.path.startswith('/book')
+
+        if not is_safe_method or is_authed or is_private_path:
+            # Never cache private, authenticated, or transaction routes
+            if not response.has_header('Cache-Control'):
+                response['Cache-Control'] = 'private, no-cache, no-store, must-revalidate'
+        elif response.status_code == 200:
+            # Check for active flash messages
+            has_messages = False
+            try:
+                from django.contrib.messages import get_messages
+                has_messages = bool(len(get_messages(request)))
+            except Exception:
+                pass
+
+            if not has_messages and not response.has_header('Cache-Control'):
+                if request.path in ('/robots.txt', '/sitemap.xml', '/site.webmanifest'):
+                    # 24-hour Edge cache for sitemaps/robots
+                    cache_rule = 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800'
+                    cdn_rule = 'public, s-maxage=86400, stale-while-revalidate=604800'
+                else:
+                    # 1-hour Edge cache for public pages: instant ~20ms response, revalidated in background
+                    cache_rule = 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400'
+                    cdn_rule = 'public, s-maxage=3600, stale-while-revalidate=86400'
+
+                response['Cache-Control'] = cache_rule
+                response['CDN-Cache-Control'] = cdn_rule
+                response['Vercel-CDN-Cache-Control'] = cdn_rule
 
         return response
 

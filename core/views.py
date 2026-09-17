@@ -2039,17 +2039,56 @@ Disallow: /admin/
 Disallow: /book/
 Disallow: /*?*
 
+# Resource-Draining Commercial Bots & Non-Search Scrapers (Blocked to prevent serverless exhaustion)
+User-agent: Bytespider
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: SemrushBot-SA
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Seekport
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /book/
 Disallow: /*?*
 Disallow: /api/
+Crawl-delay: 5
 
 # Canonical Dynamic XML Sitemaps
 Sitemap: {domain}/sitemap.xml
 """
-    return HttpResponse(content.strip() + "\n", content_type="text/plain")
+    response = HttpResponse(content.strip() + "\n", content_type="text/plain")
+    response['Cache-Control'] = 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800'
+    response['CDN-Cache-Control'] = 'public, s-maxage=86400, stale-while-revalidate=604800'
+    response['Vercel-CDN-Cache-Control'] = 'public, s-maxage=86400, stale-while-revalidate=604800'
+    return response
 
 
 def site_webmanifest(request):
@@ -2077,7 +2116,11 @@ def site_webmanifest(request):
         "background_color": "#FAF6EE",
         "display": "standalone"
     }
-    return JsonResponse(data)
+    response = JsonResponse(data)
+    response['Cache-Control'] = 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000'
+    response['CDN-Cache-Control'] = 'public, s-maxage=604800, stale-while-revalidate=2592000'
+    response['Vercel-CDN-Cache-Control'] = 'public, s-maxage=604800, stale-while-revalidate=2592000'
+    return response
 
 
 def sitemap_xml(request):
@@ -2284,7 +2327,11 @@ def sitemap_xml(request):
 {joined_entries}
 </urlset>"""
 
-    return HttpResponse(xml_content, content_type="application/xml")
+    response = HttpResponse(xml_content, content_type="application/xml")
+    response['Cache-Control'] = 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800'
+    response['CDN-Cache-Control'] = 'public, s-maxage=86400, stale-while-revalidate=604800'
+    response['Vercel-CDN-Cache-Control'] = 'public, s-maxage=86400, stale-while-revalidate=604800'
+    return response
 
 
 
