@@ -479,6 +479,91 @@ def _parse_timestamp(val):
             return 0.0
     return 0.0
 
+_LAST_BLOG_SYNC = 0
+
+def sync_blogs_from_mongo_to_sqlite(force=False):
+    """
+    Ultra-fast (<2s) dedicated sync for BlogPost models between MongoDB Atlas and SQLite.
+    Fetches blog metadata without heavy text content, identifies missing or deleted blogs,
+    and bulk-inserts or deletes them in SQLite.
+    Throttled to run at most once every 30 seconds unless force=True.
+    """
+    global _LAST_BLOG_SYNC
+    import time
+    now = time.time()
+    if not force and (now - _LAST_BLOG_SYNC < 30):
+        return True
+
+    try:
+        db = get_mongo_db()
+        if db is None:
+            return False
+
+        from .models import BlogPost
+        from django.db import transaction
+
+        raw_blogs = list(db.core_blogpost.find({}, {'id': 1, 'slug': 1, 'updated_at': 1, 'title': 1, 'imageUrl': 1, 'category': 1, 'author': 1, 'featured': 1}))
+        if not raw_blogs:
+            return False
+
+        mongo_ids = {b['id'] for b in raw_blogs if 'id' in b and b['id'] is not None}
+        if not mongo_ids:
+            return False
+
+        with disable_mongo_sync():
+            with transaction.atomic():
+                # Prune SQLite blog posts that no longer exist in MongoDB Atlas
+                deleted_count, _ = BlogPost.objects.exclude(id__in=mongo_ids).delete()
+                if deleted_count > 0:
+                    logger.info(f"Pruned {deleted_count} deleted blog post(s) from SQLite that no longer exist in MongoDB Atlas")
+
+                existing_map = {bg.id: bg for bg in BlogPost.objects.all()}
+                missing_ids = [b_id for b_id in mongo_ids if b_id not in existing_map]
+
+                # Fetch full documents only for missing blogs (e.g. newly created ones)
+                if missing_ids:
+                    full_docs = list(db.core_blogpost.find({'id': {'$in': missing_ids}}))
+                    new_items = []
+                    for doc in full_docs:
+                        new_items.append(BlogPost(
+                            id=doc.get('id'),
+                            title=str(doc.get('title') or ''),
+                            slug=str(doc.get('slug') or '').strip(),
+                            category=str(doc.get('category') or 'WILDLIFE LOG'),
+                            author=str(doc.get('author') or 'Discoveryala Naturalist'),
+                            imageUrl=str(doc.get('imageUrl') or ''),
+                            content=str(doc.get('content') or ''),
+                            featured=bool(doc.get('featured')),
+                        ))
+                    if new_items:
+                        BlogPost.objects.bulk_create(new_items, ignore_conflicts=True)
+                        logger.info(f"Imported {len(new_items)} new blog post(s) into SQLite: {missing_ids}")
+
+                # Update modified metadata on existing blogs
+                for b in raw_blogs:
+                    b_id = b.get('id')
+                    if b_id in existing_map:
+                        bg_obj = existing_map[b_id]
+                        m_img = str(b.get('imageUrl') or '')
+                        m_title = str(b.get('title') or '')
+                        m_slug = str(b.get('slug') or '').strip()
+                        m_featured = bool(b.get('featured'))
+                        if (bg_obj.imageUrl != m_img or 
+                            bg_obj.title != m_title or 
+                            bg_obj.slug != m_slug or 
+                            bg_obj.featured != m_featured):
+                            bg_obj.imageUrl = m_img
+                            bg_obj.title = m_title
+                            bg_obj.slug = m_slug
+                            bg_obj.featured = m_featured
+                            bg_obj.save()
+
+        _LAST_BLOG_SYNC = now
+        return True
+    except Exception as e:
+        logger.error(f"Error in sync_blogs_from_mongo_to_sqlite: {e}")
+        return False
+
 def sync_all_from_mongo_to_sqlite():
     """
     Loads latest documents from MongoDB Atlas into SQLite so Django Admin
@@ -648,72 +733,7 @@ def sync_all_from_mongo_to_sqlite():
                             HeroSection.objects.create(**defaults)
 
                 # 4. Sync Blog Posts (Fast incremental hydration + Pruning deleted)
-                raw_blogs = list(db.core_blogpost.find())
-                if raw_blogs:
-                    blogs_map = {}
-                    for b in raw_blogs:
-                        b_id = b.get('id')
-                        if b_id is not None:
-                            if b_id in blogs_map:
-                                old_ts = _parse_timestamp(blogs_map[b_id].get('updated_at'))
-                                new_ts = _parse_timestamp(b.get('updated_at'))
-                                if new_ts >= old_ts:
-                                    blogs_map[b_id] = b
-                            else:
-                                blogs_map[b_id] = b
-
-                    # CRITICAL: Prune blog posts from SQLite that were deleted in MongoDB Atlas
-                    if blogs_map:
-                        deleted_count, _ = BlogPost.objects.exclude(id__in=blogs_map.keys()).delete()
-                        if deleted_count > 0:
-                            logger.info(f"Pruned {deleted_count} deleted blog post(s) from SQLite that no longer exist in MongoDB Atlas")
-
-                    existing_blogs = {bg.id: bg for bg in BlogPost.objects.all()}
-                    if not existing_blogs:
-                        # Cold start bulk import
-                        blog_items = []
-                        for b_id, b in blogs_map.items():
-                            blog_items.append(BlogPost(
-                                id=b_id,
-                                title=str(b.get('title') or ''),
-                                slug=str(b.get('slug') or ''),
-                                category=str(b.get('category') or 'WILDLIFE LOG'),
-                                author=str(b.get('author') or 'Discoveryala Naturalist'),
-                                imageUrl=str(b.get('imageUrl') or ''),
-                                content=str(b.get('content') or ''),
-                                featured=bool(b.get('featured')),
-                            ))
-                        BlogPost.objects.bulk_create(blog_items, batch_size=200, ignore_conflicts=True)
-                    else:
-                        # Incremental update / insert
-                        for b_id, b in blogs_map.items():
-                            slug_val = str(b.get('slug') or '').strip()
-                            if b_id not in existing_blogs:
-                                BlogPost.objects.create(
-                                    id=b_id,
-                                    title=str(b.get('title') or ''),
-                                    slug=slug_val,
-                                    category=str(b.get('category') or 'WILDLIFE LOG'),
-                                    author=str(b.get('author') or 'Discoveryala Naturalist'),
-                                    imageUrl=str(b.get('imageUrl') or ''),
-                                    content=str(b.get('content') or ''),
-                                    featured=bool(b.get('featured')),
-                                )
-                            else:
-                                bg_obj = existing_blogs[b_id]
-                                mongo_img = str(b.get('imageUrl') or '')
-                                mongo_title = str(b.get('title') or '')
-                                mongo_slug = slug_val
-                                mongo_featured = bool(b.get('featured'))
-                                if (bg_obj.imageUrl != mongo_img or 
-                                    bg_obj.title != mongo_title or 
-                                    bg_obj.slug != mongo_slug or 
-                                    bg_obj.featured != mongo_featured):
-                                    bg_obj.imageUrl = mongo_img
-                                    bg_obj.title = mongo_title
-                                    bg_obj.slug = mongo_slug
-                                    bg_obj.featured = mongo_featured
-                                    bg_obj.save()
+                sync_blogs_from_mongo_to_sqlite(force=True)
 
                 # 5. Sync Guest Reviews (Prune deleted & sync new)
                 mongo_revs = list(db.core_guestreview.find())

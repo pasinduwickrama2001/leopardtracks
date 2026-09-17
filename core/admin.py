@@ -256,6 +256,14 @@ class BlogPostAdmin(admin.ModelAdmin):
     list_per_page = 20
     actions = [sync_selected_to_mongodb]
 
+    def changelist_view(self, request, extra_context=None):
+        try:
+            from .mongodb import sync_blogs_from_mongo_to_sqlite
+            sync_blogs_from_mongo_to_sqlite(force=True)
+        except Exception:
+            pass
+        return super().changelist_view(request, extra_context=extra_context)
+
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         try:

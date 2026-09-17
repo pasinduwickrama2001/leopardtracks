@@ -663,6 +663,12 @@ Safari Desk Hotline: +94 778158004
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
 
 def blog(request):
+    try:
+        from .mongodb import sync_blogs_from_mongo_to_sqlite
+        sync_blogs_from_mongo_to_sqlite()
+    except Exception:
+        pass
+
     all_posts = []
     try:
         all_posts = list(BlogPost.objects.all())
@@ -671,28 +677,10 @@ def blog(request):
 
     if not all_posts:
         try:
-            from .mongodb import fetch_mongo_blogs
+            from .mongodb import fetch_mongo_blogs, MongoBlogModel
             m_blogs = fetch_mongo_blogs()
             if m_blogs:
-                class MongoBlog:
-                    def __init__(self, doc):
-                        self.id = doc.get('id', 1)
-                        self.pk = self.id
-                        self.title = doc.get('title', '')
-                        self.slug = doc.get('slug', '')
-                        self.category = doc.get('category', 'WILDLIFE')
-                        self.author = doc.get('author', 'Senior Naturalist Desk')
-                        self.imageUrl = doc.get('imageUrl', '') or '/static/images/yala-wildlife-hero.jpg'
-                        self.content = doc.get('content', '')
-                        self.featured = doc.get('featured', False)
-                        self.created_at = 'August 2026'
-
-                    def get_paragraphs(self):
-                        if not self.content:
-                            return []
-                        return [p.strip() for p in self.content.split('\n\n') if p.strip()]
-
-                all_posts = [MongoBlog(b) for b in m_blogs]
+                all_posts = [MongoBlogModel(b) for b in m_blogs]
         except Exception:
             pass
 
@@ -708,47 +696,42 @@ def blog(request):
     return render(request, 'core/blog.html', context)
 
 def blog_detail(request, slug):
+    post = BlogPost.objects.filter(slug=slug).first()
+    if not post and slug.isdigit():
+        post = BlogPost.objects.filter(id=int(slug)).first()
+
+    # If post not in local SQLite, query live MongoDB Atlas directly!
+    if not post:
+        try:
+            from .mongodb import fetch_mongo_blog_by_slug
+            mongo_post = fetch_mongo_blog_by_slug(slug)
+            if mongo_post:
+                # Cache into local SQLite for fast subsequent access
+                post, _ = BlogPost.objects.update_or_create(
+                    id=mongo_post.id,
+                    defaults={
+                        'title': mongo_post.title,
+                        'slug': mongo_post.slug,
+                        'category': mongo_post.category,
+                        'author': mongo_post.author,
+                        'imageUrl': mongo_post.imageUrl,
+                        'content': mongo_post.content,
+                        'featured': mongo_post.featured,
+                    }
+                )
+        except Exception:
+            pass
+
+    if not post:
+        return redirect('blog')
+
     all_posts = []
     try:
         all_posts = list(BlogPost.objects.all())
     except Exception:
         all_posts = []
 
-    if not all_posts:
-        try:
-            from .mongodb import fetch_mongo_blogs
-            m_blogs = fetch_mongo_blogs()
-            if m_blogs:
-                class MongoBlog:
-                    def __init__(self, doc):
-                        self.id = doc.get('id', 1)
-                        self.pk = self.id
-                        self.title = doc.get('title', '')
-                        self.slug = doc.get('slug', '')
-                        self.category = doc.get('category', 'WILDLIFE')
-                        self.author = doc.get('author', 'Senior Naturalist Desk')
-                        self.imageUrl = doc.get('imageUrl', '') or '/static/images/yala-wildlife-hero.jpg'
-                        self.content = doc.get('content', '')
-                        self.featured = doc.get('featured', False)
-                        self.created_at = 'August 2026'
-
-                    def get_paragraphs(self):
-                        if not self.content:
-                            return []
-                        return [p.strip() for p in self.content.split('\n\n') if p.strip()]
-
-                all_posts = [MongoBlog(b) for b in m_blogs]
-        except Exception:
-            pass
-
-    post = next((p for p in all_posts if p.slug == slug), None)
-    if not post and slug.isdigit():
-        post = next((p for p in all_posts if str(p.pk) == slug or str(getattr(p, 'id', '')) == slug), None)
-        
-    if not post:
-        return redirect('blog')
-
-    recent_posts = [p for p in all_posts if p != post][:3]
+    recent_posts = [p for p in all_posts if p.id != post.id][:3]
 
     context = {
         'title': f'{post.title} | Discoveryala Journal',

@@ -75,7 +75,13 @@ class AutoDatabaseInitMiddleware:
         import time
         now = time.time()
         if request.path.startswith('/admin/') and getattr(request, 'user', None) and request.user.is_authenticated and request.user.is_staff:
-            if now - _LAST_ADMIN_SYNC > 300:
+            if 'blogpost' in request.path:
+                try:
+                    from core.mongodb import sync_blogs_from_mongo_to_sqlite
+                    sync_blogs_from_mongo_to_sqlite()
+                except Exception:
+                    pass
+            elif now - _LAST_ADMIN_SYNC > 300:
                 _LAST_ADMIN_SYNC = now
                 try:
                     from core.mongodb import sync_all_from_mongo_to_sqlite
