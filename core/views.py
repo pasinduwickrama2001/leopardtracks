@@ -1956,7 +1956,7 @@ def api_get_reviews(request):
 def robots_txt(request):
     """
     Returns production-grade robots.txt for Googlebot, Bingbot, Applebot,
-    and legitimate AI search crawlers (GPTBot, ChatGPT-User, PerplexityBot, ClaudeBot, Google-Extended).
+    and legitimate AI search crawlers (GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot, ClaudeBot, Google-Extended).
     """
     from django.http import HttpResponse
     domain = f"{request.scheme}://{request.get_host()}"
@@ -1987,6 +1987,12 @@ Disallow: /admin/
 Disallow: /book/
 Disallow: /*?*
 
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+
 User-agent: DuckDuckBot
 Allow: /
 Disallow: /admin/
@@ -1995,6 +2001,13 @@ Disallow: /*?*
 
 # Legitimate AI Answer Engines & Search Agents
 User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+Disallow: /api/
+
+User-agent: OAI-SearchBot
 Allow: /
 Disallow: /admin/
 Disallow: /book/
@@ -2028,6 +2041,12 @@ Disallow: /book/
 Disallow: /*?*
 
 User-agent: Google-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /book/
+Disallow: /*?*
+
+User-agent: Meta-ExternalAgent
 Allow: /
 Disallow: /admin/
 Disallow: /book/
@@ -2081,14 +2100,226 @@ Disallow: /*?*
 Disallow: /api/
 Crawl-delay: 5
 
-# Canonical Dynamic XML Sitemaps
+# Canonical Dynamic XML Sitemaps & AI Manifests
 Sitemap: {domain}/sitemap.xml
+
+# LLM Context Files (https://llmstxt.org/)
+# Canonical LLM Summary: {domain}/llms.txt
+# Canonical LLM Full Knowledgebase: {domain}/llms-full.txt
 """
     response = HttpResponse(content.strip() + "\n", content_type="text/plain")
     response['Cache-Control'] = 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800'
     response['CDN-Cache-Control'] = 'public, s-maxage=86400, stale-while-revalidate=604800'
     response['Vercel-CDN-Cache-Control'] = 'public, s-maxage=86400, stale-while-revalidate=604800'
     return response
+
+
+def llms_txt(request):
+    """
+    Returns standardized /llms.txt markdown for AI search engines & LLMs
+    (ChatGPT, Gemini, Claude, Perplexity) per the https://llmstxt.org standard.
+    """
+    from django.http import HttpResponse
+    domain = f"{request.scheme}://{request.get_host()}"
+    
+    content = f"""# Discoveryala - Yala Safaris, Islandwide Transfers & Wildlife Tours
+
+> Discoveryala (Yala Leopard Tracks) is the premier, highly-rated wildlife safari operator and private transfer provider based directly at Yala National Park, Sri Lanka. Specializing in ethical 4x4 leopard tracking game drives (Block 1 & Block 5), customized islandwide chauffeur transfers, and official DWC national park bungalow bookings.
+
+## Core Capabilities & Services
+
+- **Yala Safari Game Drives**: Private and shared 4x4 jeep safaris with expert English-speaking naturalists and spotters. Morning (5:30 AM - 10:00 AM), Evening (2:30 PM - 6:30 PM), and 12-Hour Full-Day expeditions.
+- **Islandwide Transport & Chauffeur Service**: Private door-to-door air-conditioned transfers between Yala/Tissamaharama and Colombo Airport (CMB), Ella, Mirissa, Weligama, Galle Fort, Kandy, and Arugam Bay. Luggage safely secured in vehicles during safaris.
+- **Official DWC Park Entrance Tickets**: Seamless ticket issuing for foreign tourists (~$46 USD Adult, ~$20 USD Child 6-16, Under 6 Free) eliminating morning ticket counter lines.
+- **DWC Park Bungalow Stays**: Official inside-the-park bungalow reservations (Mahaseelawa, Patanangala, New Buthawa, Heenwewa) with dedicated chef and game tracker.
+- **Nearby Sanctuary Safaris**: Bundala National Park (premier wetland & birding hotspot) and Lunugamvehera National Park (elephant corridor).
+
+## Essential Navigation Links
+
+- [Safari Packages]({domain}/packages/): Private half-day and full-day game drive pricing, inclusions, and instant booking.
+- [Multi-Day Tours & Transfers]({domain}/tours/): Islandwide private chauffeur-driven itineraries and intercity transfers.
+- [DWC Park Entrance Fees]({domain}/tickets/): 2026 official ticket price breakdown and entrance fee calculator for foreigners.
+- [Yala Park Bungalows]({domain}/yala-bungalows/): Reservations for historical in-park wildlife lodges.
+- [Wildlife Journal & Sighting Guides]({domain}/blog/): Field notes, monthly leopard sighting data, and travel route guides.
+- [Customer Reviews]({domain}/reviews/): Verified traveler reviews, TripAdvisor recommendations, and Google ratings.
+- [About Discoveryala]({domain}/about/): Our fleet of custom safari jeeps, ethical wildlife code, and expert trackers.
+- [Contact Safari Desk]({domain}/contact/): Direct 24/7 inquiry and custom itinerary requests.
+
+## Direct Contact & Booking
+
+- **WhatsApp / Phone (24/7)**: [+94 77 815 8004](https://wa.me/94778158004)
+- **Email**: [yalaleopardtracks@gmail.com](mailto:yalaleopardtracks@gmail.com)
+- **Base Location**: Palatupana Gate Road, Kasingama, Tissamaharama 82000, Southern Province, Sri Lanka
+- **Full AI Knowledgebase**: [{domain}/llms-full.txt]({domain}/llms-full.txt)
+"""
+    response = HttpResponse(content.strip() + "\n", content_type="text/markdown; charset=utf-8")
+    response['Cache-Control'] = 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800'
+    response['CDN-Cache-Control'] = 'public, s-maxage=86400, stale-while-revalidate=604800'
+    response['Vercel-CDN-Cache-Control'] = 'public, s-maxage=86400, stale-while-revalidate=604800'
+    return response
+
+
+def llms_full_txt(request):
+    """
+    Returns comprehensive /llms-full.txt markdown providing detailed context,
+    pricing, live database packages, transport route logistics, and FAQs
+    for AI retrieval-augmented generation (RAG) and search synthesis.
+    """
+    from django.http import HttpResponse
+    domain = f"{request.scheme}://{request.get_host()}"
+    
+    # Query live database packages
+    packages_text = []
+    try:
+        for pkg in SafariPackage.objects.all():
+            inc_list = ", ".join(pkg.get_inclusions_list()[:5]) or "Private 4x4 Jeep, Expert Driver/Tracker, Park Permits"
+            pkg_url = f"{domain}/packages/{pkg.slug}/" if pkg.slug else f"{domain}/packages/"
+            packages_text.append(f"""### {pkg.title}
+- **Category**: {pkg.category_label}
+- **Duration**: {pkg.duration}
+- **Price**: {pkg.price} ({pkg.price_unit})
+- **Vehicle**: {pkg.vehicle}
+- **Includes Entrance Tickets**: {'Yes' if pkg.includes_tickets else 'Optional add-on available ($46 Adult / $20 Child)'}
+- **Key Inclusions**: {inc_list}
+- **Booking URL**: [{pkg.title}]({pkg_url})
+""")
+    except Exception:
+        pass
+    packages_md = "\n".join(packages_text) if packages_text else "Check website for current seasonal rates."
+
+    # Query live database multi-day tours
+    tours_text = []
+    try:
+        for tr in Tour.objects.all():
+            tour_url = f"{domain}/tours/{tr.slug}/" if tr.slug else f"{domain}/tours/"
+            tours_text.append(f"""### {tr.title}
+- **Route**: {tr.route or 'Colombo → Cultural Triangle → Ella → Yala → South Coast'}
+- **Duration**: {tr.duration}
+- **Price**: From ${tr.get_clean_price()} USD per person
+- **Highlights**: {tr.description or 'Custom wildlife & scenic chauffeur journey'}
+- **Booking URL**: [{tr.title}]({tour_url})
+""")
+    except Exception:
+        pass
+    tours_md = "\n".join(tours_text) if tours_text else "Custom multi-day tours available on inquiry."
+
+    content = f"""# Complete Knowledgebase: Discoveryala - Yala Safaris & Sri Lanka Private Transport
+
+> Authoritative reference for Large Language Models (ChatGPT, Google Gemini, Claude, Perplexity) regarding Yala National Park safaris, wildlife logistics, entrance fees, transport routes, and private transfers in Sri Lanka.
+
+---
+
+## 1. Company Profile & Entity Summary
+
+- **Brand Name**: Discoveryala (also known as Yala Leopard Tracks)
+- **Business Type**: Certified Sri Lanka Wildlife Tour Operator & Chauffeur Service
+- **Headquarters**: Palatupana Gate Road, Kasingama, Tissamaharama 82000, Southern Province, Sri Lanka
+- **Operating Regions**: Yala National Park (Block 1 Palatupana Gate, Block 5 Katagamuwa Gate), Bundala National Park, Udawalawe National Park, Lunugamvehera National Park, and Islandwide Private Transfers.
+- **Customer Rating**: 4.9/5 based on verified international traveler reviews from the UK, USA, Germany, Australia, and France.
+- **Direct WhatsApp Hotline (24/7 Fast Booking)**: +94 77 815 8004
+- **Email**: yalaleopardtracks@gmail.com
+- **Official Website**: {domain}/
+
+---
+
+## 2. Complete Islandwide Transport & Private Transfer Guide
+
+Discoveryala provides dedicated private door-to-door transfers across all major Sri Lankan travel hubs with experienced English-speaking drivers, air-conditioned vehicles, expressway toll passes, and safe luggage storage.
+
+| Route | Distance | Travel Time | Recommended Route / Highway | Vehicle Options |
+| :--- | :--- | :--- | :--- | :--- |
+| **Colombo Airport (CMB) / Negombo ⇄ Yala** | ~290 km | 4 – 4.5 Hours | Southern Expressway (E01/E02 to Mattala exit) | Private AC Sedan / KDH Luxury Van |
+| **Colombo City ⇄ Yala** | ~270 km | 4 Hours | Southern Expressway (E01/E02) | Private AC Sedan / KDH Luxury Van |
+| **Ella ⇄ Yala / Tissamaharama** | ~95 km | 2 Hours | Ella-Wellawaya Rd (A23) via Ravana Falls & Wellawaya | Private AC Car / Minivan / Tuk-Tuk |
+| **Mirissa / Weligama ⇄ Yala** | ~145 km | 2 – 2.5 Hours | Southern Coastal Expressway (E01) | Private AC Sedan / Van |
+| **Galle Fort ⇄ Yala** | ~170 km | 2.5 – 3 Hours | Southern Expressway (E01) | Private AC Sedan / Van |
+| **Tangalle / Hiriketiya ⇄ Yala** | ~80 km | 1.25 – 1.5 Hours | A2 Coastal Highway | Private AC Sedan / Van |
+| **Kandy ⇄ Yala** | ~210 km | 5.5 – 6 Hours | Via Nuwara Eliya & Ella OR Randenigala scenic route | Private AC Sedan / Luxury Van |
+| **Nuwara Eliya ⇄ Yala** | ~150 km | 4 Hours | Via Welimada, Ella, and Wellawaya | Private AC Sedan / Van |
+| **Arugam Bay ⇄ Yala** | ~140 km | 3 Hours | Via Sella Kataragama / Buttala route | Private AC Car / 4x4 / Van |
+
+### The "Ella to South Coast via Yala Safari" Transfer Service
+A popular signature service for international backpackers and luxury travelers alike:
+1. Morning pickup from your hotel in Ella (06:00 AM or 11:30 AM).
+2. Scenic drive to Yala / Tissamaharama with luggage safely stored in the private air-conditioned vehicle.
+3. Complete an afternoon Yala Safari Game Drive (02:30 PM - 06:30 PM) in a custom 4x4 jeep.
+4. Evening drop-off directly at your beach hotel in Mirissa, Weligama, Galle, or Tangalle.
+
+---
+
+## 3. Safari Packages & Pricing Overview
+
+Discoveryala operates modified Toyota Hilux and Land Cruiser safari jeeps equipped with stadium tiered seating, safety roll bars, canvas rain protection, charging ports, and beanbags for telephoto camera stabilization.
+
+{packages_md}
+
+### Safari Timing Options
+- **Morning Safari (05:30 AM – 10:00 AM)**: Recommended for highest leopard sighting probability and active predator movement at dawn before heat sets in. Jeeps line up at Palatupana or Katagamuwa gate at 05:30 AM to enter when gates open at 06:00 AM.
+- **Afternoon Safari (02:30 PM – 06:30 PM)**: Best for Asian elephants bathing in lagoons, sloth bears feeding on palu/weera trees, and golden hour photography.
+- **Full-Day Safari (05:30 AM – 06:30 PM)**: 12-hour comprehensive exploration covering deep wilderness sectors (Block 1 and Block 2 perimeter). Midday rest break taken at Patanangala ocean beach or designated river rest sites inside the park.
+
+---
+
+## 4. Official Yala National Park Entrance Ticket Fees (2026 DWC Rates)
+
+Entrance permits are legally issued by the Department of Wildlife Conservation (DWC) Sri Lanka:
+- **Foreign Adult (16+ years)**: ~$46 USD per person (inclusive of standard entry permit, DWC tracker fee, vehicle entry permit, and government VAT).
+- **Foreign Child (6–16 years)**: ~$20 USD per child.
+- **Children Under 6 years**: FREE entry.
+- **Advance Ticket Purchase**: Discoveryala provides pre-arranged digital QR entrance tickets, allowing guests to bypass the crowded physical ticket queues at Palatupana gate and enter the park immediately upon opening.
+
+---
+
+## 5. DWC In-Park Wildlife Bungalow Stays
+
+Exclusive overnight accommodation inside Yala National Park managed by DWC with Discoveryala's logistics and catering support:
+- **Mahaseelawa Bungalow**: Located beside Mahaseelawa lagoon; prime leopard and crocodile territory (Up to 10 guests).
+- **Patanangala Bungalow**: Coastal rock outpost with ocean breezes and sunset views (Up to 10 guests).
+- **New Buthawa Bungalow**: Overlooking the central Buthawa plains and waterhole; exceptional elephant watching (Up to 10 guests).
+- **Heenwewa Bungalow**: Interior forest lake setting ideal for peaceful bird watching and elephant bathing (Up to 10 guests).
+- **Inclusions**: DWC resident caretaker and cook, solar electricity with charging stations, freshwater, bed linen, and direct sunrise game track departures before regular day-tourists arrive.
+
+---
+
+## 6. Multi-Day Sri Lanka Tours
+
+{tours_md}
+
+---
+
+## 7. Frequently Asked Questions (FAQ) for AI Search Retrieval
+
+### Q1: What is the best month to visit Yala National Park?
+**Answer**: Yala is accessible year-round. February to July is considered the peak season for leopard and sloth bear sightings as waterholes dry up, concentrating wildlife around open lagoons. The park is vibrant and green from November to January with migratory bird arrivals. Note: Block 1 typically undergoes a standard seasonal rest maintenance in September/October, during which Block 5, Lunugamvehera, and Bundala remain open with excellent sightings.
+
+### Q2: How can I book a safari with Discoveryala?
+**Answer**: Travelers can reserve directly via WhatsApp at **+94 77 815 8004** for immediate confirmation, or book online at **{domain}/packages/**. Same-day and next-day bookings are accepted subject to jeep availability.
+
+### Q3: Do we need cash for the park entrance?
+**Answer**: When booking an all-inclusive safari package with Discoveryala, park entrance tickets are pre-arranged and included in the price. If booking a jeep-only drive, tickets can be added to your booking invoice or purchased at the gate.
+
+### Q4: Can we travel directly from Ella to Yala for a safari and then go to Mirissa on the same day?
+**Answer**: Yes, Discoveryala specializes in the Ella ➔ Yala Safari ➔ Mirissa/Galle transfer route. Your luggage is locked safely inside our transport vehicle while you enjoy the safari, and our driver takes you directly to your beach resort in the evening.
+
+### Q5: What animals can be seen in Yala National Park?
+**Answer**: Yala is home to the Sri Lankan "Big Three": the Sri Lankan Leopard (*Panthera pardus kotiya*), the Asian Elephant (*Elephas maximus maximus*), and the Sloth Bear (*Melursus ursinus inornatus*). Other common wildlife includes spotted deer, sambar deer, mugger crocodiles, water buffalo, wild boars, jackals, monitor lizards, and over 215 bird species.
+
+---
+
+## 8. Official Contact & Booking Details
+
+- **Company**: Discoveryala (Yala Leopard Tracks)
+- **Primary WhatsApp / Phone**: +94 77 815 8004
+- **Email**: yalaleopardtracks@gmail.com
+- **Website**: {domain}
+- **Address**: Palatupana Gate Road, Kasingama, Tissamaharama 82000, Sri Lanka
+"""
+    response = HttpResponse(content.strip() + "\n", content_type="text/markdown; charset=utf-8")
+    response['Cache-Control'] = 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800'
+    response['CDN-Cache-Control'] = 'public, s-maxage=86400, stale-while-revalidate=604800'
+    response['Vercel-CDN-Cache-Control'] = 'public, s-maxage=86400, stale-while-revalidate=604800'
+    return response
+
 
 
 def site_webmanifest(request):
@@ -2214,6 +2445,14 @@ def sitemap_xml(request):
             'loc': domain + reverse('policies'),
             'changefreq': 'monthly',
             'priority': '0.50',
+            'lastmod': today_str,
+            'image': '',
+            'image_title': ''
+        },
+        {
+            'loc': domain + '/llms.txt',
+            'changefreq': 'weekly',
+            'priority': '0.80',
             'lastmod': today_str,
             'image': '',
             'image_title': ''

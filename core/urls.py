@@ -18,6 +18,8 @@ urlpatterns = [
     path('bungalows/', views.bungalows, name='bungalows_alias'),
     path('policies/', views.policies, name='policies'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
+    path('llms.txt', views.llms_txt, name='llms_txt'),
+    path('llms-full.txt', views.llms_full_txt, name='llms_full_txt'),
     path('sitemap.xml', views.sitemap_xml, name='sitemap_xml'),
     path('site.webmanifest', views.site_webmanifest, name='site_webmanifest'),
 ]

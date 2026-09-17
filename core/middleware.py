@@ -117,8 +117,8 @@ class AutoDatabaseInitMiddleware:
                 pass
 
             if not has_messages and not response.has_header('Cache-Control'):
-                if request.path in ('/robots.txt', '/sitemap.xml', '/site.webmanifest'):
-                    # 24-hour Edge cache for sitemaps/robots
+                if request.path in ('/robots.txt', '/sitemap.xml', '/site.webmanifest', '/llms.txt', '/llms-full.txt'):
+                    # 24-hour Edge cache for sitemaps/robots/llms.txt
                     cache_rule = 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800'
                     cdn_rule = 'public, s-maxage=86400, stale-while-revalidate=604800'
                 else:
