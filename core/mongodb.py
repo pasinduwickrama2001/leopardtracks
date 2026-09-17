@@ -430,7 +430,15 @@ def delete_model_from_mongo(instance):
         if db is None:
             return False
         model_name = instance.__class__.__name__
-        filter_query = {'id': instance.id}
+        doc_id = instance.id
+        doc_slug = getattr(instance, 'slug', None)
+
+        # Match by ID or slug (if slug exists) to eliminate any duplicate or orphaned docs
+        if doc_slug:
+            filter_query = {'$or': [{'id': doc_id}, {'slug': str(doc_slug).strip()}]}
+        else:
+            filter_query = {'id': doc_id}
+
         if model_name == 'SafariPackage':
             db.core_safaripackage.delete_many(filter_query)
             db.packages.delete_many(filter_query)
@@ -439,11 +447,13 @@ def delete_model_from_mongo(instance):
         elif model_name == 'BlogPost':
             db.core_blogpost.delete_many(filter_query)
         elif model_name == 'HeroSection':
-            db.core_herosection.delete_many(filter_query)
+            db.core_herosection.delete_many({'id': doc_id})
         elif model_name == 'GuestReview':
-            db.core_guestreview.delete_many(filter_query)
+            db.core_guestreview.delete_many({'id': doc_id})
         elif model_name == 'SafariBooking':
-            db.core_safaribooking.delete_many(filter_query)
+            db.core_safaribooking.delete_many({'id': doc_id})
+
+        logger.info(f"Successfully deleted {model_name} (id={doc_id}) from MongoDB Atlas")
         return True
     except Exception as e:
         logger.error(f"Error deleting {instance.__class__.__name__} from MongoDB Atlas: {e}")
@@ -496,6 +506,10 @@ def sync_all_from_mongo_to_sqlite():
                         pkg_id = d.get('id')
                         if pkg_id is not None:
                             pkgs_map[pkg_id] = d
+
+                    # Prune SQLite packages that no longer exist in MongoDB Atlas
+                    if pkgs_map:
+                        SafariPackage.objects.exclude(id__in=pkgs_map.keys()).delete()
 
                     for pkg_id, d in pkgs_map.items():
                         slug_val = str(d.get('slug') or '').strip()
@@ -558,6 +572,10 @@ def sync_all_from_mongo_to_sqlite():
                             else:
                                 tours_map[t_id] = t
 
+                    # Prune SQLite tours that no longer exist in MongoDB Atlas
+                    if tours_map:
+                        Tour.objects.exclude(id__in=tours_map.keys()).delete()
+
                     for t_id, t in tours_map.items():
                         slug_val = str(t.get('slug') or '').strip()
                         defaults = {
@@ -600,6 +618,10 @@ def sync_all_from_mongo_to_sqlite():
                         h_id = h.get('id', 1)
                         heroes_map[h_id] = h
 
+                    # Prune SQLite hero sections that no longer exist in MongoDB Atlas
+                    if heroes_map:
+                        HeroSection.objects.exclude(id__in=heroes_map.keys()).delete()
+
                     for h_id, h in heroes_map.items():
                         defaults = {
                             'title': str(h.get('title') or 'WILD YALA SAFARIS'),
@@ -625,15 +647,32 @@ def sync_all_from_mongo_to_sqlite():
                             defaults['id'] = h_id
                             HeroSection.objects.create(**defaults)
 
-                # 4. Sync Blog Posts (Fast incremental hydration)
-                existing_blog_count = BlogPost.objects.count()
+                # 4. Sync Blog Posts (Fast incremental hydration + Pruning deleted)
                 raw_blogs = list(db.core_blogpost.find())
                 if raw_blogs:
-                    if existing_blog_count == 0:
+                    blogs_map = {}
+                    for b in raw_blogs:
+                        b_id = b.get('id')
+                        if b_id is not None:
+                            if b_id in blogs_map:
+                                old_ts = _parse_timestamp(blogs_map[b_id].get('updated_at'))
+                                new_ts = _parse_timestamp(b.get('updated_at'))
+                                if new_ts >= old_ts:
+                                    blogs_map[b_id] = b
+                            else:
+                                blogs_map[b_id] = b
+
+                    # CRITICAL: Prune blog posts from SQLite that were deleted in MongoDB Atlas
+                    if blogs_map:
+                        deleted_count, _ = BlogPost.objects.exclude(id__in=blogs_map.keys()).delete()
+                        if deleted_count > 0:
+                            logger.info(f"Pruned {deleted_count} deleted blog post(s) from SQLite that no longer exist in MongoDB Atlas")
+
+                    existing_blogs = {bg.id: bg for bg in BlogPost.objects.all()}
+                    if not existing_blogs:
                         # Cold start bulk import
                         blog_items = []
-                        for b in raw_blogs:
-                            b_id = b.get('id') if isinstance(b.get('id'), int) else None
+                        for b_id, b in blogs_map.items():
                             blog_items.append(BlogPost(
                                 id=b_id,
                                 title=str(b.get('title') or ''),
@@ -646,12 +685,10 @@ def sync_all_from_mongo_to_sqlite():
                             ))
                         BlogPost.objects.bulk_create(blog_items, batch_size=200, ignore_conflicts=True)
                     else:
-                        # Incremental update: check only blogs where updated_at or image changed
-                        existing_blogs = {bg.id: bg for bg in BlogPost.objects.all()}
-                        for b in raw_blogs:
-                            b_id = b.get('id')
-                            if not b_id or b_id not in existing_blogs:
-                                slug_val = str(b.get('slug') or '').strip()
+                        # Incremental update / insert
+                        for b_id, b in blogs_map.items():
+                            slug_val = str(b.get('slug') or '').strip()
+                            if b_id not in existing_blogs:
                                 BlogPost.objects.create(
                                     id=b_id,
                                     title=str(b.get('title') or ''),
@@ -666,21 +703,32 @@ def sync_all_from_mongo_to_sqlite():
                                 bg_obj = existing_blogs[b_id]
                                 mongo_img = str(b.get('imageUrl') or '')
                                 mongo_title = str(b.get('title') or '')
-                                if bg_obj.imageUrl != mongo_img or bg_obj.title != mongo_title or bg_obj.featured != bool(b.get('featured')):
+                                mongo_slug = slug_val
+                                mongo_featured = bool(b.get('featured'))
+                                if (bg_obj.imageUrl != mongo_img or 
+                                    bg_obj.title != mongo_title or 
+                                    bg_obj.slug != mongo_slug or 
+                                    bg_obj.featured != mongo_featured):
                                     bg_obj.imageUrl = mongo_img
                                     bg_obj.title = mongo_title
-                                    bg_obj.featured = bool(b.get('featured'))
+                                    bg_obj.slug = mongo_slug
+                                    bg_obj.featured = mongo_featured
                                     bg_obj.save()
 
-                # 5. Sync Guest Reviews (Only if SQLite has no reviews yet, via fast bulk_create)
-                if GuestReview.objects.count() == 0:
-                    mongo_revs = list(db.core_guestreview.find())
-                    if mongo_revs:
+                # 5. Sync Guest Reviews (Prune deleted & sync new)
+                mongo_revs = list(db.core_guestreview.find())
+                if mongo_revs:
+                    revs_map = {r.get('id'): r for r in mongo_revs if r.get('id') is not None}
+                    if revs_map:
+                        GuestReview.objects.exclude(id__in=revs_map.keys()).delete()
+
+                    existing_rev_ids = set(GuestReview.objects.values_list('id', flat=True))
+                    new_revs = [r for r_id, r in revs_map.items() if r_id not in existing_rev_ids]
+                    if new_revs:
                         rev_items = []
-                        for r in mongo_revs:
-                            r_id = r.get('id') if isinstance(r.get('id'), int) else None
+                        for r in new_revs:
                             rev_items.append(GuestReview(
-                                id=r_id,
+                                id=r.get('id'),
                                 category=str(r.get('category') or 'leopard'),
                                 name=str(r.get('name') or ''),
                                 origin=str(r.get('origin') or 'London, UK'),
@@ -695,10 +743,14 @@ def sync_all_from_mongo_to_sqlite():
                             ))
                         GuestReview.objects.bulk_create(rev_items, batch_size=300, ignore_conflicts=True)
 
-                # 6. Sync Safari Bookings (Fast incremental check)
-                existing_booking_count = SafariBooking.objects.count()
+                # 6. Sync Safari Bookings (Prune deleted & sync updates)
                 mongo_books = list(db.core_safaribooking.find())
                 if mongo_books:
+                    books_map = {bk.get('id'): bk for bk in mongo_books if bk.get('id') is not None}
+                    if books_map:
+                        SafariBooking.objects.exclude(id__in=books_map.keys()).delete()
+
+                    existing_booking_count = SafariBooking.objects.count()
                     if existing_booking_count == 0:
                         book_items = []
                         for bk in mongo_books:

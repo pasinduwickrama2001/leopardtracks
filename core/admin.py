@@ -56,6 +56,28 @@ class TourAdmin(admin.ModelAdmin):
         except Exception as e:
             messages.warning(request, f"⚠ Saved locally, but MongoDB sync notice: {e}")
 
+    def delete_model(self, request, obj):
+        try:
+            from .mongodb import delete_model_from_mongo
+            delete_model_from_mongo(obj)
+        except Exception as e:
+            messages.warning(request, f"⚠ Notice syncing deletion to MongoDB Atlas: {e}")
+        super().delete_model(request, obj)
+        messages.success(request, f"✓ Successfully deleted '{getattr(obj, 'title', obj)}' from local database and MongoDB Atlas Cloud.")
+
+    def delete_queryset(self, request, queryset):
+        from .mongodb import delete_model_from_mongo
+        count = queryset.count()
+        deleted_cloud = 0
+        for item in queryset:
+            try:
+                if delete_model_from_mongo(item):
+                    deleted_cloud += 1
+            except Exception:
+                pass
+        super().delete_queryset(request, queryset)
+        messages.success(request, f"✓ Successfully deleted {count} tour(s) from local database and removed {deleted_cloud} document(s) from MongoDB Atlas Cloud.")
+
 @admin.register(HeroSection)
 class HeroSectionAdmin(admin.ModelAdmin):
     list_display = ('title', 'subtitle', 'badge_text', 'is_active', 'updated_at')
@@ -77,6 +99,28 @@ class HeroSectionAdmin(admin.ModelAdmin):
                 messages.warning(request, f"⚠ Saved locally, but MongoDB Atlas Cloud sync timed out. Please select the item and use the 'Sync selected items directly to MongoDB Atlas' action to ensure cloud sync.")
         except Exception as e:
             messages.warning(request, f"⚠ Saved locally, but MongoDB sync notice: {e}")
+
+    def delete_model(self, request, obj):
+        try:
+            from .mongodb import delete_model_from_mongo
+            delete_model_from_mongo(obj)
+        except Exception as e:
+            messages.warning(request, f"⚠ Notice syncing deletion to MongoDB Atlas: {e}")
+        super().delete_model(request, obj)
+        messages.success(request, f"✓ Successfully deleted '{getattr(obj, 'title', obj)}' from local database and MongoDB Atlas Cloud.")
+
+    def delete_queryset(self, request, queryset):
+        from .mongodb import delete_model_from_mongo
+        count = queryset.count()
+        deleted_cloud = 0
+        for item in queryset:
+            try:
+                if delete_model_from_mongo(item):
+                    deleted_cloud += 1
+            except Exception:
+                pass
+        super().delete_queryset(request, queryset)
+        messages.success(request, f"✓ Successfully deleted {count} hero section(s) from local database and removed {deleted_cloud} document(s) from MongoDB Atlas Cloud.")
 
     fieldsets = (
         ('1. Hero Headlines & Badge Tag', {
@@ -116,6 +160,28 @@ class SafariPackageAdmin(admin.ModelAdmin):
                 messages.warning(request, f"⚠ Saved locally, but MongoDB Atlas Cloud sync timed out. Please select the item and use the 'Sync selected items directly to MongoDB Atlas' action to ensure cloud sync.")
         except Exception as e:
             messages.warning(request, f"⚠ Saved locally, but MongoDB sync notice: {e}")
+
+    def delete_model(self, request, obj):
+        try:
+            from .mongodb import delete_model_from_mongo
+            delete_model_from_mongo(obj)
+        except Exception as e:
+            messages.warning(request, f"⚠ Notice syncing deletion to MongoDB Atlas: {e}")
+        super().delete_model(request, obj)
+        messages.success(request, f"✓ Successfully deleted '{getattr(obj, 'title', obj)}' from local database and MongoDB Atlas Cloud.")
+
+    def delete_queryset(self, request, queryset):
+        from .mongodb import delete_model_from_mongo
+        count = queryset.count()
+        deleted_cloud = 0
+        for item in queryset:
+            try:
+                if delete_model_from_mongo(item):
+                    deleted_cloud += 1
+            except Exception:
+                pass
+        super().delete_queryset(request, queryset)
+        messages.success(request, f"✓ Successfully deleted {count} package(s) from local database and removed {deleted_cloud} document(s) from MongoDB Atlas Cloud.")
 
     fieldsets = (
         ('1. Basic Package Information', {
@@ -157,6 +223,28 @@ class SafariBookingAdmin(admin.ModelAdmin):
         except Exception as e:
             messages.warning(request, f"⚠ Saved locally, but MongoDB sync notice: {e}")
 
+    def delete_model(self, request, obj):
+        try:
+            from .mongodb import delete_model_from_mongo
+            delete_model_from_mongo(obj)
+        except Exception as e:
+            messages.warning(request, f"⚠ Notice syncing deletion to MongoDB Atlas: {e}")
+        super().delete_model(request, obj)
+        messages.success(request, f"✓ Successfully deleted booking for '{getattr(obj, 'full_name', obj)}' from local database and MongoDB Atlas Cloud.")
+
+    def delete_queryset(self, request, queryset):
+        from .mongodb import delete_model_from_mongo
+        count = queryset.count()
+        deleted_cloud = 0
+        for item in queryset:
+            try:
+                if delete_model_from_mongo(item):
+                    deleted_cloud += 1
+            except Exception:
+                pass
+        super().delete_queryset(request, queryset)
+        messages.success(request, f"✓ Successfully deleted {count} booking(s) from local database and removed {deleted_cloud} document(s) from MongoDB Atlas Cloud.")
+
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'category', 'author', 'featured', 'created_at')
@@ -179,6 +267,28 @@ class BlogPostAdmin(admin.ModelAdmin):
                 messages.warning(request, f"⚠ Saved locally, but MongoDB Atlas Cloud sync timed out. Please select the item and use the 'Sync selected items directly to MongoDB Atlas' action to ensure cloud sync.")
         except Exception as e:
             messages.warning(request, f"⚠ Saved locally, but MongoDB sync notice: {e}")
+
+    def delete_model(self, request, obj):
+        try:
+            from .mongodb import delete_model_from_mongo
+            delete_model_from_mongo(obj)
+        except Exception as e:
+            messages.warning(request, f"⚠ Notice syncing deletion to MongoDB Atlas: {e}")
+        super().delete_model(request, obj)
+        messages.success(request, f"✓ Successfully deleted '{getattr(obj, 'title', obj)}' from local database and MongoDB Atlas Cloud.")
+
+    def delete_queryset(self, request, queryset):
+        from .mongodb import delete_model_from_mongo
+        count = queryset.count()
+        deleted_cloud = 0
+        for item in queryset:
+            try:
+                if delete_model_from_mongo(item):
+                    deleted_cloud += 1
+            except Exception:
+                pass
+        super().delete_queryset(request, queryset)
+        messages.success(request, f"✓ Successfully deleted {count} blog post(s) from local database and removed {deleted_cloud} document(s) from MongoDB Atlas Cloud.")
 
     fieldsets = (
         ('1. Article Details & Branding', {
@@ -213,6 +323,28 @@ class GuestReviewAdmin(admin.ModelAdmin):
                 messages.warning(request, "⚠ Saved locally, but MongoDB Atlas Cloud sync timed out.")
         except Exception as e:
             messages.warning(request, f"⚠ Saved locally, but MongoDB sync notice: {e}")
+
+    def delete_model(self, request, obj):
+        try:
+            from .mongodb import delete_model_from_mongo
+            delete_model_from_mongo(obj)
+        except Exception as e:
+            messages.warning(request, f"⚠ Notice syncing deletion to MongoDB Atlas: {e}")
+        super().delete_model(request, obj)
+        messages.success(request, f"✓ Successfully deleted review from '{getattr(obj, 'name', obj)}' from local database and MongoDB Atlas Cloud.")
+
+    def delete_queryset(self, request, queryset):
+        from .mongodb import delete_model_from_mongo
+        count = queryset.count()
+        deleted_cloud = 0
+        for item in queryset:
+            try:
+                if delete_model_from_mongo(item):
+                    deleted_cloud += 1
+            except Exception:
+                pass
+        super().delete_queryset(request, queryset)
+        messages.success(request, f"✓ Successfully deleted {count} review(s) from local database and removed {deleted_cloud} document(s) from MongoDB Atlas Cloud.")
 
 
 
