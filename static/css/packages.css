@@ -46,7 +46,7 @@
     text-transform: uppercase;
     padding: 10px 22px;
     border-radius: var(--radius-pill);
-    background-color: #FFFFFF;
+    background-color: var(--bg-pastel-cream);
     color: #475128;
     border: 1px solid rgba(96, 108, 56, 0.25);
     cursor: pointer;

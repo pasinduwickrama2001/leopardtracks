@@ -175,49 +175,8 @@ def home(request):
         except Exception:
             pass
 
-    # Fetch ALL Verified Guest Reviews & Testimonials from Database / MongoDB Atlas
-    reviews_list = []
-    try:
-        all_reviews = list(GuestReview.objects.all())
-        verified_reviews = [r for r in all_reviews if getattr(r, 'verified', True)]
-        reviews_qs = verified_reviews[:6] if verified_reviews else all_reviews[:6]
-
-        for r in reviews_qs:
-            reviews_list.append({
-                'name': r.name,
-                'origin': r.origin,
-                'package': r.package,
-                'rating': r.rating,
-                'rating_stars': range(r.rating),
-                'comment': r.comment,
-                'source': r.source,
-                'date': r.date,
-                'photo_url': getattr(r, 'photo_url', '') or getattr(r, 'avatar_url', '') or '',
-            })
-    except Exception:
-        reviews_list = []
-
-    if not reviews_list:
-        try:
-            from .mongodb import fetch_mongo_reviews
-            m_reviews = fetch_mongo_reviews(limit=6)
-            if m_reviews:
-                for r in m_reviews:
-                    rating_val = int(r.get('rating', 5))
-                    photo = r.get('photo_url') or r.get('photo') or r.get('avatar_url') or r.get('avatar') or r.get('imageUrl') or ''
-                    reviews_list.append({
-                        'name': r.get('name', 'Safari Guest'),
-                        'origin': r.get('origin', 'International Traveler'),
-                        'package': r.get('package', 'Yala National Park Safari'),
-                        'rating': rating_val,
-                        'rating_stars': range(rating_val),
-                        'comment': r.get('comment', 'Exceptional experience!'),
-                        'source': r.get('source', 'Google Verified Review'),
-                        'date': r.get('date', 'August 2026'),
-                        'photo_url': photo,
-                    })
-        except Exception:
-            pass
+    # Fetch Top Verified Google Maps Reviews with High-Res Photos
+    reviews_list = get_all_google_reviews()[:6]
 
 
 
@@ -1106,6 +1065,137 @@ def about(request):
     }
     return render(request, 'core/about.html', context)
 
+def get_all_google_reviews():
+    """
+    Loads verified Google Maps reviews from scripts/data/google_reviews.json,
+    deduplicates with any DB GuestReview records, and sorts so that high-resolution
+    photo reviews and detailed 5-star testimonials appear first.
+    """
+    import os
+    import json
+    from django.conf import settings
+
+    json_path = os.path.join(settings.BASE_DIR, 'scripts', 'data', 'google_reviews.json')
+    raw_reviews = []
+
+    if os.path.exists(json_path):
+        try:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                raw_reviews = json.load(f)
+        except Exception as e:
+            print("ERROR_LOADING_GOOGLE_REVIEWS_JSON:", e)
+            raw_reviews = []
+
+    reviews_list = []
+    seen_keys = set()
+
+    # 1. Include newly submitted reviews from the database (user-submitted reviews)
+    try:
+        from .models import GuestReview
+        for r in GuestReview.objects.order_by('-created_at'):
+            key = f"{r.name}_{r.comment[:40]}"
+            if key not in seen_keys:
+                seen_keys.add(key)
+                r_rating = int(r.rating) if r.rating else 5
+                reviews_list.append({
+                    'id': str(r.id),
+                    'name': r.name,
+                    'author': r.name,
+                    'origin': r.origin or 'Google Maps Verified Reviewer',
+                    'package': r.package or 'Yala National Park Safari Drive',
+                    'rating': r_rating,
+                    'rating_stars': range(r_rating),
+                    'date': r.date or 'Recent',
+                    'comment': r.comment or 'Breathtaking safari experience in Yala National Park!',
+                    'photo_url': r.photo_url or '',
+                    'avatar_url': r.avatar_url or '',
+                    'category': r.category or 'leopard',
+                    'verified': r.verified,
+                    'source': r.source or 'Google Maps',
+                })
+    except Exception:
+        pass
+
+    # 2. Include reviews from scripts/data/google_reviews.json
+    for item in raw_reviews:
+        author = item.get('author') or item.get('authorName') or 'Google Reviewer'
+        text = (item.get('text') or item.get('reviewText') or '').strip()
+        photo = (item.get('photo_url') or item.get('url') or '').strip()
+        avatar = (item.get('avatar_url') or '').strip()
+        rating = int(item.get('rating', 5))
+        date_str = item.get('date') or item.get('relativeTime') or 'Recent'
+        rid = item.get('id', '')
+
+        key = rid if rid else f"{author}_{text[:40]}"
+        if key not in seen_keys:
+            seen_keys.add(key)
+            lower = text.lower()
+            if any(k in lower for k in ['camp', 'tent', 'glamping', 'stay', 'lodge', 'cabin', 'bungalow', 'resort']):
+                cat = 'camp'
+            elif any(k in lower for k in ['photo', 'camera', 'lens', 'photograph', 'capture', 'shot', 'dslr']):
+                cat = 'photo'
+            elif any(k in lower for k in ['leopard', 'panther', 'cub', 'cat', 'predator', 'spotted']):
+                cat = 'leopard'
+            else:
+                cat = 'drives'
+
+            reviews_list.append({
+                'id': rid,
+                'name': author,
+                'author': author,
+                'origin': 'Google Maps Verified Reviewer',
+                'package': 'Yala National Park Safari Drive',
+                'rating': rating,
+                'rating_stars': range(rating),
+                'date': date_str,
+                'comment': text if text else 'Breathtaking wildlife encounter in Yala National Park.',
+                'photo_url': photo,
+                'avatar_url': avatar,
+                'category': cat,
+                'verified': True,
+                'source': 'Google Maps',
+            })
+
+    # 3. Fallback to MongoDB if both JSON and DB were empty
+    if not reviews_list:
+        try:
+            from .mongodb import fetch_mongo_reviews
+            m_revs = fetch_mongo_reviews(limit=1000)
+            for r in m_revs:
+                r_rating = int(r.get('rating', 5))
+                reviews_list.append({
+                    'id': str(r.get('id', 1)),
+                    'name': r.get('name', 'Google Reviewer'),
+                    'author': r.get('name', 'Google Reviewer'),
+                    'origin': r.get('origin', 'Google Maps Verified Reviewer'),
+                    'package': r.get('package', 'Yala National Park Safari Drive'),
+                    'rating': r_rating,
+                    'rating_stars': range(r_rating),
+                    'date': r.get('date', 'Recent'),
+                    'comment': r.get('comment', 'Exceptional Yala wildlife safari.'),
+                    'photo_url': r.get('photo_url') or r.get('photo') or '',
+                    'avatar_url': r.get('avatar_url') or r.get('avatar') or '',
+                    'category': r.get('category', 'leopard'),
+                    'verified': True,
+                    'source': 'Google Maps',
+                })
+        except Exception:
+            pass
+
+    # 4. Sort reviews: high-res photo reviews + detailed 5-star testimonials first
+    def sort_score(r):
+        has_photo = 1 if r.get('photo_url') else 0
+        has_text = 1 if (r.get('comment') and len(r.get('comment')) > 20) else 0
+        rating = r.get('rating', 5)
+        text_len = len(r.get('comment', ''))
+        return (
+            has_photo * 1000 + (1 if rating >= 4 else 0) * 500 + has_text * 200 + min(text_len, 300)
+        )
+
+    reviews_list.sort(key=sort_score, reverse=True)
+    return reviews_list
+
+
 def reviews(request):
     review_success = None
     if request.method == 'POST':
@@ -1130,7 +1220,7 @@ def reviews(request):
                 category='leopard' if 'leopard' in safari_package_used.lower() else ('camp' if 'camp' in safari_package_used.lower() else 'drives'),
                 name=reviewer_name,
                 origin=reviewer_origin,
-                date='August 2026',
+                date='Recent',
                 package=safari_package_used,
                 rating=rating_num,
                 comment=review_text,
@@ -1142,48 +1232,11 @@ def reviews(request):
             print("REVIEW_SAVE_ERROR:", str(e_rev))
             review_success = f"Thank you, {reviewer_name}! Your review has been recorded."
 
-    import random
-    db_reviews = []
-    try:
-        db_reviews = list(GuestReview.objects.all())
-        random.shuffle(db_reviews)
-    except Exception:
-        db_reviews = []
-
-    if not db_reviews:
-        try:
-            from .mongodb import fetch_mongo_reviews
-            m_revs = fetch_mongo_reviews(limit=1000)
-            if m_revs:
-                class MongoReviewModel:
-                    def __init__(self, doc):
-                        self.id = doc.get('id', 1)
-                        self.pk = self.id
-                        self.name = doc.get('name', '')
-                        self.origin = doc.get('origin', '')
-                        self.date = doc.get('date', '')
-                        self.package = doc.get('package', '')
-                        self.rating = int(doc.get('rating', 5))
-                        self.rating_stars = range(self.rating)
-                        self.comment = doc.get('comment', '')
-                        self.verified = doc.get('verified', True)
-                        self.source = doc.get('source', '')
-                        self.category = doc.get('category', 'leopard')
-                        self.photo_url = doc.get('photo_url') or doc.get('photo') or doc.get('avatar_url') or doc.get('avatar') or doc.get('imageUrl') or ''
-                        self.avatar_url = doc.get('avatar_url') or doc.get('avatar') or self.photo_url
-
-                db_reviews = [MongoReviewModel(r) for r in m_revs]
-                random.shuffle(db_reviews)
-        except Exception:
-            pass
-
-
-
-
+    db_reviews = get_all_google_reviews()
     total_reviews_count = len(db_reviews)
     avg_score = "4.9"
     if total_reviews_count > 0:
-        avg_num = sum(getattr(r, 'rating', 5) for r in db_reviews) / float(total_reviews_count)
+        avg_num = sum(r.get('rating', 5) for r in db_reviews) / float(total_reviews_count)
         avg_score = f"{avg_num:.1f}"
 
     context = {
@@ -1191,7 +1244,7 @@ def reviews(request):
         'rating_summary': {
             'score': avg_score,
             'stars': 5,
-            'total_reviews': total_reviews_count if total_reviews_count > 0 else 6000,
+            'total_reviews': total_reviews_count if total_reviews_count > 0 else 1000,
             'tripadvisor_rating': '5.0 / 5.0 (Top 10% Worldwide)',
             'google_rating': f"{avg_score} / 5.0 (Google Maps Verified)"
         },

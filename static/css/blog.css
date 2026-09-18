@@ -490,8 +490,13 @@
         border: none !important;
         transform: none !important;
         position: relative !important;
-        display: block !important;
+        display: block;
         overflow: hidden !important;
+    }
+
+    .fs-bento-card.review-item-hidden,
+    .review-item-hidden {
+        display: none !important;
     }
 
     .fs-bento-img {
@@ -567,7 +572,7 @@
         font-size: 0.8rem !important;
     }
 
-    .btn-gold-pill {
+    .btn-gold-pill:not(.reviews-load-btn):not(.reviews-show-all-btn) {
         width: 100% !important;
         text-align: center !important;
         padding: 12px 20px !important;

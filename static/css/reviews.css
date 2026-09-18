@@ -87,9 +87,9 @@
     text-transform: uppercase;
     padding: 10px 22px;
     border-radius: var(--radius-pill);
-    background-color: #FFFFFF;
+    background-color: var(--bg-pastel-cream);
     color: #475128;
-    border: 1px solid rgba(96, 108, 56, 0.25);
+    /* border: 1px solid rgba(96, 108, 56, 0.25); */
     cursor: pointer;
     transition: var(--transition);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -312,7 +312,6 @@
         font-size: 1.5rem !important;
     }
 
-    .btn-gold-pill,
     button[type="submit"] {
         width: 100% !important;
         text-align: center !important;
@@ -320,3 +319,236 @@
     }
 }
 
+/* ==========================================================================
+   Hidden Review Item & Responsive Load Controls (Desktop, Tablet & Mobile)
+   ========================================================================== */
+.review-item-hidden,
+.fs-bento-card.review-item-hidden {
+    display: none !important;
+}
+
+.reviews-load-controls {
+    padding: 35px 20px 60px;
+    background: var(--bg-pastel-cream);
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.reviews-counter-badge {
+    margin-bottom: 14px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.reviews-btn-group {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+    margin: 0 auto;
+}
+
+.reviews-load-btn,
+.reviews-show-all-btn {
+    font-family: var(--font-brand);
+    font-size: 0.92rem;
+    font-weight: 700;
+    padding: 14px 32px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: var(--radius-pill);
+    min-height: 48px;
+    transition: all 0.25s ease;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+.reviews-load-btn {
+    background: #606C38 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 8px 24px rgba(164, 112, 45, 0.25);
+}
+
+.reviews-load-btn:hover {
+    background: #4a542b !important;
+    transform: translateY(-2px);
+}
+
+.reviews-show-all-btn {
+    background: #606C38 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 8px 24px rgba(96, 108, 56, 0.25);
+}
+
+.reviews-show-all-btn:hover {
+    background: #4a542b !important;
+    transform: translateY(-2px);
+}
+
+/* Tablet & Mobile: Keep buttons side by side like desktop */
+@media (max-width: 768px) {
+    .reviews-load-controls {
+        padding: 30px 14px 45px !important;
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    .reviews-btn-group {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 10px !important;
+        flex-wrap: nowrap !important;
+    }
+
+    .reviews-load-btn,
+    .reviews-show-all-btn {
+        padding: 12px 20px !important;
+        font-size: 0.82rem !important;
+        width: auto !important;
+        max-width: none !important;
+        display: inline-flex !important;
+        visibility: visible !important;
+        flex: 0 1 auto !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .reviews-load-controls {
+        padding: 24px 8px 40px !important;
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    .reviews-counter-badge {
+        font-size: 0.82rem !important;
+        margin-bottom: 12px !important;
+    }
+
+    .reviews-btn-group {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 8px !important;
+        flex-wrap: nowrap !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .reviews-load-btn,
+    .reviews-show-all-btn {
+        padding: 11px 13px !important;
+        font-size: 0.74rem !important;
+        letter-spacing: 0.2px !important;
+        width: auto !important;
+        max-width: 50% !important;
+        display: inline-flex !important;
+        visibility: visible !important;
+        white-space: nowrap !important;
+        flex: 0 1 auto !important;
+    }
+}
+
+/* ==========================================================================
+   FAQ Section - Borderless Pastel Cream Theme
+   ========================================================================== */
+.faq-summary-section {
+    background-color: var(--bg-pastel-cream) !important;
+    padding: 60px 0 75px;
+    border: none !important;
+}
+
+.faq-accordion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.faq-accordion-item {
+    background: rgba(96, 108, 56, 0.06) !important;
+    border-radius: 16px !important;
+    padding: 18px 24px !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: background 0.25s ease;
+    cursor: pointer;
+}
+
+.faq-accordion-item:hover {
+    background: rgba(96, 108, 56, 0.09) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.faq-accordion-item[open] {
+    background: rgba(96, 108, 56, 0.08) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.faq-accordion-item summary {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #233325;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+}
+
+.faq-accordion-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-accordion-item summary .fa-chevron-down {
+    transition: transform 0.3s ease;
+    font-size: 0.95rem;
+    color: #A4702D;
+    flex-shrink: 0;
+}
+
+.faq-accordion-item[open] summary .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+.faq-accordion-item p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-top: 12px;
+    padding-top: 8px;
+    border: none !important;
+}
+
+@media (max-width: 768px) {
+    .faq-summary-section {
+        padding: 45px 0 60px;
+    }
+    .faq-accordion-item {
+        padding: 16px 18px !important;
+    }
+    .faq-accordion-item summary {
+        font-size: 0.96rem;
+    }
+    .faq-accordion-item p {
+        font-size: 0.88rem;
+        line-height: 1.65;
+    }
+}
