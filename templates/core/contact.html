@@ -97,18 +97,98 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Where does Discoveryala pick up guests for morning safaris?",
+        "name": "How fast does the Discoveryala safari desk respond?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We provide free hotel pickups for morning (05:30 AM) and afternoon safaris across Tissamaharama, Kirinda, Kataragama, and Yala National Park buffer zone lodges."
+          "text": "Our safari desk and WhatsApp team (+94 77 815 8004) are active 24 hours a day, 7 days a week. We typically respond within 15 minutes to all WhatsApp messages and email inquiries."
         }
       },
       {
         "@type": "Question",
-        "name": "How fast does the Discoveryala safari desk respond?",
+        "name": "Can I book a last-minute safari for tomorrow morning or today afternoon?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Our safari desk and WhatsApp team (+94 77 815 8004) respond within 15 minutes, 24 hours a day, 7 days a week."
+          "text": "Yes, subject to vehicle and naturalist availability. We routinely coordinate same-day afternoon safaris and next-morning 5:30 AM game drives. Simply message us directly on WhatsApp (+94 77 815 8004) for real-time clearance and immediate driver assignment."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where do you pick up guests from, and is hotel transfer included?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We provide complimentary round-trip pick-up and drop-off in our custom 4x4 safari jeeps from all hotels, resorts, safari lodges, and villas located across Tissamaharama, Palatupana (Yala buffer zone), Kirinda, and Kataragama."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What details are required to confirm our safari booking?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We only need your preferred safari date, preferred session (Morning 06:00 AM – 10:00 AM, Afternoon 02:30 PM – 06:00 PM, or Full Day 06:00 AM – 06:00 PM), party size (adults & children), and your hotel name for morning pickup."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does payment work for safari jeeps and park permits?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We offer flexible, secure payment options. You can pay online in advance via credit or debit card, or settle directly with our desk coordinator upon arrival in Sri Lankan Rupees (LKR) or USD. For Department of Wildlife Conservation (DWC) park permits, we can either arrange them in advance on your behalf or guide you through gate ticketing."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Discoveryala organize private transport from Colombo, Galle, or Ella?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! In addition to game drives, our logistics team coordinates air-conditioned private car and van transfers across Sri Lanka—including direct airport pick-ups from Bandaranaike International Airport (CMB) or Mattala Rajapaksa Airport (HRI), and intercity transfers from Ella, Mirissa, Tangalle, Galle, and Kandy."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are your safari jeeps 100% private, or will we share with others?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Every safari booked with Discoveryala is 100% private. We never combine strangers into a shared jeep. You and your party have exclusive use of the elevated 4x4 safari vehicle and your assigned senior naturalist tracker."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is your cancellation and date rescheduling policy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We offer hassle-free booking flexibility. If your travel plans change, you can reschedule your safari date free of charge with at least 24 hours' notice. In the event of unexpected severe weather closures by park authorities, full refunds or immediate date swaps are provided."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can we request a wildlife photography setup?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! Please mention when contacting us that you are wildlife photographers. We will assign a photographer-focused driver-naturalist and equip your private jeep with camera beanbags for lens stabilization, spacious low-angle seating, and customize our timing for the best natural light."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do your drivers and naturalist guides speak fluent English?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Our senior driver-naturalists are experienced professionals licensed by the Sri Lanka Tourism Development Authority (SLTDA) and Department of Wildlife Conservation (DWC), fluent in English, and experts in wildlife behavior, animal tracks, bird calls, and park history."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are safaris suitable for young children and elderly travelers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. Our private jeeps feature cushioned tiered seating, safety seatbelts, roll cages, and stable handrails. Because your safari is completely private, you determine the pacing, rest stops, and speed for the comfort of your family."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you arrange luxury camping or wilderness bungalow stays?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Discoveryala manages curated luxury tented safari camping experiences and coordinates bookings for Department of Wildlife Conservation (DWC) wilderness bungalows located inside and bordering Yala National Park. Mention your interest when sending a message for custom package options."
         }
       }
     ]
@@ -118,8 +198,8 @@
 {% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/blog.css' %}">
-<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+<link rel="stylesheet" href="{% static 'css/blog.css' %}?v=2.0">
+<link rel="stylesheet" href="{% static 'css/contact.css' %}?v=2.0">
 {% endblock %}
 
 {% block content %}
@@ -303,6 +383,141 @@
                     Tissamaharama, Kirinda, Kataragama, and Yala buffer zones.
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- Frequently Asked Questions (FAQ) Section for Booking & Contact -->
+<section class="faq-summary-section" id="contact-faq">
+    <div class="container text-center section-header" style="margin-bottom: 36px;">
+        <span class="section-tag tag-sage"><i class="fa-solid fa-circle-question font-gold"></i> FREQUENTLY ASKED QUESTIONS</span>
+        <h2 class="section-title" style="margin-top: 6px;">BOOKING & CONTACT FAQ</h2>
+        <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 800px; margin: 8px auto 0;">
+            Everything you need to know about booking private safaris, hotel pickups, response times, and payment options with Discoveryala.
+        </p>
+    </div>
+
+    <div class="container" style="max-width: 960px; margin: 0 auto;">
+        <div class="faq-accordion-list">
+            <details class="faq-accordion-item" open>
+                <summary>
+                    <span><i class="fa-solid fa-bolt font-gold" style="margin-right: 10px;"></i> How fast does the Discoveryala safari desk respond?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+                <p>
+                    Our safari desk and WhatsApp team (+94 77 815 8004) are active 24 hours a day, 7 days a week. We typically respond within 15 minutes to all WhatsApp messages and email inquiries.
+                </p>
+            </details>
+
+            <details class="faq-accordion-item">
+                <summary>
+                    <span><i class="fa-solid fa-calendar-check font-gold" style="margin-right: 10px;"></i> Can I book a last-minute safari for tomorrow morning or today afternoon?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+                <p>
+                    Yes, subject to vehicle and naturalist availability. We routinely coordinate same-day afternoon safaris and next-morning 5:30 AM game drives. Simply message us directly on WhatsApp (+94 77 815 8004) for real-time clearance and immediate driver assignment.
+                </p>
+            </details>
+
+            <details class="faq-accordion-item">
+                <summary>
+                    <span><i class="fa-solid fa-van-shuttle font-gold" style="margin-right: 10px;"></i> Where do you pick up guests from, and is hotel transfer included?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+                <p>
+                    We provide complimentary round-trip pick-up and drop-off in our custom 4x4 safari jeeps from all hotels, resorts, safari lodges, and villas located across Tissamaharama, Palatupana (Yala buffer zone), Kirinda, and Kataragama.
+                </p>
+            </details>
+
+            <details class="faq-accordion-item">
+                <summary>
+                    <span><i class="fa-solid fa-clipboard-list font-gold" style="margin-right: 10px;"></i> What details are required to confirm our safari booking?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+                <p>
+                    We only need your preferred safari date, preferred session (Morning 06:00 AM – 10:00 AM, Afternoon 02:30 PM – 06:00 PM, or Full Day 06:00 AM – 06:00 PM), party size (adults & children), and your hotel name for morning pickup.
+                </p>
+            </details>
+
+            <details class="faq-accordion-item">
+                <summary>
+                    <span><i class="fa-solid fa-credit-card font-gold" style="margin-right: 10px;"></i> How does payment work for safari jeeps and park permits?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+                <p>
+                    We offer flexible, secure payment options. You can pay online in advance via credit or debit card, or settle directly with our desk coordinator upon arrival in Sri Lankan Rupees (LKR) or USD. For Department of Wildlife Conservation (DWC) park permits, we can either arrange them in advance on your behalf or guide you through gate ticketing.
+                </p>
+            </details>
+
+            <details class="faq-accordion-item">
+                <summary>
+                    <span><i class="fa-solid fa-car font-gold" style="margin-right: 10px;"></i> Can Discoveryala organize private transport from Colombo, Galle, or Ella?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+                <p>
+                    Yes! In addition to game drives, our logistics team coordinates air-conditioned private car and van transfers across Sri Lanka—including direct airport pick-ups from Bandaranaike International Airport (CMB) or Mattala Rajapaksa Airport (HRI), and intercity transfers from Ella, Mirissa, Tangalle, Galle, and Kandy.
+                </p>
+            </details>
+
+            <details class="faq-accordion-item">
+                <summary>
+                    <span><i class="fa-solid fa-truck-monster font-gold" style="margin-right: 10px;"></i> Are your safari jeeps 100% private, or will we share with others?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+                <p>
+                    Every safari booked with Discoveryala is 100% private. We never combine strangers into a shared jeep. You and your party have exclusive use of the elevated 4x4 safari vehicle and your assigned senior naturalist tracker.
+                </p>
+            </details>
+
+            <details class="faq-accordion-item">
+                <summary>
+                    <span><i class="fa-solid fa-arrow-rotate-left font-gold" style="margin-right: 10px;"></i> What is your cancellation and date rescheduling policy?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+                <p>
+                    We offer hassle-free booking flexibility. If your travel plans change, you can reschedule your safari date free of charge with at least 24 hours' notice. In the event of unexpected severe weather closures by park authorities, full refunds or immediate date swaps are provided.
+                </p>
+            </details>
+
+            <details class="faq-accordion-item">
+                <summary>
+                    <span><i class="fa-solid fa-camera font-gold" style="margin-right: 10px;"></i> Can we request a wildlife photography setup?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+                <p>
+                    Yes! Please mention when contacting us that you are wildlife photographers. We will assign a photographer-focused driver-naturalist and equip your private jeep with camera beanbags for lens stabilization, spacious low-angle seating, and customize our timing for the best natural light.
+                </p>
+            </details>
+
+            <details class="faq-accordion-item">
+                <summary>
+                    <span><i class="fa-solid fa-language font-gold" style="margin-right: 10px;"></i> Do your drivers and naturalist guides speak fluent English?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+                <p>
+                    Yes. Our senior driver-naturalists are experienced professionals licensed by the Sri Lanka Tourism Development Authority (SLTDA) and Department of Wildlife Conservation (DWC), fluent in English, and experts in wildlife behavior, animal tracks, bird calls, and park history.
+                </p>
+            </details>
+
+            <details class="faq-accordion-item">
+                <summary>
+                    <span><i class="fa-solid fa-children font-gold" style="margin-right: 10px;"></i> Are safaris suitable for young children and elderly travelers?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+                <p>
+                    Absolutely. Our private jeeps feature cushioned tiered seating, safety seatbelts, roll cages, and stable handrails. Because your safari is completely private, you determine the pacing, rest stops, and speed for the comfort of your family.
+                </p>
+            </details>
+
+            <details class="faq-accordion-item">
+                <summary>
+                    <span><i class="fa-solid fa-campground font-gold" style="margin-right: 10px;"></i> Can you arrange luxury camping or wilderness bungalow stays?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+                <p>
+                    Yes. Discoveryala manages curated luxury tented safari camping experiences and coordinates bookings for Department of Wildlife Conservation (DWC) wilderness bungalows located inside and bordering Yala National Park. Mention your interest when sending a message for custom package options.
+                </p>
+            </details>
         </div>
     </div>
 </section>

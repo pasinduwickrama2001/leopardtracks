@@ -287,4 +287,98 @@
     }
 }
 
+/* ==========================================================================
+   Contact Page FAQ Accordion Section (Borderless Pastel Theme)
+   ========================================================================== */
+.faq-summary-section {
+    background-color: var(--bg-pastel-cream) !important;
+    padding: 60px 0 80px;
+    border: none !important;
+}
+
+.faq-accordion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.faq-accordion-item {
+    background: rgba(96, 108, 56, 0.06) !important;
+    border-radius: 16px !important;
+    padding: 18px 24px !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: background 0.25s ease;
+    cursor: pointer;
+}
+
+.faq-accordion-item:hover {
+    background: rgba(96, 108, 56, 0.09) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.faq-accordion-item[open] {
+    background: rgba(96, 108, 56, 0.08) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.faq-accordion-item summary {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #233325;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+}
+
+.faq-accordion-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-accordion-item summary .fa-chevron-down {
+    transition: transform 0.3s ease;
+    font-size: 0.95rem;
+    color: #A4702D;
+    flex-shrink: 0;
+}
+
+.faq-accordion-item[open] summary .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+.faq-accordion-item p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-top: 12px;
+    padding-top: 8px;
+    border: none !important;
+}
+
+@media (max-width: 768px) {
+    .faq-summary-section {
+        padding: 45px 0 65px;
+    }
+    .faq-accordion-item {
+        padding: 16px 18px !important;
+    }
+    .faq-accordion-item summary {
+        font-size: 0.96rem;
+    }
+    .faq-accordion-item p {
+        font-size: 0.88rem;
+        line-height: 1.65;
+    }
+}
+
+
 
