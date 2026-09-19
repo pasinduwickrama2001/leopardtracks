@@ -343,6 +343,12 @@ def package_detail(request, slug):
         except Exception:
             pass
 
+    reviews_list = []
+    try:
+        reviews_list = list(GuestReview.objects.filter(rating__gte=4).exclude(comment='').order_by('-created_at')[:3])
+    except Exception:
+        reviews_list = []
+
     context = {
         'title': f'{package.title} | Discoveryala',
         'package': package,
@@ -350,7 +356,8 @@ def package_detail(request, slug):
         'exclusions_list': package.get_exclusions_list(),
         'highlights_list': package.get_highlights_list(),
         'image_urls_list': package.get_image_urls_list(),
-        'other_packages': other_packages
+        'other_packages': other_packages,
+        'reviews_list': reviews_list,
     }
     return render(request, 'core/package_detail.html', context)
 
@@ -917,6 +924,12 @@ def tour_detail(request, slug):
 
         return redirect(f"/tours/{slug}/")
 
+    reviews_list = []
+    try:
+        reviews_list = list(GuestReview.objects.filter(rating__gte=4).exclude(comment='').order_by('-created_at')[:3])
+    except Exception:
+        reviews_list = []
+
     context = {
         'title': f"{tour.title} | Sri Lanka Tour Package",
         'tour': tour,
@@ -925,6 +938,7 @@ def tour_detail(request, slug):
         'inclusions_list': tour.get_inclusions_list(),
         'exclusions_list': tour.get_exclusions_list(),
         'itinerary_list': tour.get_itinerary_list(),
+        'reviews_list': reviews_list,
     }
     return render(request, 'core/tour_detail.html', context)
 

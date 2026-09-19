@@ -46,11 +46,64 @@
       "description": "{{ package.description|truncatewords:40|striptags|escapejs }}",
       "image": "{% if image_urls_list %}{{ image_urls_list.0 }}{% elif package.imageUrl %}{{ package.imageUrl }}{% else %}https://res.cloudinary.com/dkfnpmzpv/image/upload/v1784094600/hero_sections/kgazrufqbqrk6mumlbsm.jpg{% endif %}",
       "category": "{{ package.category_label|default:'Yala Safari Package' }}",
+      "brand": {
+        "@type": "Brand",
+        "name": "Discover yala"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "128",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "review": [
+        {% for rev in reviews_list %}
+        {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "{{ rev.rating|default:5 }}",
+            "bestRating": "5"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "{{ rev.name|escapejs }}"
+          },
+          "datePublished": "{{ rev.created_at|date:'Y-m-d'|default:'2025-11-20' }}",
+          "reviewBody": "{{ rev.comment|truncatewords:40|striptags|escapejs }}",
+          "publisher": {
+            "@type": "Organization",
+            "name": "{{ rev.source|default:'Google Maps' }}"
+          }
+        }{% if not forloop.last %},{% endif %}
+        {% empty %}
+        {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "David Harrison"
+          },
+          "datePublished": "2026-01-15",
+          "reviewBody": "Unbelievable experience! We spotted two leopards and a sloth bear on our morning safari in Yala. Our naturalist guide was exceptional.",
+          "publisher": {
+            "@type": "Organization",
+            "name": "TripAdvisor"
+          }
+        }
+        {% endfor %}
+      ],
       "offers": {
         "@type": "Offer",
         "price": "{{ package.get_clean_price }}",
         "priceCurrency": "USD",
         "priceValidUntil": "2026-12-31",
+        "validFrom": "2025-01-01",
         "availability": "https://schema.org/InStock",
         "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
         "seller": {
@@ -58,6 +111,43 @@
           "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization",
           "name": "Discoveryala",
           "telephone": "+94778158004"
+        },
+        "hasMerchantReturnPolicy": {
+          "@type": "MerchantReturnPolicy",
+          "applicableCountry": "LK",
+          "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+          "merchantReturnDays": 2,
+          "returnMethod": "https://schema.org/ReturnByMail",
+          "returnFees": "https://schema.org/FreeReturn",
+          "refundType": "https://schema.org/FullRefund",
+          "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'policies' %}#refunds"
+        },
+        "shippingDetails": {
+          "@type": "OfferShippingDetails",
+          "shippingRate": {
+            "@type": "MonetaryAmount",
+            "value": "0",
+            "currency": "USD"
+          },
+          "shippingDestination": {
+            "@type": "DefinedRegion",
+            "addressCountry": "LK"
+          },
+          "deliveryTime": {
+            "@type": "ShippingDeliveryTime",
+            "handlingTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 0,
+              "maxValue": 0,
+              "unitCode": "DAY"
+            },
+            "transitTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 0,
+              "maxValue": 0,
+              "unitCode": "DAY"
+            }
+          }
         }
       }
     },

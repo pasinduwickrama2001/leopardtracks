@@ -72,7 +72,7 @@
         {
           "@type": "TravelAgency",
           "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization",
-          "name": "Discoveryala",
+          "name": "Discover yala",
           "legalName": "Discover yala Sri Lanka",
           "url": "{{ request.scheme }}://{{ request.get_host }}/",
           "logo": {
@@ -127,7 +127,17 @@
             "https://www.facebook.com/",
             "https://www.instagram.com/",
             "https://wa.me/94778158004"
-          ]
+          ],
+          "hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "applicableCountry": "LK",
+            "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+            "merchantReturnDays": 2,
+            "returnMethod": "https://schema.org/ReturnByMail",
+            "returnFees": "https://schema.org/FreeReturn",
+            "refundType": "https://schema.org/FullRefund",
+            "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'policies' %}#refunds"
+          }
         },
         {
           "@type": "WebSite",
